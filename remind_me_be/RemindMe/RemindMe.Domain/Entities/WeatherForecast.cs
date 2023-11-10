@@ -1,4 +1,4 @@
-namespace RemindMe
+namespace RemindMe.Domain.Entities
 {
     public class WeatherForecast
     {
