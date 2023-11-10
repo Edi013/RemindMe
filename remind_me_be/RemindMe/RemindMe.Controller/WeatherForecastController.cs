@@ -1,6 +1,10 @@
-﻿using MediatR;
+﻿using Azure.Core;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using RemindMe.Application.Handlers;
+using RemindMe.Application.Requests;
+using RemindMe.Domain.Results;
 
 namespace RemindMe.Controller
 {
@@ -19,9 +23,11 @@ namespace RemindMe.Controller
         }
 
         [HttpGet("test")]
-        public async Task<String> Test()
+        public async Task<WeatherForecastResult> Test()
         {
-            return "Succesful";
+            var req = new WeatherForecastRequest();
+
+            return await mediator.Send(req, CancellationToken.None);
         }
     }
 }
