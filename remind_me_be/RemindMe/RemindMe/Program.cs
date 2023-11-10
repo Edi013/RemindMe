@@ -2,10 +2,10 @@ using RemindMe;
 
 var builder = WebApplication.CreateBuilder(args);
 
-Startup.RegisterServices(builder);
+builder.RegisterServices();
 
 var app = builder.Build();
 
-Startup.ApplyAppConfiguration(app);
+app.ApplyConfiguration();
 
 

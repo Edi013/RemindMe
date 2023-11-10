@@ -29,25 +29,5 @@ namespace RemindMe
             .Build();
             builder.Services.AddSingleton(configuration);
         }
-        
-        public static void ApplyAppConfiguration(this WebApplication app)
-        {
-            app.UseHttpsRedirection();
-
-            app.UseAuthorization();
-
-            app.MapControllers();
-
-            app.Run();
-        }
-
-        public static void UseSwager(this WebApplication app)
-        {
-            if (app.Environment.IsDevelopment())
-            {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
-        }
     }
 }
