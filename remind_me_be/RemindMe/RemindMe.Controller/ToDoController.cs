@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using BusinessTrips.Domain.Results;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using RemindMe.Application.Requests.ToDos;
@@ -29,6 +30,18 @@ namespace RemindMe.Controller
 
         [HttpPost("Create")]
         public async Task<ToDo> CreateToDo(CreateToDoRequest req)
+        {
+            return await mediator.Send(req, CancellationToken.None);
+        }
+
+        [HttpDelete("Delete")]
+        public async Task<BaseResult> DeleteToDo(DeleteToDoRequest req)
+        {
+            return await mediator.Send(req, CancellationToken.None);
+        }
+
+        [HttpPut("Edit")]
+        public async Task<ToDo> EditToDo(EditToDoRequest req)
         {
             return await mediator.Send(req, CancellationToken.None);
         }

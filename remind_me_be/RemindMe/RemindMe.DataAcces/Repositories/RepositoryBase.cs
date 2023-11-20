@@ -18,7 +18,7 @@ namespace RemindMe.DataAcces.Repositories
             return await context.Set<T>().ToListAsync();
         }
 
-        public async Task<T> GetById(long id)
+        public async Task<T> GetById(int id)
         {
             return await context.Set<T>().FindAsync(id);
         }
@@ -42,6 +42,10 @@ namespace RemindMe.DataAcces.Repositories
         {
             context.Remove(entity);
             await context.SaveChangesAsync();
+        }
+        public async Task DeleteById(int id)
+        {
+            await Delete(await GetById(id));
         }
 
         public async Task<IEnumerable<T>> FindByCondition(Expression<Func<T, bool>> expression)
