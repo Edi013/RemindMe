@@ -17,7 +17,7 @@ namespace RemindMe
             builder.RegisterSwaggerSettings();
 
             builder.Services.AddMediatR(
-                 cfg => cfg.RegisterServicesFromAssemblies(typeof(ToDoHandler).Assembly));
+                 cfg => cfg.RegisterServicesFromAssemblies(typeof(GetAllToDoHandler).Assembly));
 
             var connectionString = builder.Configuration.GetConnectionString("RemindMeDb");
             builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(connectionString));
