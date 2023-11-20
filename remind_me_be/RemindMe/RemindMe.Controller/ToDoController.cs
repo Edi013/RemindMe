@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using RemindMe.Application.Requests.ToDos;
 using RemindMe.Domain.Entities;
-using RemindMe.Domain.Results.ToDos;
 
 namespace RemindMe.Controller
 {
@@ -29,7 +28,7 @@ namespace RemindMe.Controller
         }
 
         [HttpPost("Create")]
-        public async Task<CreateToDoResult> CreateToDo(CreateToDoRequest req)
+        public async Task<ToDo> CreateToDo(CreateToDoRequest req)
         {
             return await mediator.Send(req, CancellationToken.None);
         }
