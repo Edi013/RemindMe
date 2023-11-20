@@ -1,4 +1,9 @@
-﻿using RemindMe.Application.Requests;
+﻿using Microsoft.EntityFrameworkCore;
+using RemindMe.Application.Handlers;
+using RemindMe.DataAcces;
+using RemindMe.DataAcces.Repositories;
+using RemindMe.Domain.Entities;
+using RemindMe.Domain.Interfaces;
 
 namespace RemindMe
 {
@@ -6,19 +11,24 @@ namespace RemindMe
     {
         public static void RegisterServices(this WebApplicationBuilder builder)
         {
+            builder.Services.AddControllers();
+            builder.Services.AddEndpointsApiExplorer();
+
             builder.RegisterSwaggerSettings();
 
-            builder.RegisterAppSettings();
-
             builder.Services.AddMediatR(
-                 cfg => cfg.RegisterServicesFromAssemblies(
-                 typeof(WeatherForecastRequest).Assembly));
+                 cfg => cfg.RegisterServicesFromAssemblies(typeof(GetAllToDoHandler).Assembly));
+
+            var connectionString = builder.Configuration.GetConnectionString("RemindMeDb");
+            builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(connectionString));
+
+            builder.Services.AddScoped<IToDoRepository, ToDoRepository>();
+
+            builder.RegisterAppSettings();
         }
 
         private static void RegisterSwaggerSettings(this WebApplicationBuilder builder)
         {
-            builder.Services.AddControllers();
-            builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
         }
         
