@@ -9,7 +9,7 @@ namespace RemindMe
 
         public static void LogStartupInformation() 
         {
-            Logger.Info("Application started.");
+            Logger.Info("\n---- Application started. --------------------------------------");
         }
     }
 }
