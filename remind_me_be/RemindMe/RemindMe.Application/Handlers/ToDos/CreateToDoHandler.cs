@@ -3,7 +3,7 @@ using RemindMe.Application.Requests.ToDos;
 using RemindMe.Domain.Entities;
 using RemindMe.Domain.Interfaces;
 
-namespace RemindMe.Application.Handlers
+namespace RemindMe.Application.Handlers.ToDos
 {
     public class CreateToDoHandler : IRequestHandler<CreateToDoRequest, ToDo?>
     {
@@ -16,7 +16,8 @@ namespace RemindMe.Application.Handlers
 
         public async Task<ToDo> Handle(CreateToDoRequest request, CancellationToken cancellationToken)
         {
-            var newToDo = new ToDo() { 
+            var newToDo = new ToDo()
+            {
                 CreationDate = request.CreationDate.HasValue ? (DateTime)request.CreationDate : DateTime.Now,
                 Description = request.Description,
                 Difficulty = request.Difficulty,

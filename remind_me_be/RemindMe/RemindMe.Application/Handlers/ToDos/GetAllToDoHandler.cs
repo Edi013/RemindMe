@@ -3,7 +3,7 @@ using RemindMe.Application.Requests.ToDos;
 using RemindMe.Domain.Entities;
 using RemindMe.Domain.Interfaces;
 
-namespace RemindMe.Application.Handlers
+namespace RemindMe.Application.Handlers.ToDos
 {
     public class GetAllToDoHandler : IRequestHandler<GetAllToDoRequest, IEnumerable<ToDo>>
     {
@@ -11,7 +11,7 @@ namespace RemindMe.Application.Handlers
 
         public GetAllToDoHandler(IToDoRepository _repository)
         {
-           repository = _repository;
+            repository = _repository;
         }
 
         public Task<IEnumerable<ToDo>> Handle(GetAllToDoRequest request, CancellationToken cancellationToken)

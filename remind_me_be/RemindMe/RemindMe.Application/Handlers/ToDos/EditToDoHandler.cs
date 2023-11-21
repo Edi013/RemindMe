@@ -1,16 +1,9 @@
-﻿using Azure.Core;
-using BusinessTrips.Domain.Results;
-using MediatR;
+﻿using MediatR;
 using RemindMe.Application.Requests.ToDos;
 using RemindMe.Domain.Entities;
 using RemindMe.Domain.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace RemindMe.Application.Handlers
+namespace RemindMe.Application.Handlers.ToDos
 {
     public class EditToDoHandler : IRequestHandler<EditToDoRequest, ToDo>
     {
