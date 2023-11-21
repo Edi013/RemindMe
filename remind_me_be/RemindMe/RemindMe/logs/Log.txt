@@ -1,0 +1,11 @@
+2023-11-21 10:59:44,877  INFO Microsoft.Hosting.Lifetime - MESSAGE: Now listening on: https://localhost:7066
+
+ 2023-11-21 10:59:44,890  INFO Microsoft.Hosting.Lifetime - MESSAGE: Now listening on: http://localhost:5289
+
+ 2023-11-21 10:59:44,892  INFO Microsoft.Hosting.Lifetime - MESSAGE: Application started. Press Ctrl+C to shut down.
+
+ 2023-11-21 10:59:44,893  INFO Microsoft.Hosting.Lifetime - MESSAGE: Hosting environment: Development
+
+ 2023-11-21 10:59:44,893  INFO Microsoft.Hosting.Lifetime - MESSAGE: Content root path: C:\Licenta\remind_me_be\RemindMe\RemindMe\
+
+ 

@@ -1,10 +1,9 @@
-﻿using BusinessTrips.Domain.Results;
-using MediatR;
+﻿using MediatR;
 using RemindMe.Application.Requests.ToDos;
-using RemindMe.Domain.Entities;
 using RemindMe.Domain.Interfaces;
+using RemindMe.Domain.Results;
 
-namespace RemindMe.Application.Handlers
+namespace RemindMe.Application.Handlers.ToDos
 {
     public class DeleteToDoHandler : IRequestHandler<DeleteToDoRequest, BaseResult>
     {

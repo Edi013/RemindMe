@@ -1,15 +1,15 @@
-﻿using BusinessTrips.Domain.Results;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using RemindMe.Application.Requests.ToDos;
 using RemindMe.Domain.Entities;
+using RemindMe.Domain.Results;
 
 namespace RemindMe.Controller
 {
     [ApiController]
-    [Route("api/[controller]")]
-    public class ToDoController
+    [Route("Api/[controller]")]
+    public class ToDoController : ControllerBase
     {
         private readonly IMediator mediator;
         private readonly IConfiguration configuration;
@@ -45,5 +45,7 @@ namespace RemindMe.Controller
         {
             return await mediator.Send(req, CancellationToken.None);
         }
+
+
     }
 }
