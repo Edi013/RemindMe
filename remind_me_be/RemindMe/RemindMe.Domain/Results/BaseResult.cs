@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-namespace BusinessTrips.Domain.Results
+namespace RemindMe.Domain.Results
 {
     public class BaseResult
     {

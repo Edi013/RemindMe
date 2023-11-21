@@ -1,8 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using RemindMe.Application.Handlers;
+using RemindMe.Application.Handlers.ToDos;
 using RemindMe.DataAcces;
 using RemindMe.DataAcces.Repositories;
-using RemindMe.Domain.Entities;
 using RemindMe.Domain.Interfaces;
 
 namespace RemindMe
@@ -11,6 +10,8 @@ namespace RemindMe
     {
         public static void RegisterServices(this WebApplicationBuilder builder)
         {
+            builder.ConfigureLogging();
+
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
 
@@ -25,6 +26,11 @@ namespace RemindMe
             builder.Services.AddScoped<IToDoRepository, ToDoRepository>();
 
             builder.RegisterAppSettings();
+        }
+        public static void ConfigureLogging(this WebApplicationBuilder builder)
+        {
+            builder.Logging.ClearProviders();
+            builder.Logging.AddLog4Net(log4NetConfigFile: "log4net.config");
         }
 
         private static void RegisterSwaggerSettings(this WebApplicationBuilder builder)

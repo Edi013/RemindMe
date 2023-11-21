@@ -1,5 +1,5 @@
-﻿using BusinessTrips.Domain.Results;
-using MediatR;
+﻿using MediatR;
+using RemindMe.Domain.Results;
 
 namespace RemindMe.Application.Requests.ToDos
 {
