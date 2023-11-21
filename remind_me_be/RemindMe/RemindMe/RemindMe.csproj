@@ -7,6 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="logs\**" />
+    <Compile Remove="Middlewares\**" />
+    <Content Remove="logs\**" />
+    <Content Remove="Middlewares\**" />
+    <EmbeddedResource Remove="logs\**" />
+    <EmbeddedResource Remove="Middlewares\**" />
+    <None Remove="logs\**" />
+    <None Remove="Middlewares\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="log4net.config" />
   </ItemGroup>
 
@@ -24,11 +35,6 @@
 	<PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.1.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
 
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="logs\" />
-    <Folder Include="Middlewares\" />
   </ItemGroup>
 
   <ItemGroup>
