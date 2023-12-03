@@ -4,14 +4,16 @@ import 'package:remind_me_fe/models/object_model.dart';
 import 'package:remind_me_fe/providers/object_provider.dart';
 
 class ListScreen extends StatelessWidget {
+  const ListScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Object List'),
+        title: const Text('Object List'),
       ),
       body: Container(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Card(
           elevation: 5.0,
           shape: RoundedRectangleBorder(
@@ -19,8 +21,8 @@ class ListScreen extends StatelessWidget {
           ),
           child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.all(16.0),
+              const Padding(
+                padding: EdgeInsets.all(16.0),
                 child: Text(
                   'Object List',
                   style: TextStyle(
@@ -42,7 +44,7 @@ class ListScreen extends StatelessWidget {
                           onTap: () {
                             Navigator.pushNamed(
                               context,
-                              '/form',
+                              '/edit',
                               arguments: {'index': index, 'object': object},
                             );
                           },
@@ -58,7 +60,7 @@ class ListScreen extends StatelessWidget {
                   onPressed: () {
                     Navigator.pushNamed(context, '/add');
                   },
-                  child: Text('Add Object'),
+                  child: const Text('Add Object'),
                 ),
               ),
             ],

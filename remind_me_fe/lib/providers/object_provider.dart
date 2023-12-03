@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:remind_me_fe/models/object_model.dart';
 
 class ObjectProvider extends ChangeNotifier {
-  List<ObjectModel> _objects = [
+  final List<ObjectModel> _objects = [
     ObjectModel(name: 'Object 1', description: 'Description 1'),
     ObjectModel(name: 'Object 2', description: 'Description 2'),
   ];
