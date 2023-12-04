@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:remind_me_fe/providers/object_provider.dart';
+import 'package:remind_me_fe/providers/todo_provider.dart';
 import 'package:remind_me_fe/screens/add_screen.dart';
 import 'package:remind_me_fe/screens/edit_screen.dart';
 import 'package:remind_me_fe/screens/list_screen.dart';
@@ -8,7 +8,7 @@ import 'package:remind_me_fe/screens/list_screen.dart';
 void main() {
   runApp(
     ChangeNotifierProvider(
-      create: (context) => ObjectProvider(),
+      create: (context) => ToDoProvider(),
       child: const MyApp(),
     ),
   );

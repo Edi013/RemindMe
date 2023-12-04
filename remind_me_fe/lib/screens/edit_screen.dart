@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:remind_me_fe/models/object_model.dart';
-import 'package:remind_me_fe/providers/object_provider.dart';
+import 'package:remind_me_fe/models/to_do.dart';
+import 'package:remind_me_fe/providers/todo_provider.dart';
 
 class EditScreen extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -13,12 +13,20 @@ class EditScreen extends StatelessWidget {
     Map<String, dynamic> arguments =
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     int index = arguments['index'];
-    ObjectModel object = arguments['object'];
+    ToDo toDoToUpdate = arguments['object'];
 
-    TextEditingController nameController =
-        TextEditingController(text: object.name);
+    TextEditingController titleController =
+        TextEditingController(text: toDoToUpdate.title);
     TextEditingController descriptionController =
-        TextEditingController(text: object.description);
+        TextEditingController(text: toDoToUpdate.description);
+    TextEditingController startDateController =
+        TextEditingController(text: toDoToUpdate.startDate.toString());
+
+    TextEditingController endDateController =
+        TextEditingController(text: toDoToUpdate.endDate.toString());
+
+    TextEditingController difficultyController =
+        TextEditingController(text: toDoToUpdate.difficulty.toString());
 
     return Scaffold(
       appBar: AppBar(
@@ -32,27 +40,63 @@ class EditScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               TextFormField(
-                controller: nameController,
-                decoration: const InputDecoration(labelText: 'Name'),
-                validator: (value) => validateFormField(value),
+                controller: titleController,
+                decoration: const InputDecoration(labelText: 'Title'),
               ),
               const SizedBox(height: 16.0),
               TextFormField(
                 controller: descriptionController,
                 decoration: const InputDecoration(labelText: 'Description'),
+              ),
+              const SizedBox(height: 16.0),
+              TextFormField(
+                controller: startDateController,
+                decoration: const InputDecoration(labelText: 'Start Date *'),
+                validator: (value) => validateFormField(value),
+              ),
+              const SizedBox(height: 16.0),
+              TextFormField(
+                controller: endDateController,
+                decoration:
+                    const InputDecoration(labelText: 'End Date Controller'),
+                validator: (value) => validateFormField(value),
+              ),
+              const SizedBox(height: 16.0),
+              TextFormField(
+                controller: difficultyController,
+                decoration: const InputDecoration(labelText: 'Difficulty *'),
                 validator: (value) => validateFormField(value),
               ),
               const SizedBox(height: 16.0),
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    ObjectModel updatedObject = ObjectModel(
-                      name: nameController.text,
-                      description: descriptionController.text,
+                    String title = titleController.text;
+                    String description = descriptionController.text;
+                    DateTime startDate = DateTime.parse(
+                      startDateController.text,
+                    );
+                    DateTime? endDate = endDateController.text != ""
+                        ? DateTime.parse(
+                            endDateController.text,
+                          )
+                        : null;
+                    int difficulty = int.parse(difficultyController.text);
+
+                    ToDo updatedToDo = ToDo(
+                      title: title,
+                      description: description,
+                      creationDate: DateTime.now(),
+                      startDate: startDate,
+                      endDate: endDate,
+                      difficulty: difficulty,
+                      ownerId: toDoToUpdate.ownerId,
+                      id: toDoToUpdate.id,
+                      isFinished: toDoToUpdate.isFinished,
                     );
 
-                    Provider.of<ObjectProvider>(context, listen: false)
-                        .updateObject(index, updatedObject);
+                    Provider.of<ToDoProvider>(context, listen: false)
+                        .updateObject(index, updatedToDo);
 
                     Navigator.pop(context);
                   }
@@ -69,7 +113,7 @@ class EditScreen extends StatelessWidget {
   String? validateFormField(value) {
     if (value == null || value.isEmpty) {
       return 'Field cannot be empty';
-    } else if (value.length < 2) {
+    } else if (value.length < 2 && int.tryParse(value) == null) {
       return 'Field must be at least 2 characters';
     }
     return null;

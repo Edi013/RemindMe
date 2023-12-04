@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:remind_me_fe/models/object_model.dart';
-import 'package:remind_me_fe/providers/object_provider.dart';
+import 'package:remind_me_fe/models/to_do.dart';
+import 'package:remind_me_fe/providers/todo_provider.dart';
 
 class ListScreen extends StatelessWidget {
   const ListScreen({super.key});
@@ -24,7 +24,7 @@ class ListScreen extends StatelessWidget {
               const Padding(
                 padding: EdgeInsets.all(16.0),
                 child: Text(
-                  'Object List',
+                  'To do',
                   style: TextStyle(
                     fontSize: 20.0,
                     fontWeight: FontWeight.bold,
@@ -32,20 +32,28 @@ class ListScreen extends StatelessWidget {
                 ),
               ),
               Expanded(
-                child: Consumer<ObjectProvider>(
-                  builder: (context, objectProvider, child) {
+                child: Consumer<ToDoProvider>(
+                  builder: (context, toDoProvider, child) {
                     return ListView.builder(
-                      itemCount: objectProvider.objects.length,
+                      itemCount: toDoProvider.objects.length,
                       itemBuilder: (context, index) {
-                        ObjectModel object = objectProvider.objects[index];
+                        ToDo toDo = toDoProvider.objects[index];
                         return ListTile(
-                          title: Text(object.name),
-                          subtitle: Text(object.description),
+                          title: Text(toDo.title),
+                          subtitle: Column(children: [
+                            Text("Description: ${toDo.description}"),
+                            Text(
+                                "Creation Date: ${toDo.creationDate.toString()}"),
+                            Text("Start Date: ${toDo.startDate.toString()}"),
+                            Text("End Date: ${toDo.endDate.toString()}"),
+                            Text("Is finished: ${toDo.isFinished.toString()}"),
+                            Text("Difficulty: ${toDo.difficulty.toString()}"),
+                          ]),
                           onTap: () {
                             Navigator.pushNamed(
                               context,
                               '/edit',
-                              arguments: {'index': index, 'object': object},
+                              arguments: {'index': index, 'object': toDo},
                             );
                           },
                         );

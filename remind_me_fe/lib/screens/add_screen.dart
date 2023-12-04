@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:remind_me_fe/models/object_model.dart';
-import 'package:remind_me_fe/providers/object_provider.dart';
+import 'package:remind_me_fe/models/to_do.dart';
+import 'package:remind_me_fe/providers/todo_provider.dart';
 
 class AddScreen extends StatelessWidget {
-  final TextEditingController nameController = TextEditingController();
+  final TextEditingController titleController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
+  final TextEditingController startDateController = TextEditingController();
+  final TextEditingController endDateController = TextEditingController();
+  final TextEditingController difficultyController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   AddScreen({super.key});
@@ -24,27 +27,59 @@ class AddScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               TextFormField(
-                controller: nameController,
-                decoration: const InputDecoration(labelText: 'Name'),
-                validator: (value) => validateFormField(value),
+                controller: titleController,
+                decoration: const InputDecoration(labelText: 'Title'),
               ),
               const SizedBox(height: 16.0),
               TextFormField(
                 controller: descriptionController,
                 decoration: const InputDecoration(labelText: 'Description'),
+              ),
+              const SizedBox(height: 16.0),
+              TextFormField(
+                controller: startDateController,
+                decoration: const InputDecoration(labelText: 'Start Date *'),
+                validator: (value) => validateFormField(value),
+              ),
+              const SizedBox(height: 16.0),
+              TextFormField(
+                controller: endDateController,
+                decoration: const InputDecoration(labelText: 'End Date'),
+                validator: (value) => validateFormField(value),
+              ),
+              const SizedBox(height: 16.0),
+              TextFormField(
+                controller: difficultyController,
+                decoration: const InputDecoration(labelText: 'Difficulty *'),
                 validator: (value) => validateFormField(value),
               ),
               const SizedBox(height: 16.0),
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    String name = nameController.text;
+                    String title = titleController.text;
                     String description = descriptionController.text;
+                    DateTime startDate = DateTime.parse(
+                      startDateController.text,
+                    );
+                    DateTime? endDate = endDateController.text != ""
+                        ? DateTime.parse(
+                            endDateController.text,
+                          )
+                        : null;
+                    int difficulty = int.parse(difficultyController.text);
 
-                    ObjectModel newObject =
-                        ObjectModel(name: name, description: description);
+                    ToDo newObject = ToDo(
+                      title: title,
+                      description: description,
+                      creationDate: DateTime.now(),
+                      startDate: startDate,
+                      endDate: endDate,
+                      difficulty: difficulty,
+                      ownerId: -1,
+                    );
 
-                    Provider.of<ObjectProvider>(context, listen: false)
+                    Provider.of<ToDoProvider>(context, listen: false)
                         .addObject(newObject);
 
                     Navigator.pop(context);
@@ -62,7 +97,7 @@ class AddScreen extends StatelessWidget {
   String? validateFormField(value) {
     if (value == null || value.isEmpty) {
       return 'Field cannot be empty';
-    } else if (value.length < 2) {
+    } else if (value.length < 2 && int.tryParse(value) == null) {
       return 'Field must be at least 2 characters';
     }
     return null;
