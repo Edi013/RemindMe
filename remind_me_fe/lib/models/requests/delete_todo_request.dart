@@ -1,0 +1,3 @@
+class DeleteToDoRequest {
+  int Id;
+}

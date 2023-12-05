@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:remind_me_fe/models/to_do.dart';
+import 'package:remind_me_fe/controller/list_controller.dart';
+import 'package:remind_me_fe/models/todo_model.dart';
 import 'package:remind_me_fe/providers/todo_provider.dart';
 
 class ListScreen extends StatelessWidget {
-  const ListScreen({super.key});
+  final ListController controller = ListController();
+
+  ListScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -35,9 +38,9 @@ class ListScreen extends StatelessWidget {
                 child: Consumer<ToDoProvider>(
                   builder: (context, toDoProvider, child) {
                     return ListView.builder(
-                      itemCount: toDoProvider.objects.length,
+                      itemCount: toDoProvider.todos.length,
                       itemBuilder: (context, index) {
-                        ToDo toDo = toDoProvider.objects[index];
+                        ToDo toDo = toDoProvider.todos[index];
                         return ListTile(
                           title: Text(toDo.title),
                           subtitle: Column(children: [
