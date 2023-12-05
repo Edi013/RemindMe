@@ -1,37 +1,31 @@
 import 'package:flutter/foundation.dart';
-import 'package:remind_me_fe/models/to_do.dart';
+import 'package:flutter/material.dart';
+import 'package:remind_me_fe/models/todo_model.dart';
+import 'package:remind_me_fe/repositories/to_do_repository.dart';
 
 class ToDoProvider extends ChangeNotifier {
-  final List<ToDo> _objects = [
-    ToDo(
-      title: 'Object 1',
-      description: 'Description 1',
-      creationDate: DateTime.now(),
-      startDate: DateTime.now(),
-      difficulty: 1,
-      isFinished: false,
-      ownerId: -1,
-    ),
-    ToDo(
-      title: 'To Do 2',
-      description: 'Description To Do 2',
-      creationDate: DateTime.now(),
-      startDate: DateTime.now(),
-      difficulty: 2,
-      isFinished: false,
-      ownerId: -1,
-    ),
-  ];
+  late ToDoRepository repository;
+  late List<ToDo> _todos;
 
-  List<ToDo> get objects => _objects;
+  List<ToDo> get todos => _todos;
 
-  void addObject(ToDo object) {
-    _objects.add(object);
+  ToDoProvider() {
+    repository = ToDoRepository();
+    getAll();
+  }
+
+  void getAll() async {
+    _todos = await repository.getAll();
     notifyListeners();
   }
 
-  void updateObject(int index, ToDo updatedObject) {
-    _objects[index] = updatedObject;
+  void add(ToDo object) {
+    _todos.add(object);
+    notifyListeners();
+  }
+
+  void update(int index, ToDo updatedObject) {
+    _todos[index] = updatedObject;
     notifyListeners();
   }
 }
