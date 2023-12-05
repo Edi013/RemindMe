@@ -5,27 +5,36 @@ import 'package:remind_me_fe/repositories/to_do_repository.dart';
 
 class ToDoProvider extends ChangeNotifier {
   late ToDoRepository repository;
-  late List<ToDo> _todos;
-
-  List<ToDo> get todos => _todos;
+  late List<ToDo> todos = [];
 
   ToDoProvider() {
     repository = ToDoRepository();
-    getAll();
+    initialize();
   }
 
-  void getAll() async {
-    _todos = await repository.getAll();
+  void initialize() async {
+    todos = await getAll();
     notifyListeners();
   }
 
-  void add(ToDo object) {
-    _todos.add(object);
+  Future<List<ToDo>> getAll() async {
+    return await repository.getAll();
+  }
+
+  Future<void> add(ToDo object) async {
+    todos.add(object);
+    await repository.addTodo(object);
     notifyListeners();
   }
 
-  void update(int index, ToDo updatedObject) {
-    _todos[index] = updatedObject;
+  Future<void> update(int index, ToDo updatedObject) async {
+    todos[index] = updatedObject;
+    await repository.updateTodo(updatedObject);
     notifyListeners();
+  }
+
+  Future<void> delete(int index, ToDo object) async {
+    todos.removeAt(index);
+    await repository.deleteTodo(object.id!);
   }
 }

@@ -9,16 +9,6 @@ class ToDo {
   int difficulty;
   int ownerId;
 
-  int? get getId => id;
-  String get getTitle => title;
-  String get getDescription => description;
-  DateTime get getCreationDate => creationDate;
-  DateTime get getStartDate => startDate;
-  DateTime? get getEndDate => endDate;
-  bool get getIsFinished => isFinished;
-  int get getDifficulty => difficulty;
-  int get getOwnerId => ownerId;
-
   ToDo({
     this.id,
     this.title = "",
@@ -35,15 +25,29 @@ class ToDo {
 
   factory ToDo.fromJson(Map<String, dynamic> json) {
     return ToDo(
-      id: json['Id'] as int,
-      title: json['Title'] as String,
-      description: json['Description'] as String,
-      creationDate: json['CreationDate'] as DateTime,
-      startDate: json['StartDate'] as DateTime,
-      endDate: json['EndDate'] ? json['EndDate'] as DateTime : null,
-      difficulty: json['Difficulty'],
-      isFinished: json['IsFinished'] as bool,
-      ownerId: json['OwnerId'] as int,
+      id: json['id'] as int,
+      title: json['title'] as String,
+      description: json['description'] as String,
+      creationDate: json['creationDate'] as DateTime,
+      startDate: json['startDate'] as DateTime,
+      endDate: json['endDate'] ? json['endDate'] as DateTime : null,
+      difficulty: json['difficulty'],
+      isFinished: json['isFinished'] as bool,
+      ownerId: json['ownerId'] as int,
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'title': title,
+      'description': description,
+      'creationDate': creationDate.toIso8601String(),
+      'startDate': startDate.toIso8601String(),
+      'endDate': endDate?.toIso8601String(),
+      'isFinished': isFinished,
+      'difficulty': difficulty,
+      'ownerId': ownerId,
+    };
   }
 }

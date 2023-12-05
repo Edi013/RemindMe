@@ -1,3 +1,0 @@
-class DeleteToDoRequest {
-  int Id;
-}

@@ -6,12 +6,16 @@ import 'package:remind_me_fe/view/list_screen.dart';
 import 'package:remind_me_fe/view/edit_screen.dart';
 
 void main() {
-  runApp(
-    ChangeNotifierProvider(
-      create: (context) => ToDoProvider(),
-      child: const MyApp(),
-    ),
-  );
+  try {
+    runApp(
+      ChangeNotifierProvider(
+        create: (context) => ToDoProvider(),
+        child: MyApp(),
+      ),
+    );
+  } catch (e, stackTrace) {
+    print("Error: $e + Stacktrace: $stackTrace");
+  }
 }
 
 class MyApp extends StatelessWidget {
@@ -23,7 +27,7 @@ class MyApp extends StatelessWidget {
       title: 'Object App',
       initialRoute: '/list',
       routes: {
-        '/list': (context) => const ListScreen(),
+        '/list': (context) => ListScreen(),
         '/edit': (context) => EditScreen(),
         '/add': (context) => AddScreen(),
       },
