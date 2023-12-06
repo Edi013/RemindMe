@@ -12,8 +12,11 @@ namespace RemindMe
         {
             builder.ConfigureLogging();
 
+
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
+
+            builder.ConfigureCors();
 
             builder.RegisterSwaggerSettings();
 
@@ -31,6 +34,23 @@ namespace RemindMe
         {
             builder.Logging.ClearProviders();
             builder.Logging.AddLog4Net(log4NetConfigFile: "log4net.config");
+        }
+        private static void ConfigureCors(this WebApplicationBuilder builder)
+        {
+            var frontendAppUrl = builder.Configuration.GetSection("FrontendApp:Url");
+
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy(name: "CorsPolicy",
+                                          policy =>
+                                          {
+                                              policy.WithOrigins(frontendAppUrl.Value)
+                                              //.AllowAnyOrigin()
+                                              .AllowAnyHeader()
+                                              .AllowAnyMethod()
+                                              .AllowCredentials();
+                                          });
+            });
         }
 
         private static void RegisterSwaggerSettings(this WebApplicationBuilder builder)
