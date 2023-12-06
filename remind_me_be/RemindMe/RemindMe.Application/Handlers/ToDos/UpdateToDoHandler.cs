@@ -7,19 +7,19 @@ using System.Configuration;
 
 namespace RemindMe.Application.Handlers.ToDos
 {
-    public class EditToDoHandler : IRequestHandler<EditToDoRequest, ToDo>
+    public class UpdateToDoHandler : IRequestHandler<UpdateToDoRequest, ToDo>
     {
         private IToDoRepository repository;
         private readonly IConfiguration configuration;
 
 
-        public EditToDoHandler(IToDoRepository _repository, IConfiguration _configuration)
+        public UpdateToDoHandler(IToDoRepository _repository, IConfiguration _configuration)
         {
             repository = _repository;
             configuration = _configuration;
         }
 
-        public async Task<ToDo> Handle(EditToDoRequest request, CancellationToken cancellationToken)
+        public async Task<ToDo> Handle(UpdateToDoRequest request, CancellationToken cancellationToken)
         {
             var toUpdateToDo = await repository.GetById(request.Id);
             string dateTimeFormat = configuration.GetValue<string>("DateTimeFormat");

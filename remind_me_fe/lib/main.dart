@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/list',
       routes: {
         '/list': (context) => ListScreen(),
-        '/edit': (context) => EditScreen(),
+        '/update': (context) => EditScreen(),
         '/add': (context) => AddScreen(),
       },
     );

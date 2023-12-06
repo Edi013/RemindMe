@@ -3,7 +3,7 @@ using RemindMe.Domain.Entities;
 
 namespace RemindMe.Application.Requests.ToDos
 {
-    public class EditToDoRequest : IRequest<ToDo>
+    public class UpdateToDoRequest : IRequest<ToDo>
     {
         public int Id { get; set; }
         public string Title { get; set; }

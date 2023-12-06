@@ -32,8 +32,8 @@ namespace RemindMe.Controller
             var req = new GetAllToDoRequest();
 
             logger.LogInformation("GetAll [GET] request for ToDos.");
-
-            return await mediator.Send(req, CancellationToken.None);
+            var result = await mediator.Send(req, CancellationToken.None);
+            return result;
         }
 
         [HttpPost("Create")]
@@ -52,10 +52,10 @@ namespace RemindMe.Controller
             return await mediator.Send(req, CancellationToken.None);
         }
 
-        [HttpPut("Edit")]
-        public async Task<ToDo> EditToDo(EditToDoRequest req)
+        [HttpPut("Update")]
+        public async Task<ToDo> UpdateToDo(UpdateToDoRequest req)
         {
-            logger.LogInformation($"Edit [PUT] request for ToDo with id {req.Id}.");
+            logger.LogInformation($"Update [PUT] request for ToDo with id {req.Id}.");
 
             return await mediator.Send(req, CancellationToken.None);
         }

@@ -55,7 +55,7 @@ class ListScreen extends StatelessWidget {
                           onTap: () {
                             Navigator.pushNamed(
                               context,
-                              '/edit',
+                              '/update',
                               arguments: {'index': index, 'object': toDo},
                             );
                           },
