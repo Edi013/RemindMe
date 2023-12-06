@@ -1,30 +1,33 @@
 import 'dart:convert';
+import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 import 'package:remind_me_fe/models/dto_requests/create_todo_request.dart';
 import 'package:remind_me_fe/models/dto_requests/delete_todo_request.dart';
+import 'package:remind_me_fe/models/dto_requests/update_todo_request.dart';
 
 import 'package:remind_me_fe/models/todo_model.dart';
 import 'package:remind_me_fe/shared/enviroment.dart';
 
 class ToDoRepository {
+  final String apiExtension = '/ToDo';
   final String apiUrl = "${Environment.BASE_URL}/ToDo";
+  final dio = Dio();
 
   Future<List<ToDo>> getAll() async {
-    //try {
     final response = await http.get(
-      Uri.parse("$apiUrl/GetAll"),
+      Uri.parse('$apiUrl/GetAll'),
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': '*/*'
+      },
     );
 
-    //if (response.statusCode == 200) {
     final List<dynamic> data = json.decode(response.body);
-    dynamic result = data.map((json) => ToDo.fromJson(json)).toList();
+    List<ToDo> result = data.map((json) => ToDo.fromJson(json)).toList();
     return result;
-    //   } else {
-    //     throw Exception('Failed to getAll todos');
-    //   }
-    // } catch (error) {
-    //   throw Exception('Error: $error');
-    //}
+    //final response = await dio.get('$apiUrl/GetAll');
+    //return response.data;
   }
 
   Future<ToDo> addTodo(ToDo todo) async {
@@ -52,14 +55,21 @@ class ToDoRepository {
   }
 
   Future<void> updateTodo(ToDo todo) async {
+    UpdateToDoRequest updatedToDo = UpdateToDoRequest(
+      id: todo.id!,
+      title: todo.title,
+      description: todo.description,
+      difficulty: todo.difficulty,
+      isFinished: todo.isFinished,
+      startDate: todo.startDate,
+      endDate: todo.endDate,
+      ownerId: todo.ownerId,
+    );
+
     final response = await http.put(
-      Uri.parse('$apiUrl/Edit'),
+      Uri.parse('$apiUrl/Update'),
       headers: {'Content-Type': 'application/json'},
-      body: jsonEncode(
-        todo
-            .toJson()
-            .remove("creationDate"), // sa testez daca merge acest remove
-      ),
+      body: jsonEncode(updatedToDo.toJson()),
     );
 
     // if (response.statusCode != 200) {

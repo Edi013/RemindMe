@@ -8,11 +8,11 @@ class ToDoProvider extends ChangeNotifier {
   late List<ToDo> todos = [];
 
   ToDoProvider() {
-    repository = ToDoRepository();
     initialize();
   }
 
   void initialize() async {
+    repository = ToDoRepository();
     todos = await getAll();
     notifyListeners();
   }
@@ -22,19 +22,23 @@ class ToDoProvider extends ChangeNotifier {
   }
 
   Future<void> add(ToDo object) async {
-    todos.add(object);
-    await repository.addTodo(object);
-    notifyListeners();
+    await repository.addTodo(object).then((value) {
+      todos.add(object);
+      notifyListeners();
+    });
   }
 
   Future<void> update(int index, ToDo updatedObject) async {
-    todos[index] = updatedObject;
-    await repository.updateTodo(updatedObject);
-    notifyListeners();
+    await repository.updateTodo(updatedObject).then((value) {
+      todos[index] = updatedObject;
+      notifyListeners();
+    });
   }
 
   Future<void> delete(int index, ToDo object) async {
-    todos.removeAt(index);
-    await repository.deleteTodo(object.id!);
+    await repository.deleteTodo(object.id!).then((value) {
+      todos.removeAt(index);
+      notifyListeners();
+    });
   }
 }

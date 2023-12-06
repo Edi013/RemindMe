@@ -1,3 +1,6 @@
+import 'package:intl/intl.dart';
+import 'package:remind_me_fe/shared/enviroment.dart';
+
 class ToDo {
   int? id;
   String title;
@@ -28,9 +31,13 @@ class ToDo {
       id: json['id'] as int,
       title: json['title'] as String,
       description: json['description'] as String,
-      creationDate: json['creationDate'] as DateTime,
-      startDate: json['startDate'] as DateTime,
-      endDate: json['endDate'] ? json['endDate'] as DateTime : null,
+      creationDate:
+          DateFormat(Environment.DATE_TIME_FORMAT).parse(json['creationDate']),
+      startDate:
+          DateFormat(Environment.DATE_TIME_FORMAT).parse(json['startDate']),
+      endDate: json['endDate'] != ""
+          ? DateFormat(Environment.DATE_TIME_FORMAT).parse(json['endDate'])
+          : null,
       difficulty: json['difficulty'],
       isFinished: json['isFinished'] as bool,
       ownerId: json['ownerId'] as int,
