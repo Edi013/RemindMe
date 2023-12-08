@@ -35,9 +35,9 @@ class ToDoProvider extends ChangeNotifier {
     });
   }
 
-  Future<void> delete(ToDo object) async {
-    await repository.deleteTodo(object.id!).then((value) {
-      todos.remove(object);
+  Future<void> delete(int id) async {
+    await repository.deleteTodo(id).then((value) {
+      todos.remove(todos.firstWhere((element) => element.id == id));
       notifyListeners();
     });
   }

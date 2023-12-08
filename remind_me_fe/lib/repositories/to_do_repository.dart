@@ -14,18 +14,20 @@ class ToDoRepository {
   final dio = Dio();
 
   Future<List<ToDo>> getAll() async {
-    final response = await http.get(
+    return await http.get(
       Uri.parse('$apiUrl/GetAll'),
       headers: {
         "Access-Control-Allow-Origin": "*",
         'Content-Type': 'application/json; charset=UTF-8',
         'Accept': '*/*'
       },
+    ).then(
+      (response) {
+        final List<dynamic> data = json.decode(response.body);
+        List<ToDo> result = data.map((json) => ToDo.fromJson(json)).toList();
+        return result;
+      },
     );
-
-    final List<dynamic> data = json.decode(response.body);
-    List<ToDo> result = data.map((json) => ToDo.fromJson(json)).toList();
-    return result;
   }
 
   Future<ToDo> addTodo(ToDo todo) async {
@@ -39,13 +41,16 @@ class ToDoRepository {
       difficulty: todo.difficulty,
       ownerId: todo.ownerId,
     );
+
     return await http
         .post(
           Uri.parse('$apiUrl/Create'),
           headers: {'Content-Type': 'application/json'},
           body: jsonEncode(newToDo.toJson()),
         )
-        .then((value) => ToDo.fromJson(json.decode(value.body)));
+        .then(
+          (value) => ToDo.fromJson(json.decode(value.body)),
+        );
   }
 
   Future<ToDo> updateTodo(ToDo todo) async {
@@ -67,13 +72,22 @@ class ToDoRepository {
           headers: {'Content-Type': 'application/json'},
           body: jsonEncode(updatedToDo.toJson()),
         )
-        .then((value) => ToDo.fromJson(json.decode(value.body)));
+        .then(
+          (value) => ToDo.fromJson(json.decode(value.body)),
+        );
   }
 
   Future<void> deleteTodo(int todoId) async {
-    await http.delete(
+    DeleteToDoRequest deleteRequest = DeleteToDoRequest(id: todoId);
+
+    await http
+        .delete(
       Uri.parse('$apiUrl/Delete'),
-      body: DeleteToDoRequest(id: todoId),
-    );
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode(deleteRequest.toJson()),
+    )
+        .then((value) {
+      return;
+    });
   }
 }

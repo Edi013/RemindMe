@@ -43,15 +43,26 @@ class ListScreen extends StatelessWidget {
                         ToDo toDo = toDoProvider.todos[index];
                         return ListTile(
                           title: Text(toDo.title),
-                          subtitle: Column(children: [
-                            Text("Description: ${toDo.description}"),
-                            Text(
-                                "Creation Date: ${toDo.creationDate.toString()}"),
-                            Text("Start Date: ${toDo.startDate.toString()}"),
-                            Text("End Date: ${toDo.endDate.toString()}"),
-                            Text("Is finished: ${toDo.isFinished.toString()}"),
-                            Text("Difficulty: ${toDo.difficulty.toString()}"),
-                          ]),
+                          subtitle: Column(
+                            children: [
+                              Text("Description: ${toDo.description}"),
+                              Text(
+                                  "Creation Date: ${toDo.creationDate.toString()}"),
+                              Text("Start Date: ${toDo.startDate.toString()}"),
+                              Text("End Date: ${toDo.endDate.toString()}"),
+                              Text(
+                                  "Is finished: ${toDo.isFinished.toString()}"),
+                              Text("Difficulty: ${toDo.difficulty.toString()}"),
+                              IconButton(
+                                onPressed: () =>
+                                    controller.deleteById(context, toDo.id!),
+                                icon: const Icon(
+                                  Icons.delete,
+                                  color: Colors.red,
+                                ),
+                              )
+                            ],
+                          ),
                           onTap: () {
                             Navigator.pushNamed(
                               context,
