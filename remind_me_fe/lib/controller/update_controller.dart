@@ -51,8 +51,7 @@ class EditController {
   ) {
     if (_formKey.currentState!.validate()) {
       DateTime parsedStartDate = DateTime.parse(startDate);
-      DateTime? parsedEndDate =
-          endDate.isNotEmpty ? DateTime.parse(endDate) : null;
+      DateTime? parsedEndDate = endDate != "" ? DateTime.parse(endDate) : null;
       int parsedDifficulty = int.parse(difficulty);
 
       ToDo updatedToDo = ToDo(
