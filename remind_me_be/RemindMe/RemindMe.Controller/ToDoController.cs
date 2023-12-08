@@ -18,7 +18,6 @@ namespace RemindMe.Controller
         private readonly IConfiguration configuration;
         private readonly ILogger<ToDoController> logger;
 
-
         public ToDoController(IMediator mediator, IConfiguration configuration, ILogger<ToDoController> logger)
         {
             this.mediator = mediator;

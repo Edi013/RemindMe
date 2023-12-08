@@ -5,6 +5,7 @@ using RemindMe.Domain.Entities;
 using RemindMe.Domain.Interfaces;
 using System.Configuration;
 using System.Globalization;
+using System.Runtime.Serialization;
 
 namespace RemindMe.Application.Handlers.ToDos
 {
@@ -22,25 +23,31 @@ namespace RemindMe.Application.Handlers.ToDos
 
         public async Task<ToDo> Handle(UpdateToDoRequest request, CancellationToken cancellationToken)
         {
-            //var toUpdateToDo = await repository.GetById(request.Id);
-            string dateTimeFormat = configuration.GetValue<string>("DateTimeFormat");
+            ToDo newToDo = await buildNewToDoAsync(request);
+            return await repository.Update(newToDo); ;
+        }
 
-            var newToDo = new ToDo()
+        private async Task<ToDo> buildNewToDoAsync(UpdateToDoRequest request)
+        {
+            string dateTimeFormat = configuration.GetValue<string>("DateTimeFormat");
+            var toUpdateToDo = await repository.SingleOrDefaultAsync(request.Id);
+
+            return new ToDo()
             {
-                Id = request.Id,
+                Id = toUpdateToDo.Id,
+                CreationDate = toUpdateToDo.CreationDate,
+                OwnerId = toUpdateToDo.OwnerId,
+
                 Title = request.Title,
                 Description = request.Description,
-                CreationDate = DateTime.ParseExact(request.CreationDate, dateTimeFormat, null, DateTimeStyles.AssumeUniversal).ToUniversalTime(),
+
+
                 StartDate = DateTime.ParseExact(request.StartDate, dateTimeFormat, null, DateTimeStyles.AssumeUniversal).ToUniversalTime(),
                 EndDate = DateTime.ParseExact(request.EndDate, dateTimeFormat, null, DateTimeStyles.AssumeUniversal).ToUniversalTime(),
                 IsFinished = request.IsFinished,
                 Difficulty = request.Difficulty,
-                OwnerId = request.OwnerId,
+
             };
-           
-            return await repository.Update(newToDo); ;
         }
-
-
     }
 }
