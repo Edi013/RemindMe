@@ -45,7 +45,6 @@ namespace RemindMe
                                           policy =>
                                           {
                                               policy.WithOrigins(frontendAppUrl.Value)
-                                              //.AllowAnyOrigin()
                                               .AllowAnyHeader()
                                               .AllowAnyMethod()
                                               .AllowCredentials();

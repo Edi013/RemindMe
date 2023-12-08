@@ -26,14 +26,14 @@ namespace RemindMe.Application.Handlers.ToDos
             
             var newToDo = new ToDo()
             {
-                CreationDate = DateTime.ParseExact(request.CreationDate, dateTimeFormat, null),
-                Description = request.Description,
-                Difficulty = request.Difficulty,
-                EndDate = DateTime.ParseExact(request.EndDate, dateTimeFormat, null),
-                IsFinished = request.IsFinished,
-                OwnerId = request.OwnerId,
-                StartDate = DateTime.ParseExact(request.StartDate, dateTimeFormat, null),
                 Title = request.Title,
+                Description = request.Description,
+                CreationDate = DateTime.ParseExact(request.CreationDate, dateTimeFormat, null, DateTimeStyles.AssumeUniversal).ToUniversalTime(),
+                StartDate = DateTime.ParseExact(request.StartDate, dateTimeFormat, null, DateTimeStyles.AssumeUniversal).ToUniversalTime(),
+                EndDate = DateTime.ParseExact(request.EndDate, dateTimeFormat, null, DateTimeStyles.AssumeUniversal).ToUniversalTime(),
+                IsFinished = request.IsFinished,
+                Difficulty = request.Difficulty,
+                OwnerId = request.OwnerId,
             };
 
             ToDo operationResult = await repository.Add(newToDo);

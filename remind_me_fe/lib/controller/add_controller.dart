@@ -31,7 +31,7 @@ class AddController {
             )
           : null;
       int difficulty = int.parse(difficultyController.text);
-      print(DateTime.now());
+
       ToDo newObject = ToDo(
         title: title,
         description: description,

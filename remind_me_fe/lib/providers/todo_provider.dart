@@ -23,21 +23,21 @@ class ToDoProvider extends ChangeNotifier {
 
   Future<void> add(ToDo object) async {
     await repository.addTodo(object).then((value) {
-      todos.add(object);
+      todos.add(value);
       notifyListeners();
     });
   }
 
   Future<void> update(int index, ToDo updatedObject) async {
     await repository.updateTodo(updatedObject).then((value) {
-      todos[index] = updatedObject;
+      todos[index] = value;
       notifyListeners();
     });
   }
 
-  Future<void> delete(int index, ToDo object) async {
+  Future<void> delete(ToDo object) async {
     await repository.deleteTodo(object.id!).then((value) {
-      todos.removeAt(index);
+      todos.remove(object);
       notifyListeners();
     });
   }
