@@ -6,7 +6,7 @@
         {
             app.UseSwager();
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseAuthorization();
 
