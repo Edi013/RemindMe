@@ -10,7 +10,7 @@ namespace RemindMe
 
             app.UseSwager();
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseCors("CorsPolicy");
 
