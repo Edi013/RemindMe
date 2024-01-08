@@ -3,8 +3,9 @@ using RemindMe.Domain.Entities;
 
 namespace RemindMe.Application.Requests.ToDos
 {
-    public class CreateToDoRequest : IRequest<ToDo>
+    public class UpdateToDoRequest : IRequest<ToDo>
     {
+        public int Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public string CreationDate { get; set; }
@@ -13,6 +14,5 @@ namespace RemindMe.Application.Requests.ToDos
         public bool IsFinished { get; set; }
         public int Difficulty { get; set; }
         public int OwnerId { get; set; }
-
     }
 }

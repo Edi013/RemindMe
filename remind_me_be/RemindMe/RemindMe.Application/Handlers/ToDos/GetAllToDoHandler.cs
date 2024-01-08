@@ -14,9 +14,10 @@ namespace RemindMe.Application.Handlers.ToDos
             repository = _repository;
         }
 
-        public Task<IEnumerable<ToDo>> Handle(GetAllToDoRequest request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<ToDo>> Handle(GetAllToDoRequest request, CancellationToken cancellationToken)
         {
-            return repository.GetAll();
+            var result = await repository.GetAll();
+            return result;
         }
     }
 }

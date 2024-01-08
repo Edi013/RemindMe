@@ -1,12 +1,18 @@
-﻿namespace RemindMe
+﻿using log4net;
+
+namespace RemindMe
 {
     public static class WebApplicationExtensions
     {
         public static void ApplyConfiguration(this WebApplication app)
         {
+            
+
             app.UseSwager();
 
             //app.UseHttpsRedirection();
+
+            app.UseCors("CorsPolicy");
 
             app.UseAuthorization();
 
