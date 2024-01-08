@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:remind_me_fe/controller/update_controller.dart';
+import 'package:remind_me_fe/controller/todo/update_controller.dart';
 import 'package:remind_me_fe/models/todo_model.dart';
 
-class EditScreen extends StatelessWidget {
-  final EditController controller = EditController();
+class ToDoUpdateScreen extends StatelessWidget {
+  final ToDoUpdateController controller = ToDoUpdateController();
 
-  EditScreen({super.key});
+  ToDoUpdateScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

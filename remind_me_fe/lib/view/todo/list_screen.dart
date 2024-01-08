@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:remind_me_fe/controller/list_controller.dart';
+import 'package:remind_me_fe/controller/todo/list_controller.dart';
 import 'package:remind_me_fe/models/todo_model.dart';
 import 'package:remind_me_fe/providers/todo_provider.dart';
 
-class ListScreen extends StatelessWidget {
-  final ListController controller = ListController();
+class ToDoListScreen extends StatelessWidget {
+  final ToDoListController controller = ToDoListController();
 
-  ListScreen({super.key});
+  ToDoListScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

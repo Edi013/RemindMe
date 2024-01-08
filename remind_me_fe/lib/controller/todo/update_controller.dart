@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:remind_me_fe/models/todo_model.dart';
 import 'package:remind_me_fe/providers/todo_provider.dart';
 
-class EditController {
+class ToDoUpdateController {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   late TextEditingController _titleController;
   late TextEditingController _descriptionController;

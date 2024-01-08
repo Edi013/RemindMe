@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:remind_me_fe/models/todo_model.dart';
 import 'package:remind_me_fe/providers/todo_provider.dart';
 
-class AddController {
+class ToDoAddController {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _startDateController = TextEditingController();

@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:remind_me_fe/color-scheme.dart';
 import 'package:remind_me_fe/providers/todo_provider.dart';
-import 'package:remind_me_fe/view/add_screen.dart';
-import 'package:remind_me_fe/view/list_screen.dart';
-import 'package:remind_me_fe/view/update_screen.dart';
+import 'package:remind_me_fe/routes.dart';
 
 void main() {
   try {
     runApp(
-      ChangeNotifierProvider(
-        create: (context) => ToDoProvider(),
-        child: MyApp(),
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider<ToDoProvider>(create: (_) => ToDoProvider()),
+        ],
+        child: const MyApp(),
       ),
     );
   } catch (e, stackTrace) {
@@ -19,18 +20,17 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Object App',
-      initialRoute: '/list',
-      routes: {
-        '/list': (context) => ListScreen(),
-        '/update': (context) => EditScreen(),
-        '/add': (context) => AddScreen(),
-      },
+      title: 'RemindMe',
+      initialRoute: Routes.homeRoute,
+      routes: Routes.generateRoutes(),
+      theme: ThemeData(
+        colorScheme: AppColors.getAppColorScheme(),
+      ),
     );
   }
 }

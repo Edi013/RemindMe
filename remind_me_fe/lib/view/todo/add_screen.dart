@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:remind_me_fe/controller/add_controller.dart';
+import 'package:remind_me_fe/controller/todo/add_controller.dart';
 
-class AddScreen extends StatelessWidget {
-  final AddController addController = AddController();
+class ToDoAddScreen extends StatelessWidget {
+  final ToDoAddController addController = ToDoAddController();
 
-  AddScreen({super.key});
+  ToDoAddScreen({super.key});
 
   Future<void> _selectDate(
       BuildContext context, TextEditingController controller) async {
