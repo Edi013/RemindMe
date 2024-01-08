@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:remind_me_fe/models/dto_requests/create_todo_request.dart';
-import 'package:remind_me_fe/models/dto_requests/delete_todo_request.dart';
-import 'package:remind_me_fe/models/dto_requests/update_todo_request.dart';
+import 'package:remind_me_fe/models/todo_dtos/create_todo_request.dart';
+import 'package:remind_me_fe/models/todo_dtos/delete_todo_request.dart';
+import 'package:remind_me_fe/models/todo_dtos/update_todo_request.dart';
 
 import 'package:remind_me_fe/models/todo_model.dart';
 import 'package:remind_me_fe/shared/enviroment.dart';
