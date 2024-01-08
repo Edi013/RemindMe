@@ -21,16 +21,16 @@ class AddController {
   void addItem(BuildContext context) {
     if (_formKey.currentState!.validate()) {
       String title = _titleController.text;
-      String description = descriptionController.text;
+      String description = _descriptionController.text;
       DateTime startDate = DateTime.parse(
-        startDateController.text,
+        _startDateController.text,
       );
-      DateTime? endDate = endDateController.text != ""
+      DateTime? endDate = _endDateController.text.isNotEmpty
           ? DateTime.parse(
-              endDateController.text,
+              _endDateController.text,
             )
           : null;
-      int difficulty = int.parse(difficultyController.text);
+      int difficulty = int.parse(_difficultyController.text);
 
       ToDo newObject = ToDo(
         title: title,
@@ -55,5 +55,9 @@ class AddController {
       return 'Field must be at least 2 characters';
     }
     return null;
+  }
+
+  String formatDate(DateTime date) {
+    return "${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}";
   }
 }

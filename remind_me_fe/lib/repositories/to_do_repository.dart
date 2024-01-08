@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 import 'package:remind_me_fe/models/dto_requests/create_todo_request.dart';
 import 'package:remind_me_fe/models/dto_requests/delete_todo_request.dart';
@@ -11,7 +10,6 @@ import 'package:remind_me_fe/shared/enviroment.dart';
 class ToDoRepository {
   final String apiExtension = '/ToDo';
   final String apiUrl = "${Environment.BASE_URL}/ToDo";
-  final dio = Dio();
 
   Future<List<ToDo>> getAll() async {
     return await http.get(

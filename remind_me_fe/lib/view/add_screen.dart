@@ -6,6 +6,20 @@ class AddScreen extends StatelessWidget {
 
   AddScreen({super.key});
 
+  Future<void> _selectDate(
+      BuildContext context, TextEditingController controller) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
+    );
+
+    if (picked != null && picked != DateTime.now()) {
+      controller.text = addController.formatDate(picked);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,12 +47,16 @@ class AddScreen extends StatelessWidget {
                 controller: addController.startDateController,
                 decoration: const InputDecoration(labelText: 'Start Date *'),
                 validator: (value) => addController.validateFormField(value),
+                onTap: () =>
+                    _selectDate(context, addController.startDateController),
               ),
               const SizedBox(height: 16.0),
               TextFormField(
                 controller: addController.endDateController,
                 decoration: const InputDecoration(labelText: 'End Date'),
                 validator: (value) => addController.validateFormField(value),
+                onTap: () =>
+                    _selectDate(context, addController.endDateController),
               ),
               const SizedBox(height: 16.0),
               TextFormField(

@@ -12,9 +12,6 @@ class ListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Object List'),
-      ),
       body: Container(
         padding: const EdgeInsets.all(16.0),
         child: Card(
@@ -27,7 +24,7 @@ class ListScreen extends StatelessWidget {
               const Padding(
                 padding: EdgeInsets.all(16.0),
                 child: Text(
-                  'To do',
+                  'Todos',
                   style: TextStyle(
                     fontSize: 20.0,
                     fontWeight: FontWeight.bold,
@@ -82,7 +79,7 @@ class ListScreen extends StatelessWidget {
                   onPressed: () {
                     Navigator.pushNamed(context, '/add');
                   },
-                  child: const Text('Add Object'),
+                  child: const Text('+'),
                 ),
               ),
             ],
