@@ -1,5 +1,4 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:remind_me_fe/models/todo_model.dart';
 import 'package:remind_me_fe/repositories/to_do_repository.dart';
 
@@ -7,9 +6,13 @@ class ToDoProvider extends ChangeNotifier {
   late ToDoRepository repository;
   late List<ToDo> todos = [];
 
-  ToDoProvider() {
+  ToDoProvider.singleton() {
     initialize();
   }
+
+  static final ToDoProvider _instance = ToDoProvider.singleton();
+
+  static ToDoProvider get instance => _instance;
 
   void initialize() async {
     repository = ToDoRepository();
