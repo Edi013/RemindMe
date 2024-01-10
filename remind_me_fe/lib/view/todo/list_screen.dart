@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:remind_me_fe/controller/todo/list_controller.dart';
 import 'package:remind_me_fe/models/todo_model.dart';
 import 'package:remind_me_fe/providers/todo_provider.dart';
+import '../../routes.dart';
 
 class ToDoListScreen extends StatelessWidget {
   final ToDoListController controller = ToDoListController();
@@ -63,7 +64,7 @@ class ToDoListScreen extends StatelessWidget {
                           onTap: () {
                             Navigator.pushNamed(
                               context,
-                              '/update',
+                              Routes.todoUpdateRoute,
                               arguments: {'index': index, 'object': toDo},
                             );
                           },
@@ -77,7 +78,7 @@ class ToDoListScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(16.0),
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, '/add');
+                    Navigator.pushNamed(context, Routes.todoAddRoute);
                   },
                   child: const Text('+'),
                 ),
