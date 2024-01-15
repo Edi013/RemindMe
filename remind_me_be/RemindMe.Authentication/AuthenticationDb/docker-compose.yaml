@@ -1,0 +1,16 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres:14-alpine
+    ports:
+      - 5433:5432 # Map port 5432 from the container to port 5433 on the host
+    volumes:
+      - RemindMeAuthenticationDb-db-volume:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=1234
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=RemindMeAuthenticationDb
+
+volumes:
+  RemindMeAuthenticationDb-db-volume:

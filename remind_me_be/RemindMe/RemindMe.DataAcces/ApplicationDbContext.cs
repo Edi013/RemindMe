@@ -9,6 +9,8 @@ namespace RemindMe.DataAcces
         private IConfiguration Configuration;
         public DbSet<ToDo> ToDos { get; set; }
 
+        public ApplicationDbContext() { }
+
         public ApplicationDbContext(IConfiguration _configuration)
         {
             Configuration = _configuration;
@@ -30,7 +32,39 @@ namespace RemindMe.DataAcces
 
         private void ConfigureToDo(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<ToDo>().HasKey(x => x.Id);
+            modelBuilder.Entity<ToDo>()
+                .HasKey(x => x.Id);
+            
+            
+            modelBuilder.Entity<ToDo>()
+                .Property(x => x.Title)
+                .IsRequired()
+                .HasMaxLength(100);
+
+            modelBuilder.Entity<ToDo>()
+                .Property(x => x.Description)
+                .IsRequired()
+                .HasMaxLength(10000);
+
+            modelBuilder.Entity<ToDo>()
+                .Property(x => x.CreationDate)
+                .IsRequired();
+
+            modelBuilder.Entity<ToDo>()
+                .Property(x => x.StartDate)
+                .IsRequired();
+
+            modelBuilder.Entity<ToDo>()
+                .Property(x => x.IsFinished)
+                .IsRequired();
+
+            modelBuilder.Entity<ToDo>()
+                .Property(x => x.Difficulty)
+                .IsRequired();
+
+            modelBuilder.Entity<ToDo>()
+                .Property(x => x.OwnerId)
+                .IsRequired();
         }
     }
 }

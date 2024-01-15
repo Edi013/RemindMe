@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34408.163
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RemindMe.Authentication", "RemindMe.Authentication\RemindMe.Authentication.csproj", "{B33E4C47-FA8D-47F1-9D8B-54CB6307EF64}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RemindMe.Authentication.DataAccess", "RemindMe.Authentication.DataAccess\RemindMe.Authentication.DataAccess.csproj", "{6548699D-8A20-43C0-A697-DCE64A17A1DA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RemindMe.Authentication.Business", "RemindMe.Authentication.Business\RemindMe.Authentication.Business.csproj", "{F5E32BD5-AB97-463A-9E97-084E08EBF8A0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RemindMe.Authentication.Domain", "RemindMe.Authentication.Domain\RemindMe.Authentication.Domain.csproj", "{5965A0CD-ADAF-4920-8F61-B2C9CA028820}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RemindMe.Authentication.Controllers", "RemindMe.Authentication.Controllers\RemindMe.Authentication.Controllers.csproj", "{90AF3FEB-D2B4-4855-BE69-E92BC71C4AA3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemindMe.Authentication.Notifications", "RemindMe.Authentication.Notifications\RemindMe.Authentication.Notifications.csproj", "{D61F13F6-BF98-4602-9827-CC3662289A40}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B33E4C47-FA8D-47F1-9D8B-54CB6307EF64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B33E4C47-FA8D-47F1-9D8B-54CB6307EF64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B33E4C47-FA8D-47F1-9D8B-54CB6307EF64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B33E4C47-FA8D-47F1-9D8B-54CB6307EF64}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6548699D-8A20-43C0-A697-DCE64A17A1DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6548699D-8A20-43C0-A697-DCE64A17A1DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6548699D-8A20-43C0-A697-DCE64A17A1DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6548699D-8A20-43C0-A697-DCE64A17A1DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5E32BD5-AB97-463A-9E97-084E08EBF8A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5E32BD5-AB97-463A-9E97-084E08EBF8A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5E32BD5-AB97-463A-9E97-084E08EBF8A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5E32BD5-AB97-463A-9E97-084E08EBF8A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5965A0CD-ADAF-4920-8F61-B2C9CA028820}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5965A0CD-ADAF-4920-8F61-B2C9CA028820}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5965A0CD-ADAF-4920-8F61-B2C9CA028820}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5965A0CD-ADAF-4920-8F61-B2C9CA028820}.Release|Any CPU.Build.0 = Release|Any CPU
+		{90AF3FEB-D2B4-4855-BE69-E92BC71C4AA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90AF3FEB-D2B4-4855-BE69-E92BC71C4AA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90AF3FEB-D2B4-4855-BE69-E92BC71C4AA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90AF3FEB-D2B4-4855-BE69-E92BC71C4AA3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D61F13F6-BF98-4602-9827-CC3662289A40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D61F13F6-BF98-4602-9827-CC3662289A40}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D61F13F6-BF98-4602-9827-CC3662289A40}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D61F13F6-BF98-4602-9827-CC3662289A40}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B204BE6D-358C-4882-998F-83DB1942FB88}
+	EndGlobalSection
+EndGlobal
