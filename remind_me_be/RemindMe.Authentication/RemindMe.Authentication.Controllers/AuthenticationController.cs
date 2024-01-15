@@ -37,13 +37,6 @@ namespace RemindMe.Authentication.Controllers
             return result;
         }
 
-        [HttpPut("SeedRoles")]
-        public Task<BaseResult> SeedRoles()
-        {
-            var result = _authenticationHandler.SeedRoles();
-
-            return result;
-        }
 
         [HttpGet("TestEmail")]
         public async Task<BaseResult> TestEmail()
@@ -60,6 +53,21 @@ namespace RemindMe.Authentication.Controllers
                 HttpStatusCode = System.Net.HttpStatusCode.OK,
                 Message = "Email was sent successfully"
             };
+        }
+
+        [HttpGet("ConfirmEmail")]
+        public async Task<BaseResult> ConfirmEmail(string userId, string token)
+        {
+
+            return await _authenticationHandler.ConfirmEmail(userId, token);
+        }
+
+        [HttpPut("SeedRoles")]
+        public Task<BaseResult> SeedRoles()
+        {
+            var result = _authenticationHandler.SeedRoles();
+
+            return result;
         }
     }
 }
