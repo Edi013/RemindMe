@@ -49,10 +49,9 @@ namespace RemindMe.Authentication.Controllers
         public async Task<BaseResult> TestEmail()
         {
             var receivers = new string[]{
-                "edymare97@yahoo.com",
-                "enachecristina70@gmail.com"
+                "edymare97@yahoo.com"
             };
-            var message = new Message("Miau miau e miau miau miau", "Zambeste, puicul te iubeste", receivers);
+            var message = new Message("Test email", "Email for test.", receivers);
 
             _emailService.SendEmail(message);
 
