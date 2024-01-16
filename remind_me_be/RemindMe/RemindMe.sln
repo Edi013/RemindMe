@@ -7,13 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RemindMe", "RemindMe\Remind
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RemindMe.Domain", "RemindMe.Domain\RemindMe.Domain.csproj", "{7BDB3C81-E579-4354-8055-CC49E7E8DBF5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemindMe.DataAcces", "RemindMe.DataAcces\RemindMe.DataAcces.csproj", "{583D11E9-24D4-4F23-88CA-6EF3FAD5CA4D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RemindMe.DataAcces", "RemindMe.DataAcces\RemindMe.DataAcces.csproj", "{583D11E9-24D4-4F23-88CA-6EF3FAD5CA4D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemindMe.Controller", "RemindMe.Controller\RemindMe.Controller.csproj", "{DCFFA450-B48C-4B3D-B0E1-60D0E51A6D72}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RemindMe.Controller", "RemindMe.Controller\RemindMe.Controller.csproj", "{DCFFA450-B48C-4B3D-B0E1-60D0E51A6D72}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemindMe.Application", "RemindMe.Application\RemindMe.Application.csproj", "{EBFE4B0D-14D8-472F-AEA4-B713E518A709}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemindMe.Notification", "RemindMe.Notification\RemindMe.Notification.csproj", "{16AA9239-0CFA-4BF4-B056-AB3C65B6C5A8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RemindMe.Application", "RemindMe.Application\RemindMe.Application.csproj", "{EBFE4B0D-14D8-472F-AEA4-B713E518A709}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,10 +39,6 @@ Global
 		{EBFE4B0D-14D8-472F-AEA4-B713E518A709}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EBFE4B0D-14D8-472F-AEA4-B713E518A709}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EBFE4B0D-14D8-472F-AEA4-B713E518A709}.Release|Any CPU.Build.0 = Release|Any CPU
-		{16AA9239-0CFA-4BF4-B056-AB3C65B6C5A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{16AA9239-0CFA-4BF4-B056-AB3C65B6C5A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{16AA9239-0CFA-4BF4-B056-AB3C65B6C5A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{16AA9239-0CFA-4BF4-B056-AB3C65B6C5A8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
