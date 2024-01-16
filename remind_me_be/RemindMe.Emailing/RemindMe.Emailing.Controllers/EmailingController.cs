@@ -22,9 +22,9 @@ namespace RemindMe.Emailing.Controllers
         }
 
         [HttpPost("SendEmail")]
-        public BaseResult SendEmail(SendEmailRequest request)
+        public async Task<BaseResult> SendEmailAsync(SendEmailRequest request)
         {
-            return _emailingHandler.SendEmail(request);
+            return await _emailingHandler.SendEmailAsync(request);
         }
     }
 }

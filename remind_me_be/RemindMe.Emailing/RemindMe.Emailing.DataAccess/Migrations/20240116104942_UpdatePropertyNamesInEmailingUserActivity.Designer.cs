@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using RemindMe.Emailing.DataAccess;
@@ -11,9 +12,10 @@ using RemindMe.Emailing.DataAccess;
 namespace RemindMe.Emailing.DataAccess.Migrations
 {
     [DbContext(typeof(EmailingDbContext))]
-    partial class EmailingDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240116104942_UpdatePropertyNamesInEmailingUserActivity")]
+    partial class UpdatePropertyNamesInEmailingUserActivity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

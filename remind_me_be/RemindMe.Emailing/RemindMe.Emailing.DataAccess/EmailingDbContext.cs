@@ -34,7 +34,8 @@ namespace RemindMe.Emailing.DataAccess
             modelBuilder.Entity<EmailingUserActivity>().HasKey(x => x.Id);
             
             modelBuilder.Entity<EmailingUserActivity>().Property(x => x.UserId).IsRequired();
-            modelBuilder.Entity<EmailingUserActivity>().Property(x => x.Dates).IsRequired();
+            modelBuilder.Entity<EmailingUserActivity>().Property(x => x.UserId).HasMaxLength(36);
+            modelBuilder.Entity<EmailingUserActivity>().Property(x => x.UtcDates).IsRequired();
             modelBuilder.Entity<EmailingUserActivity>().Property(x => x.EmailsSent).IsRequired();
         }
     }

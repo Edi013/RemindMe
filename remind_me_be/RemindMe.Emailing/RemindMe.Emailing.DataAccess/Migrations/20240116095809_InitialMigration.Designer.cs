@@ -12,7 +12,7 @@ using RemindMe.Emailing.DataAccess;
 namespace RemindMe.Emailing.DataAccess.Migrations
 {
     [DbContext(typeof(EmailingDbContext))]
-    [Migration("20240116092359_InitialMigration")]
+    [Migration("20240116095809_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -39,8 +39,10 @@ namespace RemindMe.Emailing.DataAccess.Migrations
                     b.Property<int>("EmailsSent")
                         .HasColumnType("integer");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasMaxLength(36)
+                        .HasColumnType("character varying(36)");
 
                     b.HasKey("Id");
 

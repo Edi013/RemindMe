@@ -16,7 +16,7 @@ namespace RemindMe.Emailing.DataAccess.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
+                    UserId = table.Column<string>(type: "character varying(36)", maxLength: 36, nullable: false),
                     Dates = table.Column<DateTime[]>(type: "timestamp with time zone[]", nullable: false),
                     EmailsSent = table.Column<int>(type: "integer", nullable: false)
                 },

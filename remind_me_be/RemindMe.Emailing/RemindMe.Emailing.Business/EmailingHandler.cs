@@ -30,7 +30,7 @@ namespace RemindMe.Emailing.Business
             };
         }
 
-        public BaseResult SendEmail(SendEmailRequest request)
+        public async Task<BaseResult> SendEmailAsync(SendEmailRequest request)
         {
             var badRequestResponse = new BaseResult()
             {
@@ -38,7 +38,15 @@ namespace RemindMe.Emailing.Business
                 Message = "Email has not been sent. You have to provide an email and id foreach receiver."
             };
 
-            if (request.ReceiversEmail.Length != request.ReceiversId.Length)
+            if (string.IsNullOrEmpty(request.Subject) || string.IsNullOrEmpty(request.Content))
+            {
+                return new BaseResult()
+                {
+                    HttpStatusCode = System.Net.HttpStatusCode.BadRequest,
+                    Message = "Email has not been sent. The subject or content is/are empty. Please provide a subject or a content. "
+                };
+            }
+            if (request.ReceiversEmail.Length != request.ReceiversId.Length || request.ReceiversId.Length <= 0 || request.ReceiversEmail.Length <= 0)
             {
                 return badRequestResponse;
             }
@@ -50,28 +58,25 @@ namespace RemindMe.Emailing.Business
                 }
             }
 
-            if (string.IsNullOrEmpty(request.Subject) || string.IsNullOrEmpty(request.Content))
-            {
-                return new BaseResult()
-                {
-                    HttpStatusCode = System.Net.HttpStatusCode.BadRequest,
-                    Message = "Email has not been sent. The subject or content is/are empty. Please provide a subject or a content. "
-                };
-            }
-
             var message = new Message(request.Subject, request.Content, request.ReceiversEmail);
             _emailService.SendEmail(message);
-            var date = DateTime.Now;
+
+            //record activity
+            var date = DateTime.UtcNow;
             foreach (var receiverId in request.ReceiversId)
             {
-                _emailingRepository.StoreEmailSentToUserActivity(receiverId, date);
+                var result = await _emailingRepository.StoreEmailSentToUserActivity(receiverId, date);
+                if (result.HttpStatusCode == System.Net.HttpStatusCode.InternalServerError)
+                {
+                    return result;
+                }
             }
+
             return new BaseResult()
             {
                 HttpStatusCode = System.Net.HttpStatusCode.OK,
                 Message = "Email has been sent."
             };
         }
-
     }
 }
