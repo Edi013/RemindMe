@@ -95,14 +95,15 @@ namespace RemindMe
 
         private static void ConfigureCors(this WebApplicationBuilder builder)
         {
-            var authorizedUrl = builder.Configuration.GetSection("AuthorizedUrl:BE");
+            string[] authorizedUrls = new string[] { };
+            authorizedUrls.Append(builder.Configuration.GetSection("AuthorizedUrls:FrontendAppUrl").Value);
 
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy(name: "AuthenticationPolicy",
                                           policy =>
                                           {
-                                              policy.WithOrigins(authorizedUrl.Value)
+                                              policy.WithOrigins(authorizedUrls)
                                               .AllowAnyHeader()
                                               .AllowAnyMethod()
                                               .AllowCredentials();

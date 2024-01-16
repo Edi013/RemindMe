@@ -37,14 +37,16 @@ namespace RemindMe
         }
         private static void ConfigureCors(this WebApplicationBuilder builder)
         {
-            var frontendAppUrl = builder.Configuration.GetSection("FrontendApp:Url");
-
+            string[] authorizedUrls = new string[] { };
+            authorizedUrls.Append(builder.Configuration.GetSection("AuthorizedUrls:EmailingService").Value);
+            authorizedUrls.Append(builder.Configuration.GetSection("AuthorizedUrls:FrontendAppUrl").Value);
+            
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy(name: "CorsPolicy",
                                           policy =>
                                           {
-                                              policy.WithOrigins(frontendAppUrl.Value)
+                                              policy.WithOrigins(authorizedUrls)
                                               .AllowAnyHeader()
                                               .AllowAnyMethod()
                                               .AllowCredentials();

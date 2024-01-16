@@ -37,22 +37,14 @@ namespace RemindMe.Authentication.Controllers
             return result;
         }
 
-        [HttpPut("SeedRoles")]
-        public Task<BaseResult> SeedRoles()
-        {
-            var result = _authenticationHandler.SeedRoles();
-
-            return result;
-        }
 
         [HttpGet("TestEmail")]
         public async Task<BaseResult> TestEmail()
         {
             var receivers = new string[]{
-                "edymare97@yahoo.com",
-                "enachecristina70@gmail.com"
+                "edymare97@yahoo.com"
             };
-            var message = new Message("Miau miau e miau miau miau", "Zambeste, puicul te iubeste", receivers);
+            var message = new Message("Test auth email", "Email for testing authication emailing.", receivers);
 
             _emailService.SendEmail(message);
 
@@ -61,6 +53,21 @@ namespace RemindMe.Authentication.Controllers
                 HttpStatusCode = System.Net.HttpStatusCode.OK,
                 Message = "Email was sent successfully"
             };
+        }
+
+        [HttpGet("ConfirmEmail")]
+        public async Task<BaseResult> ConfirmEmail(string userId, string token)
+        {
+
+            return await _authenticationHandler.ConfirmEmail(userId, token);
+        }
+
+        [HttpPut("SeedRoles")]
+        public Task<BaseResult> SeedRoles()
+        {
+            var result = _authenticationHandler.SeedRoles();
+
+            return result;
         }
     }
 }

@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Configuration;
 using RemindMe.Authentication.Domain.DTOs;
+using RemindMe.Authentication.Domain.Interfaces.EmailingSystem;
 using RemindMe.Authentication.Domain.Models;
 using System.Net;
+using System.Text;
 
 namespace RemindMe.Authentication.Handlers
 {
@@ -12,12 +14,14 @@ namespace RemindMe.Authentication.Handlers
         private readonly UserManager<User> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IConfiguration _configuration;
+        private readonly IEmailService _emailService;
 
-        public AuthenticationHandler(UserManager<User> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration)
+        public AuthenticationHandler(UserManager<User> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration, IEmailService emailService)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _configuration = configuration;
+            _emailService = emailService;
         }
 
         public async Task<BaseResult> Register(RegisterDto registerDto)
@@ -45,9 +49,23 @@ namespace RemindMe.Authentication.Handlers
 
             if(result.Succeeded)
             {
-                await _userManager.AddToRoleAsync(newUser, "Free"); //AccountLevel.Levels.First()
+                var accoutDefaultLevel = "Free";
+                await _userManager.AddToRoleAsync(newUser, accoutDefaultLevel);
 
-                //send confirmation email
+                var rawEmailConfirmationToken = 
+                    await _userManager.GenerateEmailConfirmationTokenAsync(newUser);
+                var encodedEmailConfirmationToken = Encoding.UTF8.GetBytes(rawEmailConfirmationToken);
+                var validEmailConfirmationToken = WebEncoders.Base64UrlEncode(encodedEmailConfirmationToken);
+
+                var appUrl = _configuration.GetSection("AppUrl").Value;
+                var controllerName = "Authentication";
+                var enpointName = "ConfirmEmail";
+                var emailConfirmationLink = $"{appUrl}/{controllerName}/{enpointName}?userid={newUser.Id}&token={validEmailConfirmationToken}";
+
+                string subject = "Confirmation link for your new account on RemindMe";
+                string content = $"To validate your email press this link <a href=\"{emailConfirmationLink}\"> confirmation link </a>.\n\nYou can start using your account on RemindMe after you have completed the step above.";
+                string[] receivers = new string[] { newUser.Email };
+                _emailService.SendEmail(new Domain.Models.EmailingSystem.Message(subject, content, receivers));
 
                 return new BaseResult()
                 {
@@ -72,6 +90,15 @@ namespace RemindMe.Authentication.Handlers
                 {
                     HttpStatusCode = HttpStatusCode.BadRequest,
                     Message = "This email is not registered."
+                };
+            }
+
+            if(existingUser.EmailConfirmed == false)
+            {
+                return new BaseResult()
+                {
+                    HttpStatusCode = HttpStatusCode.Unauthorized,
+                    Message = "You can't log in before validating your accout. Please confirm your email before proceeding again. You can do that by accesing the email sent to you after registering your account here."
                 };
             }
 
@@ -113,6 +140,45 @@ namespace RemindMe.Authentication.Handlers
             {
                 HttpStatusCode = HttpStatusCode.Created,
                 Message = "Roles have been seed."
+            };
+        }
+
+        public async Task<BaseResult> ConfirmEmail(string userId, string token)
+        {
+            var invalidRequestDataResponse = new BaseResult()
+            {
+                HttpStatusCode = System.Net.HttpStatusCode.BadRequest,
+                Message = "Confirmation data is invalid. Email was not confirmed."
+            };
+
+            if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(token))
+            {
+                return invalidRequestDataResponse;
+            }
+
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null) {
+                return invalidRequestDataResponse;
+            }
+
+            var encodedToken = WebEncoders.Base64UrlDecode(token); 
+            var rawToken = Encoding.UTF8.GetString(encodedToken);
+
+            var result = await _userManager.ConfirmEmailAsync(user, rawToken);
+
+            if(result.Succeeded)
+            {
+                return new BaseResult()
+                {
+                    HttpStatusCode = System.Net.HttpStatusCode.OK,
+                    Message = "Email was confirmed"
+                };
+            }
+
+            return new BaseResult()
+            {
+                HttpStatusCode = HttpStatusCode.InternalServerError,
+                Message = "Unexpected error happened on confirming email. Please contact application staff.",
             };
         }
     }
