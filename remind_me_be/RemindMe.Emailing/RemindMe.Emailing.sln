@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34408.163
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemindMe.Emailing", "RemindMe.Emailing\RemindMe.Emailing.csproj", "{A87CCF3C-FAF2-4C80-856B-95841E377CAF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemindMe.Emailing.Domain", "RemindMe.Emailing.Domain\RemindMe.Emailing.Domain.csproj", "{8EF2BBC3-A9E2-4098-A677-52C8A7CDC614}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemindMe.Emailing.Business", "RemindMe.Emailing.Business\RemindMe.Emailing.Business.csproj", "{1DC6FBAE-D914-4AD6-A3DB-9081A3323A2F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RemindMe.Emailing.DataAccess", "RemindMe.Emailing.DataAccess\RemindMe.Emailing.DataAccess.csproj", "{E9546229-A80A-41B1-9116-560129A54D7B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemindMe.Emailing.Controllers", "RemindMe.Emailing.Controllers\RemindMe.Emailing.Controllers.csproj", "{48F17BC5-EEEE-4A40-B0F1-1BBB17A4B8D3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A87CCF3C-FAF2-4C80-856B-95841E377CAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A87CCF3C-FAF2-4C80-856B-95841E377CAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A87CCF3C-FAF2-4C80-856B-95841E377CAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A87CCF3C-FAF2-4C80-856B-95841E377CAF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8EF2BBC3-A9E2-4098-A677-52C8A7CDC614}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8EF2BBC3-A9E2-4098-A677-52C8A7CDC614}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8EF2BBC3-A9E2-4098-A677-52C8A7CDC614}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8EF2BBC3-A9E2-4098-A677-52C8A7CDC614}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1DC6FBAE-D914-4AD6-A3DB-9081A3323A2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1DC6FBAE-D914-4AD6-A3DB-9081A3323A2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1DC6FBAE-D914-4AD6-A3DB-9081A3323A2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1DC6FBAE-D914-4AD6-A3DB-9081A3323A2F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9546229-A80A-41B1-9116-560129A54D7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9546229-A80A-41B1-9116-560129A54D7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9546229-A80A-41B1-9116-560129A54D7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9546229-A80A-41B1-9116-560129A54D7B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{48F17BC5-EEEE-4A40-B0F1-1BBB17A4B8D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48F17BC5-EEEE-4A40-B0F1-1BBB17A4B8D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48F17BC5-EEEE-4A40-B0F1-1BBB17A4B8D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48F17BC5-EEEE-4A40-B0F1-1BBB17A4B8D3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {698EE829-9E4F-4E07-8AF7-3F623DB87F35}
+	EndGlobalSection
+EndGlobal

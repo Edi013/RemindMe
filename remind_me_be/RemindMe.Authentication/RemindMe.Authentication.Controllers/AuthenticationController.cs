@@ -44,7 +44,7 @@ namespace RemindMe.Authentication.Controllers
             var receivers = new string[]{
                 "edymare97@yahoo.com"
             };
-            var message = new Message("Test email", "Email for test.", receivers);
+            var message = new Message("Test auth email", "Email for testing authication emailing.", receivers);
 
             _emailService.SendEmail(message);
 
