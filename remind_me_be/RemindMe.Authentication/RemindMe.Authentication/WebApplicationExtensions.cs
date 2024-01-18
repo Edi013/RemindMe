@@ -14,11 +14,14 @@
 
             app.UseCors("AuthenticationPolicy");
 
-            //app.UseRouting();
+            app.UseRouting();
+            app.UseAuthentication();
             app.UseAuthorization();
-            //app.UseEndpoints();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
 
-            app.MapControllers();
 
             app.Run();
         }

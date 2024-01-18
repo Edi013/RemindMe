@@ -1,8 +1,8 @@
 ﻿using System.Net;
 
-namespace RemindMe.Authentication.Domain.Models
+namespace RemindMe.Authentication.Domain.Responses
 {
-    public class BaseResult
+    public class BaseResponse
     {
         public HttpStatusCode HttpStatusCode { get; set; }
         public string Message { get; set; }
