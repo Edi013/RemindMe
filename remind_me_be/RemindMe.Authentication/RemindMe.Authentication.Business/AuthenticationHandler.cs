@@ -153,7 +153,6 @@ namespace RemindMe.Authentication.Handlers
             {
                 HttpStatusCode = HttpStatusCode.Accepted,
                 Message = "Login succesful.",
-                //UserId = existingUser.Id.ToString(),
                 Jwt = jwt,  
                 JwtExpiration = jwtExpirationDate
             };
@@ -163,14 +162,17 @@ namespace RemindMe.Authentication.Handlers
         {
             var authClaims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, user.Nickname),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+                //this jwt id
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+
+                new Claim("Email", user.Email),
+                new Claim("Username", user.Nickname),
             };
 
             var userRoles = await _userManager.GetRolesAsync(user);
-            foreach (var userRole in userRoles)
+            for(var i = 0; i < userRoles.Count; i++)
             {
-                authClaims.Add(new Claim(ClaimTypes.Role, userRole));
+                authClaims.Add(new Claim($"Role {i}", userRoles[i]));
             }
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
@@ -265,15 +267,15 @@ namespace RemindMe.Authentication.Handlers
                 Message = "Unexpected error happened on confirming email. Please contact application staff.",
             };
         }
-    
+
         // endpoint to check if a token is valid
-            // correct format or not
-            // expired or not
+        // correct format or not
+        // expired or not
         // endpoint to refresh the jwt/token being given the refresh token
         //refresh model
-            // if jwt is valid but expired
-            //      check if the refresh token is valid and not expired
-            //          return new jwt
+        // if jwt is valid but expired
+        //      check if the refresh token is valid and not expired
+        //          return new jwt
     }
 }
 
