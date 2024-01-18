@@ -54,8 +54,12 @@ namespace RemindMe
                         ValidateAudience = true,
                         ValidateLifetime = true,
                         RequireExpirationTime = true,
-                        ValidIssuer = builder.Configuration.GetSection("JWT:Secret").Value,
-                        ValidAudience = builder.Configuration.GetSection("JWT:Secret").Value,
+                        ValidIssuer = builder.Configuration.GetSection("JWT:ValidIssuer").Value,
+                        ValidAudiences = new List<string>
+                        {
+                            builder.Configuration.GetSection("JWT:ValidAudience:Postman").Value,
+                            builder.Configuration.GetSection("JWT:ValidAudience:FlutterClient").Value,
+                        },
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
                             builder.Configuration.GetSection("JWT:Secret").Value)),
                         ClockSkew = TimeSpan.Zero
@@ -76,7 +80,7 @@ namespace RemindMe
 
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            //builder.Services.AddSwaggerGen();
         }
 
         private static void RegisterJsonConfigFile(this WebApplicationBuilder builder)
@@ -90,7 +94,7 @@ namespace RemindMe
         private static void ConfigureCors(this WebApplicationBuilder builder)
         {
             string[] authorizedUrls = new string[] { };
-            authorizedUrls.Append(builder.Configuration.GetSection("AuthorizedUrls:FrontendAppUrl").Value);
+            authorizedUrls.Append(builder.Configuration.GetSection("AuthorizedUrls:FlutterClient").Value);
 
             builder.Services.AddCors(options =>
             {
