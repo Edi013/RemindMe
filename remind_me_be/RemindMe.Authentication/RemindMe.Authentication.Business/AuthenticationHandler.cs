@@ -63,13 +63,13 @@ namespace RemindMe.Authentication.Handlers
                 var encodedEmailConfirmationToken = Encoding.UTF8.GetBytes(rawEmailConfirmationToken);
                 var validEmailConfirmationToken = WebEncoders.Base64UrlEncode(encodedEmailConfirmationToken);
 
-                var appUrl = _configuration.GetSection("AppUrl").Value;
+                var authServiceUrl = _configuration.GetSection("AuthServiceUrl").Value;
                 var controllerName = "Authentication";
                 var enpointName = "ConfirmEmail";
-                var emailConfirmationLink = $"{appUrl}/{controllerName}/{enpointName}?userid={newUser.Id}&token={validEmailConfirmationToken}";
+                var emailConfirmationLink = $"{authServiceUrl}/{controllerName}/{enpointName}?userid={newUser.Id}&token={validEmailConfirmationToken}";
 
                 string subject = "Confirmation link for your new account on RemindMe";
-                string content = $"To validate your email press this confirmation link.\n\nYou can start using your account on RemindMe after you have completed the step above.";
+                string content = $"To validate your email press this confirmation link {emailConfirmationLink}.\n\nYou can start using your account on RemindMe after you have completed the step above.";
                 string[] receivers = new string[] { newUser.Email };
                 _emailService.SendEmail(new Domain.Models.EmailingSystem.Message(subject, content, receivers));
 
@@ -117,7 +117,7 @@ namespace RemindMe.Authentication.Handlers
             }
 
             // generate jwt & refresh token
-            DateTime jwtExpirationDate = DateTime.UtcNow.AddSeconds(30);
+            DateTime jwtExpirationDate = DateTime.UtcNow.AddMinutes(30);
             var jwt = await GenerateJwtAsync(existingUser, jwtExpirationDate);
 
             //string refreshToken = GenerateRefreshToken();
