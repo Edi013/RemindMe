@@ -6,11 +6,11 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - remindme-db-volume:/var/lib/postgresql/data
+      - RemindMeToDoDb-db-volume:/var/lib/postgresql/data
     environment:
       - POSTGRES_PASSWORD=1234
       - POSTGRES_USER=postgres
-      - POSTGRES_DB=RemindMeDb
+      - POSTGRES_DB=RemindMeToDoDb
 
 volumes:
-  remindme-db-volume:
+  RemindMeToDoDb-db-volume:

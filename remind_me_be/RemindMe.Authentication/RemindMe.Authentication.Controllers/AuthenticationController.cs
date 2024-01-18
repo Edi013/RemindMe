@@ -79,5 +79,12 @@ namespace RemindMe.Authentication.Controllers
         {
             return "Test message!\nIf you see this message, the Get http call on https://localhost:7092/Authentication/Test works";
         }
+
+       /* [HttpGet("RefreshJwt")]
+        public async Task<bool> RefreshJwt([FromBody] string jwt, [FromBody] string refreshToken)
+        {
+            var result = await _authenticationHandler.RefreshJwt(jwt, refreshToken);
+            return result;
+        }*/
     }
 }
