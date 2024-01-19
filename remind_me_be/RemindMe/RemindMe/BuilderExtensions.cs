@@ -1,8 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using RemindMe.Application.Handlers.ToDos;
 using RemindMe.DataAcces;
 using RemindMe.DataAcces.Repositories;
 using RemindMe.Domain.Interfaces;
+using System.Security.Cryptography.X509Certificates;
+using System.Text;
 
 namespace RemindMe
 {
@@ -26,9 +30,50 @@ namespace RemindMe
             var connectionString = builder.Configuration.GetConnectionString("RemindMeDb");
             builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(connectionString));
 
-            builder.Services.AddScoped<IToDoRepository, ToDoRepository>();
+            var audience = new List<string>{
+                            builder.Configuration.GetSection("JWT:ValidAudience:Postman").Value,
+                            builder.Configuration.GetSection("JWT:ValidAudience:FlutterClient").Value,
+                            builder.Configuration.GetSection("JWT:ValidAudience:ToDoService").Value,
+            };
+            builder.Services
+                .AddAuthentication(options =>
+                {
+                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+                .AddJwtBearer(options =>
+                {
+                    options.SaveToken = true;
+                    options.RequireHttpsMetadata = false;
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        RequireExpirationTime = true,
+                        ValidIssuer = builder.Configuration.GetSection("JWT:ValidIssuer").Value,
+                        ValidAudiences = audience,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
+                            builder.Configuration.GetSection("JWT:Secret").Value)),
+                        ClockSkew = TimeSpan.Zero
+                    };
+                }
+            );
 
             builder.RegisterAppSettings();
+
+            builder.Services.AddScoped<IToDoRepository, ToDoRepository>();
+
+            builder.Services.AddHttpClient("AuthService", client =>
+            {
+                client.BaseAddress = new Uri("https://localhost:7092");
+            })
+            .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
+            {
+                ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => true,
+                ClientCertificates = { new X509Certificate2("C:\\openssl\\certificate.crt", "qweqweqwe123") }
+            });
         }
         public static void ConfigureLogging(this WebApplicationBuilder builder)
         {
@@ -43,7 +88,7 @@ namespace RemindMe
             
             builder.Services.AddCors(options =>
             {
-                options.AddPolicy(name: "CorsPolicy",
+                options.AddPolicy(name: "ToDoPolicy",
                                           policy =>
                                           {
                                               policy.WithOrigins(authorizedUrls)

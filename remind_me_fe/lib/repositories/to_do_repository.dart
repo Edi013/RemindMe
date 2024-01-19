@@ -12,7 +12,7 @@ class ToDoRepository {
   final String apiUrl = "${Environment.BASE_URL}/ToDo";
 
   Future<List<ToDo>> getAll() async {
-    return await http.get(
+    var result = await http.get(
       Uri.parse('$apiUrl/GetAll'),
       headers: {
         "Access-Control-Allow-Origin": "*",
@@ -26,6 +26,7 @@ class ToDoRepository {
         return result;
       },
     );
+    return result;
   }
 
   Future<ToDo> addTodo(ToDo todo) async {

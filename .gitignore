@@ -1,6 +1,7 @@
 **/bin/
 **/obj/
-**.vscode/
+!**launch.json
+**/.vscode/
 **/.vs/
 **/node_modules/
 **/package-lock.json/

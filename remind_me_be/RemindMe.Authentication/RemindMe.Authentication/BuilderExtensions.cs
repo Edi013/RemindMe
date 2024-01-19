@@ -8,6 +8,7 @@ using RemindMe.Authentication.Domain.Models;
 using RemindMe.Authentication.Domain.Models.EmailingSystem;
 using RemindMe.Authentication.Handlers;
 using RemindMe.Authentication.Notifications;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
 namespace RemindMe
@@ -37,6 +38,11 @@ namespace RemindMe
                 .AddEntityFrameworkStores<AuthenticationDbContext>()
                 .AddDefaultTokenProviders();
 
+            var audience = new List<string>{
+                            builder.Configuration.GetSection("JWT:ValidAudience:Postman").Value,
+                            builder.Configuration.GetSection("JWT:ValidAudience:FlutterClient").Value,
+                            builder.Configuration.GetSection("JWT:ValidAudience:ToDoService").Value,
+            };
             builder.Services
                 .AddAuthentication(options =>
                 {
@@ -55,11 +61,7 @@ namespace RemindMe
                         ValidateLifetime = true,
                         RequireExpirationTime = true,
                         ValidIssuer = builder.Configuration.GetSection("JWT:ValidIssuer").Value,
-                        ValidAudiences = new List<string>
-                        {
-                            builder.Configuration.GetSection("JWT:ValidAudience:Postman").Value,
-                            builder.Configuration.GetSection("JWT:ValidAudience:FlutterClient").Value,
-                        },
+                        ValidAudiences = audience,
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
                             builder.Configuration.GetSection("JWT:Secret").Value)),
                         ClockSkew = TimeSpan.Zero
@@ -81,6 +83,17 @@ namespace RemindMe
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             //builder.Services.AddSwaggerGen();
+
+            builder.Services.AddHttpClient("ToDoService", client =>
+            {
+                client.BaseAddress = new Uri("https://localhost:7066");
+            })
+            .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
+            {
+                ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => true,
+                ClientCertificates = { new X509Certificate2("C:\\openssl\\certificate.crt", "qweqweqwe123") }
+
+            });
         }
 
         private static void RegisterJsonConfigFile(this WebApplicationBuilder builder)
@@ -95,6 +108,7 @@ namespace RemindMe
         {
             string[] authorizedUrls = new string[] { };
             authorizedUrls.Append(builder.Configuration.GetSection("AuthorizedUrls:FlutterClient").Value);
+            authorizedUrls.Append(builder.Configuration.GetSection("AuthorizedUrls:Postman").Value);
 
             builder.Services.AddCors(options =>
             {

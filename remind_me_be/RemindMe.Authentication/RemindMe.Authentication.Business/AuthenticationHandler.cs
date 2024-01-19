@@ -160,6 +160,12 @@ namespace RemindMe.Authentication.Handlers
 
         private async Task<string> GenerateJwtAsync(User user, DateTime jwtExpirationDate)
         {
+            var audience = new List<string>{
+                            _configuration.GetSection("JWT:ValidAudience:Postman").Value,
+                            _configuration.GetSection("JWT:ValidAudience:FlutterClient").Value,
+                            _configuration.GetSection("JWT:ValidAudience:ToDoService").Value,
+
+            };
             var authClaims = new List<Claim>
             {
                 //this jwt id
@@ -167,6 +173,8 @@ namespace RemindMe.Authentication.Handlers
 
                 new Claim("Email", user.Email),
                 new Claim("Username", user.Nickname),
+                new Claim(JwtRegisteredClaimNames.Aud, audience[0]),
+                new Claim(JwtRegisteredClaimNames.Aud, audience[1])
             };
 
             var userRoles = await _userManager.GetRolesAsync(user);
@@ -180,9 +188,10 @@ namespace RemindMe.Authentication.Handlers
             ));
             var signingCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 
+           
             var token = new JwtSecurityToken(
                 issuer: _configuration["JWT:ValidIssuer"],
-                audience: _configuration["JWT:ValidAudience"],
+                //audience: audience,
                 expires: jwtExpirationDate,
                 claims: authClaims,
                 signingCredentials: signingCredentials

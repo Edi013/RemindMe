@@ -22,7 +22,6 @@
                 endpoints.MapControllers();
             });
 
-
             app.Run();
         }
     }

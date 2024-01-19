@@ -1,8 +1,7 @@
-﻿using log4net;
-using MediatR;
+﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using RemindMe.Application.Handlers.Logging;
 using RemindMe.Application.Requests.ToDos;
 using RemindMe.Domain.Entities;
 using RemindMe.Domain.Results;
@@ -22,6 +21,7 @@ namespace RemindMe.Controller
             this._logger = logger;
         }
 
+        [Authorize]
         [HttpGet("GetAll")]
         public async Task<IEnumerable<ToDo>> GetAll()
         {

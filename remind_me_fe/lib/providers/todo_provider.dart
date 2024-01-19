@@ -21,7 +21,8 @@ class ToDoProvider extends ChangeNotifier {
   }
 
   Future<List<ToDo>> getAll() async {
-    return await repository.getAll();
+    var result  = await repository.getAll();
+    return result;
   }
 
   Future<void> add(ToDo object) async {
