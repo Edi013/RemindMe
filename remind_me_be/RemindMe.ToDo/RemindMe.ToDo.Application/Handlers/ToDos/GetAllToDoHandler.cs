@@ -1,20 +1,20 @@
 ﻿using MediatR;
-using RemindMe.Application.Requests.ToDos;
+using RemindMe.Application.Requests.Todos;
 using RemindMe.Domain.Entities;
 using RemindMe.Domain.Interfaces;
 
-namespace RemindMe.Application.Handlers.ToDos
+namespace RemindMe.Application.Handlers.Todos
 {
-    public class GetAllToDoHandler : IRequestHandler<GetAllToDoRequest, IEnumerable<ToDo>>
+    public class GetAllTodoHandler : IRequestHandler<GetAllTodoRequest, IEnumerable<Item>>
     {
-        private IToDoRepository repository;
+        private ITodoRepository repository;
 
-        public GetAllToDoHandler(IToDoRepository _repository)
+        public GetAllTodoHandler(ITodoRepository _repository)
         {
             repository = _repository;
         }
 
-        public async Task<IEnumerable<ToDo>> Handle(GetAllToDoRequest request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<Item>> Handle(GetAllTodoRequest request, CancellationToken cancellationToken)
         {
             var result = await repository.GetAll();
             return result;

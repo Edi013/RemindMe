@@ -1,42 +1,42 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Configuration;
-using RemindMe.Application.Requests.ToDos;
+using RemindMe.Application.Requests.Todos;
 using RemindMe.Domain.Entities;
 using RemindMe.Domain.Interfaces;
 using System.Configuration;
 using System.Globalization;
 using System.Runtime.Serialization;
 
-namespace RemindMe.Application.Handlers.ToDos
+namespace RemindMe.Application.Handlers.Todos
 {
-    public class UpdateToDoHandler : IRequestHandler<UpdateToDoRequest, ToDo>
+    public class UpdateTodoHandler : IRequestHandler<UpdateTodoRequest, Item>
     {
-        private IToDoRepository repository;
+        private ITodoRepository repository;
         private readonly IConfiguration configuration;
 
 
-        public UpdateToDoHandler(IToDoRepository _repository, IConfiguration _configuration)
+        public UpdateTodoHandler(ITodoRepository _repository, IConfiguration _configuration)
         {
             repository = _repository;
             configuration = _configuration;
         }
 
-        public async Task<ToDo> Handle(UpdateToDoRequest request, CancellationToken cancellationToken)
+        public async Task<Item> Handle(UpdateTodoRequest request, CancellationToken cancellationToken)
         {
-            ToDo newToDo = await buildNewToDoAsync(request);
-            return await repository.Update(newToDo); ;
+            Item newTodo = await buildNewTodoAsync(request);
+            return await repository.Update(newTodo); ;
         }
 
-        private async Task<ToDo> buildNewToDoAsync(UpdateToDoRequest request)
+        private async Task<Item> buildNewTodoAsync(UpdateTodoRequest request)
         {
             string dateTimeFormat = configuration.GetValue<string>("DateTimeFormat");
-            var toUpdateToDo = await repository.SingleOrDefaultAsync(request.Id);
+            var toUpdateTodo = await repository.SingleOrDefaultAsync(request.Id);
 
-            return new ToDo()
+            return new Item()
             {
-                Id = toUpdateToDo.Id,
-                CreationDate = toUpdateToDo.CreationDate,
-                OwnerId = toUpdateToDo.OwnerId,
+                Id = toUpdateTodo.Id,
+                CreationDate = toUpdateTodo.CreationDate,
+                OwnerId = toUpdateTodo.OwnerId,
 
                 Title = request.Title,
                 Description = request.Description,

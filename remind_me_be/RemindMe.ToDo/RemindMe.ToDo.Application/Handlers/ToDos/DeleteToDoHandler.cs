@@ -1,20 +1,20 @@
 ﻿using MediatR;
-using RemindMe.Application.Requests.ToDos;
+using RemindMe.Application.Requests.Todos;
 using RemindMe.Domain.Interfaces;
 using RemindMe.Domain.Results;
 
-namespace RemindMe.Application.Handlers.ToDos
+namespace RemindMe.Application.Handlers.Todos
 {
-    public class DeleteToDoHandler : IRequestHandler<DeleteToDoRequest, BaseResult>
+    public class DeleteTodoHandler : IRequestHandler<DeleteTodoRequest, BaseResult>
     {
-        private IToDoRepository repository;
+        private ITodoRepository repository;
 
-        public DeleteToDoHandler(IToDoRepository _repository)
+        public DeleteTodoHandler(ITodoRepository _repository)
         {
             repository = _repository;
         }
 
-        public async Task<BaseResult> Handle(DeleteToDoRequest request, CancellationToken cancellationToken)
+        public async Task<BaseResult> Handle(DeleteTodoRequest request, CancellationToken cancellationToken)
         {
             await repository.DeleteById(request.Id);
 

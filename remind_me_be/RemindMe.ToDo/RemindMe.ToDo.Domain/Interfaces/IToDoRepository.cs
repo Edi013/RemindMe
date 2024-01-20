@@ -2,8 +2,8 @@
 
 namespace RemindMe.Domain.Interfaces
 {
-    public interface IToDoRepository : IRepository<ToDo>
+    public interface ITodoRepository : IRepository<Item>
     {
-        Task<ToDo> SingleOrDefaultAsync(int id);
+        Task<Item> SingleOrDefaultAsync(int id);
     }
 }

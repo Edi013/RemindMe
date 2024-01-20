@@ -4,14 +4,14 @@ using RemindMe.Domain.Interfaces;
 
 namespace RemindMe.DataAcces.Repositories
 {
-    public class ToDoRepository : RepositoryBase<ToDo>, IToDoRepository
+    public class TodoRepository : RepositoryBase<Item>, ITodoRepository
     {
-        public ToDoRepository(ApplicationDbContext context)
+        public TodoRepository(ApplicationDbContext context)
             : base(context)
         { }
-        public async Task<ToDo> SingleOrDefaultAsync(int id)
+        public async Task<Item> SingleOrDefaultAsync(int id)
         {
-            return await context.Set<ToDo>()
+            return await context.Set<Item>()
                 .AsNoTracking()
                 .SingleAsync(x => x.Id == id);
         }

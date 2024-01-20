@@ -7,7 +7,7 @@ namespace RemindMe.DataAcces
     public class ApplicationDbContext : DbContext
     {
         private IConfiguration Configuration;
-        public DbSet<ToDo> ToDos { get; set; }
+        public DbSet<Item> Todos { get; set; }
 
         public ApplicationDbContext() { }
 
@@ -25,44 +25,44 @@ namespace RemindMe.DataAcces
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            ConfigureToDo(modelBuilder);
+            ConfigureTodo(modelBuilder);
 
             base.OnModelCreating(modelBuilder);
         }
 
-        private void ConfigureToDo(ModelBuilder modelBuilder)
+        private void ConfigureTodo(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<ToDo>()
+            modelBuilder.Entity<Item>()
                 .HasKey(x => x.Id);
             
             
-            modelBuilder.Entity<ToDo>()
+            modelBuilder.Entity<Item>()
                 .Property(x => x.Title)
                 .IsRequired()
                 .HasMaxLength(100);
 
-            modelBuilder.Entity<ToDo>()
+            modelBuilder.Entity<Item>()
                 .Property(x => x.Description)
                 .IsRequired()
                 .HasMaxLength(10000);
 
-            modelBuilder.Entity<ToDo>()
+            modelBuilder.Entity<Item>()
                 .Property(x => x.CreationDate)
                 .IsRequired();
 
-            modelBuilder.Entity<ToDo>()
+            modelBuilder.Entity<Item>()
                 .Property(x => x.StartDate)
                 .IsRequired();
 
-            modelBuilder.Entity<ToDo>()
+            modelBuilder.Entity<Item>()
                 .Property(x => x.IsFinished)
                 .IsRequired();
 
-            modelBuilder.Entity<ToDo>()
+            modelBuilder.Entity<Item>()
                 .Property(x => x.Difficulty)
                 .IsRequired();
 
-            modelBuilder.Entity<ToDo>()
+            modelBuilder.Entity<Item>()
                 .Property(x => x.OwnerId)
                 .IsRequired();
         }

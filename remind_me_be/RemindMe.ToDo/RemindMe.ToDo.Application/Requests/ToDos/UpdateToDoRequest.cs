@@ -1,9 +1,9 @@
 ﻿using MediatR;
 using RemindMe.Domain.Entities;
 
-namespace RemindMe.Application.Requests.ToDos
+namespace RemindMe.Application.Requests.Todos
 {
-    public class UpdateToDoRequest : IRequest<ToDo>
+    public class UpdateTodoRequest : IRequest<Item>
     {
         public int Id { get; set; }
         public string Title { get; set; }

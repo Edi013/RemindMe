@@ -10,16 +10,17 @@ namespace RemindMe
 
             app.UseHttpsRedirection();
 
-            app.UseCors("ToDoPolicy");
+            app.UseCors("TodoPolicy");
 
-            app.UseAuthorization();
-
-            app.MapControllers();
-
-            app.Run();
-
+            app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
+
+            app.Run();
         }
 
         private static void UseSwager(this WebApplication app)

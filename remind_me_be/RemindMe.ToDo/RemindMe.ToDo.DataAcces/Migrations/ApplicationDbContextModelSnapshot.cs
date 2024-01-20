@@ -8,7 +8,7 @@ using RemindMe.DataAcces;
 
 #nullable disable
 
-namespace RemindMe.DataAcces.Migrations
+namespace RemindMe.ToDo.DataAcces.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -22,7 +22,7 @@ namespace RemindMe.DataAcces.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("RemindMe.Domain.Entities.ToDo", b =>
+            modelBuilder.Entity("RemindMe.Domain.Entities.Item", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -60,7 +60,7 @@ namespace RemindMe.DataAcces.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ToDos");
+                    b.ToTable("Todos");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using RemindMe.Application.Handlers.ToDos;
+using RemindMe.Application.Handlers.Todos;
 using RemindMe.DataAcces;
 using RemindMe.DataAcces.Repositories;
 using RemindMe.Domain.Interfaces;
+using System.Net;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
@@ -25,7 +26,7 @@ namespace RemindMe
             builder.RegisterSwaggerSettings();
 
             builder.Services.AddMediatR(
-                 cfg => cfg.RegisterServicesFromAssemblies(typeof(GetAllToDoHandler).Assembly));
+                 cfg => cfg.RegisterServicesFromAssemblies(typeof(GetAllTodoHandler).Assembly));
 
             var connectionString = builder.Configuration.GetConnectionString("RemindMeDb");
             builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(connectionString));
@@ -33,7 +34,7 @@ namespace RemindMe
             var audience = new List<string>{
                             builder.Configuration.GetSection("JWT:ValidAudience:Postman").Value,
                             builder.Configuration.GetSection("JWT:ValidAudience:FlutterClient").Value,
-                            builder.Configuration.GetSection("JWT:ValidAudience:ToDoService").Value,
+                            builder.Configuration.GetSection("JWT:ValidAudience:TodoService").Value,
             };
             builder.Services
                 .AddAuthentication(options =>
@@ -63,16 +64,18 @@ namespace RemindMe
 
             builder.RegisterAppSettings();
 
-            builder.Services.AddScoped<IToDoRepository, ToDoRepository>();
+            builder.Services.AddScoped<ITodoRepository, TodoRepository>();
 
-            builder.Services.AddHttpClient("AuthService", client =>
+            var certificatePath = "C:\\openssl\\certificate.pfx";
+            var certificatePassword = "qweqweqwe123";
+            var certificate = new X509Certificate2(certificatePath, certificatePassword);
+
+            builder.WebHost.ConfigureKestrel((context, serverOptions) =>
             {
-                client.BaseAddress = new Uri("https://localhost:7092");
-            })
-            .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
-            {
-                ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => true,
-                ClientCertificates = { new X509Certificate2("C:\\openssl\\certificate.crt", "qweqweqwe123") }
+                serverOptions.Listen(IPAddress.Loopback, 7066, listenOptions =>
+                {
+                    listenOptions.UseHttps(certificate);
+                });
             });
         }
         public static void ConfigureLogging(this WebApplicationBuilder builder)
@@ -88,7 +91,7 @@ namespace RemindMe
             
             builder.Services.AddCors(options =>
             {
-                options.AddPolicy(name: "ToDoPolicy",
+                options.AddPolicy(name: "TodoPolicy",
                                           policy =>
                                           {
                                               policy.WithOrigins(authorizedUrls)

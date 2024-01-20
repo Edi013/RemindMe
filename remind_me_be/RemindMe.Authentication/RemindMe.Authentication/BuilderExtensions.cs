@@ -8,6 +8,7 @@ using RemindMe.Authentication.Domain.Models;
 using RemindMe.Authentication.Domain.Models.EmailingSystem;
 using RemindMe.Authentication.Handlers;
 using RemindMe.Authentication.Notifications;
+using System.Net;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
@@ -67,11 +68,7 @@ namespace RemindMe
                         ClockSkew = TimeSpan.Zero
                     };
                 }
-            );/*
-                .AddCookie(options =>
-                {
-                        options.Cookie.Name = "JWT";
-                });*/
+            );
 
             //Add email configs
             var emailConfig = builder.Configuration.GetSection("EmailingSystem").Get<EmailConfigurator>();
@@ -82,17 +79,17 @@ namespace RemindMe
 
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
-            //builder.Services.AddSwaggerGen();
+            
+            var certificatePath = "C:\\openssl\\certificate.pfx";
+            var certificatePassword = "qweqweqwe123";
+            var certificate = new X509Certificate2(certificatePath, certificatePassword);
 
-            builder.Services.AddHttpClient("ToDoService", client =>
+            builder.WebHost.ConfigureKestrel((context, serverOptions) =>
             {
-                client.BaseAddress = new Uri("https://localhost:7066");
-            })
-            .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
-            {
-                ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => true,
-                ClientCertificates = { new X509Certificate2("C:\\openssl\\certificate.crt", "qweqweqwe123") }
-
+                serverOptions.Listen(IPAddress.Loopback, 7092, listenOptions =>
+                {
+                    listenOptions.UseHttps(certificate);
+                });
             });
         }
 
