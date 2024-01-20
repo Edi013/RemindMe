@@ -42,9 +42,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RemindMe.Controller\RemindMe.Controller.csproj" />
-    <ProjectReference Include="..\RemindMe.DataAcces\RemindMe.DataAcces.csproj" />
-    <ProjectReference Include="..\RemindMe.Domain\RemindMe.Domain.csproj" />
+    <ProjectReference Include="..\RemindMe.ToDo.Application\RemindMe.ToDo.Application.csproj" />
+    <ProjectReference Include="..\RemindMe.ToDo.Controller\RemindMe.ToDo.Controller.csproj" />
+    <ProjectReference Include="..\RemindMe.ToDo.DataAcces\RemindMe.ToDo.DataAcces.csproj" />
+    <ProjectReference Include="..\RemindMe.ToDo.Domain\RemindMe.ToDo.Domain.csproj" />
+    <ProjectReference Include="..\RemindMe.ToDo.Notification\RemindMe.ToDo.Notification.csproj" />
   </ItemGroup>
 
 </Project>

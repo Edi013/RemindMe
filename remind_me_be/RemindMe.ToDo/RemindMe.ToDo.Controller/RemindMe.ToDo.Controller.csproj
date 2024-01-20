@@ -13,8 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RemindMe.Application\RemindMe.Application.csproj" />
-    <ProjectReference Include="..\RemindMe.Domain\RemindMe.Domain.csproj" />
+    <ProjectReference Include="..\RemindMe.ToDo.Application\RemindMe.ToDo.Application.csproj" />
+    <ProjectReference Include="..\RemindMe.ToDo.Domain\RemindMe.ToDo.Domain.csproj" />
   </ItemGroup>
 
 </Project>

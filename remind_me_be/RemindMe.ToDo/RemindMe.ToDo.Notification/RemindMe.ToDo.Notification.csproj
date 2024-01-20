@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\RemindMe.ToDo.Domain\RemindMe.ToDo.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
