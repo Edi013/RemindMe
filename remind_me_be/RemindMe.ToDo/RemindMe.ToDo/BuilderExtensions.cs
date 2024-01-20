@@ -66,7 +66,7 @@ namespace RemindMe
 
             builder.Services.AddScoped<ITodoRepository, TodoRepository>();
 
-            var certificatePath = "C:\\openssl\\certificate.pfx";
+            var certificatePath = "..\\..\\Self-Signed-Certificate\\certificate.pfx";
             var certificatePassword = "qweqweqwe123";
             var certificate = new X509Certificate2(certificatePath, certificatePassword);
 
