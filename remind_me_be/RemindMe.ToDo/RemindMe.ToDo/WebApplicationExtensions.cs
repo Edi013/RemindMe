@@ -13,8 +13,8 @@ namespace RemindMe
             app.UseCors("TodoPolicy");
 
             app.UseRouting();
-            app.UseAuthentication();
-            app.UseAuthorization();
+            /*app.UseAuthentication();
+            app.UseAuthorization();*/
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

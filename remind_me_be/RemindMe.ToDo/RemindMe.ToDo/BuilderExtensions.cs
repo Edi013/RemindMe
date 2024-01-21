@@ -31,7 +31,7 @@ namespace RemindMe
             var connectionString = builder.Configuration.GetConnectionString("RemindMeDb");
             builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(connectionString));
 
-            var audience = new List<string>{
+            /*var audience = new List<string>{
                             builder.Configuration.GetSection("JWT:ValidAudience:Postman").Value,
                             builder.Configuration.GetSection("JWT:ValidAudience:FlutterClient").Value,
                             builder.Configuration.GetSection("JWT:ValidAudience:TodoService").Value,
@@ -60,16 +60,10 @@ namespace RemindMe
                         ClockSkew = TimeSpan.Zero
                     };
                 }
-            );
-
-            builder.RegisterAppSettings();
-
-            builder.Services.AddScoped<ITodoRepository, TodoRepository>();
-
+            );*/
             var certificatePath = "..\\..\\Self-Signed-Certificate\\certificate.pfx";
             var certificatePassword = "qweqweqwe123";
             var certificate = new X509Certificate2(certificatePath, certificatePassword);
-
             builder.WebHost.ConfigureKestrel((context, serverOptions) =>
             {
                 serverOptions.Listen(IPAddress.Loopback, 7066, listenOptions =>
@@ -77,12 +71,16 @@ namespace RemindMe
                     listenOptions.UseHttps(certificate);
                 });
             });
+
+            builder.RegisterAppSettings();
+            builder.Services.AddScoped<ITodoRepository, TodoRepository>();
         }
         public static void ConfigureLogging(this WebApplicationBuilder builder)
         {
             builder.Logging.ClearProviders();
             builder.Logging.AddLog4Net(log4NetConfigFile: "log4net.config");
         }
+
         private static void ConfigureCors(this WebApplicationBuilder builder)
         {
             string[] authorizedUrls = new string[] { };
@@ -94,7 +92,7 @@ namespace RemindMe
                 options.AddPolicy(name: "TodoPolicy",
                                           policy =>
                                           {
-                                              policy.WithOrigins(authorizedUrls)
+                                              policy.WithOrigins(builder.Configuration.GetSection("FrontendApp:Url").Value)
                                               .AllowAnyHeader()
                                               .AllowAnyMethod()
                                               .AllowCredentials();
