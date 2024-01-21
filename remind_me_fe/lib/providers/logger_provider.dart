@@ -25,6 +25,7 @@ class LoggerProvider extends ChangeNotifier {
       await repository.logData(log);
       notifyListeners();
     } catch (error) {
+      // ignore: avoid_print
       print('Error logging data: $error');
     }
   }

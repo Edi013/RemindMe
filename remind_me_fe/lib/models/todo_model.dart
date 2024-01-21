@@ -2,7 +2,7 @@ import 'package:intl/intl.dart';
 import 'package:remind_me_fe/shared/enviroment.dart';
 
 class ToDo {
-  int? id;
+  int id;
   String title;
   String description;
   DateTime creationDate;
@@ -13,7 +13,7 @@ class ToDo {
   int ownerId;
 
   ToDo({
-    this.id,
+    required this.id,
     this.title = "",
     this.description = "",
     required this.creationDate,

@@ -53,7 +53,7 @@ class ToDoListScreen extends StatelessWidget {
                               Text("Difficulty: ${toDo.difficulty.toString()}"),
                               IconButton(
                                 onPressed: () =>
-                                    controller.deleteById(context, toDo.id!),
+                                    controller.deleteById(context, toDo.id),
                                 icon: const Icon(
                                   Icons.delete,
                                   color: Colors.red,

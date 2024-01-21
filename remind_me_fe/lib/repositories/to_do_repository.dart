@@ -9,8 +9,12 @@ import 'package:remind_me_fe/shared/enviroment.dart';
 
 class ToDoRepository {
   final String apiExtension = '/ToDo';
-  final String apiUrl = "${Environment.BASE_URL}/ToDo";
+  late String apiUrl ;
 
+  ToDoRepository(){
+    apiUrl = "${Environment.BASE_URL}${apiExtension}";
+  }
+  
   Future<List<ToDo>> getAll() async {
     var result = await http.get(
       Uri.parse('$apiUrl/GetAll'),
@@ -54,7 +58,7 @@ class ToDoRepository {
 
   Future<ToDo> updateTodo(ToDo todo) async {
     UpdateToDoRequest updatedToDo = UpdateToDoRequest(
-      id: todo.id!,
+      id: todo.id,
       title: todo.title,
       description: todo.description,
       difficulty: todo.difficulty,

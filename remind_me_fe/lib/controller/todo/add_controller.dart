@@ -33,6 +33,7 @@ class ToDoAddController {
       int difficulty = int.parse(_difficultyController.text);
 
       ToDo newObject = ToDo(
+        id: 0,
         title: title,
         description: description,
         creationDate: DateTime.now(),

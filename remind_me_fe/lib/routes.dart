@@ -13,7 +13,7 @@ class Routes {
 
   static Map<String, WidgetBuilder> generateRoutes() {
     return {
-      homeRoute: (context) => HomeScreen(),
+      homeRoute: (context) => const HomeScreen(),
       todoListRoute: (context) => ToDoListScreen(),
       todoUpdateRoute: (context) => ToDoUpdateScreen(),
       todoAddRoute: (context) => ToDoAddScreen(),

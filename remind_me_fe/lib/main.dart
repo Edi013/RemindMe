@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:remind_me_fe/color-scheme.dart';
+import 'package:remind_me_fe/color_scheme.dart';
 import 'package:remind_me_fe/providers/logger_provider.dart';
 import 'package:remind_me_fe/providers/todo_provider.dart';
 import 'package:remind_me_fe/routes.dart';
@@ -19,12 +19,14 @@ void main() {
       ),
     );
   } catch (e, stackTrace) {
+    // ignore: avoid_print
     print("Error: $e + Stacktrace: $stackTrace");
   }
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key});
+  const MyApp({super.key});
+
 
   @override
   Widget build(BuildContext context) {
