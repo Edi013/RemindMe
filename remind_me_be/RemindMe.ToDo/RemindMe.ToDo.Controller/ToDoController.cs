@@ -10,18 +10,18 @@ namespace RemindMe.Controller
 {
     [ApiController]
     [Route("Api/[controller]")]
-    public class TodoController : ControllerBase
+    public class ToDoController : ControllerBase
     {
         private readonly IMediator _mediator;
-        private readonly ILogger<TodoController> _logger;
+        private readonly ILogger<ToDoController> _logger;
 
-        public TodoController(IMediator mediator, ILogger<TodoController> logger)
+        public ToDoController(IMediator mediator, ILogger<ToDoController> logger)
         {
             this._mediator = mediator;
             this._logger = logger;
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpGet("GetAll")]
         public async Task<IEnumerable<Item>> GetAll()
         {
