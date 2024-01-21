@@ -60,7 +60,7 @@ namespace RemindMe
                         ClockSkew = TimeSpan.Zero
                     };
                 }
-            );*/
+            );
             var certificatePath = "..\\..\\Self-Signed-Certificate\\certificate.pfx";
             var certificatePassword = "qweqweqwe123";
             var certificate = new X509Certificate2(certificatePath, certificatePassword);
@@ -70,7 +70,7 @@ namespace RemindMe
                 {
                     listenOptions.UseHttps(certificate);
                 });
-            });
+            });*/
 
             builder.RegisterAppSettings();
             builder.Services.AddScoped<ITodoRepository, TodoRepository>();
