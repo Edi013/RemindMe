@@ -16,21 +16,57 @@ class ToDoRepository {
   }
   
   Future<List<ToDo>> getAll() async {
-    var result = await http.get(
-      Uri.parse('$apiUrl/GetAll'),
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        'Content-Type': 'application/json; charset=UTF-8',
-        'Accept': '*/*'
-      },
-    ).then(
-      (response) {
-        final List<dynamic> data = json.decode(response.body);
-        List<ToDo> result = data.map((json) => ToDo.fromJson(json)).toList();
-        return result;
-      },
-    );
-    return result;
+    // var result = await http.get(
+    //   Uri.parse('$apiUrl/GetAll'),
+    //   headers: {
+    //     "Access-Control-Allow-Origin": "*",
+    //     'Content-Type': 'application/json; charset=UTF-8',
+    //     'Accept': '*/*'
+    //   },
+    // ).then(
+    //   (response) {
+    //     final List<dynamic> data = json.decode(response.body);
+    //     List<ToDo> result = data.map((json) => ToDo.fromJson(json)).toList();
+    //     return result;
+    //   },
+    // );
+    // return result;
+    List<ToDo> toDoList = [
+      ToDo(
+        id: 1,
+        title: "Complete Flutter Project",
+        description: "Finish the tasks in the Flutter project",
+        creationDate: DateTime.now(),
+        startDate: DateTime(2024, 1, 21),
+        endDate: DateTime(2024, 1, 25),
+        isFinished: false,
+        difficulty: 3,
+        ownerId: 123,
+      ),
+      ToDo(
+        id: 2,
+        title: "Study Dart Programming",
+        description: "Learn Dart programming language",
+        creationDate: DateTime.now(),
+        startDate: DateTime(2024, 1, 22),
+        endDate: DateTime(2024, 1, 30),
+        isFinished: false,
+        difficulty: 2,
+        ownerId: 456,
+      ),
+      ToDo(
+        id: 3,
+        title: "Exercise",
+        description: "Go for a jog or hit the gym",
+        creationDate: DateTime.now(),
+        startDate: DateTime(2024, 1, 23),
+        endDate: DateTime(2024, 1, 31),
+        isFinished: false,
+        difficulty: 1,
+        ownerId: 789,
+      ),
+    ];
+    return toDoList;
   }
 
   Future<ToDo> addTodo(ToDo todo) async {
