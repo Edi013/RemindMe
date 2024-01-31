@@ -83,7 +83,8 @@ namespace RemindMe
                 options.AddPolicy(name: "TodoPolicy",
                                           policy =>
                                           {
-                                              policy.WithOrigins(builder.Configuration.GetSection("FrontendApp:Url").Value)
+                                              policy
+                                              .WithOrigins(builder.Configuration.GetSection("FrontendApp:Url").Value)
                                               .AllowAnyHeader()
                                               .AllowAnyMethod()
                                               .AllowCredentials();
