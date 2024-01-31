@@ -79,18 +79,6 @@ namespace RemindMe
 
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
-            
-            var certificatePath = "..\\..\\Self-Signed-Certificate\\certificate.pfx";
-            var certificatePassword = "qweqweqwe123";
-            var certificate = new X509Certificate2(certificatePath, certificatePassword);
-
-            builder.WebHost.ConfigureKestrel((context, serverOptions) =>
-            {
-                serverOptions.Listen(IPAddress.Loopback, 7092, listenOptions =>
-                {
-                    listenOptions.UseHttps(certificate);
-                });
-            });
         }
 
         private static void RegisterJsonConfigFile(this WebApplicationBuilder builder)

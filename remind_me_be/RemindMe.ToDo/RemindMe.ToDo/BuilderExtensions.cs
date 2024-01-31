@@ -61,16 +61,7 @@ namespace RemindMe
                     };
                 }
             );
-            var certificatePath = "..\\..\\Self-Signed-Certificate\\certificate.pfx";
-            var certificatePassword = "qweqweqwe123";
-            var certificate = new X509Certificate2(certificatePath, certificatePassword);
-            builder.WebHost.ConfigureKestrel((context, serverOptions) =>
-            {
-                serverOptions.Listen(IPAddress.Loopback, 7066, listenOptions =>
-                {
-                    listenOptions.UseHttps(certificate);
-                });
-            });*/
+            ;*/
 
             builder.RegisterAppSettings();
             builder.Services.AddScoped<ITodoRepository, TodoRepository>();

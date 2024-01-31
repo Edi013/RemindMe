@@ -10,7 +10,7 @@
                 app.UseSwaggerUI();
             }*/
 
-            app.UseHttpsRedirection();
+           
 
             app.UseCors("AuthenticationPolicy");
 
