@@ -6,31 +6,10 @@ import 'package:remind_me_fe/providers/todo_provider.dart';
 import 'package:remind_me_fe/routes.dart';
 import 'package:dio/dio.dart';
 
+import 'providers/authentication_provider.dart';
 
 void main() {
- try {
-    // Initialize Dio with interceptors
-    Dio dio = Dio();
-    dio.interceptors.add(InterceptorsWrapper(
-      onRequest: (options, handler) {
-        // Modify request headers or perform other actions before sending the request
-        handler.next(options);
-      },
-      onResponse: (response, handler) {
-        // Modify response or perform other actions after receiving the response
-        handler.next(response);
-      },
-      onError: (DioError e, handler) {
-        // Handle errors, including 401 Unauthorized
-        if (e.response?.statusCode == 401) {
-          // Redirect to login screen or perform other actions
-          navigatorKey.currentState?.pushReplacementNamed('/login');
-        }
-
-        handler.next(e);
-      },
-    ));
-
+  try {
     runApp(
       MultiProvider(
         providers: [
@@ -38,6 +17,8 @@ void main() {
               create: (_) => ToDoProvider.instance),
           ChangeNotifierProvider<LoggerProvider>(
               create: (_) => LoggerProvider.instance),
+          ChangeNotifierProvider<AuthenticationProvider>(
+              create: (_) => AuthenticationProvider.instance),
         ],
         child: const MyApp(),
       ),
@@ -50,7 +31,6 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
 
   @override
   Widget build(BuildContext context) {
