@@ -1,24 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:remind_me_fe/color_scheme.dart';
-import 'package:remind_me_fe/providers/logger_provider.dart';
-import 'package:remind_me_fe/providers/todo_provider.dart';
-import 'package:remind_me_fe/routes.dart';
-import 'package:dio/dio.dart';
+import 'package:remind_me_fe/config/color_scheme.dart';
+import 'package:remind_me_fe/config/routes.dart';
+import 'package:remind_me_fe/features/list_todos/presentation/providers/todo_provider.dart';
+import 'package:remind_me_fe/injection_container.dart';
 
-import 'providers/authentication_provider.dart';
-
-void main() {
+Future<void> main() async {
+  await initializeDependencies();
   try {
     runApp(
       MultiProvider(
         providers: [
-          ChangeNotifierProvider<ToDoProvider>(
-              create: (_) => ToDoProvider.instance),
-          ChangeNotifierProvider<LoggerProvider>(
-              create: (_) => LoggerProvider.instance),
-          ChangeNotifierProvider<AuthenticationProvider>(
-              create: (_) => AuthenticationProvider.instance),
+          ChangeNotifierProvider<TodoProvider>(
+              create: (_) => sl<TodoProvider>()),
+          // ChangeNotifierProvider<LoggerProvider>(
+          //     create: (_) => LoggerProvider.instance),
+          // ChangeNotifierProvider<AuthenticationProvider>(
+          //     create: (_) => AuthenticationProvider.instance),
         ],
         child: const MyApp(),
       ),

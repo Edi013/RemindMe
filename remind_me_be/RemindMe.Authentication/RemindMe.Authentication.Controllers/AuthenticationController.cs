@@ -73,7 +73,7 @@ namespace RemindMe.Authentication.Controllers
             return result;
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpGet("Test")]
         public string Test()
         {
