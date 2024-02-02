@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:remind_me_fe/config/routes.dart';
+import 'package:remind_me_fe/core/routes.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});

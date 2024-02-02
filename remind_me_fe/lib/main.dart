@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:remind_me_fe/config/color_scheme.dart';
-import 'package:remind_me_fe/config/routes.dart';
+import 'package:remind_me_fe/core/routes.dart';
+import 'package:remind_me_fe/core/theme/current_app_theme.dart';
+import 'package:remind_me_fe/core/theme/theme_config.dart';
 import 'package:remind_me_fe/features/list_todos/presentation/providers/todo_provider.dart';
+import 'package:remind_me_fe/features/theme/presentation/providers/theme_provider.dart';
 import 'package:remind_me_fe/injection_container.dart';
 
 Future<void> main() async {
@@ -15,10 +17,10 @@ Future<void> main() async {
               create: (_) => sl<TodoProvider>()),
           // ChangeNotifierProvider<LoggerProvider>(
           //     create: (_) => LoggerProvider.instance),
-          // ChangeNotifierProvider<AuthenticationProvider>(
-          //     create: (_) => AuthenticationProvider.instance),
+          ChangeNotifierProvider<ThemeProvider>(
+              create: (_) => sl<ThemeProvider>()),
         ],
-        child: const MyApp(),
+        child: MyApp(),
       ),
     );
   } catch (e, stackTrace) {
@@ -28,17 +30,37 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'RemindMe',
-      initialRoute: Routes.homeRoute,
-      routes: Routes.generateRoutes(),
-      theme: ThemeData(
-        colorScheme: AppColors.getAppColorScheme(),
+    return MyInheritedWidget(
+      data: sl<AppTheme>().currentThemeData,
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'RemindMe',
+        initialRoute: Routes.themeScreenRoute,
+        routes: Routes.generateRoutes(),
+        theme: MyInheritedWidget.of(context)!.data,
+        darkTheme: darkTheme,
+        themeMode: ThemeMode.system,
       ),
     );
+  }
+}
+
+class MyInheritedWidget extends InheritedWidget {
+  final ThemeData data;
+
+  MyInheritedWidget({required this.data, required Widget child})
+      : super(child: child);
+
+  static MyInheritedWidget? of(BuildContext context) {
+    return context.dependOnInheritedWidgetOfExactType<MyInheritedWidget>();
+  }
+
+  @override
+  bool updateShouldNotify(MyInheritedWidget oldWidget) {
+    return oldWidget.data != data;
   }
 }

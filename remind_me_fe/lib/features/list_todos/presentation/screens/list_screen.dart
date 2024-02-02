@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:remind_me_fe/config/routes.dart';
+import 'package:remind_me_fe/core/routes.dart';
 import 'package:remind_me_fe/features/list_todos/domain/entities/todo.dart';
 import 'package:remind_me_fe/features/list_todos/presentation/controllers/list_controller.dart';
 import 'package:remind_me_fe/features/list_todos/presentation/providers/todo_provider.dart';

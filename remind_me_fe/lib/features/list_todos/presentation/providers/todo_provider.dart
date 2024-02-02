@@ -7,12 +7,12 @@ class TodoProvider extends ChangeNotifier {
   late TodoRepositoryImpl repository;
   late List<TodoEntity> todos = [];
 
-  TodoProvider() {
+  TodoProvider(TodoRepositoryImpl repo) {
+    repository = repo;
     initialize();
   }
 
   void initialize() async {
-    repository = sl<TodoRepositoryImpl>();
     todos = await getAll();
     notifyListeners();
   }
