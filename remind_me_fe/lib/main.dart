@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:remind_me_fe/core/constants.dart';
 import 'package:remind_me_fe/core/routes.dart';
-import 'package:remind_me_fe/core/theme/current_app_theme.dart';
 import 'package:remind_me_fe/core/theme/theme_config.dart';
 import 'package:remind_me_fe/features/list_todos/presentation/providers/todo_provider.dart';
 import 'package:remind_me_fe/features/theme/presentation/providers/theme_provider.dart';
@@ -40,16 +38,9 @@ class MyApp extends StatelessWidget {
       title: 'RemindMe',
       initialRoute: Routes.themeScreenRoute,
       routes: Routes.generateRoutes(),
-      theme:
-          lightTheme, //Provider.of<ThemeProvider>(context).appTheme.currentThemeData,
-      darkTheme:
-          darkTheme, //Provider.of<ThemeProvider>(context).appTheme.currentThemeData,
+      theme: lightTheme,
+      darkTheme: darkTheme,
       themeMode: Provider.of<ThemeProvider>(context).buildThemeMode(),
     );
-  }
-
-  ThemeMode buildThemeMode(BuildContext context) {
-    Brightness brightness = MediaQuery.of(context).platformBrightness;
-    return brightness == Brightness.dark ? ThemeMode.dark : ThemeMode.light;
   }
 }
