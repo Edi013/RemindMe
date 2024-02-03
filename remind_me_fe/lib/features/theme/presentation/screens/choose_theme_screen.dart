@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:remind_me_fe/core/theme/current_app_theme.dart';
+import 'package:remind_me_fe/features/theme/data/local/current_app_theme.dart';
 import 'package:remind_me_fe/core/constants.dart';
 import 'package:remind_me_fe/features/theme/presentation/providers/theme_provider.dart';
 import 'package:remind_me_fe/injection_container.dart';
 
+// ignore: must_be_immutable
 class ThemeScreen extends StatelessWidget {
   late ThemeProvider themeProvider;
 
@@ -29,7 +30,7 @@ class ThemeScreen extends StatelessWidget {
             const SizedBox(height: 8),
             Text(
               sl<AppTheme>().currentThemeName,
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 24),
             const Divider(),

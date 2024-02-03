@@ -77,6 +77,7 @@ namespace RemindMe
             builder.Services.AddScoped<AuthenticationHandler, AuthenticationHandler>();
             builder.RegisterJsonConfigFile();
 
+            builder.Services.AddSwaggerGen();
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
         }
@@ -91,16 +92,18 @@ namespace RemindMe
 
         private static void ConfigureCors(this WebApplicationBuilder builder)
         {
-            string[] authorizedUrls = new string[] { };
-            authorizedUrls.Append(builder.Configuration.GetSection("AuthorizedUrls:FlutterClient").Value);
-            authorizedUrls.Append(builder.Configuration.GetSection("AuthorizedUrls:Postman").Value);
+            //string[] authorizedUrls = new string[] { };
+            var value = builder.Configuration.GetSection("AuthorizedUrls:FlutterClient").Value;
+            //authorizedUrls.Append(value);
+            /*value = builder.Configuration.GetSection("AuthorizedUrls:Postman").Value;
+            authorizedUrls.Append(value);*/
 
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy(name: "AuthenticationPolicy",
                                           policy =>
                                           {
-                                              policy.WithOrigins(authorizedUrls)
+                                              policy.WithOrigins(value)
                                               .AllowAnyHeader()
                                               .AllowAnyMethod()
                                               .AllowCredentials();

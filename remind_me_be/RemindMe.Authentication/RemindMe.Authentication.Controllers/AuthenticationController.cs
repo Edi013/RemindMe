@@ -32,14 +32,39 @@ namespace RemindMe.Authentication.Controllers
         }
 
         [HttpPost("Login")]
-        public async Task<IActionResult> Login ([FromBody] LoginDto loginDto)
+        public async Task<BaseResponse> Login ([FromBody] LoginDto loginDto)
         {
             var result = 
                 await _authenticationHandler.Login(loginDto, HttpContext);
             
-            return Ok(result);
+            return result;
+        }
+        //IActionResult
+        //Ok(result)
+
+        [HttpGet("ConfirmEmail")]
+        public async Task<BaseResponse> ConfirmEmail(string userId, string token)
+        {
+
+            return await _authenticationHandler.ConfirmEmail(userId, token);
         }
 
+
+
+        /* [HttpGet("RefreshJwt")]
+         public async Task<bool> RefreshJwt([FromBody] string jwt, [FromBody] string refreshToken)
+         {
+             var result = await _authenticationHandler.RefreshJwt(jwt, refreshToken);
+             return result;
+         }*/
+
+        [HttpPut("SeedRoles")]
+        public Task<BaseResponse> SeedRoles()
+        {
+            var result = _authenticationHandler.SeedRoles();
+
+            return result;
+        }
 
         [HttpGet("TestEmail")]
         public async Task<BaseResponse> TestEmail()
@@ -58,33 +83,11 @@ namespace RemindMe.Authentication.Controllers
             };
         }
 
-        [HttpGet("ConfirmEmail")]
-        public async Task<BaseResponse> ConfirmEmail(string userId, string token)
-        {
-
-            return await _authenticationHandler.ConfirmEmail(userId, token);
-        }
-
-        [HttpPut("SeedRoles")]
-        public Task<BaseResponse> SeedRoles()
-        {
-            var result = _authenticationHandler.SeedRoles();
-
-            return result;
-        }
-
         //[Authorize]
         [HttpGet("Test")]
         public string Test()
         {
             return "Test message!\nIf you see this message, the Get http call on https://localhost:7092/Authentication/Test works";
         }
-
-       /* [HttpGet("RefreshJwt")]
-        public async Task<bool> RefreshJwt([FromBody] string jwt, [FromBody] string refreshToken)
-        {
-            var result = await _authenticationHandler.RefreshJwt(jwt, refreshToken);
-            return result;
-        }*/
     }
 }

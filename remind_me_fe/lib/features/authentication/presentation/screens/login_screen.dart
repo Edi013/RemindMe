@@ -1,4 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:remind_me_fe/core/routes.dart';
+import 'package:remind_me_fe/features/authentication/domain/entities/login_credentials.dart';
+import 'package:remind_me_fe/features/authentication/presentation/provider/auth_provider.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -7,7 +13,7 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: LoginCard(),
+        child: LoginCard(context),
       ),
     );
   }
@@ -18,7 +24,11 @@ class LoginCard extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  LoginCard({super.key});
+  late AuthProvider provider;
+
+  LoginCard(BuildContext context, {super.key}) {
+    provider = Provider.of<AuthProvider>(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -91,9 +101,30 @@ class LoginCard extends StatelessWidget {
                       ),
                       child: Center(
                         child: ElevatedButton(
-                          onPressed: () {
+                          onPressed: () async {
                             if (_formKey.currentState!.validate()) {
-                              //if()
+                              LoginCredentials credentials = LoginCredentials(
+                                email: emailController.text,
+                                password: passwordController.text,
+                              );
+                              var result = await provider.login(credentials);
+
+                              if (result.httpStatusCode ==
+                                  HttpStatus.accepted) {
+                                Navigator.pushNamed(context, Routes.homeRoute);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text('Login succesful.'),
+                                  ),
+                                );
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                        'Unexpected error occured. Try again later.'),
+                                  ),
+                                );
+                              }
                             } else {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(

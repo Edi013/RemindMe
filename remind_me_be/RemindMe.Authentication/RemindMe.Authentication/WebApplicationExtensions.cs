@@ -4,13 +4,11 @@
     {
         public static void ApplyConfiguration(this WebApplication app)
         {
-           /* if (app.Environment.IsDevelopment())
+           if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
-            }*/
-
-           
+            }
 
             app.UseCors("AuthenticationPolicy");
 

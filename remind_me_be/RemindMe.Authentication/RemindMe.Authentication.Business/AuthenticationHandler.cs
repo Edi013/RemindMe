@@ -46,8 +46,8 @@ namespace RemindMe.Authentication.Handlers
             {
                 Email = registerDto.Email,
                 NormalizedEmail = registerDto.Email,
-                Nickname = registerDto.Username,
-                NormalizedUserName = registerDto.Username,
+                Nickname = registerDto.Nickname,
+                NormalizedUserName = registerDto.Nickname,
             };
             newUser.UserName = newUser.Id;
 

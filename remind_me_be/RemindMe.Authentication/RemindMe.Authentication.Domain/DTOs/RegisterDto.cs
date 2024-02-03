@@ -5,8 +5,8 @@ namespace RemindMe.Authentication.Domain.DTOs
 {
     public class RegisterDto
     {
-        [Required(ErrorMessage = "User Name is required")]
-        public string Username { get; set; }
+        [Required(ErrorMessage = "Nickname is required")]
+        public string Nickname { get; set; }
 
         [EmailAddress]
         [Required(ErrorMessage = "Email is required")]
