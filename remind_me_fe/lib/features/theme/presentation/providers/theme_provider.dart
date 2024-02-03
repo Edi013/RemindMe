@@ -1,12 +1,18 @@
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:remind_me_fe/core/theme/current_app_theme.dart';
-import 'package:remind_me_fe/injection_container.dart';
 
 class ThemeProvider extends ChangeNotifier {
-  ThemeProvider();
+  late AppTheme appTheme;
+  ThemeProvider(AppTheme theme) {
+    appTheme = theme;
+  }
 
   void updateTheme(String themeName) {
-    sl<AppTheme>().swapTheme(themeName);
+    appTheme.swapTheme(themeName);
     notifyListeners();
+  }
+
+  ThemeMode buildThemeMode() {
+    return appTheme.buildAppThemeMode();
   }
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:remind_me_fe/features/list_todos/data/repositories/todo_repository_impl.dart';
 import 'package:remind_me_fe/features/list_todos/domain/entities/todo.dart';
-import 'package:remind_me_fe/injection_container.dart';
 
 class TodoProvider extends ChangeNotifier {
   late TodoRepositoryImpl repository;
@@ -13,7 +12,7 @@ class TodoProvider extends ChangeNotifier {
   }
 
   void initialize() async {
-    todos = await getAll();
+    //todos = await getAll();
     notifyListeners();
   }
 

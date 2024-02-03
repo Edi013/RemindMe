@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:remind_me_fe/core/constants.dart';
 import 'package:remind_me_fe/core/routes.dart';
 import 'package:remind_me_fe/core/theme/current_app_theme.dart';
 import 'package:remind_me_fe/core/theme/theme_config.dart';
@@ -20,7 +21,7 @@ Future<void> main() async {
           ChangeNotifierProvider<ThemeProvider>(
               create: (_) => sl<ThemeProvider>()),
         ],
-        child: MyApp(),
+        child: const MyApp(),
       ),
     );
   } catch (e, stackTrace) {
@@ -30,37 +31,25 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({super.key});
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MyInheritedWidget(
-      data: sl<AppTheme>().currentThemeData,
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'RemindMe',
-        initialRoute: Routes.themeScreenRoute,
-        routes: Routes.generateRoutes(),
-        theme: MyInheritedWidget.of(context)!.data,
-        darkTheme: darkTheme,
-        themeMode: ThemeMode.system,
-      ),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'RemindMe',
+      initialRoute: Routes.themeScreenRoute,
+      routes: Routes.generateRoutes(),
+      theme:
+          lightTheme, //Provider.of<ThemeProvider>(context).appTheme.currentThemeData,
+      darkTheme:
+          darkTheme, //Provider.of<ThemeProvider>(context).appTheme.currentThemeData,
+      themeMode: Provider.of<ThemeProvider>(context).buildThemeMode(),
     );
   }
-}
 
-class MyInheritedWidget extends InheritedWidget {
-  final ThemeData data;
-
-  MyInheritedWidget({required this.data, required Widget child})
-      : super(child: child);
-
-  static MyInheritedWidget? of(BuildContext context) {
-    return context.dependOnInheritedWidgetOfExactType<MyInheritedWidget>();
-  }
-
-  @override
-  bool updateShouldNotify(MyInheritedWidget oldWidget) {
-    return oldWidget.data != data;
+  ThemeMode buildThemeMode(BuildContext context) {
+    Brightness brightness = MediaQuery.of(context).platformBrightness;
+    return brightness == Brightness.dark ? ThemeMode.dark : ThemeMode.light;
   }
 }

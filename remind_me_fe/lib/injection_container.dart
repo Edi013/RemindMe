@@ -10,7 +10,7 @@ final sl = GetIt.instance;
 
 Future<void> initializeDependencies() async {
   sl.registerSingleton<AppTheme>(AppTheme());
-  sl.registerSingleton<ThemeProvider>(ThemeProvider());
+  sl.registerSingleton<ThemeProvider>(ThemeProvider(sl<AppTheme>()));
 
   sl.registerSingleton<TodoServiceApi>(TodoServiceApi());
   sl.registerSingleton<TodoRepositoryImpl>(

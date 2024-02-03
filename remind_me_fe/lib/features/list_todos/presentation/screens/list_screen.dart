@@ -6,9 +6,11 @@ import 'package:remind_me_fe/features/list_todos/presentation/controllers/list_c
 import 'package:remind_me_fe/features/list_todos/presentation/providers/todo_provider.dart';
 
 class TodoListScreen extends StatelessWidget {
-  final TodoListController controller = TodoListController();
+  late TodoListController controller;
 
-  TodoListScreen({super.key});
+  TodoListScreen(BuildContext context, {super.key}) {
+    controller = TodoListController(context);
+  }
 
   @override
   Widget build(BuildContext context) {
