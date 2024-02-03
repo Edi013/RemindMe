@@ -18,10 +18,12 @@ class LoginCard extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
+  LoginCard({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      constraints: BoxConstraints(maxWidth: 750),
+      constraints: const BoxConstraints(maxWidth: 750),
       child: Card(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -54,6 +56,9 @@ class LoginCard extends StatelessWidget {
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Please enter your email';
+                          }
+                          if (!value.contains("@")) {
+                            return 'Email has to contain \' @ \'.';
                           }
                           return null;
                         },
@@ -88,7 +93,7 @@ class LoginCard extends StatelessWidget {
                         child: ElevatedButton(
                           onPressed: () {
                             if (_formKey.currentState!.validate()) {
-                              // Navigate the user to the Home page
+                              //if()
                             } else {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(

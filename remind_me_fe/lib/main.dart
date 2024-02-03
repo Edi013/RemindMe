@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'RemindMe',
-      initialRoute: Routes.themeScreenRoute,
+      initialRoute: Routes.loginRoute,
       routes: Routes.generateRoutes(),
       theme: lightTheme,
       darkTheme: darkTheme,

@@ -5,6 +5,7 @@ import 'package:remind_me_fe/features/list_todos/domain/entities/todo.dart';
 import 'package:remind_me_fe/features/list_todos/presentation/controllers/list_controller.dart';
 import 'package:remind_me_fe/features/list_todos/presentation/providers/todo_provider.dart';
 
+// ignore: must_be_immutable
 class TodoListScreen extends StatelessWidget {
   late TodoListController controller;
 

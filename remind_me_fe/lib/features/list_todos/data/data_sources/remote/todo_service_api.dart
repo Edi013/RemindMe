@@ -10,7 +10,7 @@ class TodoServiceApi {
   late String apiUrl;
 
   TodoServiceApi() {
-    apiUrl = "${BASE_URL_TODOS}${apiExtension}";
+    apiUrl = "$BASE_URL_TODOS$apiExtension";
   }
 
   Future<List<TodoModel>> getAll() async {
