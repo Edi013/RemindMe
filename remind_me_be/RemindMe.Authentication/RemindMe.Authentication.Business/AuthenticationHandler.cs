@@ -86,13 +86,13 @@ namespace RemindMe.Authentication.Handlers
             };
         }
 
-        public async Task<LoginResponse> Login(LoginDto loginDto, HttpContext httpContext)
+        public async Task<BaseResponse> Login(LoginDto loginDto, HttpContext httpContext)
         {
             var existingUser = await _userManager.FindByEmailAsync(loginDto.Email);
 
             if (existingUser == null)
             {
-                return new LoginResponse()
+                return new BaseResponse()
                 {
                     HttpStatusCode = HttpStatusCode.BadRequest,
                     Message = "This email is not registered."
@@ -101,7 +101,7 @@ namespace RemindMe.Authentication.Handlers
 
             if(existingUser.EmailConfirmed == false)
             {
-                return new LoginResponse()
+                return new BaseResponse()
                 {
                     HttpStatusCode = HttpStatusCode.Unauthorized,
                     Message = "You can't log in before validating your accout. Please confirm your email before proceeding again. You can do that by accesing the email sent to you after registering your account here."
@@ -109,14 +109,13 @@ namespace RemindMe.Authentication.Handlers
             }
 
             if(!await _userManager.CheckPasswordAsync(existingUser, loginDto.Password)){
-                return new LoginResponse()
+                return new BaseResponse()
                 {
                     HttpStatusCode = HttpStatusCode.Unauthorized,
                     Message = "Login failed. Invalid password."
                 };
             }
 
-            // generate jwt & refresh token
             DateTime jwtExpirationDate = DateTime.UtcNow.AddMinutes(30);
             var jwt = await GenerateJwtAsync(existingUser, jwtExpirationDate);
 
@@ -128,16 +127,17 @@ namespace RemindMe.Authentication.Handlers
             existingUser.JwtRefreshToken = refreshToken;
             existingUser.JwtRefreshTokenExpirationDate = jwtRefreshTokenExpirationDate;
 */
-            /*//use cookies
+            //use cookies
+
             httpContext.Response.Cookies.Append("Jwt",
                 jwt,
                 new CookieOptions{
-                    HttpOnly = true,
-                    Secure = true,  // Set to true if using HTTPS
-                    SameSite = SameSiteMode.Strict,  
+                    HttpOnly = false,
+                    Secure = false,  // Set to true if using HTTPS
+                    //SameSite = SameSiteMode.Lax,  
                     Expires = jwtExpirationDate
                 });
-            httpContext.Response.Cookies.Append("JwtRefreshToken",
+            /*httpContext.Response.Cookies.Append("JwtRefreshToken",
                 refreshToken,
                 new CookieOptions
                 {
@@ -146,15 +146,23 @@ namespace RemindMe.Authentication.Handlers
                     SameSite = SameSiteMode.Strict, 
                     Expires = jwtRefreshTokenExpirationDate
                 });*/
+
+            // sau 
+
             //httpContext.Response.Cookies.Append("Jwt", jwt);
             //httpContext.Response.Cookies.Append("JwtRefreshToken", refreshToken);
 
-            return new LoginResponse()
+            // use headers : 
+            //httpContext.Response.Headers.Add("Authorization", "Bearer " + jwt);
+            //httpContext.Response.Headers.Add("Token-Expiration", jwtExpirationDate.ToString(
+            //  _configuration.GetSection("DateTimeFormat").Value));
+
+            return new BaseResponse()
             {
                 HttpStatusCode = HttpStatusCode.Accepted,
                 Message = "Login succesful.",
-                Jwt = jwt,  
-                JwtExpiration = jwtExpirationDate
+                //Jwt = jwt,  
+                //JwtExpiration = jwtExpirationDate
             };
         }
 
@@ -180,7 +188,7 @@ namespace RemindMe.Authentication.Handlers
             var userRoles = await _userManager.GetRolesAsync(user);
             for(var i = 0; i < userRoles.Count; i++)
             {
-                authClaims.Add(new Claim($"Role {i}", userRoles[i]));
+                authClaims.Add(new Claim($"Role", userRoles[i])); //  "Role {i}"
             }
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(

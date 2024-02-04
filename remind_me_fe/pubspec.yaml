@@ -41,9 +41,7 @@ dependencies:
   intl: ^0.18.1
   get_it: ^7.6.7
   flutter_login: ^5.0.0
-  google_fonts: ^6.1.0
-
-  
+  shared_preferences: ^2.0.8
 
 dev_dependencies:
   flutter_test:

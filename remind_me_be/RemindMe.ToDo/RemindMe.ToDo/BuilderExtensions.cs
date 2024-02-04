@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using RemindMe.Application.Handlers.Todos;
@@ -31,17 +32,36 @@ namespace RemindMe
             var connectionString = builder.Configuration.GetConnectionString("RemindMeDb");
             builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(connectionString));
 
-            /*var audience = new List<string>{
+            var audience = new List<string>{
                             builder.Configuration.GetSection("JWT:ValidAudience:Postman").Value,
                             builder.Configuration.GetSection("JWT:ValidAudience:FlutterClient").Value,
                             builder.Configuration.GetSection("JWT:ValidAudience:TodoService").Value,
             };
             builder.Services
-                .AddAuthentication(options =>
+                /*.AddAuthentication(options =>
                 {
                     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
                     options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                })*/
+                .AddAuthentication(options =>
+                {
+                    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+                .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
+                {
+                    options.Cookie.Name = "Jwt"; 
+                    /*options.Events = new CookieAuthenticationEvents
+                    {
+                        OnValidatePrincipal = context =>
+                        {
+                            // Custom logic to validate the principal from the cookie
+                            // You may check the cookie content, expiration, etc.
+                            // If validation fails, set context.RejectPrincipal();
+                            return Task.CompletedTask;
+                        }
+                    };*/
                 })
                 .AddJwtBearer(options =>
                 {
@@ -61,7 +81,7 @@ namespace RemindMe
                     };
                 }
             );
-            ;*/
+            ;
 
             builder.RegisterAppSettings();
             builder.Services.AddScoped<ITodoRepository, TodoRepository>();

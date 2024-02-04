@@ -21,7 +21,7 @@ namespace RemindMe.Controller
             this._logger = logger;
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpGet("GetAll")]
         public async Task<IEnumerable<Item>> GetAll()
         {
