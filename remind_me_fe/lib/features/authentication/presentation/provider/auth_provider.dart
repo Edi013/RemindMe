@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:remind_me_fe/features/authentication/data/repositories/auth_repository_impl.dart';
 import 'package:remind_me_fe/features/authentication/domain/entities/login_credentials.dart';
+import 'package:remind_me_fe/features/authentication/domain/entities/login_result.dart';
 import 'package:remind_me_fe/features/authentication/domain/entities/register_credentials.dart';
 import 'package:remind_me_fe/features/authentication/domain/entities/user.dart';
 
@@ -18,13 +19,13 @@ class AuthProvider extends ChangeNotifier {
     return await repository.test();
   }
 
-  Future<BaseResponse> login(LoginCredentials credentials) async {
+  Future<LoginResponse> login(LoginCredentials credentials) async {
     var result = await repository.login(credentials);
     // store jwt
     return result;
   }
 
-  Future<BaseResponse> register(RegisterCredentials credentials) async {
+  Future<BaseResult> register(RegisterCredentials credentials) async {
     var result = await repository.register(credentials);
     return result;
   }

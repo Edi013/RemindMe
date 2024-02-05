@@ -1,8 +1,12 @@
 import 'dart:convert';
+import 'dart:io';
+import 'package:cookie_jar/cookie_jar.dart';
 import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 import 'package:remind_me_fe/core/constants.dart';
 import 'package:remind_me_fe/features/authentication/domain/entities/base_response.dart';
 import 'package:remind_me_fe/features/authentication/domain/entities/login_credentials.dart';
+import 'package:remind_me_fe/features/authentication/domain/entities/login_result.dart';
 import 'package:remind_me_fe/features/authentication/domain/entities/register_credentials.dart';
 
 class AuthServiceApi {
@@ -30,19 +34,36 @@ class AuthServiceApi {
     return result;
   }
 
-  Future<BaseResponse> login(LoginCredentials credentials) async {
-    return await http
-        .post(
-          Uri.parse('$apiUrl/Login'),
-          headers: {'Content-Type': 'application/json'},
-          body: jsonEncode(credentials.toJson()),
-        )
-        .then(
-          (value) => BaseResponse.fromJson(json.decode(value.body)),
-        );
+  Future<LoginResponse> login(LoginCredentials credentials) async {
+    var httpResult = await http.post(
+      Uri.parse('$apiUrl/Login'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Accept': 'application/json'
+      },
+      body: jsonEncode(credentials.toJson()),
+    );
+    //String token = getJwtFromResponse(httpResult);
+    String token = "";
+    var cookieJar = CookieJar();
+    List<Cookie> cookies = [Cookie('jwt', 'test_string')];
+    cookieJar.saveFromResponse(Uri.parse('$apiUrl/Login'), cookies);
+
+    var result = LoginResponse.fromJson(json.decode(httpResult.body), token);
+    return result;
   }
 
-  Future<BaseResponse> register(RegisterCredentials credentials) async {
+  String getJwtFromResponse(http.Response httpResult) {
+    String? setCookieHeaders = httpResult.headers['set-cookie'];
+    if (setCookieHeaders == null) {
+      return "";
+    }
+    var cookies = Cookie.fromSetCookieValue(setCookieHeaders!);
+    return cookies.value;
+  }
+
+  Future<BaseResult> register(RegisterCredentials credentials) async {
     try {
       return await http
           .post(
@@ -51,7 +72,7 @@ class AuthServiceApi {
             body: jsonEncode(credentials.toJson()),
           )
           .then(
-            (value) => BaseResponse.fromJson(json.decode(value.body)),
+            (value) => BaseResult.fromJson(json.decode(value.body)),
           );
     } catch (err) {
       rethrow;

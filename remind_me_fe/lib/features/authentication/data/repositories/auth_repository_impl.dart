@@ -1,6 +1,7 @@
 import 'package:remind_me_fe/features/authentication/data/data_sources/remote/auth_service_api.dart';
 import 'package:remind_me_fe/features/authentication/domain/entities/base_response.dart';
 import 'package:remind_me_fe/features/authentication/domain/entities/login_credentials.dart';
+import 'package:remind_me_fe/features/authentication/domain/entities/login_result.dart';
 import 'package:remind_me_fe/features/authentication/domain/entities/register_credentials.dart';
 import 'package:remind_me_fe/features/authentication/domain/repository/auth_repository.dart';
 
@@ -12,12 +13,12 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<BaseResponse> login(LoginCredentials credentials) async {
+  Future<LoginResponse> login(LoginCredentials credentials) async {
     return await authService.login(credentials);
   }
 
   @override
-  Future<BaseResponse> register(RegisterCredentials credentials) async {
+  Future<BaseResult> register(RegisterCredentials credentials) async {
     return await authService.register(credentials);
   }
 

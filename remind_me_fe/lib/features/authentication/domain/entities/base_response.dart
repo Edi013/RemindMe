@@ -1,11 +1,11 @@
-class BaseResponse {
+class BaseResult {
   int httpStatusCode;
   String message;
 
-  BaseResponse({required this.httpStatusCode, required this.message});
+  BaseResult({required this.httpStatusCode, required this.message});
 
-  factory BaseResponse.fromJson(Map<String, dynamic> json) {
-    return BaseResponse(
+  factory BaseResult.fromJson(Map<String, dynamic> json) {
+    return BaseResult(
       httpStatusCode: json['httpStatusCode'] as int,
       message: json['message'] as String,
     );

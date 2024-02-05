@@ -1,33 +1,26 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:remind_me_fe/core/routes.dart';
-import 'package:remind_me_fe/features/authentication/domain/entities/login_credentials.dart';
+import 'package:remind_me_fe/features/authentication/presentation/controllers/login_controller.dart';
 import 'package:remind_me_fe/features/authentication/presentation/provider/auth_provider.dart';
+import 'package:remind_me_fe/injection_container.dart';
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+  const LoginScreen({Key? key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: LoginCard(context),
+        child: LoginCard(),
       ),
     );
   }
 }
 
 class LoginCard extends StatelessWidget {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+  late LoginController controller;
 
-  late AuthProvider provider;
-
-  LoginCard(BuildContext context, {super.key}) {
-    provider = Provider.of<AuthProvider>(context);
+  LoginCard({super.key}) {
+    controller = LoginController(sl<AuthProvider>());
   }
 
   @override
@@ -48,7 +41,7 @@ class LoginCard extends StatelessWidget {
                 ),
               ),
               Form(
-                key: _formKey,
+                key: controller.formKey,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -58,7 +51,7 @@ class LoginCard extends StatelessWidget {
                         vertical: 16,
                       ),
                       child: TextFormField(
-                        controller: emailController,
+                        controller: controller.emailController,
                         decoration: const InputDecoration(
                           border: OutlineInputBorder(),
                           labelText: "Email",
@@ -80,7 +73,7 @@ class LoginCard extends StatelessWidget {
                         vertical: 16,
                       ),
                       child: TextFormField(
-                        controller: passwordController,
+                        controller: controller.passwordController,
                         obscureText: true,
                         decoration: const InputDecoration(
                           border: OutlineInputBorder(),
@@ -102,36 +95,7 @@ class LoginCard extends StatelessWidget {
                       child: Center(
                         child: ElevatedButton(
                           onPressed: () async {
-                            if (_formKey.currentState!.validate()) {
-                              LoginCredentials credentials = LoginCredentials(
-                                email: emailController.text,
-                                password: passwordController.text,
-                              );
-                              var result = await provider.login(credentials);
-
-                              if (result.httpStatusCode ==
-                                  HttpStatus.accepted) {
-                                Navigator.pushNamed(context, Routes.homeRoute);
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text('Login succesful.'),
-                                  ),
-                                );
-                              } else {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text(
-                                        'Unexpected error occured. Try again later.'),
-                                  ),
-                                );
-                              }
-                            } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text('Please fill input'),
-                                ),
-                              );
-                            }
+                            await controller.handleLogin(context);
                           },
                           child: const Text('Submit'),
                         ),

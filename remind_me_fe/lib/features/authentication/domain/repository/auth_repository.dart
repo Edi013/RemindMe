@@ -3,7 +3,7 @@ import 'package:remind_me_fe/features/authentication/domain/entities/login_crede
 import 'package:remind_me_fe/features/authentication/domain/entities/register_credentials.dart';
 
 abstract class AuthRepository {
-  Future<BaseResponse> register(RegisterCredentials credentials);
-  Future<BaseResponse> login(LoginCredentials credentials);
+  Future<BaseResult> register(RegisterCredentials credentials);
+  Future<BaseResult> login(LoginCredentials credentials);
   Future<String> test();
 }

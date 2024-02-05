@@ -134,7 +134,7 @@ namespace RemindMe.Authentication.Handlers
                 new CookieOptions{
                     HttpOnly = false,
                     Secure = false,  // Set to true if using HTTPS
-                    //SameSite = SameSiteMode.Lax,  
+                    SameSite = SameSiteMode.Lax,  
                     Expires = jwtExpirationDate
                 });
             /*httpContext.Response.Cookies.Append("JwtRefreshToken",

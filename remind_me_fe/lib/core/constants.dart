@@ -10,3 +10,5 @@ const String dark_theme = "dark";
 const String system_theme = "system";
 const String error_message_constants_not_used =
     "Theme name doesn't use one of the allowed constants for theme name !";
+
+const String jwt_key = "Jwt";
