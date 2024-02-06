@@ -32,7 +32,7 @@ namespace RemindMe.Authentication.Controllers
         }
 
         [HttpPost("Login")]
-        public async Task<BaseResponse> Login ([FromBody] LoginDto loginDto)
+        public async Task<LoginResponse> Login ([FromBody] LoginDto loginDto)
         {
             var result = 
                 await _authenticationHandler.Login(loginDto, HttpContext);

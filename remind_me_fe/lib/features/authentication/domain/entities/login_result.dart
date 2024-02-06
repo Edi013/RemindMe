@@ -8,18 +8,21 @@ class LoginResponse implements BaseResult {
   late String message;
 
   late String token;
+  late String jwtExpiration;
 
   LoginResponse({
     required this.httpStatusCode,
     required this.message,
     required this.token,
+    required this.jwtExpiration,
   });
 
-  factory LoginResponse.fromJson(Map<String, dynamic> json, String token) {
+  factory LoginResponse.fromJson(Map<String, dynamic> json) {
     return LoginResponse(
-      token: token,
       httpStatusCode: json['httpStatusCode'] as int,
       message: json['message'] as String,
+      token: json['jwt'] as String,
+      jwtExpiration: json['jwtExpiration'] as String,
     );
   }
 }

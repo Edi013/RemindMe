@@ -38,13 +38,13 @@ namespace RemindMe
                             builder.Configuration.GetSection("JWT:ValidAudience:TodoService").Value,
             };
             builder.Services
-                /*.AddAuthentication(options =>
+                .AddAuthentication(options =>
                 {
                     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
                     options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-                })*/
-                .AddAuthentication(options =>
+                })
+                /*.AddAuthentication(options =>
                 {
                     options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -52,7 +52,7 @@ namespace RemindMe
                 .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
                 {
                     options.Cookie.Name = "Jwt"; 
-                    /*options.Events = new CookieAuthenticationEvents
+                    *//*options.Events = new CookieAuthenticationEvents
                     {
                         OnValidatePrincipal = context =>
                         {
@@ -61,8 +61,8 @@ namespace RemindMe
                             // If validation fails, set context.RejectPrincipal();
                             return Task.CompletedTask;
                         }
-                    };*/
-                })
+                    };*//*
+                })*/
                 .AddJwtBearer(options =>
                 {
                     options.SaveToken = true;

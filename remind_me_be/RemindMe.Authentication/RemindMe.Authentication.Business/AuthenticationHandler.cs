@@ -86,13 +86,13 @@ namespace RemindMe.Authentication.Handlers
             };
         }
 
-        public async Task<BaseResponse> Login(LoginDto loginDto, HttpContext httpContext)
+        public async Task<LoginResponse> Login(LoginDto loginDto, HttpContext httpContext)
         {
             var existingUser = await _userManager.FindByEmailAsync(loginDto.Email);
 
             if (existingUser == null)
             {
-                return new BaseResponse()
+                return new LoginResponse()
                 {
                     HttpStatusCode = HttpStatusCode.BadRequest,
                     Message = "This email is not registered."
@@ -101,7 +101,7 @@ namespace RemindMe.Authentication.Handlers
 
             if(existingUser.EmailConfirmed == false)
             {
-                return new BaseResponse()
+                return new LoginResponse()
                 {
                     HttpStatusCode = HttpStatusCode.Unauthorized,
                     Message = "You can't log in before validating your accout. Please confirm your email before proceeding again. You can do that by accesing the email sent to you after registering your account here."
@@ -109,7 +109,7 @@ namespace RemindMe.Authentication.Handlers
             }
 
             if(!await _userManager.CheckPasswordAsync(existingUser, loginDto.Password)){
-                return new BaseResponse()
+                return new LoginResponse()
                 {
                     HttpStatusCode = HttpStatusCode.Unauthorized,
                     Message = "Login failed. Invalid password."
@@ -129,14 +129,14 @@ namespace RemindMe.Authentication.Handlers
 */
             //use cookies
 
-            httpContext.Response.Cookies.Append("Jwt",
+            /*httpContext.Response.Cookies.Append("Jwt",
                 jwt,
                 new CookieOptions{
                     HttpOnly = false,
                     Secure = false,  // Set to true if using HTTPS
                     SameSite = SameSiteMode.Lax,  
                     Expires = jwtExpirationDate
-                });
+                });*/
             /*httpContext.Response.Cookies.Append("JwtRefreshToken",
                 refreshToken,
                 new CookieOptions
@@ -157,12 +157,12 @@ namespace RemindMe.Authentication.Handlers
             //httpContext.Response.Headers.Add("Token-Expiration", jwtExpirationDate.ToString(
             //  _configuration.GetSection("DateTimeFormat").Value));
 
-            return new BaseResponse()
+            return new LoginResponse()
             {
                 HttpStatusCode = HttpStatusCode.Accepted,
                 Message = "Login succesful.",
-                //Jwt = jwt,  
-                //JwtExpiration = jwtExpirationDate
+                Jwt = jwt,
+                JwtExpiration = jwtExpirationDate.ToString(_configuration.GetSection("DateTimeFormat").Value),
             };
         }
 

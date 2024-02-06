@@ -2,7 +2,7 @@
 {
     public class LoginResponse : BaseResponse
     {
-        public string Jwt { get; set; }
-        public DateTime JwtExpiration { get; set; }
+        public string Jwt { get; set; } = String.Empty;
+        public string JwtExpiration { get; set; } = String.Empty;
     }
 }

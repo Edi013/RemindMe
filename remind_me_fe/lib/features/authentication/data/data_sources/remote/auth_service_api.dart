@@ -44,23 +44,9 @@ class AuthServiceApi {
       },
       body: jsonEncode(credentials.toJson()),
     );
-    //String token = getJwtFromResponse(httpResult);
-    String token = "";
-    var cookieJar = CookieJar();
-    List<Cookie> cookies = [Cookie('jwt', 'test_string')];
-    cookieJar.saveFromResponse(Uri.parse('$apiUrl/Login'), cookies);
 
-    var result = LoginResponse.fromJson(json.decode(httpResult.body), token);
+    var result = LoginResponse.fromJson(json.decode(httpResult.body));
     return result;
-  }
-
-  String getJwtFromResponse(http.Response httpResult) {
-    String? setCookieHeaders = httpResult.headers['set-cookie'];
-    if (setCookieHeaders == null) {
-      return "";
-    }
-    var cookies = Cookie.fromSetCookieValue(setCookieHeaders!);
-    return cookies.value;
   }
 
   Future<BaseResult> register(RegisterCredentials credentials) async {

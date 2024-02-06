@@ -29,9 +29,7 @@ class LoginController {
       if (result.httpStatusCode == HttpStatus.accepted) {
         Navigator.pushNamed(context, Routes.homeRoute);
 
-        if (result.token != "") {
-          _saveJwtToken(result.token);
-        }
+        _saveUserAuthenticationData(result.token, result.jwtExpiration);
 
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
@@ -41,7 +39,7 @@ class LoginController {
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('Unexpected error occurred. Try again later.'),
+            content: Text('Input error. Re-enter your credentials.'),
           ),
         );
       }
@@ -54,11 +52,27 @@ class LoginController {
     }
   }
 
-  Future<void> _saveJwtToken(String token) async {
+  // ScaffoldFeatureController<SnackBar, SnackBarClosedReason> snackMessage(
+  //     BuildContext context, String message) {
+  //   return ScaffoldMessenger.of(context).showSnackBar(
+  //     const SnackBar(
+  //       content: Text(message),
+  //     ),
+  //   );
+  // }
+
+  Future<void> _saveUserAuthenticationData(
+      String token, String expirationDateUtc) async {
     if (token.isEmpty) {
-      throw AssertionError("Token was empty when storing it.");
+      throw AssertionError("Token was empty when storing it have been tried.");
     }
+    if (expirationDateUtc.isEmpty) {
+      throw AssertionError(
+          "Expiration date for token was empty when storing it have been tried.");
+    }
+
     final SharedPreferences preferences = await SharedPreferences.getInstance();
     preferences.setString(jwt_key, token);
+    preferences.setString(jwt_expiration_date_key, expirationDateUtc);
   }
 }

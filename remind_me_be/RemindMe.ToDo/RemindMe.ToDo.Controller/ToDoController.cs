@@ -26,7 +26,10 @@ namespace RemindMe.Controller
         public async Task<IEnumerable<Item>> GetAll()
         {
             var req = new GetAllTodoRequest();
-
+            foreach (var header in HttpContext.Request.Headers)
+            {
+                _logger.LogInformation($"{header.Key}: {header.Value}");
+            }
             _logger.LogInformation("GetAll [GET] request for Todos / Items.");
             var result = await _mediator.Send(req, CancellationToken.None);
             return result;
