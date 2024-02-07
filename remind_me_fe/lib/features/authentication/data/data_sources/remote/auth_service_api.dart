@@ -1,8 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:cookie_jar/cookie_jar.dart';
 import 'package:http/http.dart' as http;
-import 'package:http/http.dart';
 import 'package:remind_me_fe/core/constants.dart';
 import 'package:remind_me_fe/features/authentication/domain/entities/base_response.dart';
 import 'package:remind_me_fe/features/authentication/domain/entities/login_credentials.dart';
@@ -45,23 +43,32 @@ class AuthServiceApi {
       body: jsonEncode(credentials.toJson()),
     );
 
+    if (httpResult.statusCode == HttpStatus.badRequest) {
+      return LoginResponse(
+        httpStatusCode: 400,
+        message: "Bad credentials",
+        jwtExpiration: "",
+        token: "",
+      );
+    }
+
     var result = LoginResponse.fromJson(json.decode(httpResult.body));
     return result;
   }
 
   Future<BaseResult> register(RegisterCredentials credentials) async {
-    try {
-      return await http
-          .post(
-            Uri.parse('$apiUrl/Register'),
-            headers: {'Content-Type': 'application/json'},
-            body: jsonEncode(credentials.toJson()),
-          )
-          .then(
-            (value) => BaseResult.fromJson(json.decode(value.body)),
-          );
-    } catch (err) {
-      rethrow;
+    var httpResult = await http.post(
+      Uri.parse('$apiUrl/Register'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode(credentials.toJson()),
+    );
+
+    if (httpResult.statusCode == HttpStatus.badRequest) {
+      return BaseResult(
+        httpStatusCode: 400,
+        message: "Bad credentials",
+      );
     }
+    return BaseResult.fromJson(json.decode(httpResult.body));
   }
 }
