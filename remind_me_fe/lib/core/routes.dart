@@ -26,8 +26,8 @@ class Routes {
       todoListRoute: (context) => TodoListScreen(context),
       todoUpdateRoute: (context) => TodoUpdateScreen(),
       todoAddRoute: (context) => TodoAddScreen(),
-      loginRoute: (context) => const LoginScreen(),
-      registerRoute: (context) => const RegisterScreen(),
+      loginRoute: (context) => LoginScreen(),
+      registerRoute: (context) => RegisterScreen(),
     };
   }
 }

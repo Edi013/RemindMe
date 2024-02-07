@@ -35,6 +35,7 @@ namespace RemindMe.Controller
             return result;
         }
 
+        [Authorize]
         [HttpPost("Create")]
         public async Task<Item> CreateTodo(CreateTodoRequest req)
         {
@@ -43,6 +44,7 @@ namespace RemindMe.Controller
             return await _mediator.Send(req, CancellationToken.None);
         }
 
+        [Authorize]
         [HttpDelete("Delete")]
         public async Task<BaseResult> DeleteTodo(DeleteTodoRequest req)
         {
@@ -51,6 +53,7 @@ namespace RemindMe.Controller
             return await _mediator.Send(req, CancellationToken.None);
         }
 
+        [Authorize]
         [HttpPut("Update")]
         public async Task<Item> UpdateTodo(UpdateTodoRequest req)
         {
@@ -58,7 +61,5 @@ namespace RemindMe.Controller
 
             return await _mediator.Send(req, CancellationToken.None);
         }
-
-
     }
 }

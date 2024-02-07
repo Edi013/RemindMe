@@ -18,6 +18,8 @@ class TodoProvider extends ChangeNotifier {
 
   Future<List<TodoEntity>> getAll() async {
     var result = await repository.getAll();
+    todos = result;
+    notifyListeners();
     return result;
   }
 

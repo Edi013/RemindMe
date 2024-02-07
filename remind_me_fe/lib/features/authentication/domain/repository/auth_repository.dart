@@ -5,5 +5,5 @@ import 'package:remind_me_fe/features/authentication/domain/entities/register_cr
 abstract class AuthRepository {
   Future<BaseResult> register(RegisterCredentials credentials);
   Future<BaseResult> login(LoginCredentials credentials);
-  Future<String> test();
+  Future<BaseResult> refreshJwt(String refreshToken);
 }

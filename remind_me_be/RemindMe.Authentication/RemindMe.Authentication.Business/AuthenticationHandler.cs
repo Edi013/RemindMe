@@ -9,9 +9,11 @@ using RemindMe.Authentication.Domain.Models;
 using RemindMe.Authentication.Domain.Responses;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net;
+using System.Net.Mail;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace RemindMe.Authentication.Handlers
 {
@@ -85,7 +87,7 @@ namespace RemindMe.Authentication.Handlers
                 Message = "Unexpected error happened on register. Please contact application staff.",
             };
         }
-
+        
         public async Task<LoginResponse> Login(LoginDto loginDto, HttpContext httpContext)
         {
             var existingUser = await _userManager.FindByEmailAsync(loginDto.Email);
@@ -98,12 +100,13 @@ namespace RemindMe.Authentication.Handlers
                     Message = "This email is not registered."
                 };
             }
-
+            // sa verificam daca email ul e conform
+            
             if(existingUser.EmailConfirmed == false)
             {
                 return new LoginResponse()
                 {
-                    HttpStatusCode = HttpStatusCode.Unauthorized,
+                    HttpStatusCode = HttpStatusCode.BadRequest,
                     Message = "You can't log in before validating your accout. Please confirm your email before proceeding again. You can do that by accesing the email sent to you after registering your account here."
                 };
             }
@@ -111,8 +114,8 @@ namespace RemindMe.Authentication.Handlers
             if(!await _userManager.CheckPasswordAsync(existingUser, loginDto.Password)){
                 return new LoginResponse()
                 {
-                    HttpStatusCode = HttpStatusCode.Unauthorized,
-                    Message = "Login failed. Invalid password."
+                    HttpStatusCode = HttpStatusCode.BadRequest,
+                    Message = "Bad password."
                 };
             }
 

@@ -1,8 +1,12 @@
+// login_controller.dart
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:remind_me_fe/core/constants.dart';
 import 'package:remind_me_fe/core/routes.dart';
+import 'package:remind_me_fe/core/snackBar/snack_bar.dart';
 import 'package:remind_me_fe/features/authentication/domain/entities/login_credentials.dart';
 import 'package:remind_me_fe/features/authentication/presentation/provider/auth_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -28,38 +32,17 @@ class LoginController {
 
       if (result.httpStatusCode == HttpStatus.accepted) {
         Navigator.pushNamed(context, Routes.homeRoute);
-
         _saveUserAuthenticationData(result.token, result.jwtExpiration);
-
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Login successful.'),
-          ),
-        );
+      } else if (result.httpStatusCode == HttpStatus.badRequest) {
+        buildSnackBarMessage(context, "'Bad credentials. Please try again.'");
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Input error. Re-enter your credentials.'),
-          ),
-        );
+        buildSnackBarMessage(context,
+            "Unexpected error occured. Http code status not expected.");
       }
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Please fill input'),
-        ),
-      );
+      buildSnackBarMessage(context, "Fill in your credentials.");
     }
   }
-
-  // ScaffoldFeatureController<SnackBar, SnackBarClosedReason> snackMessage(
-  //     BuildContext context, String message) {
-  //   return ScaffoldMessenger.of(context).showSnackBar(
-  //     const SnackBar(
-  //       content: Text(message),
-  //     ),
-  //   );
-  // }
 
   Future<void> _saveUserAuthenticationData(
       String token, String expirationDateUtc) async {

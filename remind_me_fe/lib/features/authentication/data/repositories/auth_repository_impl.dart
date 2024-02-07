@@ -23,7 +23,7 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<String> test() async {
-    return await authService.test();
+  Future<BaseResult> refreshJwt(String refreshToken) async {
+    return BaseResult(httpStatusCode: 1, message: "NOT IMPLEMENTED");
   }
 }

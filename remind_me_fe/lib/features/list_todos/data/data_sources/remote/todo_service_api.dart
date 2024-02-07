@@ -1,35 +1,31 @@
 import 'dart:convert';
-import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart';
 import 'package:remind_me_fe/features/list_todos/data/models/create_todo_request.dart';
 import 'package:remind_me_fe/features/list_todos/data/models/delete_todo_request.dart';
 import 'package:remind_me_fe/features/list_todos/data/models/todo.dart';
 import 'package:remind_me_fe/core/constants.dart';
+import 'package:remind_me_fe/injection_container.dart';
 
 class TodoServiceApi {
   final String apiExtension = '/ToDo';
   late String apiUrl;
+  late Dio _dio;
 
   TodoServiceApi() {
     apiUrl = "$BASE_URL_TODOS$apiExtension";
+    _dio = sl<Dio>();
   }
 
   Future<List<TodoModel>> getAll() async {
-    var result = await http.get(
-      Uri.parse('$apiUrl/GetAll'),
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        'Content-Type': 'application/json; charset=UTF-8',
-        'Accept': '*/*'
-      },
-    ).then(
-      (response) {
-        final List<dynamic> data = json.decode(response.body);
-        List<TodoModel> result =
-            data.map((json) => TodoModel.fromJson(json)).toList();
-        return result;
-      },
-    );
-    return result.isEmpty ? seedData() : result;
+    try {
+      final response = await _dio.get('$apiUrl/GetAll');
+      final List<dynamic> data = response.data;
+      List<TodoModel> result =
+          data.map((json) => TodoModel.fromJson(json)).toList();
+      return result.isEmpty ? seedData() : result;
+    } catch (error) {
+      throw Exception('Failed to fetch todos: $error');
+    }
   }
 
   List<TodoModel> seedData() {
@@ -83,36 +79,39 @@ class TodoServiceApi {
       ownerId: todo.ownerId,
     );
 
-    return await http
-        .post(
-          Uri.parse('$apiUrl/Create'),
-          headers: {'Content-Type': 'application/json'},
-          body: jsonEncode(newToDo.toJson()),
-        )
-        .then(
-          (value) => TodoModel.fromJson(json.decode(value.body)),
-        );
+    try {
+      final response = await _dio.post(
+        '$apiUrl/Create',
+        data: jsonEncode(newToDo.toJson()),
+      );
+      return TodoModel.fromJson(response.data);
+    } catch (error) {
+      throw Exception('Failed to add todo: $error');
+    }
   }
 
   Future<TodoModel> updateTodo(TodoModel updatedToDo) async {
-    return await http
-        .put(
-          Uri.parse('$apiUrl/Update'),
-          headers: {'Content-Type': 'application/json'},
-          body: jsonEncode(updatedToDo.toJson()),
-        )
-        .then(
-          (value) => TodoModel.fromJson(json.decode(value.body)),
-        );
+    try {
+      final response = await _dio.put(
+        '$apiUrl/Update',
+        data: jsonEncode(updatedToDo.toJson()),
+      );
+      return TodoModel.fromJson(response.data);
+    } catch (error) {
+      throw Exception('Failed to update todo: $error');
+    }
   }
 
   Future<void> deleteTodo(int todoId) async {
     DeleteToDoRequest deleteRequest = DeleteToDoRequest(id: todoId);
 
-    await http.delete(
-      Uri.parse('$apiUrl/Delete'),
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode(deleteRequest.toJson()),
-    );
+    try {
+      await _dio.delete(
+        '$apiUrl/Delete',
+        data: jsonEncode(deleteRequest.toJson()),
+      );
+    } catch (error) {
+      throw Exception('Failed to delete todo: $error');
+    }
   }
 }

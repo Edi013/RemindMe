@@ -15,13 +15,8 @@ class AuthProvider extends ChangeNotifier {
     repository = repo;
   }
 
-  Future<String> test() async {
-    return await repository.test();
-  }
-
   Future<LoginResponse> login(LoginCredentials credentials) async {
     var result = await repository.login(credentials);
-    // store jwt
     return result;
   }
 

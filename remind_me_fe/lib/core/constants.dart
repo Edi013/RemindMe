@@ -2,6 +2,7 @@
 
 const String BASE_URL_TODOS = "http://localhost:7066/Api";
 const String BASE_URL_AUTHENTICATION_SERVICE = "http://localhost:7092";
+const String BASE_URL_FLUTTER_CLIENT = "http://localhost:51742";
 
 const String DATE_TIME_FORMAT = "yyyy-MM-ddTHH:mm";
 

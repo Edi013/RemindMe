@@ -4,10 +4,14 @@ import 'package:remind_me_fe/features/list_todos/presentation/providers/todo_pro
 
 class TodoListController {
   TodoListController(BuildContext context) {
-    Provider.of<TodoProvider>(context, listen: false).getAll();
+    getRemoteTodos(context);
   }
 
   void deleteById(BuildContext context, int id) {
     Provider.of<TodoProvider>(context, listen: false).delete(id);
+  }
+
+  Future<void> getRemoteTodos(BuildContext context) async {
+    await Provider.of<TodoProvider>(context, listen: false).getAll();
   }
 }
