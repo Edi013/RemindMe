@@ -119,7 +119,7 @@ namespace RemindMe.Authentication.Handlers
                 };
             }
 
-            DateTime jwtExpirationDate = DateTime.UtcNow.AddMinutes(30);
+            DateTime jwtExpirationDate = DateTime.UtcNow.AddSeconds(15);
             var jwt = await GenerateJwtAsync(existingUser, jwtExpirationDate);
 
             //string refreshToken = GenerateRefreshToken();

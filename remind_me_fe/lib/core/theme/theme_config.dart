@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
 const Color lightPrimary = Color(0xFFF5F5F5);
-const Color darkPrimary = Color(0xff1f1f1f);
 const Color lightAccent = Color(0xff2ca8e2);
-const Color darkAccent = Color(0xff2ca8e2);
 const Color lightBG = Colors.white;
-const Color darkBG = Color(0xff121212);
+
+const Color darkPrimary = Color.fromARGB(255, 36, 36, 36);
+const Color darkAccent = Color.fromARGB(255, 148, 112, 15);
+const Color darkBG = Color.fromARGB(255, 18, 18, 18);
+
 const Color smokeWhite = Color(0xffF5F5F5);
 
 final ThemeData lightTheme = ThemeData(
@@ -56,7 +58,7 @@ final ThemeData darkTheme = ThemeData(
   tabBarTheme: const TabBarTheme(
     indicator: UnderlineTabIndicator(
       borderSide: BorderSide(
-        color: lightAccent,
+        color: darkAccent, // lightAccent
         width: 2.0,
       ),
     ),
@@ -70,5 +72,16 @@ final ThemeData darkTheme = ThemeData(
       fontWeight: FontWeight.w800,
     ),
     iconTheme: IconThemeData(color: Colors.white),
+  ),
+  buttonTheme: ButtonThemeData(
+    buttonColor: darkAccent,
+    textTheme: ButtonTextTheme.primary,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(80),
+    ),
+  ),
+  cardTheme: const CardTheme(
+    color: darkPrimary,
+    margin: EdgeInsets.all(50),
   ),
 );

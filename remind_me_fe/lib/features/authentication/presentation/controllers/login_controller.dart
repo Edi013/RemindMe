@@ -9,6 +9,7 @@ import 'package:remind_me_fe/core/routes.dart';
 import 'package:remind_me_fe/core/snackBar/snack_bar.dart';
 import 'package:remind_me_fe/features/authentication/domain/entities/login_credentials.dart';
 import 'package:remind_me_fe/features/authentication/presentation/provider/auth_provider.dart';
+import 'package:remind_me_fe/injection_container.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginController {
@@ -54,7 +55,7 @@ class LoginController {
           "Expiration date for token was empty when storing it have been tried.");
     }
 
-    final SharedPreferences preferences = await SharedPreferences.getInstance();
+    final SharedPreferences preferences = sl<SharedPreferences>();
     preferences.setString(jwt_key, token);
     preferences.setString(jwt_expiration_date_key, expirationDateUtc);
   }

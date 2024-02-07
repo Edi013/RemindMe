@@ -8,6 +8,7 @@ import 'package:remind_me_fe/features/list_todos/data/data_sources/remote/todo_s
 import 'package:remind_me_fe/features/list_todos/data/repositories/todo_repository_impl.dart';
 import 'package:remind_me_fe/features/theme/presentation/providers/theme_provider.dart';
 import 'package:dio/dio.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'features/list_todos/presentation/providers/todo_provider.dart';
 
@@ -33,4 +34,7 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<AuthRepositoryImpl>(
       AuthRepositoryImpl(sl<AuthServiceApi>()));
   sl.registerSingleton<AuthProvider>(AuthProvider(sl<AuthRepositoryImpl>()));
+
+  sl.registerSingleton<SharedPreferences>(
+      await SharedPreferences.getInstance());
 }
