@@ -5,16 +5,10 @@ import 'package:remind_me_fe/injection_container.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatelessWidget {
-  late AuthProvider provider;
-
-  HomeScreen(AuthProvider authProvider, {super.key}) {
-    provider = authProvider;
-  }
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    checkJwtValidity(context);
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Home Screen'),
@@ -29,23 +23,47 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+class HomeScreenWithJwtCheck extends StatefulWidget {
+  final AuthProvider provider;
+
+  const HomeScreenWithJwtCheck(this.provider, {Key? key}) : super(key: key);
+
+  @override
+  _HomeScreenWithJwtCheckState createState() => _HomeScreenWithJwtCheckState();
+}
+
+class _HomeScreenWithJwtCheckState extends State<HomeScreenWithJwtCheck> {
+  @override
+  void initState() {
+    super.initState();
+
+    checkJwtValidity(context);
+  }
 
   void checkJwtValidity(BuildContext context) {
-    provider.clearJwtData(sl<SharedPreferences>());
-    if (!provider.isJwtPresent()) {
-      Navigator.pushNamedAndRemoveUntil(
-        context,
-        Routes.sessionExpiredRoute,
-        (route) => false, // Remove all routes and push login route
-      );
+    widget.provider.clearJwtData(sl<SharedPreferences>());
+    if (!widget.provider.isJwtPresent()) {
+      _navigateToLogin(context);
     }
-    if (provider.isJwtExpired()) {
-      Navigator.pushNamedAndRemoveUntil(
-        context,
-        Routes.sessionExpiredRoute,
-        (route) => false, // Remove all routes and push login route
-      );
+    if (widget.provider.isJwtExpired()) {
+      _navigateToLogin(context);
     }
     return;
+  }
+
+  void _navigateToLogin(BuildContext context) {
+    // Navigator.pushNamedAndRemoveUntil(
+    //   context,
+    //   Routes.sessionExpiredRoute,
+    //   (route) => false,
+    // );
+    Navigator.pushNamed(context, Routes.loginRoute);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return const HomeScreen();
   }
 }

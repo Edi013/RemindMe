@@ -13,4 +13,7 @@ const String error_message_constants_not_used =
     "Theme name doesn't use one of the allowed constants for theme name !";
 
 const String jwt_key = "Jwt";
-const String jwt_expiration_date_key = "JwtExpirationDate";
+const String jwt_jti = "Jti";
+const String jwt_nickname = "Nickname";
+const String jwt_email = "Email";
+const String jwt_role = "Role";

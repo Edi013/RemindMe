@@ -175,13 +175,10 @@ namespace RemindMe.Authentication.Handlers
                             _configuration.GetSection("JWT:ValidAudience:Postman").Value,
                             _configuration.GetSection("JWT:ValidAudience:FlutterClient").Value,
                             _configuration.GetSection("JWT:ValidAudience:ToDoService").Value,
-
             };
             var authClaims = new List<Claim>
             {
-                //this jwt id
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-
+                new Claim("Jti", Guid.NewGuid().ToString()),
                 new Claim("Email", user.Email),
                 new Claim("Username", user.Nickname),
                 new Claim(JwtRegisteredClaimNames.Aud, audience[0]),

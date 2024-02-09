@@ -57,6 +57,6 @@ class LoginController {
 
     final SharedPreferences preferences = sl<SharedPreferences>();
     preferences.setString(jwt_key, token);
-    preferences.setString(jwt_expiration_date_key, expirationDateUtc);
+    //preferences.setString(jwt_expiration_date_key, expirationDateUtc);
   }
 }

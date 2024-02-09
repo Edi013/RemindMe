@@ -192,6 +192,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.6.7"
+  jwt_decode_full:
+    dependency: "direct main"
+    description:
+      name: jwt_decode_full
+      sha256: "827e9cd0b15a48d31e2ffb9bdd12a9b36b075ede9a78256a6e65588e7971738c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.9.2"
   libphonenumber_platform_interface:
     dependency: transitive
     description:
