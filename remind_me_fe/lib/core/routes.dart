@@ -25,7 +25,7 @@ class Routes {
 
   static Map<String, WidgetBuilder> generateRoutes() {
     return {
-      homeRoute: (context) => HomeScreenWithJwtCheck(sl<AuthProvider>()),
+      homeRoute: (context) => const HomeScreen(),
       themeScreenRoute: (context) => ThemeScreen(context),
       todoListRoute: (context) => TodoListScreen(context),
       todoUpdateRoute: (context) => TodoUpdateScreen(),

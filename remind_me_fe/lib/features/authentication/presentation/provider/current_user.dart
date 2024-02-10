@@ -4,17 +4,40 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class CurrentUser {
   late final SharedPreferences preferences;
-  late String? jwt;
-  late DateTime? jwtExpirationDate;
-  late String? jwtJti;
-  late String? nickname;
-  late String? email;
-  late List<String>? role;
+  String? jwt;
+  DateTime? jwtExpirationDate;
+  String? jwtJti;
+  String? nickname;
+  String? email;
+  List<String>? role;
 
   CurrentUser(SharedPreferences preferencesInjected) {
     preferences = preferencesInjected;
+    //clearJwtData();
+    var storedJwt = preferences.getString(jwt_key);
+    if (storedJwt != null && storedJwt.isNotEmpty) {
+      parseNewJwt(storedJwt);
+      return;
+    }
+    jwt = null;
+    jwtExpirationDate = null;
+    jwtJti = null;
+    nickname = null;
+    email = null;
+    role = null;
+  }
 
-    jwt = preferences.getString(jwt_key);
+  bool isLoggedIn() {
+    if (!isJwtPresent()) {
+      clearJwtData();
+      return false;
+    }
+    if (isJwtExpired()) {
+      clearJwtData();
+      return false;
+    }
+
+    return true;
   }
 
   void parseNewJwt(String token) {
@@ -28,7 +51,7 @@ class CurrentUser {
         throw AssertionError("Token has no expiration date.");
       }
 
-      if (!jwtData.expiration!.isBefore(DateTime.now().toUtc())) {
+      if (jwtData.expiration!.isBefore(DateTime.now().toUtc())) {
         return;
       }
 
@@ -48,8 +71,13 @@ class CurrentUser {
     nickname = jwtData.payload[jwt_nickname] as String;
     email = jwtData.payload[jwt_email] as String;
     var roleFromJwt = jwtData.payload[jwt_role];
-    for (var role in roleFromJwt) {
-      this.role!.insert(this.role!.length, role);
+    roleFromJwt = List<String>;
+    if (roleFromJwt is String) {
+      role!.insert(0, roleFromJwt);
+    } else if (roleFromJwt is List<String>) {
+      for (var role in roleFromJwt) {
+        this.role!.insert(this.role!.length, role);
+      }
     }
   }
 

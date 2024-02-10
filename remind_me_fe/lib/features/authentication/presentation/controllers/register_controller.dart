@@ -8,6 +8,7 @@ import 'package:remind_me_fe/core/routes.dart';
 import 'package:remind_me_fe/core/snackBar/snack_bar.dart';
 import 'package:remind_me_fe/features/authentication/domain/entities/register_credentials.dart';
 import 'package:remind_me_fe/features/authentication/presentation/provider/auth_provider.dart';
+import 'package:remind_me_fe/injection_container.dart';
 
 class RegisterController {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -18,8 +19,8 @@ class RegisterController {
       TextEditingController();
   late AuthProvider provider;
 
-  RegisterController(AuthProvider providerInjected) {
-    provider = providerInjected;
+  RegisterController() {
+    provider = sl<AuthProvider>();
   }
 
   Future<void> handleRegister(BuildContext context) async {

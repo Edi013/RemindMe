@@ -37,5 +37,6 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<AuthServiceApi>(AuthServiceApi());
   sl.registerSingleton<AuthRepositoryImpl>(
       AuthRepositoryImpl(sl<AuthServiceApi>()));
-  sl.registerSingleton<AuthProvider>(AuthProvider(sl<AuthRepositoryImpl>()));
+  sl.registerSingleton<AuthProvider>(
+      AuthProvider(sl<AuthRepositoryImpl>(), sl<CurrentUser>()));
 }

@@ -23,7 +23,7 @@ class LoginCard extends StatelessWidget {
   late LoginController controller;
 
   LoginCard({super.key}) {
-    controller = LoginController(sl<AuthProvider>());
+    controller = LoginController();
   }
 
   @override

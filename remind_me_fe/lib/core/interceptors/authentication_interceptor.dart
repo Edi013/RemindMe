@@ -1,16 +1,15 @@
 import 'package:dio/dio.dart';
-import 'package:remind_me_fe/core/constants.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:remind_me_fe/features/authentication/presentation/provider/current_user.dart';
+import 'package:remind_me_fe/injection_container.dart';
 
 class AuthenticationInterceptor extends Interceptor {
   @override
   void onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? jwtToken = prefs.getString(jwt_key);
+    CurrentUser currentUser = sl<CurrentUser>();
 
-    if (jwtToken != null) {
-      options.headers['Authorization'] = 'Bearer $jwtToken';
+    if (currentUser.isJwtPresent()) {
+      options.headers['Authorization'] = 'Bearer ${currentUser.jwt}';
     }
 
     super.onRequest(options, handler);

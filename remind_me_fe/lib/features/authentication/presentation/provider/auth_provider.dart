@@ -11,8 +11,9 @@ class AuthProvider extends ChangeNotifier {
   late AuthRepositoryImpl repository;
   late CurrentUser currentUser;
 
-  AuthProvider(AuthRepositoryImpl repo) {
+  AuthProvider(AuthRepositoryImpl repo, CurrentUser currentUserInjected) {
     repository = repo;
+    currentUser = currentUserInjected;
   }
 
   Future<LoginResponse> login(LoginCredentials credentials) async {

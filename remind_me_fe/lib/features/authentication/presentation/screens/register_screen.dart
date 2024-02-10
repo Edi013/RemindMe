@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:remind_me_fe/features/authentication/presentation/controllers/register_controller.dart';
-import 'package:remind_me_fe/features/authentication/presentation/provider/auth_provider.dart';
-import 'package:remind_me_fe/injection_container.dart';
 
 class RegisterScreen extends StatelessWidget {
   const RegisterScreen({super.key});
@@ -19,11 +16,9 @@ class RegisterScreen extends StatelessWidget {
 
 class RegisterCard extends StatelessWidget {
   late RegisterController controller;
-  late AuthProvider provider;
 
   RegisterCard(BuildContext context, {super.key}) {
-    provider = Provider.of<AuthProvider>(context);
-    controller = RegisterController(sl<AuthProvider>());
+    controller = RegisterController();
   }
 
   @override

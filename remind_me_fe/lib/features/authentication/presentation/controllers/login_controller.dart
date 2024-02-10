@@ -7,6 +7,7 @@ import 'package:remind_me_fe/core/routes.dart';
 import 'package:remind_me_fe/core/snackBar/snack_bar.dart';
 import 'package:remind_me_fe/features/authentication/domain/entities/login_credentials.dart';
 import 'package:remind_me_fe/features/authentication/presentation/provider/auth_provider.dart';
+import 'package:remind_me_fe/injection_container.dart';
 
 class LoginController {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -14,8 +15,8 @@ class LoginController {
   final TextEditingController passwordController = TextEditingController();
   late AuthProvider provider;
 
-  LoginController(AuthProvider providerInjected) {
-    provider = providerInjected;
+  LoginController() {
+    provider = sl<AuthProvider>();
   }
 
   Future<void> handleLogin(BuildContext context) async {
