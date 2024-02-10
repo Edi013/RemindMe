@@ -100,8 +100,8 @@ class LoginCard extends StatelessWidget {
                           onPressed: () async {
                             await controller.handleLogin(context);
                           },
-                          child: const Text('Submit'),
                           style: ElevatedButton.styleFrom(),
+                          child: const Text('Submit'),
                         ),
                       ),
                     ),

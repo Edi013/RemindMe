@@ -31,8 +31,8 @@ class Routes {
       todoUpdateRoute: (context) => TodoUpdateScreen(),
       todoAddRoute: (context) => TodoAddScreen(),
       loginRoute: (context) => LoginScreen(),
-      registerRoute: (context) => RegisterScreen(),
-      sessionExpiredRoute: (context) => SessionExpiredScreen(),
+      registerRoute: (context) => const RegisterScreen(),
+      sessionExpiredRoute: (context) => const SessionExpiredScreen(),
     };
   }
 }

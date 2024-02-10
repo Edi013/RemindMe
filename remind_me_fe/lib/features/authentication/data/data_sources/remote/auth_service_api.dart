@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:remind_me_fe/core/constants.dart';
 import 'package:remind_me_fe/features/authentication/domain/entities/base_response.dart';
