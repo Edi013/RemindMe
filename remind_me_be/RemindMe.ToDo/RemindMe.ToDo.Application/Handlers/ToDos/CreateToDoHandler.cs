@@ -22,6 +22,11 @@ namespace RemindMe.Application.Handlers.Todos
 
         public async Task<Item> Handle(CreateTodoRequest request, CancellationToken cancellationToken)
         {
+            if(request.Difficulty < 1 || request.Difficulty > 10)
+            {
+                throw new BadHttpRequestException("Todo's difficulty has to be between 1-10.");
+            }
+
             string dateTimeFormat = configuration.GetValue<string>("DateTimeFormat");
             
             var newTodo = new Item()
@@ -35,6 +40,8 @@ namespace RemindMe.Application.Handlers.Todos
                 Difficulty = request.Difficulty,
                 OwnerId = request.OwnerId,
             };
+
+            
 
             Item operationResult = await repository.Add(newTodo);
             return operationResult;

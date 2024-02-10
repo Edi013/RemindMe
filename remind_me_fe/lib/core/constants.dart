@@ -14,6 +14,6 @@ const String error_message_constants_not_used =
 
 const String jwt_key = "Jwt";
 const String jwt_jti = "Jti";
-const String jwt_nickname = "Nickname";
+const String jwt_nickname = "Username";
 const String jwt_email = "Email";
 const String jwt_role = "Role";

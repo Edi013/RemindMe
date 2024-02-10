@@ -84,6 +84,11 @@ class TodoServiceApi {
         '$apiUrl/Create',
         data: jsonEncode(newToDo.toJson()),
       );
+
+      if (response.statusCode == 400) {
+        throw Exception('Failed to add todo: Bad Request');
+      }
+
       return TodoModel.fromJson(response.data);
     } catch (error) {
       throw Exception('Failed to add todo: $error');
