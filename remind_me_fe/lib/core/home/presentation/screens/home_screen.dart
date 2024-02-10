@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:remind_me_fe/core/routes.dart';
 import 'package:remind_me_fe/features/authentication/presentation/provider/auth_provider.dart';
-import 'package:remind_me_fe/injection_container.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -39,15 +37,14 @@ class _HomeScreenWithJwtCheckState extends State<HomeScreenWithJwtCheck> {
   void initState() {
     super.initState();
 
-    checkJwtValidity(context);
+    manageAuthentionStatus(context);
   }
 
-  void checkJwtValidity(BuildContext context) {
-    widget.provider.clearJwtData(sl<SharedPreferences>());
-    if (!widget.provider.isJwtPresent()) {
+  void manageAuthentionStatus(BuildContext context) {
+    if (!widget.provider.currentUser.isJwtPresent()) {
       _navigateToLogin(context);
     }
-    if (widget.provider.isJwtExpired()) {
+    if (widget.provider.currentUser.isJwtExpired()) {
       _navigateToLogin(context);
     }
     return;

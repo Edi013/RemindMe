@@ -31,12 +31,11 @@ Future<void> initializeDependencies() async {
       TodoRepositoryImpl(sl<TodoServiceApi>()));
   sl.registerSingleton<TodoProvider>(TodoProvider(sl<TodoRepositoryImpl>()));
 
-  sl.registerSingleton<CurrentUser>(CurrentUser(null));
+  sl.registerSingleton<SharedPreferences>(
+      await SharedPreferences.getInstance());
+  sl.registerSingleton<CurrentUser>(CurrentUser(sl<SharedPreferences>()));
   sl.registerSingleton<AuthServiceApi>(AuthServiceApi());
   sl.registerSingleton<AuthRepositoryImpl>(
       AuthRepositoryImpl(sl<AuthServiceApi>()));
   sl.registerSingleton<AuthProvider>(AuthProvider(sl<AuthRepositoryImpl>()));
-
-  sl.registerSingleton<SharedPreferences>(
-      await SharedPreferences.getInstance());
 }
