@@ -5,16 +5,16 @@ using RemindMe.Domain.Results;
 
 namespace RemindMe.Application.Handlers.Todos
 {
-    public class DeleteTodoHandler : IRequestHandler<DeleteTodoRequest, BaseResponse>
+    public class DeleteItemHandler : IRequestHandler<DeleteItemRequest, BaseResponse>
     {
-        private ITodoRepository repository;
+        private IItemRepository repository;
 
-        public DeleteTodoHandler(ITodoRepository _repository)
+        public DeleteItemHandler(IItemRepository _repository)
         {
             repository = _repository;
         }
 
-        public async Task<BaseResponse> Handle(DeleteTodoRequest request, CancellationToken cancellationToken)
+        public async Task<BaseResponse> Handle(DeleteItemRequest request, CancellationToken cancellationToken)
         {
             await repository.DeleteById(request.Id);
 

@@ -3,7 +3,7 @@ using RemindMe.Domain.Entities;
 
 namespace RemindMe.Application.Requests.Todos
 {
-    public class GetAllTodoRequest : IRequest<IEnumerable<Item>>
+    public class GetAllItemRequest : IRequest<IEnumerable<Item>>
     {
     }
 }

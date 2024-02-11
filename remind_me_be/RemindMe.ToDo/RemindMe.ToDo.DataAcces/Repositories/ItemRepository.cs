@@ -4,9 +4,9 @@ using RemindMe.Domain.Interfaces;
 
 namespace RemindMe.DataAcces.Repositories
 {
-    public class TodoRepository : RepositoryBase<Item>, ITodoRepository
+    public class ItemRepository : RepositoryBase<Item>, IItemRepository
     {
-        public TodoRepository(ApplicationDbContext context)
+        public ItemRepository(ApplicationDbContext context)
             : base(context)
         { }
         public async Task<Item> SingleOrDefaultAsync(int id)

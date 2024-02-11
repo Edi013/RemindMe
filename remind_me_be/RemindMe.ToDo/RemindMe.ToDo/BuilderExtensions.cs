@@ -27,7 +27,7 @@ namespace RemindMe
             builder.RegisterSwaggerSettings();
 
             builder.Services.AddMediatR(
-                 cfg => cfg.RegisterServicesFromAssemblies(typeof(GetAllTodoHandler).Assembly));
+                 cfg => cfg.RegisterServicesFromAssemblies(typeof(GetAllItemHandler).Assembly));
 
             var connectionString = builder.Configuration.GetConnectionString("RemindMeDb");
             builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(connectionString));
@@ -84,7 +84,7 @@ namespace RemindMe
             ;
 
             builder.RegisterAppSettings();
-            builder.Services.AddScoped<ITodoRepository, TodoRepository>();
+            builder.Services.AddScoped<IItemRepository, ItemRepository>();
         }
         public static void ConfigureLogging(this WebApplicationBuilder builder)
         {

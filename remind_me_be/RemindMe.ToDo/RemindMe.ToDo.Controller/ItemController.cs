@@ -5,27 +5,28 @@ using Microsoft.Extensions.Logging;
 using RemindMe.Application.Requests.Todos;
 using RemindMe.Domain.Entities;
 using RemindMe.Domain.Results;
+using RemindMe.ToDo.Domain.Results;
 
 namespace RemindMe.Controller
 {
     [ApiController]
     [Route("Api/[controller]")]
-    public class ToDoController : ControllerBase
+    public class ItemController : ControllerBase
     {
         private readonly IMediator _mediator;
-        private readonly ILogger<ToDoController> _logger;
+        private readonly ILogger<ItemController> _logger;
 
-        public ToDoController(IMediator mediator, ILogger<ToDoController> logger)
+        public ItemController(IMediator mediator, ILogger<ItemController> logger)
         {
             this._mediator = mediator;
             this._logger = logger;
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpGet("GetAll")]
         public async Task<IEnumerable<Item>> GetAll()
         {
-            var req = new GetAllTodoRequest();
+            var req = new GetAllItemRequest();
             foreach (var header in HttpContext.Request.Headers)
             {
                 _logger.LogInformation($"{header.Key}: {header.Value}");
@@ -35,27 +36,27 @@ namespace RemindMe.Controller
             return result;
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpPost("Create")]
-        public async Task<Item> CreateTodo(CreateTodoRequest req)
+        public async Task<ItemResponse> CreateTodo(CreateItemRequest req)
         {
             _logger.LogInformation("Create [POST] request for a Todo / Item.");
-
-            return await _mediator.Send(req, CancellationToken.None);
+            var result = await _mediator.Send(req, CancellationToken.None);
+            return result;
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpDelete("Delete")]
-        public async Task<BaseResponse> DeleteTodo(DeleteTodoRequest req)
+        public async Task<BaseResponse> DeleteTodo(DeleteItemRequest req)
         {
             _logger.LogInformation($"Delete [DELETE] request for Todo / Item with id {req.Id}.");
-
-            return await _mediator.Send(req, CancellationToken.None);
+            var result = await _mediator.Send(req, CancellationToken.None);
+            return result;
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpPut("Update")]
-        public async Task<Item> UpdateTodo(UpdateTodoRequest req)
+        public async Task<ItemResponse> UpdateTodo(UpdateItemRequest req)
         {
             _logger.LogInformation($"Update [PUT] request for Todo / Item with id {req.Id}.");
 

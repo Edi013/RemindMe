@@ -11,6 +11,5 @@
         public bool IsFinished { get; set; }
         public int Difficulty { get; set; }
         public int OwnerId { get; set; }
-
     }
 }
