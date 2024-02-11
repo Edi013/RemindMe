@@ -49,12 +49,33 @@ class TodoAddController {
     }
   }
 
-  String? validateFormField(value) {
+  String? validateDateTimeFormField(value) {
     if (value == null || value.isEmpty) {
       return 'Field cannot be empty';
-    } else if (value.length < 2 && int.tryParse(value) == null) {
-      return 'Field must be at least 2 characters';
+    } else if (value.length < 10) {
+      return 'Field must have this format 2000-01-01';
     }
+    return null;
+  }
+
+  String? validateDifficultyFormField(dynamic value) {
+    if (value == null) {
+      return 'Field cannot be empty';
+    }
+
+    int? intValue;
+    try {
+      intValue = int.parse(value.toString());
+    } catch (e) {
+      return 'Invalid input. Please enter a valid number';
+    }
+
+    if (intValue < 1) {
+      return 'Difficulty must be greater or equal to 1';
+    } else if (intValue > 10) {
+      return 'Difficulty must be less or equal to 10';
+    }
+
     return null;
   }
 

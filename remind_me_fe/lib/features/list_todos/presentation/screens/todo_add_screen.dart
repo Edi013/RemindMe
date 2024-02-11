@@ -46,7 +46,8 @@ class TodoAddScreen extends StatelessWidget {
               TextFormField(
                 controller: addController.startDateController,
                 decoration: const InputDecoration(labelText: 'Start Date *'),
-                validator: (value) => addController.validateFormField(value),
+                validator: (value) =>
+                    addController.validateDateTimeFormField(value),
                 onTap: () =>
                     _selectDate(context, addController.startDateController),
               ),
@@ -54,7 +55,8 @@ class TodoAddScreen extends StatelessWidget {
               TextFormField(
                 controller: addController.endDateController,
                 decoration: const InputDecoration(labelText: 'End Date'),
-                validator: (value) => addController.validateFormField(value),
+                validator: (value) =>
+                    addController.validateDateTimeFormField(value),
                 onTap: () =>
                     _selectDate(context, addController.endDateController),
               ),
@@ -62,7 +64,8 @@ class TodoAddScreen extends StatelessWidget {
               TextFormField(
                 controller: addController.difficultyController,
                 decoration: const InputDecoration(labelText: 'Difficulty *'),
-                validator: (value) => addController.validateFormField(value),
+                validator: (value) =>
+                    addController.validateDifficultyFormField(value),
               ),
               const SizedBox(height: 16.0),
               ElevatedButton(

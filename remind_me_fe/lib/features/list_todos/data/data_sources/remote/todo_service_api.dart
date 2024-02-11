@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
+import 'package:remind_me_fe/core/snackBar/snack_bar.dart';
 import 'package:remind_me_fe/features/list_todos/data/models/create_todo_request.dart';
 import 'package:remind_me_fe/features/list_todos/data/models/delete_todo_request.dart';
 import 'package:remind_me_fe/features/list_todos/data/models/todo.dart';
@@ -7,7 +9,7 @@ import 'package:remind_me_fe/core/constants.dart';
 import 'package:remind_me_fe/injection_container.dart';
 
 class TodoServiceApi {
-  final String apiExtension = '/ToDo';
+  final String apiExtension = '/Item';
   late String apiUrl;
   late Dio _dio;
 
@@ -101,6 +103,11 @@ class TodoServiceApi {
         '$apiUrl/Update',
         data: jsonEncode(updatedToDo.toJson()),
       );
+
+      if (response.statusCode == 400) {
+        throw Exception('Failed to add todo: Bad Request');
+      }
+
       return TodoModel.fromJson(response.data);
     } catch (error) {
       throw Exception('Failed to update todo: $error');

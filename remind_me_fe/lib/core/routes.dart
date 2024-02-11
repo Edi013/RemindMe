@@ -4,9 +4,9 @@ import 'package:remind_me_fe/features/authentication/presentation/provider/auth_
 import 'package:remind_me_fe/features/authentication/presentation/screens/expired_session_screen.dart';
 import 'package:remind_me_fe/features/authentication/presentation/screens/login_screen.dart';
 import 'package:remind_me_fe/features/authentication/presentation/screens/register_screen.dart';
-import 'package:remind_me_fe/features/list_todos/presentation/screens/add_screen.dart';
-import 'package:remind_me_fe/features/list_todos/presentation/screens/list_screen.dart';
-import 'package:remind_me_fe/features/list_todos/presentation/screens/update_screen.dart';
+import 'package:remind_me_fe/features/list_todos/presentation/screens/todo_add_screen.dart';
+import 'package:remind_me_fe/features/list_todos/presentation/screens/todo_list_screen.dart';
+import 'package:remind_me_fe/features/list_todos/presentation/screens/todo_update_screen.dart';
 import 'package:remind_me_fe/features/theme/presentation/screens/choose_theme_screen.dart';
 import 'package:remind_me_fe/injection_container.dart';
 

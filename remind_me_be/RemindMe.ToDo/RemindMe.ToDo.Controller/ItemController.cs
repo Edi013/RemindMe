@@ -22,7 +22,7 @@ namespace RemindMe.Controller
             this._logger = logger;
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpGet("GetAll")]
         public async Task<IEnumerable<Item>> GetAll()
         {
@@ -36,7 +36,7 @@ namespace RemindMe.Controller
             return result;
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpPost("Create")]
         public async Task<ItemResponse> CreateTodo(CreateItemRequest req)
         {
@@ -45,7 +45,7 @@ namespace RemindMe.Controller
             return result;
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpDelete("Delete")]
         public async Task<BaseResponse> DeleteTodo(DeleteItemRequest req)
         {
@@ -54,7 +54,7 @@ namespace RemindMe.Controller
             return result;
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpPut("Update")]
         public async Task<ItemResponse> UpdateTodo(UpdateItemRequest req)
         {

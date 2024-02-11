@@ -29,7 +29,7 @@ namespace RemindMe.Application.Handlers.Todos
             {
                 return new ItemResponse
                 {
-                    HttpCodeStatus = HttpStatusCode.Created,
+                    HttpCodeStatus = HttpStatusCode.BadRequest,
                     Message = "Item created successfully",
                     Id = null,
                     Title = null,
@@ -59,7 +59,7 @@ namespace RemindMe.Application.Handlers.Todos
             Item operationResult = await repository.Add(newTodo);
             return new ItemResponse
             {
-                HttpCodeStatus = System.Net.HttpStatusCode.Created,
+                HttpCodeStatus = HttpStatusCode.Created,
                 Message = "Item created succesfully",
                 Id = operationResult.Id,
                 Title = operationResult.Title,
