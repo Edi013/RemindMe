@@ -5,7 +5,7 @@ using RemindMe.Domain.Results;
 
 namespace RemindMe.Application.Handlers.Todos
 {
-    public class DeleteTodoHandler : IRequestHandler<DeleteTodoRequest, BaseResult>
+    public class DeleteTodoHandler : IRequestHandler<DeleteTodoRequest, BaseResponse>
     {
         private ITodoRepository repository;
 
@@ -14,11 +14,11 @@ namespace RemindMe.Application.Handlers.Todos
             repository = _repository;
         }
 
-        public async Task<BaseResult> Handle(DeleteTodoRequest request, CancellationToken cancellationToken)
+        public async Task<BaseResponse> Handle(DeleteTodoRequest request, CancellationToken cancellationToken)
         {
             await repository.DeleteById(request.Id);
 
-            return new BaseResult()
+            return new BaseResponse()
             {
                 HttpCodeStatus = System.Net.HttpStatusCode.OK,
                 Message = "Item deleted."

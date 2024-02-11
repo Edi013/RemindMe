@@ -5,7 +5,7 @@ using RemindMe.Domain.Results;
 
 namespace RemindMe.Application.Handlers.Logging
 {
-    public class LoggingHandler : IRequestHandler<LoggingRequest, BaseResult>
+    public class LoggingHandler : IRequestHandler<LoggingRequest, BaseResponse>
     {
         private readonly ILogger<LoggingHandler> logger;
 
@@ -13,7 +13,7 @@ namespace RemindMe.Application.Handlers.Logging
         {
             this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
-        public Task<BaseResult> Handle(LoggingRequest request, CancellationToken cancellationToken)
+        public Task<BaseResponse> Handle(LoggingRequest request, CancellationToken cancellationToken)
         {
             switch (request.Level)
             {
@@ -34,7 +34,7 @@ namespace RemindMe.Application.Handlers.Logging
             }
 
             return Task.FromResult(
-                new BaseResult() 
+                new BaseResponse() 
                 {
                     HttpCodeStatus = System.Net.HttpStatusCode.Created,
                     Message = "Message logged."

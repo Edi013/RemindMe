@@ -21,7 +21,7 @@ namespace RemindMe.Controller
             this._logger = logger;
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpGet("GetAll")]
         public async Task<IEnumerable<Item>> GetAll()
         {
@@ -35,7 +35,7 @@ namespace RemindMe.Controller
             return result;
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpPost("Create")]
         public async Task<Item> CreateTodo(CreateTodoRequest req)
         {
@@ -46,14 +46,14 @@ namespace RemindMe.Controller
 
         [Authorize]
         [HttpDelete("Delete")]
-        public async Task<BaseResult> DeleteTodo(DeleteTodoRequest req)
+        public async Task<BaseResponse> DeleteTodo(DeleteTodoRequest req)
         {
             _logger.LogInformation($"Delete [DELETE] request for Todo / Item with id {req.Id}.");
 
             return await _mediator.Send(req, CancellationToken.None);
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpPut("Update")]
         public async Task<Item> UpdateTodo(UpdateTodoRequest req)
         {

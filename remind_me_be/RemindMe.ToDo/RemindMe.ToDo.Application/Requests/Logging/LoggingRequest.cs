@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace RemindMe.Application.Requests.Logging
 {
-    public class LoggingRequest : IRequest<BaseResult>
+    public class LoggingRequest : IRequest<BaseResponse>
     {
         [Required(ErrorMessage = "Message is required")]
         public string Message { get; set; }

@@ -13,7 +13,6 @@ class CurrentUser {
 
   CurrentUser(SharedPreferences preferencesInjected) {
     preferences = preferencesInjected;
-    //clearJwtData();
     var storedJwt = preferences.getString(jwt_key);
     if (storedJwt != null && storedJwt.isNotEmpty) {
       parseNewJwt(storedJwt);
