@@ -58,15 +58,14 @@ class TodoAddController {
     return null;
   }
 
-  String? validateDifficultyFormField(dynamic value) {
-    if (value == null) {
+  String? validateDifficultyFormField(String? value) {
+    if (value == null || value.isEmpty) {
       return 'Field cannot be empty';
     }
 
-    int? intValue;
-    try {
-      intValue = int.parse(value.toString());
-    } catch (e) {
+    int? intValue = int.tryParse(value);
+
+    if (intValue == null) {
       return 'Invalid input. Please enter a valid number';
     }
 
@@ -76,6 +75,15 @@ class TodoAddController {
       return 'Difficulty must be less or equal to 10';
     }
 
+    return null;
+  }
+
+  String? validateEndDateField(String? value) {
+    if (value == null || value.isEmpty) {
+      return null;
+    } else if (value.length < 10) {
+      return 'Field must have this format 2000-01-01';
+    }
     return null;
   }
 

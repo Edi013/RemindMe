@@ -39,6 +39,15 @@ class TodoUpdateController {
     return null;
   }
 
+  String? validateEndDateField(String? value) {
+    if (value == null || value.isEmpty) {
+      return null;
+    } else if (value.length < 10) {
+      return 'Field must have this format 2000-01-01';
+    }
+    return null;
+  }
+
   void saveChanges(
     String title,
     String description,

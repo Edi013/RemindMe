@@ -47,7 +47,7 @@ class TodoUpdateScreen extends StatelessWidget {
                 controller: controller.endDateController,
                 decoration:
                     const InputDecoration(labelText: 'End Date Controller'),
-                validator: (value) => controller.validateFormField(value),
+                validator: (value) => controller.validateEndDateField(value),
               ),
               const SizedBox(height: 16.0),
               TextFormField(
