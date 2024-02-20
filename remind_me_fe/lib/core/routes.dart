@@ -25,7 +25,7 @@ class Routes {
 
   static Map<String, WidgetBuilder> generateRoutes() {
     return {
-      homeRoute: (context) => const HomeScreen(),
+      homeRoute: (context) => HomeScreen(),
       themeScreenRoute: (context) => ThemeScreen(context),
       todoListRoute: (context) => TodoListScreen(context),
       todoUpdateRoute: (context) => TodoUpdateScreen(),
