@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:remind_me_fe/core/constants.dart';
+import 'package:remind_me_fe/core/theme/theme_config.dart';
 
 class AppTheme {
   late String currentThemeName;
@@ -29,5 +30,17 @@ class AppTheme {
     currentThemeName = themeName;
 
     buildAppThemeMode();
+  }
+
+  Color getAccentColor() {
+    switch (currentThemeName) {
+      case light_theme:
+        return lightAccent;
+      case dark_theme:
+        return darkAccent;
+      case system_theme:
+        break;
+    }
+    throw AssertionError(error_message_constants_not_used);
   }
 }

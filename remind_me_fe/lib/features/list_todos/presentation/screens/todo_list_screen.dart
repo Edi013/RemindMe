@@ -20,6 +20,7 @@ class TodoListScreen extends StatelessWidget {
         await controller.getRemoteTodos(context);
       },
       child: Scaffold(
+        appBar: AppBar(),
         body: Container(
           padding: const EdgeInsets.all(16.0),
           child: Card(

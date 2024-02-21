@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:remind_me_fe/core/routes.dart';
+import 'package:remind_me_fe/features/theme/presentation/providers/theme_provider.dart';
+import 'package:remind_me_fe/injection_container.dart';
 import 'package:sidebarx/sidebarx.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -7,100 +9,152 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
         if (constraints.maxWidth > constraints.maxHeight) {
-          // Landscape orientation: show the drawer
-          return Scaffold(
-            key: _scaffoldKey,
-            body: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                ExampleSidebarX(),
-                Row(
-                  children: [
-                    Text(" Hello Charlie"),
-                    Card(child: Text("You have done")),
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, Routes.todoListRoute);
-                      },
-                      child: const Text('Go to Todo List'),
-                    ),
-                  ],
-                ),
-                Column(
-                  children: [
-                    IconButton(
-                      onPressed: () {
-                        _scaffoldKey.currentState?.openDrawer();
-                      },
-                      icon: const Icon(Icons.menu),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            drawer: Drawer(
-              child: ListView(
-                padding: EdgeInsets.zero,
-                children: <Widget>[
-                  const DrawerHeader(
-                    decoration: BoxDecoration(
-                      color: Colors.blue,
-                    ),
-                    child: Text('Drawer Header'),
-                  ),
-                  ListTile(
-                    title: Text('Item 1'),
-                    onTap: () {
-                      // Handle item tap
-                    },
-                  ),
-                  ListTile(
-                    title: Text('Item 2'),
-                    onTap: () {
-                      // Handle item tap
-                    },
-                  ),
-                ],
-              ),
-            ),
-          );
+          return const LandscapeScaffold();
         } else {
-          // Portrait orientation: show the bottom navigation bar
-          return Scaffold(
-            body: Center(
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, Routes.todoListRoute);
-                },
-                child: const Text('Go to Todo List'),
-              ),
-            ),
-            bottomNavigationBar: BottomNavigationBar(
-              items: const <BottomNavigationBarItem>[
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.home),
-                  label: 'Home',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.business),
-                  label: 'Business',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.school),
-                  label: 'School',
-                ),
-              ],
-              currentIndex: 0,
-              selectedItemColor: Colors.blue,
-              onTap: (int index) {},
-            ),
-          );
+          return const PortraitScaffold();
         }
       },
+    );
+  }
+}
+
+class PortraitScaffold extends StatelessWidget {
+  const PortraitScaffold({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+    return Scaffold(
+      key: scaffoldKey,
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.pushNamed(context, Routes.todoListRoute);
+          },
+          child: const Text('Go to Todo List'),
+        ),
+      ),
+      drawer: const RoutesDrawer(),
+      bottomNavigationBar: const ActionBottomBar(),
+    );
+  }
+}
+
+class LandscapeScaffold extends StatelessWidget {
+  const LandscapeScaffold({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
+    return Scaffold(
+      key: scaffoldKey,
+      body: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          ExampleSidebarX(),
+          const MiddleClusterData(),
+          const Column(
+            children: [
+              DrawerButton(),
+            ],
+          ),
+        ],
+      ),
+      drawer: const RoutesDrawer(),
+    );
+  }
+}
+
+class ActionBottomBar extends StatelessWidget {
+  const ActionBottomBar({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BottomNavigationBar(
+      items: const <BottomNavigationBarItem>[
+        BottomNavigationBarItem(
+          icon: Icon(Icons.business),
+          label: 'Todo',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.add),
+          label: '',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home),
+          label: 'Home',
+        ),
+      ],
+      currentIndex: 0,
+      selectedItemColor: sl<ThemeProvider>().appTheme.getAccentColor(),
+      onTap: (int index) {
+        if (index == 0) {
+          Navigator.pushNamed(context, Routes.todoListRoute);
+        }
+        if (index == 1) {
+          Navigator.pushNamed(context, Routes.todoAddRoute);
+        }
+        if (index == 2) {
+          Navigator.pushNamed(context, Routes.homeRoute);
+        }
+      },
+    );
+  }
+}
+
+class RoutesDrawer extends StatelessWidget {
+  const RoutesDrawer({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: <Widget>[
+          const DrawerHeader(
+            decoration: BoxDecoration(
+              color: Colors.blue,
+            ),
+            child: Text('Drawer Header'),
+          ),
+          ListTile(
+            title: Text('Theme'),
+            onTap: () {
+              Navigator.pushNamed(context, Routes.themeScreenRoute);
+            },
+          ),
+          ListTile(
+            title: Text('User Profile'),
+            onTap: () {
+              Navigator.pushNamed(context, Routes.homeRoute);
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class MiddleClusterData extends StatelessWidget {
+  const MiddleClusterData({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        const Text(" Hello Charlie"),
+        const Card(child: Text("You have done")),
+        ElevatedButton(
+          onPressed: () {
+            Navigator.pushNamed(context, Routes.todoListRoute);
+          },
+          child: const Text('Go to Todo List'),
+        ),
+      ],
     );
   }
 }
@@ -172,24 +226,22 @@ class ExampleSidebarX extends StatelessWidget {
           icon: Icons.home,
           label: 'Home',
           onTap: () {
-            debugPrint('Home');
+            Navigator.pushNamed(context, Routes.homeRoute);
           },
         ),
-        const SidebarXItem(
-          icon: Icons.search,
-          label: 'Search',
+        SidebarXItem(
+          icon: Icons.plus_one,
+          label: '+',
+          onTap: () {
+            Navigator.pushNamed(context, Routes.homeRoute);
+          },
         ),
-        const SidebarXItem(
-          icon: Icons.people,
-          label: 'People',
-        ),
-        const SidebarXItem(
-          icon: Icons.favorite,
-          label: 'Favorites',
-        ),
-        const SidebarXItem(
-          iconWidget: FlutterLogo(size: 20),
-          label: 'Flutter',
+        SidebarXItem(
+          icon: Icons.home,
+          label: 'Home',
+          onTap: () {
+            Navigator.pushNamed(context, Routes.homeRoute);
+          },
         ),
       ],
     );
