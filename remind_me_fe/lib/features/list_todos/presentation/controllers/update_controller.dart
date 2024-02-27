@@ -60,7 +60,9 @@ class TodoUpdateController {
   ) {
     if (_formKey.currentState!.validate()) {
       DateTime parsedStartDate = DateTime.parse(startDate);
-      DateTime? parsedEndDate = endDate != "" ? DateTime.parse(endDate) : null;
+      DateTime? parsedEndDate = endDate != ""
+          ? DateTime.parse(endDate)
+          : parsedStartDate.add(const Duration(days: 1));
       int parsedDifficulty = int.parse(difficulty);
 
       TodoEntity updatedTodoEntity = TodoEntity(
