@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'RemindMe',
       initialRoute: sl<CurrentUser>().isJwtExpired()
-          ? Routes.loginRoute
+          ? Routes.homeRoute
           : Routes.homeRoute,
       routes: Routes.generateRoutes(),
       theme: lightTheme,

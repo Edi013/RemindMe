@@ -58,6 +58,12 @@ class TodoAddScreen extends StatelessWidget {
                 validator: (value) => addController.validateEndDateField(value),
                 onTap: () =>
                     _selectDate(context, addController.endDateController),
+                onChanged: (value) {
+                  if (addController.endDateController.text.isEmpty) {
+                    addController.endDateController.text =
+                        addController.startDateController.text;
+                  }
+                },
               ),
               const SizedBox(height: 16.0),
               TextFormField(

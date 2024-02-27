@@ -31,16 +31,4 @@ class AppTheme {
 
     buildAppThemeMode();
   }
-
-  Color getAccentColor() {
-    switch (currentThemeName) {
-      case light_theme:
-        return lightAccent;
-      case dark_theme:
-        return darkAccent;
-      case system_theme:
-        break;
-    }
-    throw AssertionError(error_message_constants_not_used);
-  }
 }
