@@ -1,0 +1,52 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="logs\**" />
+    <Compile Remove="Middlewares\**" />
+    <Content Remove="logs\**" />
+    <Content Remove="Middlewares\**" />
+    <EmbeddedResource Remove="logs\**" />
+    <EmbeddedResource Remove="Middlewares\**" />
+    <None Remove="logs\**" />
+    <None Remove="Middlewares\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="log4net.config" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="12.1.1" />
+	<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.20" />
+	<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.20" />
+	<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.20">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	  </PackageReference>
+	<PackageReference Include="Microsoft.Extensions.Logging.Log4Net.AspNetCore" Version="7.0.0" />
+	<PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.1.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="log4net.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RemindMe.ToDo.Application\RemindMe.ToDo.Application.csproj" />
+    <ProjectReference Include="..\RemindMe.ToDo.Controller\RemindMe.ToDo.Controller.csproj" />
+    <ProjectReference Include="..\RemindMe.ToDo.DataAcces\RemindMe.ToDo.DataAcces.csproj" />
+    <ProjectReference Include="..\RemindMe.ToDo.Domain\RemindMe.ToDo.Domain.csproj" />
+    <ProjectReference Include="..\RemindMe.ToDo.Notification\RemindMe.ToDo.Notification.csproj" />
+  </ItemGroup>
+
+</Project>

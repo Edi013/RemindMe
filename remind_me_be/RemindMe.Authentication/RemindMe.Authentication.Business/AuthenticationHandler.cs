@@ -1,11 +1,19 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using RemindMe.Authentication.Domain.DTOs;
 using RemindMe.Authentication.Domain.Interfaces.EmailingSystem;
 using RemindMe.Authentication.Domain.Models;
+using RemindMe.Authentication.Domain.Responses;
+using System.IdentityModel.Tokens.Jwt;
 using System.Net;
+using System.Net.Mail;
+using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace RemindMe.Authentication.Handlers
 {
@@ -24,12 +32,12 @@ namespace RemindMe.Authentication.Handlers
             _emailService = emailService;
         }
 
-        public async Task<BaseResult> Register(RegisterDto registerDto)
+        public async Task<BaseResponse> Register(RegisterDto registerDto)
         {
             var existingUser = await _userManager.FindByEmailAsync(registerDto.Email);
 
             if (existingUser != null) {
-                return new BaseResult()
+                return new BaseResponse()
                 {
                     HttpStatusCode = HttpStatusCode.Forbidden,
                     Message = "This email has already been used to register."
@@ -40,8 +48,8 @@ namespace RemindMe.Authentication.Handlers
             {
                 Email = registerDto.Email,
                 NormalizedEmail = registerDto.Email,
-                Username = registerDto.Username,
-                NormalizedUserName = registerDto.Username,
+                Nickname = registerDto.Nickname,
+                NormalizedUserName = registerDto.Nickname,
             };
             newUser.UserName = newUser.Id;
 
@@ -57,66 +65,161 @@ namespace RemindMe.Authentication.Handlers
                 var encodedEmailConfirmationToken = Encoding.UTF8.GetBytes(rawEmailConfirmationToken);
                 var validEmailConfirmationToken = WebEncoders.Base64UrlEncode(encodedEmailConfirmationToken);
 
-                var appUrl = _configuration.GetSection("AppUrl").Value;
+                var authServiceUrl = _configuration.GetSection("AuthServiceUrl").Value;
                 var controllerName = "Authentication";
                 var enpointName = "ConfirmEmail";
-                var emailConfirmationLink = $"{appUrl}/{controllerName}/{enpointName}?userid={newUser.Id}&token={validEmailConfirmationToken}";
+                var emailConfirmationLink = $"{authServiceUrl}/{controllerName}/{enpointName}?userid={newUser.Id}&token={validEmailConfirmationToken}";
 
                 string subject = "Confirmation link for your new account on RemindMe";
-                string content = $"To validate your email press this link <a href=\"{emailConfirmationLink}\"> confirmation link </a>.\n\nYou can start using your account on RemindMe after you have completed the step above.";
+                string content = $"To validate your email press this confirmation link {emailConfirmationLink}.\n\nYou can start using your account on RemindMe after you have completed the step above.";
                 string[] receivers = new string[] { newUser.Email };
                 _emailService.SendEmail(new Domain.Models.EmailingSystem.Message(subject, content, receivers));
 
-                return new BaseResult()
+                return new BaseResponse()
                 {
                     HttpStatusCode = HttpStatusCode.Created,
                     Message = "Account created. Confirmation email has been sent."
                 };
             }
-            return new BaseResult()
+            return new BaseResponse()
             {
                 HttpStatusCode = HttpStatusCode.InternalServerError,
                 Message = "Unexpected error happened on register. Please contact application staff.",
             };
         }
-
-        public async Task<BaseResult> Login(LoginDto loginDto)
+        
+        public async Task<LoginResponse> Login(LoginDto loginDto, HttpContext httpContext)
         {
             var existingUser = await _userManager.FindByEmailAsync(loginDto.Email);
 
             if (existingUser == null)
             {
-                return new BaseResult()
+                return new LoginResponse()
                 {
                     HttpStatusCode = HttpStatusCode.BadRequest,
                     Message = "This email is not registered."
                 };
             }
-
+            // sa verificam daca email ul e conform
+            
             if(existingUser.EmailConfirmed == false)
             {
-                return new BaseResult()
+                return new LoginResponse()
                 {
-                    HttpStatusCode = HttpStatusCode.Unauthorized,
+                    HttpStatusCode = HttpStatusCode.BadRequest,
                     Message = "You can't log in before validating your accout. Please confirm your email before proceeding again. You can do that by accesing the email sent to you after registering your account here."
                 };
             }
 
             if(!await _userManager.CheckPasswordAsync(existingUser, loginDto.Password)){
-                return new BaseResult()
+                return new LoginResponse()
                 {
-                    HttpStatusCode = HttpStatusCode.Unauthorized,
-                    Message = "Login failed. Invalid password."
+                    HttpStatusCode = HttpStatusCode.BadRequest,
+                    Message = "Bad password."
                 };
             }
-            return new BaseResult()
+
+            DateTime jwtExpirationDate = DateTime.UtcNow.AddMinutes(45);
+            var jwt = await GenerateJwtAsync(existingUser, jwtExpirationDate);
+
+            //string refreshToken = GenerateRefreshToken();
+            //DateTime jwtRefreshTokenExpirationDate = DateTime.UtcNow.AddHours(5);
+
+            /*existingUser.Jwt = jwt.ToString();
+            existingUser.JwtExpirationDate = jwtExpirationDate;
+            existingUser.JwtRefreshToken = refreshToken;
+            existingUser.JwtRefreshTokenExpirationDate = jwtRefreshTokenExpirationDate;
+*/
+            //use cookies
+
+            /*httpContext.Response.Cookies.Append("Jwt",
+                jwt,
+                new CookieOptions{
+                    HttpOnly = false,
+                    Secure = false,  // Set to true if using HTTPS
+                    SameSite = SameSiteMode.Lax,  
+                    Expires = jwtExpirationDate
+                });*/
+            /*httpContext.Response.Cookies.Append("JwtRefreshToken",
+                refreshToken,
+                new CookieOptions
+                {
+                    HttpOnly = true,
+                    Secure = true,  
+                    SameSite = SameSiteMode.Strict, 
+                    Expires = jwtRefreshTokenExpirationDate
+                });*/
+
+            // sau 
+
+            //httpContext.Response.Cookies.Append("Jwt", jwt);
+            //httpContext.Response.Cookies.Append("JwtRefreshToken", refreshToken);
+
+            // use headers : 
+            //httpContext.Response.Headers.Add("Authorization", "Bearer " + jwt);
+            //httpContext.Response.Headers.Add("Token-Expiration", jwtExpirationDate.ToString(
+            //  _configuration.GetSection("DateTimeFormat").Value));
+
+            return new LoginResponse()
             {
                 HttpStatusCode = HttpStatusCode.Accepted,
-                Message = "Login succesful."
+                Message = "Login succesful.",
+                Jwt = jwt,
+                JwtExpiration = jwtExpirationDate.ToString(_configuration.GetSection("DateTimeFormat").Value),
             };
         }
 
-        public async Task<BaseResult> SeedRoles()
+        private async Task<string> GenerateJwtAsync(User user, DateTime jwtExpirationDate)
+        {
+            var audience = new List<string>{
+                            _configuration.GetSection("JWT:ValidAudience:Postman").Value,
+                            _configuration.GetSection("JWT:ValidAudience:FlutterClient").Value,
+                            _configuration.GetSection("JWT:ValidAudience:ToDoService").Value,
+            };
+            var authClaims = new List<Claim>
+            {
+                new Claim("Jti", Guid.NewGuid().ToString()),
+                new Claim("Email", user.Email),
+                new Claim("Username", user.Nickname),
+                new Claim(JwtRegisteredClaimNames.Aud, audience[0]),
+                new Claim(JwtRegisteredClaimNames.Aud, audience[1])
+            };
+
+            var userRoles = await _userManager.GetRolesAsync(user);
+            for(var i = 0; i < userRoles.Count; i++)
+            {
+                authClaims.Add(new Claim($"Role", userRoles[i])); //  "Role {i}"
+            }
+
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
+                _configuration["Jwt:Secret"] ?? throw new InvalidOperationException("Secret key not present")
+            ));
+            var signingCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+
+           
+            var token = new JwtSecurityToken(
+                issuer: _configuration["JWT:ValidIssuer"],
+                //audience: audience,
+                expires: jwtExpirationDate,
+                claims: authClaims,
+                signingCredentials: signingCredentials
+            );
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
+        private static string GenerateRefreshToken()
+        {
+            var randomNumber = new byte[64];
+
+            using var generator = RandomNumberGenerator.Create();
+
+            generator.GetBytes(randomNumber);
+
+            return Convert.ToBase64String(randomNumber);
+        }
+
+        public async Task<BaseResponse> SeedRoles()
         {
             if(! await _roleManager.RoleExistsAsync("Free"))
             {
@@ -136,16 +239,16 @@ namespace RemindMe.Authentication.Handlers
                 });
             }
 
-            return new BaseResult()
+            return new BaseResponse()
             {
                 HttpStatusCode = HttpStatusCode.Created,
                 Message = "Roles have been seed."
             };
         }
 
-        public async Task<BaseResult> ConfirmEmail(string userId, string token)
+        public async Task<BaseResponse> ConfirmEmail(string userId, string token)
         {
-            var invalidRequestDataResponse = new BaseResult()
+            var invalidRequestDataResponse = new BaseResponse()
             {
                 HttpStatusCode = System.Net.HttpStatusCode.BadRequest,
                 Message = "Confirmation data is invalid. Email was not confirmed."
@@ -168,19 +271,28 @@ namespace RemindMe.Authentication.Handlers
 
             if(result.Succeeded)
             {
-                return new BaseResult()
+                return new BaseResponse()
                 {
                     HttpStatusCode = System.Net.HttpStatusCode.OK,
                     Message = "Email was confirmed"
                 };
             }
 
-            return new BaseResult()
+            return new BaseResponse()
             {
                 HttpStatusCode = HttpStatusCode.InternalServerError,
                 Message = "Unexpected error happened on confirming email. Please contact application staff.",
             };
         }
+
+        // endpoint to check if a token is valid
+        // correct format or not
+        // expired or not
+        // endpoint to refresh the jwt/token being given the refresh token
+        //refresh model
+        // if jwt is valid but expired
+        //      check if the refresh token is valid and not expired
+        //          return new jwt
     }
 }
 

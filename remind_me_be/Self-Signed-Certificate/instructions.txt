@@ -1,0 +1,15 @@
+1. Set a https url in the Properties/launchSettings.json
+2. Add in BuilderExtensions class configuration for the certificate : 
+ var certificatePath = "..\\..\\Self-Signed-Certificate\\certificate.pfx";
+ var certificatePassword = "qweqweqwe123";
+ var certificate = new X509Certificate2(certificatePath, certificatePassword);
+
+ builder.WebHost.ConfigureKestrel((context, serverOptions) =>
+ {
+     serverOptions.Listen(IPAddress.Loopback, 7092, listenOptions =>
+     {
+         listenOptions.UseHttps(certificate);
+     });
+ });
+3. In WebApplicationExtensions add :
+ app.UseHttpsRedirection(); - before UseCors.

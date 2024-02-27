@@ -1,12 +1,16 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using RemindMe.Authentication.DataAccess;
 using RemindMe.Authentication.Domain.Interfaces.EmailingSystem;
 using RemindMe.Authentication.Domain.Models;
 using RemindMe.Authentication.Domain.Models.EmailingSystem;
 using RemindMe.Authentication.Handlers;
 using RemindMe.Authentication.Notifications;
+using System.Net;
+using System.Security.Cryptography.X509Certificates;
+using System.Text;
 
 namespace RemindMe
 {
@@ -14,78 +18,71 @@ namespace RemindMe
     {
         public static void RegisterServices(this WebApplicationBuilder builder)
         {
-            builder.Services.AddControllers();
-            builder.Services.AddEndpointsApiExplorer();
-
             builder.ConfigureCors();
 
-            builder.Services.AddSwaggerGen();
-
             var connectionString = builder.Configuration.GetConnectionString("RemindMeAuthenticationDb");
-            builder.Services.AddDbContext<AuthenticationDbContext>(options => 
-                options.UseNpgsql(connectionString));
+            builder.Services.
+                AddDbContext<AuthenticationDbContext>(options => 
+                    options.UseNpgsql(connectionString));
 
-            builder.Services.AddScoped<AuthenticationHandler, AuthenticationHandler>();
+            builder.Services
+                .AddIdentity<User, IdentityRole>(x =>
+                {
+                    x.Password.RequiredLength = 8;
+                    x.Password.RequireUppercase = true;
+                    x.Password.RequireLowercase = true;
+                    x.Password.RequireDigit = true;
+                    x.Password.RequireNonAlphanumeric = true;
 
-            builder.RegisterAppSettings();
+                    x.User.RequireUniqueEmail = true;
+                })
+                .AddEntityFrameworkStores<AuthenticationDbContext>()
+                .AddDefaultTokenProviders();
 
-            builder.Services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
+            var audience = new List<string>{
+                            builder.Configuration.GetSection("JWT:ValidAudience:Postman").Value,
+                            builder.Configuration.GetSection("JWT:ValidAudience:FlutterClient").Value,
+                            builder.Configuration.GetSection("JWT:ValidAudience:ToDoService").Value,
+            };
+            builder.Services
+                .AddAuthentication(options =>
+                {
+                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
                 .AddJwtBearer(options =>
                 {
-                    /*options.TokenValidationParameters = new TokenValidationParameters
+                    options.SaveToken = true;
+                    options.RequireHttpsMetadata = false;
+                    options.TokenValidationParameters = new TokenValidationParameters
                     {
-                        // Specify the key used to sign the JWT. This should match the key used during token creation.
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("your_secret_key")),
-
-                        // Validate the token issuer (optional)
                         ValidateIssuer = true,
-                        ValidIssuer = "your_issuer",
-
-                        // Validate the token audience (optional)
                         ValidateAudience = true,
-                        ValidAudience = "your_audience",
-
-                        // Validate the token expiration time (required)
                         ValidateLifetime = true,
-
-                        // Clock skew allows for some time drift between the server and client. Adjust as needed.
+                        RequireExpirationTime = true,
+                        ValidIssuer = builder.Configuration.GetSection("JWT:ValidIssuer").Value,
+                        ValidAudiences = audience,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
+                            builder.Configuration.GetSection("JWT:Secret").Value)),
                         ClockSkew = TimeSpan.Zero
-                    };*/
-                })
-                .AddCookie(options =>
-                    {
-                        options.Cookie.Name = "JWT";
-                    });
-
-            builder.ConfigureIdentityPassword();
+                    };
+                }
+            );
 
             //Add email configs
             var emailConfig = builder.Configuration.GetSection("EmailingSystem").Get<EmailConfigurator>();
             builder.Services.AddSingleton(emailConfig);
-
             builder.Services.AddScoped<IEmailService, EmailService>();
-        }
-        private static void ConfigureIdentityPassword(this WebApplicationBuilder builder)
-        {
-            builder.Services.AddIdentity<User, IdentityRole>(x =>
-            {
-                x.Password.RequiredLength = 8;
-                x.Password.RequireUppercase = true;
-                x.Password.RequireLowercase = true;
-                x.Password.RequireDigit = true;
-                x.Password.RequireNonAlphanumeric = true;
+            builder.Services.AddScoped<AuthenticationHandler, AuthenticationHandler>();
+            builder.RegisterJsonConfigFile();
 
-                x.User.RequireUniqueEmail = true;
-            })
-                .AddEntityFrameworkStores<AuthenticationDbContext>()
-                .AddDefaultTokenProviders(); ;
+            builder.Services.AddSwaggerGen();
+            builder.Services.AddControllers();
+            builder.Services.AddEndpointsApiExplorer();
         }
 
-        private static void RegisterAppSettings(this WebApplicationBuilder builder)
+        private static void RegisterJsonConfigFile(this WebApplicationBuilder builder)
         {
             var configuration = new ConfigurationBuilder()
             .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
@@ -95,15 +92,18 @@ namespace RemindMe
 
         private static void ConfigureCors(this WebApplicationBuilder builder)
         {
-            string[] authorizedUrls = new string[] { };
-            authorizedUrls.Append(builder.Configuration.GetSection("AuthorizedUrls:FrontendAppUrl").Value);
+            //string[] authorizedUrls = new string[] { };
+            var value = builder.Configuration.GetSection("AuthorizedUrls:FlutterClient").Value;
+            //authorizedUrls.Append(value);
+            /*value = builder.Configuration.GetSection("AuthorizedUrls:Postman").Value;
+            authorizedUrls.Append(value);*/
 
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy(name: "AuthenticationPolicy",
                                           policy =>
                                           {
-                                              policy.WithOrigins(authorizedUrls)
+                                              policy.WithOrigins(value)
                                               .AllowAnyHeader()
                                               .AllowAnyMethod()
                                               .AllowCredentials();

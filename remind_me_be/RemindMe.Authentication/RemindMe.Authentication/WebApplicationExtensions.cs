@@ -4,21 +4,21 @@
     {
         public static void ApplyConfiguration(this WebApplication app)
         {
-            if (app.Environment.IsDevelopment())
+           if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
 
-            app.UseHttpsRedirection();
-
             app.UseCors("AuthenticationPolicy");
 
-            //app.UseRouting();
+            app.UseRouting();
+            app.UseAuthentication();
             app.UseAuthorization();
-            //app.UseEndpoints();
-
-            app.MapControllers();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
 
             app.Run();
         }
