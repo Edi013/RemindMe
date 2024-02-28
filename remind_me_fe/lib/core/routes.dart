@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:remind_me_fe/core/home/presentation/screens/home_screen.dart';
-import 'package:remind_me_fe/features/authentication/presentation/provider/auth_provider.dart';
+import 'package:remind_me_fe/features/home/presentation/screens/home_screen.dart';
 import 'package:remind_me_fe/features/authentication/presentation/screens/expired_session_screen.dart';
 import 'package:remind_me_fe/features/authentication/presentation/screens/login_screen.dart';
 import 'package:remind_me_fe/features/authentication/presentation/screens/register_screen.dart';
@@ -8,7 +7,6 @@ import 'package:remind_me_fe/features/list_todos/presentation/screens/todo_add_s
 import 'package:remind_me_fe/features/list_todos/presentation/screens/todo_list_screen.dart';
 import 'package:remind_me_fe/features/list_todos/presentation/screens/todo_update_screen.dart';
 import 'package:remind_me_fe/features/theme/presentation/screens/choose_theme_screen.dart';
-import 'package:remind_me_fe/injection_container.dart';
 
 class Routes {
   static const String homeRoute = '/home';
@@ -25,11 +23,11 @@ class Routes {
 
   static Map<String, WidgetBuilder> generateRoutes() {
     return {
-      homeRoute: (context) => HomeScreen(),
+      homeRoute: (context) => const HomeScreen(),
       themeScreenRoute: (context) => ThemeScreen(context),
-      todoListRoute: (context) => TodoListScreen(context),
+      todoListRoute: (context) => const TodoListScreen(),
       todoUpdateRoute: (context) => TodoUpdateScreen(),
-      todoAddRoute: (context) => TodoAddScreen(),
+      todoAddRoute: (context) => const TodoAddScreen(),
       loginRoute: (context) => LoginScreen(),
       registerRoute: (context) => const RegisterScreen(),
       sessionExpiredRoute: (context) => const SessionExpiredScreen(),
