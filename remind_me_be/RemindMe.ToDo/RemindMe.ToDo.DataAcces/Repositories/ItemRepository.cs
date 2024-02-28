@@ -15,5 +15,13 @@ namespace RemindMe.DataAcces.Repositories
                 .AsNoTracking()
                 .SingleAsync(x => x.Id == id);
         }
+
+        public IQueryable<Item> GetAllActiveItems()
+        {
+            DateTime dateTimeNow = DateTime.Now;
+
+            return context.Set<Item>().Where(currentItem =>
+             (currentItem.StartDate < dateTimeNow) && (dateTimeNow < currentItem.EndDate));
+        }
     }
 }

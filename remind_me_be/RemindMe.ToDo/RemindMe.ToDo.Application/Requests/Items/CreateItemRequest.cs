@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using RemindMe.Domain.Entities;
 using RemindMe.ToDo.Domain.Results;
 
 namespace RemindMe.Application.Requests.Todos

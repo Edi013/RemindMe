@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using RemindMe.Application.Requests.Todos;
 using RemindMe.Domain.Entities;
 using RemindMe.Domain.Results;
+using RemindMe.ToDo.Application.Requests.Items;
 using RemindMe.ToDo.Domain.Results;
 
 namespace RemindMe.Controller
@@ -22,21 +23,28 @@ namespace RemindMe.Controller
             this._logger = logger;
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpGet("GetAll")]
         public async Task<IEnumerable<Item>> GetAll()
         {
             var req = new GetAllItemRequest();
-            foreach (var header in HttpContext.Request.Headers)
-            {
-                _logger.LogInformation($"{header.Key}: {header.Value}");
-            }
+
             _logger.LogInformation("GetAll [GET] request for Todos / Items.");
             var result = await _mediator.Send(req, CancellationToken.None);
             return result;
         }
 
-        //[Authorize]
+        [Authorize]
+        [HttpGet("GetAllActiveItem")]
+        public async Task<IEnumerable<Item>> GetAllActiveItem()
+        {
+            var req = new GetAllActiveItemRequest();
+            _logger.LogInformation("GetAllActiveItem [GET] request for Todos / Items.");
+            var result = await _mediator.Send(req, CancellationToken.None);
+            return result;
+        }
+
+        [Authorize]
         [HttpPost("Create")]
         public async Task<ItemResponse> CreateTodo(CreateItemRequest req)
         {
