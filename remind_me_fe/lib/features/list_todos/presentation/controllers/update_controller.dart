@@ -4,29 +4,22 @@ import 'package:remind_me_fe/features/list_todos/domain/entities/todo.dart';
 import 'package:remind_me_fe/features/list_todos/presentation/providers/todo_provider.dart';
 
 class TodoUpdateController {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  late TextEditingController _titleController;
-  late TextEditingController _descriptionController;
-  late TextEditingController _startDateController;
-  late TextEditingController _endDateController;
-  late TextEditingController _difficultyController;
-
-  GlobalKey<FormState> get formKey => _formKey;
-  TextEditingController get titleController => _titleController;
-  TextEditingController get descriptionController => _descriptionController;
-  TextEditingController get startDateController => _startDateController;
-  TextEditingController get endDateController => _endDateController;
-  TextEditingController get difficultyController => _difficultyController;
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  late TextEditingController titleController;
+  late TextEditingController descriptionController;
+  late TextEditingController startDateController;
+  late TextEditingController endDateController;
+  late TextEditingController difficultyController;
 
   void initControllers(TodoEntity toDoToUpdate) {
-    _titleController = TextEditingController(text: toDoToUpdate.title);
-    _descriptionController =
+    titleController = TextEditingController(text: toDoToUpdate.title);
+    descriptionController =
         TextEditingController(text: toDoToUpdate.description);
-    _startDateController =
+    startDateController =
         TextEditingController(text: toDoToUpdate.startDate.toString());
-    _endDateController =
+    endDateController =
         TextEditingController(text: toDoToUpdate.endDate.toString());
-    _difficultyController =
+    difficultyController =
         TextEditingController(text: toDoToUpdate.difficulty.toString());
   }
 
@@ -48,28 +41,25 @@ class TodoUpdateController {
     return null;
   }
 
-  void saveChanges(
-    String title,
-    String description,
-    String startDate,
-    String endDate,
-    String difficulty,
+  void updateItem(
     int index,
     TodoEntity toDoToUpdate,
     BuildContext context,
   ) {
-    if (_formKey.currentState!.validate()) {
-      DateTime parsedStartDate = DateTime.parse(startDate);
-      DateTime? parsedEndDate = endDate != "" ? DateTime.parse(endDate) : null;
-      int parsedDifficulty = int.parse(difficulty);
+    if (formKey.currentState!.validate()) {
+      DateTime startDate = DateTime.parse(startDateController.text);
+      DateTime? endDate = endDateController.text != ""
+          ? DateTime.parse(endDateController.text)
+          : startDate.add(const Duration(days: 1));
+      int difficulty = int.parse(difficultyController.text);
 
       TodoEntity updatedTodoEntity = TodoEntity(
-        title: title,
-        description: description,
+        title: titleController.text,
+        description: descriptionController.text,
         creationDate: DateTime.now(),
-        startDate: parsedStartDate,
-        endDate: parsedEndDate,
-        difficulty: parsedDifficulty,
+        startDate: startDate,
+        endDate: endDate,
+        difficulty: difficulty,
         ownerId: toDoToUpdate.ownerId,
         id: toDoToUpdate.id,
         isFinished: toDoToUpdate.isFinished,
@@ -80,5 +70,10 @@ class TodoUpdateController {
 
       Navigator.pop(context);
     }
+  }
+
+  String formatDate(DateTime dateTime) {
+    return "${dateTime.year}-${dateTime.month.toString().padLeft(2, '0')}-${dateTime.day.toString().padLeft(2, '0')}"
+        "T${dateTime.hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')}:00.000";
   }
 }

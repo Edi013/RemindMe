@@ -1,28 +1,14 @@
+// Landscape
+
 import 'package:flutter/material.dart';
 import 'package:remind_me_fe/core/routes.dart';
 import 'package:sidebarx/sidebarx.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (BuildContext context, BoxConstraints constraints) {
-        if (constraints.maxWidth > constraints.maxHeight) {
-          return const LandscapeScaffold();
-        } else {
-          return const PortraitScaffold();
-        }
-      },
-    );
-  }
-}
-
-// Landscape
-
 class LandscapeScaffold extends StatelessWidget {
-  const LandscapeScaffold({super.key});
+  final double minimizeContentParameter = 0.7;
+  final Widget child;
+
+  const LandscapeScaffold(this.child, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -34,24 +20,14 @@ class LandscapeScaffold extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           ExampleSidebarX(),
-          const LandscapeContent(),
+          SizedBox(
+            width: MediaQuery.of(context).size.width * minimizeContentParameter,
+            height: MediaQuery.of(context).size.height,
+            child: child,
+          ),
         ],
       ),
       drawer: const RoutesDrawer(),
-    );
-  }
-}
-
-class LandscapeContent extends StatelessWidget {
-  const LandscapeContent({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width * 0.7,
-      // fit the container in the screen, the middle text was overflowing
-      height: MediaQuery.of(context).size.height,
-      child: const Content(),
     );
   }
 }
@@ -137,14 +113,36 @@ class ExampleSidebarX extends StatelessWidget {
 // Portrait
 
 class PortraitScaffold extends StatelessWidget {
-  const PortraitScaffold({super.key});
+  final double minimizeContentParameter = 0.015;
+  final Widget child;
+
+  const PortraitScaffold(this.child, {super.key});
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+
     final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
     return Scaffold(
       key: scaffoldKey,
-      body: const Content(),
+      body: Row(
+        children: [
+          SizedBox(
+            width: width * minimizeContentParameter,
+            height: height,
+          ),
+          SizedBox(
+            width: width * (1 - 2 * minimizeContentParameter),
+            height: height,
+            child: child,
+          ),
+          SizedBox(
+            width: width * minimizeContentParameter,
+            height: height,
+          ),
+        ],
+      ),
       drawer: const RoutesDrawer(),
       bottomNavigationBar: const BottomBar(),
     );
@@ -245,24 +243,20 @@ class RoutesDrawer extends StatelessWidget {
   }
 }
 
-class Content extends StatelessWidget {
-  const Content({super.key});
+class LayoutByOrientation extends StatelessWidget {
+  final Widget child;
+  const LayoutByOrientation(this.child, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(" Hello Charlie"),
-        Flexible(
-          child: Card(
-            child: Text(
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
-            ),
-          ),
-        ),
-        BurgerButton()
-      ],
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) {
+        if (constraints.maxWidth > constraints.maxHeight) {
+          return LandscapeScaffold(child);
+        } else {
+          return PortraitScaffold(child);
+        }
+      },
     );
   }
 }

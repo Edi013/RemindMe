@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:remind_me_fe/core/bar/presentation/screen_by_orientation.dart';
 import 'package:remind_me_fe/features/theme/data/local/current_app_theme.dart';
 import 'package:remind_me_fe/core/constants.dart';
 import 'package:remind_me_fe/features/theme/presentation/providers/theme_provider.dart';
@@ -7,11 +7,19 @@ import 'package:remind_me_fe/injection_container.dart';
 
 // ignore: must_be_immutable
 class ThemeScreen extends StatelessWidget {
-  late ThemeProvider themeProvider;
+  const ThemeScreen(BuildContext context, {super.key});
 
-  ThemeScreen(BuildContext context, {super.key}) {
-    themeProvider = Provider.of<ThemeProvider>(context, listen: true);
+  @override
+  Widget build(BuildContext context) {
+    return LayoutByOrientation(ThemeScreenContent());
   }
+}
+
+class ThemeScreenContent extends StatelessWidget {
+  final ThemeProvider themeProvider = sl<ThemeProvider>();
+  //Provider.of<ThemeProvider>(context, listen: true);
+
+  ThemeScreenContent({super.key});
 
   @override
   Widget build(BuildContext context) {

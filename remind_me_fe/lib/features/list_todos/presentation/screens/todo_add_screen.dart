@@ -1,22 +1,48 @@
 import 'package:flutter/material.dart';
+import 'package:remind_me_fe/core/bar/presentation/screen_by_orientation.dart';
 import 'package:remind_me_fe/features/list_todos/presentation/controllers/add_controller.dart';
 
 class TodoAddScreen extends StatelessWidget {
-  final TodoAddController addController = TodoAddController();
+  const TodoAddScreen({super.key});
 
-  TodoAddScreen({super.key});
+  @override
+  Widget build(BuildContext context) {
+    return LayoutByOrientation(TodoAddScreenContent());
+  }
+}
+
+class TodoAddScreenContent extends StatelessWidget {
+  final TodoAddController controller = TodoAddController();
+
+  TodoAddScreenContent({super.key});
 
   Future<void> _selectDate(
-      BuildContext context, TextEditingController controller) async {
-    final DateTime? picked = await showDatePicker(
+      BuildContext context, TextEditingController currentController) async {
+    final DateTime? pickedDate = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
       firstDate: DateTime(2000),
       lastDate: DateTime(2101),
     );
 
-    if (picked != null && picked != DateTime.now()) {
-      controller.text = addController.formatDate(picked);
+    if (pickedDate != null) {
+      // ignore: use_build_context_synchronously
+      final TimeOfDay? pickedTime = await showTimePicker(
+        context: context,
+        initialTime: TimeOfDay.now(),
+      );
+
+      if (pickedTime != null) {
+        final DateTime selectedDateTime = DateTime(
+          pickedDate.year,
+          pickedDate.month,
+          pickedDate.day,
+          pickedTime.hour,
+          pickedTime.minute,
+        );
+
+        currentController.text = controller.formatDate(selectedDateTime);
+      }
     }
   }
 
@@ -29,52 +55,45 @@ class TodoAddScreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
-          key: addController.formKey,
+          key: controller.formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               TextFormField(
-                controller: addController.titleController,
+                controller: controller.titleController,
                 decoration: const InputDecoration(labelText: 'Title'),
               ),
               const SizedBox(height: 16.0),
               TextFormField(
-                controller: addController.descriptionController,
+                controller: controller.descriptionController,
                 decoration: const InputDecoration(labelText: 'Description'),
               ),
               const SizedBox(height: 16.0),
               TextFormField(
-                controller: addController.startDateController,
+                controller: controller.startDateController,
                 decoration: const InputDecoration(labelText: 'Start Date *'),
                 validator: (value) =>
-                    addController.validateDateTimeFormField(value),
+                    controller.validateDateTimeFormField(value),
                 onTap: () =>
-                    _selectDate(context, addController.startDateController),
+                    _selectDate(context, controller.startDateController),
               ),
               const SizedBox(height: 16.0),
               TextFormField(
-                controller: addController.endDateController,
+                controller: controller.endDateController,
                 decoration: const InputDecoration(labelText: 'End Date'),
-                validator: (value) => addController.validateEndDateField(value),
-                onTap: () =>
-                    _selectDate(context, addController.endDateController),
-                onChanged: (value) {
-                  if (addController.endDateController.text.isEmpty) {
-                    addController.endDateController.text =
-                        addController.startDateController.text;
-                  }
-                },
+                validator: (value) => controller.validateEndDateField(value),
+                onTap: () => _selectDate(context, controller.endDateController),
               ),
               const SizedBox(height: 16.0),
               TextFormField(
-                controller: addController.difficultyController,
+                controller: controller.difficultyController,
                 decoration: const InputDecoration(labelText: 'Difficulty *'),
                 validator: (value) =>
-                    addController.validateDifficultyFormField(value),
+                    controller.validateDifficultyFormField(value),
               ),
               const SizedBox(height: 16.0),
               ElevatedButton(
-                onPressed: () => addController.addItem(context),
+                onPressed: () => controller.addItem(context),
                 child: const Text('Add Object'),
               ),
             ],

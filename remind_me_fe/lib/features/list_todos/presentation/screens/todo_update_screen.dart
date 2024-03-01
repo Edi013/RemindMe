@@ -1,11 +1,51 @@
 import 'package:flutter/material.dart';
+import 'package:remind_me_fe/core/bar/presentation/screen_by_orientation.dart';
 import 'package:remind_me_fe/features/list_todos/domain/entities/todo.dart';
 import 'package:remind_me_fe/features/list_todos/presentation/controllers/update_controller.dart';
 
 class TodoUpdateScreen extends StatelessWidget {
+  const TodoUpdateScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutByOrientation(TodoUpdateScreenContent());
+  }
+}
+
+class TodoUpdateScreenContent extends StatelessWidget {
   final TodoUpdateController controller = TodoUpdateController();
 
-  TodoUpdateScreen({super.key});
+  TodoUpdateScreenContent({super.key});
+
+  Future<void> _selectDate(
+      BuildContext context, TextEditingController currentController) async {
+    final DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
+    );
+
+    if (pickedDate != null) {
+      // ignore: use_build_context_synchronously
+      final TimeOfDay? pickedTime = await showTimePicker(
+        context: context,
+        initialTime: TimeOfDay.now(),
+      );
+
+      if (pickedTime != null) {
+        final DateTime selectedDateTime = DateTime(
+          pickedDate.year,
+          pickedDate.month,
+          pickedDate.day,
+          pickedTime.hour,
+          pickedTime.minute,
+        );
+
+        currentController.text = controller.formatDate(selectedDateTime);
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +81,8 @@ class TodoUpdateScreen extends StatelessWidget {
                 controller: controller.startDateController,
                 decoration: const InputDecoration(labelText: 'Start Date *'),
                 validator: (value) => controller.validateFormField(value),
+                onTap: () =>
+                    _selectDate(context, controller.startDateController),
               ),
               const SizedBox(height: 16.0),
               TextFormField(
@@ -48,6 +90,7 @@ class TodoUpdateScreen extends StatelessWidget {
                 decoration:
                     const InputDecoration(labelText: 'End Date Controller'),
                 validator: (value) => controller.validateEndDateField(value),
+                onTap: () => _selectDate(context, controller.endDateController),
               ),
               const SizedBox(height: 16.0),
               TextFormField(
@@ -58,12 +101,7 @@ class TodoUpdateScreen extends StatelessWidget {
               const SizedBox(height: 16.0),
               ElevatedButton(
                 onPressed: () {
-                  controller.saveChanges(
-                    controller.titleController.text,
-                    controller.descriptionController.text,
-                    controller.startDateController.text,
-                    controller.endDateController.text,
-                    controller.difficultyController.text,
+                  controller.updateItem(
                     index,
                     toDoToUpdate,
                     context,

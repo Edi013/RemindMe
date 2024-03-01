@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:remind_me_fe/core/bar/presentation/screen_by_orientation.dart';
 import 'package:remind_me_fe/core/routes.dart';
 import 'package:remind_me_fe/features/list_todos/domain/entities/todo.dart';
 import 'package:remind_me_fe/features/list_todos/presentation/controllers/list_controller.dart';
@@ -7,9 +8,18 @@ import 'package:remind_me_fe/features/list_todos/presentation/providers/todo_pro
 
 // ignore: must_be_immutable
 class TodoListScreen extends StatelessWidget {
+  const TodoListScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutByOrientation(TodoListScreenContent(context));
+  }
+}
+
+class TodoListScreenContent extends StatelessWidget {
   late TodoListController controller;
 
-  TodoListScreen(BuildContext context, {super.key}) {
+  TodoListScreenContent(BuildContext context, {super.key}) {
     controller = TodoListController(context);
   }
 
@@ -33,7 +43,7 @@ class TodoListScreen extends StatelessWidget {
                 const Padding(
                   padding: EdgeInsets.all(16.0),
                   child: Text(
-                    'Todos',
+                    'All tasks',
                     style: TextStyle(
                       fontSize: 20.0,
                       fontWeight: FontWeight.bold,
@@ -68,7 +78,8 @@ class TodoListScreen extends StatelessWidget {
                                     Icons.delete,
                                     color: Colors.red,
                                   ),
-                                )
+                                ),
+                                const Divider()
                               ],
                             ),
                             onTap: () {
@@ -90,7 +101,20 @@ class TodoListScreen extends StatelessWidget {
                     onPressed: () {
                       Navigator.pushNamed(context, Routes.todoAddRoute);
                     },
-                    child: const Text('+'),
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(
+                          Theme.of(context)
+                              .colorScheme
+                              .secondary
+                              .withOpacity(0.75)),
+                    ),
+                    child: Text(
+                      '+',
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.primary,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
                 ),
               ],

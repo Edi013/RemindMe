@@ -29,7 +29,7 @@ class TodoAddController {
           ? DateTime.parse(
               _endDateController.text,
             )
-          : null;
+          : startDate.add(const Duration(days: 1));
       int difficulty = int.parse(_difficultyController.text);
 
       TodoEntity newObject = TodoEntity(
@@ -87,7 +87,8 @@ class TodoAddController {
     return null;
   }
 
-  String formatDate(DateTime date) {
-    return "${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}";
+  String formatDate(DateTime dateTime) {
+    return "${dateTime.year}-${dateTime.month.toString().padLeft(2, '0')}-${dateTime.day.toString().padLeft(2, '0')}"
+        "T${dateTime.hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')}:00.000";
   }
 }
