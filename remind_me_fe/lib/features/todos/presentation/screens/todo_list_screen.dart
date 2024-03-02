@@ -5,28 +5,45 @@ import 'package:remind_me_fe/features/todos/presentation/providers/todo_provider
 import 'package:remind_me_fe/features/todos/presentation/screens/todo_list_builder_widget.dart';
 import 'package:remind_me_fe/injection_container.dart';
 
-// ignore: must_be_immutable
 class TodoListScreen extends StatelessWidget {
-  TodoListScreen({super.key}) {
-    sl<TodoProvider>().getAll();
-  }
+  const TodoListScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return LayoutByOrientation(TodoListScreenContent(context));
+    return const LayoutByOrientation(
+      TodoListScreenContent(),
+    );
   }
 }
 
 class TodoListScreenContent extends StatelessWidget {
-  const TodoListScreenContent(BuildContext context, {super.key});
+  const TodoListScreenContent({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return RefreshIndicator(
-      onRefresh: () async {
-        await sl<TodoProvider>().getAll();
+    return FutureBuilder(
+      future: sl<TodoProvider>().getAll(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return Center(child: Text('Error: ${snapshot.error}'));
+        } else {
+          return Row(
+            children: [
+              Flexible(
+                child: RefreshIndicator(
+                  onRefresh: () async {
+                    await sl<TodoProvider>().getAll();
+                  },
+                  child: buildListFromTodos(context, allTodosListName),
+                ),
+              ),
+              const BurgerButton(),
+            ],
+          );
+        }
       },
-      child: buildListFromTodos(context, allTodosListName),
     );
   }
 }

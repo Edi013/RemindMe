@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:remind_me_fe/core/routes.dart';
+import 'package:remind_me_fe/features/authentication/presentation/provider/current_user.dart';
+import 'package:remind_me_fe/injection_container.dart';
 import 'package:sidebarx/sidebarx.dart';
 
 class LandscapeScaffold extends StatelessWidget {
@@ -159,17 +161,17 @@ class BottomBar extends StatelessWidget {
       items: <BottomNavigationBarItem>[
         BottomNavigationBarItem(
           icon: Icon(
-            Icons.business,
+            Icons.list,
             color: theme.colorScheme.secondary,
           ),
-          label: 'Todo',
+          label: 'Todos',
         ),
         BottomNavigationBarItem(
           icon: Icon(
             Icons.add,
             color: theme.colorScheme.secondary,
           ),
-          label: '',
+          label: 'Hello ${sl<CurrentUser>().nickname}',
         ),
         BottomNavigationBarItem(
           icon: Icon(
@@ -223,7 +225,19 @@ class RoutesDrawer extends StatelessWidget {
             decoration: BoxDecoration(
               color: theme.colorScheme.secondary,
             ),
-            child: const Text('Drawer Header'),
+            child: const Text('Actions / Screens / Categories'),
+          ),
+          ListTile(
+            title: const Text('User Profile'),
+            onTap: () {
+              Navigator.pushNamed(context, Routes.userProfile);
+            },
+          ),
+          ListTile(
+            title: const Text('Home'),
+            onTap: () {
+              Navigator.pushNamed(context, Routes.homeRoute);
+            },
           ),
           ListTile(
             title: const Text('Theme'),
@@ -231,12 +245,6 @@ class RoutesDrawer extends StatelessWidget {
               Navigator.pushNamed(context, Routes.themeScreenRoute);
             },
           ),
-          // ListTile(
-          //   title: Text('User Profile'),
-          //   onTap: () {
-          //     Navigator.pushNamed(context, Routes.homeRoute);
-          //   },
-          // ),
         ],
       ),
     );

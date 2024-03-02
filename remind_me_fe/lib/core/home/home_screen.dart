@@ -7,34 +7,45 @@ import 'package:remind_me_fe/features/todos/presentation/screens/todo_list_build
 import 'package:remind_me_fe/injection_container.dart';
 
 class HomeScreen extends StatelessWidget {
-  HomeScreen({Key? key}) : super(key: key) {
-    sl<TodoProvider>().getAllActiveTodos();
-  }
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const LayoutByOrientation(HomeScreenContent());
+    return const LayoutByOrientation(
+      HomeScreenContent(),
+    );
   }
 }
 
 class HomeScreenContent extends StatelessWidget {
-  const HomeScreenContent({super.key});
+  const HomeScreenContent({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Text("Hello ${sl<CurrentUser>().nickname}"),
-        Flexible(
-          child: RefreshIndicator(
-            onRefresh: () async {
-              sl<TodoProvider>().getAllActiveTodos();
-            },
-            child: buildListFromTodos(context, activeTodosListName),
-          ),
-        ),
-        const BurgerButton(),
-      ],
+    return FutureBuilder(
+      future: sl<TodoProvider>().getAllActiveTodos(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return Center(child: Text('Error: ${snapshot.error}'));
+        } else {
+          return Row(
+            children: [
+              Text("Hello ${sl<CurrentUser>().nickname}"),
+              Flexible(
+                child: RefreshIndicator(
+                  onRefresh: () async {
+                    await sl<TodoProvider>().getAllActiveTodos();
+                  },
+                  child: buildListFromTodos(context, activeTodosListName),
+                ),
+              ),
+              const BurgerButton(),
+            ],
+          );
+        }
+      },
     );
   }
 }
