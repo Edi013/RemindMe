@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:remind_me_fe/core/bar/presentation/screen_by_orientation.dart';
-import 'package:remind_me_fe/features/list_todos/domain/entities/todo.dart';
-import 'package:remind_me_fe/features/list_todos/presentation/controllers/update_controller.dart';
+import 'package:remind_me_fe/features/todos/domain/entities/todo.dart';
+import 'package:remind_me_fe/features/todos/presentation/controllers/update_controller.dart';
 
 class TodoUpdateScreen extends StatelessWidget {
   const TodoUpdateScreen({super.key});
@@ -57,9 +57,6 @@ class TodoUpdateScreenContent extends StatelessWidget {
     controller.initControllers(toDoToUpdate);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Edit Object'),
-      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(

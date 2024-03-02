@@ -16,9 +16,9 @@ namespace RemindMe.DataAcces.Repositories
                 .SingleAsync(x => x.Id == id);
         }
 
-        public IQueryable<Item> GetAllActiveItems()
+        public async Task<IQueryable<Item>> GetAllActiveItems()
         {
-            DateTime dateTimeNow = DateTime.Now;
+            DateTime dateTimeNow = DateTime.UtcNow;
 
             return context.Set<Item>().Where(currentItem =>
              (currentItem.StartDate < dateTimeNow) && (dateTimeNow < currentItem.EndDate));

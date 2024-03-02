@@ -1,7 +1,7 @@
-import 'package:remind_me_fe/features/list_todos/data/data_sources/remote/todo_service_api.dart';
-import 'package:remind_me_fe/features/list_todos/data/models/todo.dart';
-import 'package:remind_me_fe/features/list_todos/domain/entities/todo.dart';
-import 'package:remind_me_fe/features/list_todos/domain/repositories/todo_repository.dart';
+import 'package:remind_me_fe/features/todos/data/data_sources/remote/todo_service_api.dart';
+import 'package:remind_me_fe/features/todos/data/models/todo.dart';
+import 'package:remind_me_fe/features/todos/domain/entities/todo.dart';
+import 'package:remind_me_fe/features/todos/domain/repositories/todo_repository.dart';
 
 class TodoRepositoryImpl implements ToDoRepository {
   late TodoServiceApi _todoServiceApi;
@@ -13,6 +13,14 @@ class TodoRepositoryImpl implements ToDoRepository {
   @override
   Future<List<TodoEntity>> getAll() async {
     List<TodoModel> remoteData = await _todoServiceApi.getAll();
+    return remoteData.map((todoModel) {
+      return todoModel.toTodoEntity();
+    }).toList();
+  }
+
+  @override
+  Future<List<TodoEntity>> getAllActiveTodos() async {
+    List<TodoModel> remoteData = await _todoServiceApi.getAllActiveTodos();
     return remoteData.map((todoModel) {
       return todoModel.toTodoEntity();
     }).toList();

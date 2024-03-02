@@ -1,10 +1,8 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
-import 'package:remind_me_fe/core/snackBar/snack_bar.dart';
-import 'package:remind_me_fe/features/list_todos/data/models/create_todo_request.dart';
-import 'package:remind_me_fe/features/list_todos/data/models/delete_todo_request.dart';
-import 'package:remind_me_fe/features/list_todos/data/models/todo.dart';
+import 'package:remind_me_fe/features/todos/data/models/create_todo_request.dart';
+import 'package:remind_me_fe/features/todos/data/models/delete_todo_request.dart';
+import 'package:remind_me_fe/features/todos/data/models/todo.dart';
 import 'package:remind_me_fe/core/constants.dart';
 import 'package:remind_me_fe/injection_container.dart';
 
@@ -21,6 +19,18 @@ class TodoServiceApi {
   Future<List<TodoModel>> getAll() async {
     try {
       final response = await _dio.get('$apiUrl/GetAll');
+      final List<dynamic> data = response.data;
+      List<TodoModel> result =
+          data.map((json) => TodoModel.fromJson(json)).toList();
+      return result.isEmpty ? seedData() : result;
+    } catch (error) {
+      throw Exception('Failed to fetch todos: $error');
+    }
+  }
+
+  Future<List<TodoModel>> getAllActiveTodos() async {
+    try {
+      final response = await _dio.get('$apiUrl/GetAllActiveItems');
       final List<dynamic> data = response.data;
       List<TodoModel> result =
           data.map((json) => TodoModel.fromJson(json)).toList();

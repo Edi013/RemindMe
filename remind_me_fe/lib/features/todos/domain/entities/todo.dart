@@ -4,7 +4,7 @@ class TodoEntity {
   String description;
   DateTime creationDate;
   DateTime startDate;
-  DateTime? endDate;
+  DateTime endDate;
   bool isFinished;
   int difficulty;
   int ownerId;
@@ -15,7 +15,7 @@ class TodoEntity {
     this.description = "",
     required this.creationDate,
     required this.startDate,
-    this.endDate,
+    required this.endDate,
     this.isFinished = false,
     required this.difficulty,
     required this.ownerId,

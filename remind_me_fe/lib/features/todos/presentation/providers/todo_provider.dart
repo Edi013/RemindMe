@@ -1,32 +1,52 @@
 import 'package:flutter/foundation.dart';
-import 'package:remind_me_fe/features/list_todos/data/repositories/todo_repository_impl.dart';
-import 'package:remind_me_fe/features/list_todos/domain/entities/todo.dart';
+import 'package:remind_me_fe/features/todos/data/repositories/todo_repository_impl.dart';
+import 'package:remind_me_fe/features/todos/domain/entities/todo.dart';
 
 class TodoProvider extends ChangeNotifier {
   late TodoRepositoryImpl repository;
   late List<TodoEntity> todos = [];
+  late List<TodoEntity> activeTodos = [];
 
   TodoProvider(TodoRepositoryImpl repo) {
     repository = repo;
-    initialize();
+    //initialize();
   }
 
-  void initialize() async {
-    //todos = await getAll();
-    notifyListeners();
-  }
+  // void initialize() async {
+  //   todos = await getAll();
+  //   notifyListeners();
+  // }
 
   Future<List<TodoEntity>> getAll() async {
     var result = await repository.getAll();
     todos = result;
     notifyListeners();
+    filterActiveTodos();
     return result;
+  }
+
+  Future<List<TodoEntity>> getAllActiveTodos() async {
+    var result = await repository.getAllActiveTodos();
+    activeTodos = result;
+    notifyListeners();
+    return result;
+  }
+
+  Future<void> filterActiveTodos() async {
+    final now = DateTime.now();
+    activeTodos = todos
+        .where(
+            (todo) => todo.startDate.isBefore(now) && todo.endDate.isAfter(now))
+        .toList();
+    notifyListeners();
+    filterActiveTodos();
   }
 
   Future<void> add(TodoEntity object) async {
     await repository.addTodo(object).then((TodoEntity value) {
       todos.add(value);
       notifyListeners();
+      filterActiveTodos();
     });
   }
 
@@ -34,6 +54,7 @@ class TodoProvider extends ChangeNotifier {
     await repository.updateTodo(updatedObject).then((TodoEntity value) {
       todos[index] = value;
       notifyListeners();
+      filterActiveTodos();
     });
   }
 
@@ -41,6 +62,7 @@ class TodoProvider extends ChangeNotifier {
     await repository.deleteTodo(id).then((value) {
       todos.remove(todos.firstWhere((element) => element.id == id));
       notifyListeners();
+      filterActiveTodos();
     });
   }
 }

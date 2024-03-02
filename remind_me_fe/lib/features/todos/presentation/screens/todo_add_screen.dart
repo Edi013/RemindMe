@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:remind_me_fe/core/bar/presentation/screen_by_orientation.dart';
-import 'package:remind_me_fe/features/list_todos/presentation/controllers/add_controller.dart';
+import 'package:remind_me_fe/features/todos/presentation/controllers/add_controller.dart';
 
 class TodoAddScreen extends StatelessWidget {
   const TodoAddScreen({super.key});
@@ -49,9 +49,6 @@ class TodoAddScreenContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Add New Object'),
-      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(

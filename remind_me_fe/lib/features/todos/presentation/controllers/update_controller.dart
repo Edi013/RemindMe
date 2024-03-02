@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:remind_me_fe/features/list_todos/domain/entities/todo.dart';
-import 'package:remind_me_fe/features/list_todos/presentation/providers/todo_provider.dart';
+import 'package:remind_me_fe/features/todos/domain/entities/todo.dart';
+import 'package:remind_me_fe/features/todos/presentation/providers/todo_provider.dart';
 
 class TodoUpdateController {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();

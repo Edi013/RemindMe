@@ -1,6 +1,6 @@
 import 'package:intl/intl.dart';
 import 'package:remind_me_fe/core/constants.dart';
-import 'package:remind_me_fe/features/list_todos/domain/entities/todo.dart';
+import 'package:remind_me_fe/features/todos/domain/entities/todo.dart';
 
 class TodoModel extends TodoEntity {
   TodoModel({
@@ -9,7 +9,7 @@ class TodoModel extends TodoEntity {
     String description = "",
     required DateTime creationDate,
     required DateTime startDate,
-    DateTime? endDate,
+    required DateTime endDate,
     bool isFinished = false,
     required int difficulty,
     required int ownerId,
@@ -34,9 +34,7 @@ class TodoModel extends TodoEntity {
       description: json['description'] as String,
       creationDate: DateFormat(DATE_TIME_FORMAT).parse(json['creationDate']),
       startDate: DateFormat(DATE_TIME_FORMAT).parse(json['startDate']),
-      endDate: json['endDate'] != ""
-          ? DateFormat(DATE_TIME_FORMAT).parse(json['endDate'])
-          : null,
+      endDate: DateFormat(DATE_TIME_FORMAT).parse(json['endDate']),
       difficulty: json['difficulty'],
       isFinished: json['isFinished'] as bool,
       ownerId: json['ownerId'] as int,
