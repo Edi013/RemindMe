@@ -23,8 +23,8 @@ class ThemeScreenContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Row(
+    return Container(
+      child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Flexible(
