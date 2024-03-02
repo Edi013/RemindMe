@@ -32,7 +32,6 @@ class HomeScreenContent extends StatelessWidget {
         } else {
           return Row(
             children: [
-              Text("Hello ${sl<CurrentUser>().nickname}"),
               Flexible(
                 child: RefreshIndicator(
                   onRefresh: () async {

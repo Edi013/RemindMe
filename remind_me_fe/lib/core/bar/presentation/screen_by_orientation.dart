@@ -87,22 +87,22 @@ class ExampleSidebarX extends StatelessWidget {
       },
       items: [
         SidebarXItem(
-          icon: Icons.home,
-          label: 'Home',
+          icon: Icons.segment_rounded,
+          label: 'Active Tasks',
           onTap: () {
             Navigator.pushNamed(context, Routes.homeRoute);
           },
         ),
         SidebarXItem(
           icon: Icons.business,
-          label: 'View todos',
+          label: 'All Tasks',
           onTap: () {
             Navigator.pushNamed(context, Routes.todoListRoute);
           },
         ),
         SidebarXItem(
           icon: Icons.add,
-          label: 'New todo',
+          label: 'New Task',
           onTap: () {
             Navigator.pushNamed(context, Routes.todoAddRoute);
           },
@@ -164,23 +164,24 @@ class BottomBar extends StatelessWidget {
             Icons.list,
             color: theme.colorScheme.secondary,
           ),
-          label: 'Todos',
+          label: 'All Tasks',
         ),
         BottomNavigationBarItem(
           icon: Icon(
             Icons.add,
             color: theme.colorScheme.secondary,
           ),
-          label: 'Hello ${sl<CurrentUser>().nickname}',
+          label: 'G\'day ${sl<CurrentUser>().nickname ?? "User"}',
         ),
         BottomNavigationBarItem(
           icon: Icon(
-            Icons.home,
+            Icons.segment_rounded,
             color: theme.colorScheme.secondary,
           ),
-          label: 'Home',
+          label: 'Active Tasks',
         ),
       ],
+      currentIndex: 1,
       onTap: (int index) {
         if (index == 0) {
           Navigator.pushNamed(context, Routes.todoListRoute);
@@ -225,7 +226,8 @@ class RoutesDrawer extends StatelessWidget {
             decoration: BoxDecoration(
               color: theme.colorScheme.secondary,
             ),
-            child: const Text('Actions / Screens / Categories'),
+            child: const Text(
+                'Streets / Routes / Directions / Actions / Screens / Categories'),
           ),
           ListTile(
             title: const Text('User Profile'),
@@ -234,7 +236,7 @@ class RoutesDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            title: const Text('Home'),
+            title: const Text('Tasks'),
             onTap: () {
               Navigator.pushNamed(context, Routes.homeRoute);
             },
