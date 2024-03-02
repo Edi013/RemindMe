@@ -48,7 +48,7 @@ class TodoModel extends TodoEntity {
       'description': description,
       'creationDate': creationDate.toIso8601String(),
       'startDate': startDate.toIso8601String(),
-      'endDate': endDate?.toIso8601String(),
+      'endDate': endDate.toIso8601String(),
       'isFinished': isFinished,
       'difficulty': difficulty,
       'ownerId': ownerId,
