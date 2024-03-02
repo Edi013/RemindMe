@@ -21,7 +21,7 @@ class CurrentUser {
     jwt = null;
     jwtExpirationDate = null;
     jwtJti = null;
-    nickname = null;
+    nickname = "User";
     email = null;
     role = null;
   }

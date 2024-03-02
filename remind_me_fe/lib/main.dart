@@ -4,7 +4,7 @@ import 'package:remind_me_fe/core/routes.dart';
 import 'package:remind_me_fe/core/theme/theme_config.dart';
 import 'package:remind_me_fe/features/authentication/presentation/provider/auth_provider.dart';
 import 'package:remind_me_fe/features/authentication/presentation/provider/current_user.dart';
-import 'package:remind_me_fe/features/list_todos/presentation/providers/todo_provider.dart';
+import 'package:remind_me_fe/features/todos/presentation/providers/todo_provider.dart';
 import 'package:remind_me_fe/features/theme/presentation/providers/theme_provider.dart';
 import 'package:remind_me_fe/injection_container.dart';
 

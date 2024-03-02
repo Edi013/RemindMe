@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:remind_me_fe/features/authentication/presentation/controllers/login_controller.dart';
-import 'package:remind_me_fe/features/authentication/presentation/provider/auth_provider.dart';
-import 'package:remind_me_fe/injection_container.dart';
 
 class LoginScreen extends StatelessWidget {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  LoginScreen({Key? key});
+  LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +17,7 @@ class LoginScreen extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class LoginCard extends StatelessWidget {
   late LoginController controller;
 

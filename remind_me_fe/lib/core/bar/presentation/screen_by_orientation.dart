@@ -226,7 +226,7 @@ class RoutesDrawer extends StatelessWidget {
             child: const Text('Drawer Header'),
           ),
           ListTile(
-            title: Text('Theme'),
+            title: const Text('Theme'),
             onTap: () {
               Navigator.pushNamed(context, Routes.themeScreenRoute);
             },

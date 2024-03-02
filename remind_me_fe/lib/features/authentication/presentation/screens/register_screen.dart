@@ -14,6 +14,7 @@ class RegisterScreen extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class RegisterCard extends StatelessWidget {
   late RegisterController controller;
 

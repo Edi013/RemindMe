@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:remind_me_fe/core/constants.dart';
-import 'package:remind_me_fe/core/theme/theme_config.dart';
 
 class AppTheme {
   late String currentThemeName;
@@ -18,14 +17,14 @@ class AppTheme {
       case system_theme:
         return ThemeMode.system;
     }
-    throw AssertionError(error_message_constants_not_used);
+    throw AssertionError(error_message_constants_not_used_theme);
   }
 
   void swapTheme(String themeName) {
     if (themeName != dark_theme &&
         themeName != light_theme &&
         themeName != system_theme) {
-      throw AssertionError(error_message_constants_not_used);
+      throw AssertionError(error_message_constants_not_used_theme);
     }
     currentThemeName = themeName;
 

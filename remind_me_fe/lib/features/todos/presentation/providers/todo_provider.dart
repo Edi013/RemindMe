@@ -32,14 +32,13 @@ class TodoProvider extends ChangeNotifier {
     return result;
   }
 
-  Future<void> filterActiveTodos() async {
+  void filterActiveTodos() {
     final now = DateTime.now();
     activeTodos = todos
         .where(
             (todo) => todo.startDate.isBefore(now) && todo.endDate.isAfter(now))
         .toList();
     notifyListeners();
-    filterActiveTodos();
   }
 
   Future<void> add(TodoEntity object) async {
