@@ -22,7 +22,7 @@ class TodoServiceApi {
       final List<dynamic> data = response.data;
       List<TodoModel> result =
           data.map((json) => TodoModel.fromJson(json)).toList();
-      return result.isEmpty ? seedData() : result;
+      return result; //result.isEmpty ? seedData() : result;
     } catch (error) {
       throw Exception('Failed to fetch todos: $error');
     }
@@ -34,7 +34,7 @@ class TodoServiceApi {
       final List<dynamic> data = response.data;
       List<TodoModel> result =
           data.map((json) => TodoModel.fromJson(json)).toList();
-      return result.isEmpty ? seedData() : result;
+      return result; //result.isEmpty ? seedData() : result;
     } catch (error) {
       throw Exception('Failed to fetch todos: $error');
     }

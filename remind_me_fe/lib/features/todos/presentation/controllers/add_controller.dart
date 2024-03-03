@@ -33,7 +33,7 @@ class TodoAddController {
             )
           : startDate.add(const Duration(days: 1));
       int difficulty = int.parse(_difficultyController.text);
-
+      CurrentUser user = sl<CurrentUser>();
       TodoEntity newObject = TodoEntity(
         id: 0,
         title: title,
@@ -42,7 +42,7 @@ class TodoAddController {
         startDate: startDate,
         endDate: endDate,
         difficulty: difficulty,
-        ownerId: sl<CurrentUser>().userId!,
+        ownerId: user.userId!,
       );
 
       Provider.of<TodoProvider>(context, listen: false).add(newObject);
