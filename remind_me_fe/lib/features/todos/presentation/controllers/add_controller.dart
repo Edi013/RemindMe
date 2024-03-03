@@ -42,7 +42,7 @@ class TodoAddController {
         startDate: startDate,
         endDate: endDate,
         difficulty: difficulty,
-        ownerId: user.userId!,
+        ownerId: user.id!,
       );
 
       Provider.of<TodoProvider>(context, listen: false).add(newObject);

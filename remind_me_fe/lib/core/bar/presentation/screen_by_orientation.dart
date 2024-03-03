@@ -247,6 +247,12 @@ class RoutesDrawer extends StatelessWidget {
               Navigator.pushNamed(context, Routes.themeScreenRoute);
             },
           ),
+          ListTile(
+            title: const Text('Logout'),
+            onTap: () {
+              Navigator.pushNamed(context, Routes.logoutRoute);
+            },
+          ),
         ],
       ),
     );

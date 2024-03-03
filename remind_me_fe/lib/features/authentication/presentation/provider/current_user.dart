@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class CurrentUser {
   late final SharedPreferences preferences;
-  String? userId;
+  String? id;
   String? jwt;
   DateTime? jwtExpirationDate;
   String? jwtJti;
@@ -19,7 +19,7 @@ class CurrentUser {
       parseNewJwt(storedJwt);
       return;
     }
-    userId = null;
+    id = null;
     jwt = null;
     jwtExpirationDate = null;
     jwtJti = null;
@@ -67,7 +67,7 @@ class CurrentUser {
   }
 
   void _saveJwtData(JWTData jwtData) {
-    userId = jwtData.payload[jwt_user_id];
+    id = jwtData.payload[jwt_user_id];
     jwtExpirationDate = jwtData.expiration!;
     jwtJti = jwtData.payload[jwt_jti] as String;
     nickname = jwtData.payload[jwt_nickname] as String;
@@ -111,6 +111,7 @@ class CurrentUser {
 
   void clearJwtData() {
     preferences.remove(jwt_key);
+    id = null;
     jwt = null;
     jwtExpirationDate = null;
     jwtJti = null;

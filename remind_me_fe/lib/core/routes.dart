@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:remind_me_fe/core/home/home_screen.dart';
 import 'package:remind_me_fe/features/authentication/presentation/screens/expired_session_screen.dart';
 import 'package:remind_me_fe/features/authentication/presentation/screens/login_screen.dart';
+import 'package:remind_me_fe/features/authentication/presentation/screens/logout_screen.dart';
 import 'package:remind_me_fe/features/authentication/presentation/screens/register_screen.dart';
 import 'package:remind_me_fe/features/todos/presentation/screens/todo_add_screen.dart';
 import 'package:remind_me_fe/features/todos/presentation/screens/todo_list_screen.dart';
@@ -19,6 +20,7 @@ class Routes {
   static const String todoAddRoute = '/todo_add';
 
   static const String loginRoute = '/login';
+  static const String logoutRoute = '/logout';
   static const String registerRoute = '/register';
   static const String sessionExpiredRoute = '/session_expired';
 
@@ -31,6 +33,7 @@ class Routes {
       todoListRoute: (context) => const TodoListScreen(),
       todoUpdateRoute: (context) => const TodoUpdateScreen(),
       todoAddRoute: (context) => const TodoAddScreen(),
+      logoutRoute: (context) => const LogoutScreen(),
       loginRoute: (context) => LoginScreen(),
       registerRoute: (context) => const RegisterScreen(),
       sessionExpiredRoute: (context) => const SessionExpiredScreen(),
