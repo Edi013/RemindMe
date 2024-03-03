@@ -12,7 +12,7 @@ class TodoModel extends TodoEntity {
     required DateTime endDate,
     bool isFinished = false,
     required int difficulty,
-    required int ownerId,
+    required String ownerId,
   }) : super(
           id: id,
           title: title,
@@ -37,7 +37,7 @@ class TodoModel extends TodoEntity {
       endDate: DateFormat(DATE_TIME_FORMAT).parse(json['endDate']),
       difficulty: json['difficulty'],
       isFinished: json['isFinished'] as bool,
-      ownerId: json['ownerId'] as int,
+      ownerId: json['ownerId'] as String,
     );
   }
 

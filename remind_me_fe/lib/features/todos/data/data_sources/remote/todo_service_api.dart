@@ -51,7 +51,7 @@ class TodoServiceApi {
         endDate: DateTime(2024, 1, 25),
         isFinished: false,
         difficulty: 3,
-        ownerId: 123,
+        ownerId: "testOwnerId",
       ),
       TodoModel(
         id: 2,
@@ -62,7 +62,7 @@ class TodoServiceApi {
         endDate: DateTime(2024, 1, 30),
         isFinished: false,
         difficulty: 2,
-        ownerId: 456,
+        ownerId: "testOwnerId",
       ),
       TodoModel(
         id: 3,
@@ -73,7 +73,7 @@ class TodoServiceApi {
         endDate: DateTime(2024, 1, 31),
         isFinished: false,
         difficulty: 1,
-        ownerId: 789,
+        ownerId: "testOwnerId",
       ),
     ];
     return toDoList;

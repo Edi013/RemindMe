@@ -17,6 +17,7 @@ const String jwt_jti = "Jti";
 const String jwt_nickname = "Username";
 const String jwt_email = "Email";
 const String jwt_role = "Role";
+const String jwt_user_id = "Id";
 
 const String allTodosListName = "todos";
 const String activeTodosListName = "activeTodos";

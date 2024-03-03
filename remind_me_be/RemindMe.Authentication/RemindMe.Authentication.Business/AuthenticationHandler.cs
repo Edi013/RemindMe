@@ -178,6 +178,7 @@ namespace RemindMe.Authentication.Handlers
             };
             var authClaims = new List<Claim>
             {
+                new Claim("Id", user.Id.ToString()),
                 new Claim("Jti", Guid.NewGuid().ToString()),
                 new Claim("Email", user.Email),
                 new Claim("Username", user.Nickname),

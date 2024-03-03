@@ -6,7 +6,7 @@ class CreateToDoRequest {
   DateTime? endDate;
   bool isFinished;
   int difficulty;
-  int ownerId;
+  String ownerId;
 
   CreateToDoRequest({
     required this.title,

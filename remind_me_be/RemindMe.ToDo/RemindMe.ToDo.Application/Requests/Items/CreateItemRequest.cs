@@ -12,7 +12,7 @@ namespace RemindMe.Application.Requests.Todos
         public string EndDate { get; set; }
         public bool IsFinished { get; set; }
         public int Difficulty { get; set; }
-        public int OwnerId { get; set; }
+        public string OwnerId { get; set; }
 
     }
 }
