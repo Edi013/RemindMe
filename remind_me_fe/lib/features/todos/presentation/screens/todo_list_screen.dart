@@ -18,6 +18,7 @@ class TodoListScreen extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class TodoListScreenContent extends StatelessWidget {
   TodoProvider provider = sl<TodoProvider>();
 

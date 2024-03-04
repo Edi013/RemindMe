@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:remind_me_fe/core/router/app_router.gr.dart';
-import 'package:remind_me_fe/core/routes.dart';
 import 'package:auto_route/auto_route.dart';
 
 @RoutePage()

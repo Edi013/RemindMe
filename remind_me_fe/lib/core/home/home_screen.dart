@@ -18,6 +18,7 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class HomeScreenContent extends StatelessWidget {
   TodoProvider provider = sl<TodoProvider>();
 

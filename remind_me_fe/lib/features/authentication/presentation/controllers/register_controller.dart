@@ -6,7 +6,6 @@ import 'dart:io';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:remind_me_fe/core/router/app_router.gr.dart';
-import 'package:remind_me_fe/core/routes.dart';
 import 'package:remind_me_fe/core/snackBar/snack_bar.dart';
 import 'package:remind_me_fe/features/authentication/domain/entities/register_credentials.dart';
 import 'package:remind_me_fe/features/authentication/presentation/provider/auth_provider.dart';

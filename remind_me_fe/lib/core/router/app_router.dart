@@ -1,6 +1,4 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:remind_me_fe/features/authentication/presentation/provider/current_user.dart';
-import 'package:remind_me_fe/injection_container.dart';
 
 import 'app_router.gr.dart';
 
@@ -10,7 +8,7 @@ class AppRouter extends $AppRouter {
   List<AutoRoute> get routes => [
         AutoRoute(
             page: LoginRoute.page,
-            initial: sl<CurrentUser>().isJwtExpired() ? true : false),
+            initial: true), //sl<CurrentUser>().isJwtExpired() ? true : false),
         AutoRoute(page: RegisterRoute.page),
         AutoRoute(page: LogoutRoute.page),
         AutoRoute(page: SessionExpiredRoute.page),
@@ -20,7 +18,7 @@ class AppRouter extends $AppRouter {
         AutoRoute(page: TodoUpdateRoute.page),
         AutoRoute(page: UserProfileRoute.page),
         AutoRoute(
-            page: HomeRoute.page,
-            initial: !sl<CurrentUser>().isJwtExpired() ? true : false),
+          page: HomeRoute.page,
+        ) //initial: !sl<CurrentUser>().isJwtExpired() ? true : false),
       ];
 }
