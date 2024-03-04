@@ -1,6 +1,8 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:remind_me_fe/core/constants.dart';
+import 'package:remind_me_fe/core/router/app_router.gr.dart';
 import 'package:remind_me_fe/core/routes.dart';
 import 'package:remind_me_fe/features/todos/domain/entities/todo.dart';
 import 'package:remind_me_fe/features/todos/presentation/providers/todo_provider.dart';
@@ -73,11 +75,12 @@ Scaffold buildListFromTodos(BuildContext context, String todoListName) {
                           ],
                         ),
                         onTap: () {
-                          Navigator.pushNamed(
-                            context,
-                            Routes.todoUpdateRoute,
-                            arguments: {'index': index, 'object': toDo},
-                          );
+                          // Navigator.pushNamed(
+                          //   context,
+                          //   Routes.todoUpdateRoute,
+                          //   arguments: {'index': index, 'object': toDo},
+                          // );
+                          AutoRouter.of(context).push(const TodoUpdateRoute());
                         },
                       );
                     },
@@ -89,7 +92,7 @@ Scaffold buildListFromTodos(BuildContext context, String todoListName) {
               padding: const EdgeInsets.all(16.0),
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, Routes.todoAddRoute);
+                  AutoRouter.of(context).push(const TodoAddRoute());
                 },
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(Theme.of(context)
