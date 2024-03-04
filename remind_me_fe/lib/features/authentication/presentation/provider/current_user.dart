@@ -10,7 +10,7 @@ class CurrentUser {
   String? jwtJti;
   String? nickname;
   String? email;
-  List<String>? role;
+  List<String> role = List<String>.empty();
 
   CurrentUser(SharedPreferences preferencesInjected) {
     preferences = preferencesInjected;
@@ -25,7 +25,7 @@ class CurrentUser {
     jwtJti = null;
     nickname = "User";
     email = null;
-    role = null;
+    role = List<String>.empty();
   }
 
   bool isLoggedIn() {
@@ -72,13 +72,14 @@ class CurrentUser {
     jwtJti = jwtData.payload[jwt_jti] as String;
     nickname = jwtData.payload[jwt_nickname] as String;
     email = jwtData.payload[jwt_email] as String;
+
     var roleFromJwt = jwtData.payload[jwt_role];
-    roleFromJwt = List<String>;
     if (roleFromJwt is String) {
-      role!.insert(0, roleFromJwt);
+      role.insert(0, roleFromJwt);
     } else if (roleFromJwt is List<String>) {
+      // role = roleFromJwt;
       for (var role in roleFromJwt) {
-        this.role!.insert(this.role!.length, role);
+        this.role.insert(this.role.length, role);
       }
     }
   }
@@ -117,6 +118,6 @@ class CurrentUser {
     jwtJti = null;
     nickname = null;
     email = null;
-    role = null;
+    role = List<String>.empty();
   }
 }

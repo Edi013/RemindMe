@@ -50,13 +50,13 @@ class UserProfileScreen extends StatelessWidget {
                     ),
                   ),
                   ListView.builder(
-                      itemCount: currentUser.role!.length,
+                      itemCount: currentUser.role.length,
                       itemBuilder: (context, index) {
                         return Padding(
                           padding:
                               const EdgeInsets.only(left: 16.0, bottom: 16.0),
                           child: Text(
-                            currentUser.role![index],
+                            currentUser.role[index],
                             style: const TextStyle(fontSize: 18.0),
                           ),
                         );
