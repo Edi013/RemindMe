@@ -1,5 +1,7 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:remind_me_fe/core/router/app_router.dart';
 import 'package:remind_me_fe/core/routes.dart';
 import 'package:remind_me_fe/core/theme/theme_config.dart';
 import 'package:remind_me_fe/features/authentication/presentation/provider/auth_provider.dart';
@@ -16,14 +18,12 @@ Future<void> main() async {
         providers: [
           ChangeNotifierProvider<TodoProvider>(
               create: (_) => sl<TodoProvider>()),
-          // ChangeNotifierProvider<LoggerProvider>(
-          //     create: (_) => LoggerProvider.instance),
           ChangeNotifierProvider<ThemeProvider>(
               create: (_) => sl<ThemeProvider>()),
           ChangeNotifierProvider<AuthProvider>(
               create: (_) => sl<AuthProvider>()),
         ],
-        child: const MyApp(),
+        child: MyApp(),
       ),
     );
   } catch (e, stackTrace) {
@@ -33,20 +33,33 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
 
+  final _appRouter = AppRouter();
+
+  // @override
+  // Widget build(BuildContext context) {
+  //   return MaterialApp(
+  //     debugShowCheckedModeBanner: false,
+  //     title: 'RemindMe',
+  //     initialRoute: sl<CurrentUser>().isJwtExpired()
+  //         ? Routes.loginRoute
+  //         : Routes.homeRoute,
+  //     routes: Routes.generateRoutes(),
+  //     theme: lightTheme,
+  //     darkTheme: darkTheme,
+  //     themeMode: Provider.of<ThemeProvider>(context).buildThemeMode(),
+  //   );
+  // }
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: 'RemindMe',
-      initialRoute: sl<CurrentUser>().isJwtExpired()
-          ? Routes.loginRoute
-          : Routes.homeRoute,
-      routes: Routes.generateRoutes(),
       theme: lightTheme,
       darkTheme: darkTheme,
       themeMode: Provider.of<ThemeProvider>(context).buildThemeMode(),
+      routerConfig: _appRouter.config(),
     );
   }
 }

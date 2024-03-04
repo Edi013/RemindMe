@@ -1,7 +1,9 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:remind_me_fe/core/bar/presentation/screen_by_orientation.dart';
 import 'package:remind_me_fe/features/todos/presentation/controllers/add_controller.dart';
 
+@RoutePage()
 class TodoAddScreen extends StatelessWidget {
   const TodoAddScreen({super.key});
 

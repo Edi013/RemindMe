@@ -2,8 +2,9 @@
 
 import 'dart:io';
 
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:remind_me_fe/core/routes.dart';
+import 'package:remind_me_fe/core/router/app_router.gr.dart';
 import 'package:remind_me_fe/core/snackBar/snack_bar.dart';
 import 'package:remind_me_fe/features/authentication/domain/entities/login_credentials.dart';
 import 'package:remind_me_fe/features/authentication/presentation/provider/auth_provider.dart';
@@ -29,7 +30,7 @@ class LoginController {
       var result = await provider.login(credentials);
 
       if (result.httpStatusCode == HttpStatus.accepted) {
-        Navigator.pushNamed(context, Routes.homeRoute);
+        AutoRouter.of(context).push(const HomeRoute());
         _saveUserAuthenticationData(result.token);
       } else if (result.httpStatusCode == HttpStatus.badRequest) {
         buildSnackBarMessage(context, "'Bad credentials. Please try again.'");

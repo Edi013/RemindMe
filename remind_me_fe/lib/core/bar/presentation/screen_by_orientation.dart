@@ -1,6 +1,8 @@
 // Landscape
 
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:remind_me_fe/core/router/app_router.gr.dart';
 import 'package:remind_me_fe/core/routes.dart';
 import 'package:remind_me_fe/features/authentication/presentation/provider/current_user.dart';
 import 'package:remind_me_fe/injection_container.dart';
@@ -90,21 +92,21 @@ class ExampleSidebarX extends StatelessWidget {
           icon: Icons.segment_rounded,
           label: 'Active Tasks',
           onTap: () {
-            Navigator.pushNamed(context, Routes.homeRoute);
+            AutoRouter.of(context).push(const HomeRoute());
           },
         ),
         SidebarXItem(
           icon: Icons.business,
           label: 'All Tasks',
           onTap: () {
-            Navigator.pushNamed(context, Routes.todoListRoute);
+            AutoRouter.of(context).push(const TodoListRoute());
           },
         ),
         SidebarXItem(
           icon: Icons.add,
           label: 'New Task',
           onTap: () {
-            Navigator.pushNamed(context, Routes.todoAddRoute);
+            AutoRouter.of(context).push(const TodoAddRoute());
           },
         ),
       ],
@@ -184,13 +186,13 @@ class BottomBar extends StatelessWidget {
       currentIndex: 1,
       onTap: (int index) {
         if (index == 0) {
-          Navigator.pushNamed(context, Routes.todoListRoute);
+          AutoRouter.of(context).push(const TodoListRoute());
         }
         if (index == 1) {
-          Navigator.pushNamed(context, Routes.todoAddRoute);
+          AutoRouter.of(context).push(const TodoAddRoute());
         }
         if (index == 2) {
-          Navigator.pushNamed(context, Routes.homeRoute);
+          AutoRouter.of(context).push(const HomeRoute());
         }
       },
     );
@@ -232,25 +234,25 @@ class RoutesDrawer extends StatelessWidget {
           ListTile(
             title: const Text('User Profile'),
             onTap: () {
-              Navigator.pushNamed(context, Routes.userProfile);
+              AutoRouter.of(context).push(const UserProfileRoute());
             },
           ),
           ListTile(
             title: const Text('Tasks'),
             onTap: () {
-              Navigator.pushNamed(context, Routes.homeRoute);
+              AutoRouter.of(context).push(const HomeRoute());
             },
           ),
           ListTile(
             title: const Text('Theme'),
             onTap: () {
-              Navigator.pushNamed(context, Routes.themeScreenRoute);
+              AutoRouter.of(context).push(ThemeRoute(context: context));
             },
           ),
           ListTile(
             title: const Text('Logout'),
             onTap: () {
-              Navigator.pushNamed(context, Routes.logoutRoute);
+              AutoRouter.of(context).push(const LogoutRoute());
             },
           ),
         ],

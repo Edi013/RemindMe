@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:remind_me_fe/core/bar/presentation/screen_by_orientation.dart';
 import 'package:remind_me_fe/features/theme/data/local/current_app_theme.dart';
@@ -6,6 +7,7 @@ import 'package:remind_me_fe/features/theme/presentation/providers/theme_provide
 import 'package:remind_me_fe/injection_container.dart';
 
 // ignore: must_be_immutable
+@RoutePage()
 class ThemeScreen extends StatelessWidget {
   const ThemeScreen(BuildContext context, {super.key});
 

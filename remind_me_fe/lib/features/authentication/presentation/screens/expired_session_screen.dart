@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:remind_me_fe/core/router/app_router.gr.dart';
 import 'package:remind_me_fe/core/routes.dart';
+import 'package:auto_route/auto_route.dart';
 
+@RoutePage()
 class SessionExpiredScreen extends StatelessWidget {
   const SessionExpiredScreen({super.key});
 
@@ -26,7 +29,7 @@ class SessionExpiredScreen extends StatelessWidget {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                Navigator.pushReplacementNamed(context, Routes.loginRoute);
+                AutoRouter.of(context).push(LoginRoute());
               },
               child: const Text('Log In'),
             ),

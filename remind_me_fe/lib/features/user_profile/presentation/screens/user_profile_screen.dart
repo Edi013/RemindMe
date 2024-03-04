@@ -1,7 +1,9 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:remind_me_fe/features/authentication/presentation/provider/current_user.dart';
 import 'package:remind_me_fe/injection_container.dart';
 
+@RoutePage()
 class UserProfileScreen extends StatelessWidget {
   const UserProfileScreen({Key? key}) : super(key: key);
 
@@ -47,13 +49,18 @@ class UserProfileScreen extends StatelessWidget {
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 16.0, bottom: 16.0),
-                    child: Text(
-                      currentUser.role?.join(", ") ?? 'Not available',
-                      style: const TextStyle(fontSize: 18.0),
-                    ),
-                  ),
+                  ListView.builder(
+                      itemCount: currentUser.role!.length,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding:
+                              const EdgeInsets.only(left: 16.0, bottom: 16.0),
+                          child: Text(
+                            currentUser.role![index],
+                            style: const TextStyle(fontSize: 18.0),
+                          ),
+                        );
+                      }),
                 ],
               ),
             ),
