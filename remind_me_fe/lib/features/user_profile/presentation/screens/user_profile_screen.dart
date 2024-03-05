@@ -39,29 +39,12 @@ class UserProfileScreen extends StatelessWidget {
               ),
             ),
             Card(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.all(16.0),
-                    child: Text(
-                      'Roles',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  ListView.builder(
-                      itemCount: currentUser.role.length,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding:
-                              const EdgeInsets.only(left: 16.0, bottom: 16.0),
-                          child: Text(
-                            currentUser.role[index],
-                            style: const TextStyle(fontSize: 18.0),
-                          ),
-                        );
-                      }),
-                ],
+              child: ListTile(
+                title: const Text(
+                  'Account type',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                subtitle: Text(currentUser.roles.last),
               ),
             ),
           ],
