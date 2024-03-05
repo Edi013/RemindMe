@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:remind_me_fe/core/router/guards/auth_guard.dart';
 import 'package:remind_me_fe/features/authentication/presentation/provider/current_user.dart';
 import 'package:remind_me_fe/injection_container.dart';
 
@@ -9,16 +10,39 @@ class AppRouter extends $AppRouter {
   @override
   List<AutoRoute> get routes => [
         AutoRoute(
-            page: LoginRoute.page,
-            initial: sl<CurrentUser>().isJwtExpired() ? true : false),
-        AutoRoute(page: RegisterRoute.page),
-        AutoRoute(page: LogoutRoute.page),
+          page: LoginRoute.page,
+          initial: sl<CurrentUser>().isJwtExpired() ? true : false,
+          keepHistory: false,
+        ),
+        AutoRoute(
+          page: RegisterRoute.page,
+          keepHistory: false,
+        ),
         AutoRoute(page: SessionExpiredRoute.page),
-        AutoRoute(page: ThemeRoute.page),
-        AutoRoute(page: TodoAddRoute.page),
-        AutoRoute(page: TodoListRoute.page),
-        AutoRoute(page: TodoUpdateRoute.page),
-        AutoRoute(page: UserProfileRoute.page),
+        AutoRoute(
+          page: LogoutRoute.page,
+          guards: [AuthGuard()],
+        ),
+        AutoRoute(
+          page: ThemeRoute.page,
+          guards: [AuthGuard()],
+        ),
+        AutoRoute(
+          page: TodoAddRoute.page,
+          guards: [AuthGuard()],
+        ),
+        AutoRoute(
+          page: TodoListRoute.page,
+          guards: [AuthGuard()],
+        ),
+        AutoRoute(
+          page: TodoUpdateRoute.page,
+          guards: [AuthGuard()],
+        ),
+        AutoRoute(
+          page: UserProfileRoute.page,
+          guards: [AuthGuard()],
+        ),
         AutoRoute(
             page: HomeRoute.page,
             initial: !sl<CurrentUser>().isJwtExpired() ? true : false),
