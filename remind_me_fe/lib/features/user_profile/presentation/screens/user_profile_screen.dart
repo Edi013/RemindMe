@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:remind_me_fe/core/bar/presentation/screen_by_orientation.dart';
 import 'package:remind_me_fe/features/authentication/presentation/provider/current_user.dart';
 import 'package:remind_me_fe/injection_container.dart';
 
@@ -12,43 +13,45 @@ class UserProfileScreen extends StatelessWidget {
     final currentUser = sl<CurrentUser>();
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('User Profile'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Card(
-              child: ListTile(
-                title: const Text(
-                  'Nickname',
-                  style: TextStyle(fontWeight: FontWeight.bold),
+      drawer: const RoutesDrawer(),
+      body: Row(
+        children: [
+          Flexible(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Card(
+                  child: ListTile(
+                    title: const Text(
+                      'Nickname',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    subtitle: Text(currentUser.nickname ?? 'Not available'),
+                  ),
                 ),
-                subtitle: Text(currentUser.nickname ?? 'Not available'),
-              ),
-            ),
-            Card(
-              child: ListTile(
-                title: const Text(
-                  'Email',
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                Card(
+                  child: ListTile(
+                    title: const Text(
+                      'Email',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    subtitle: Text(currentUser.email ?? 'Not available'),
+                  ),
                 ),
-                subtitle: Text(currentUser.email ?? 'Not available'),
-              ),
-            ),
-            Card(
-              child: ListTile(
-                title: const Text(
-                  'Account type',
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                Card(
+                  child: ListTile(
+                    title: const Text(
+                      'Account type',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    subtitle: Text(currentUser.roles.last),
+                  ),
                 ),
-                subtitle: Text(currentUser.roles.last),
-              ),
+              ],
             ),
-          ],
-        ),
+          ),
+          const BurgerButton()
+        ],
       ),
     );
   }
