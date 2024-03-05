@@ -55,7 +55,7 @@ class MyApp extends StatelessWidget {
       title: 'RemindMe',
       theme: lightTheme,
       darkTheme: darkTheme,
-      themeMode: Provider.of<ThemeProvider>(context).buildThemeMode(),
+      themeMode: Provider.of<ThemeProvider>(context).buildAppThemeMode(),
       routerConfig: _appRouter.config(),
     );
   }

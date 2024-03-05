@@ -20,23 +20,38 @@ class LogoutScreenContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        const Text("Here you can log out."),
-        const SizedBox(height: 30),
-        IconButton(
-          onPressed: () {
-            CurrentUser user = sl<CurrentUser>();
+        const SizedBox(
+          width: 1,
+          height: 1,
+        ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text("Here you can log out."),
+            const SizedBox(height: 30),
+            IconButton(
+              onPressed: () {
+                CurrentUser user = sl<CurrentUser>();
 
-            if (!user.isJwtPresent()) {
-              return;
-            }
+                if (!user.isJwtPresent()) {
+                  return;
+                }
 
-            user.clearJwtData();
-            AutoRouter.of(context).push(LoginRoute());
-          },
-          icon: const Icon(Icons.logout),
+                user.clearJwtData();
+                AutoRouter.of(context).push(LoginRoute());
+              },
+              icon: const Icon(Icons.logout),
+            ),
+          ],
+        ),
+        const Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            BurgerButton(),
+          ],
         ),
       ],
     );

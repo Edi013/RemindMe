@@ -1,19 +1,36 @@
 import 'package:flutter/material.dart';
-import 'package:remind_me_fe/features/theme/data/local/current_app_theme.dart';
+import 'package:remind_me_fe/core/constants.dart';
 
 class ThemeProvider extends ChangeNotifier {
-  late AppTheme appTheme;
+  late String currentThemeName = system_theme_name;
 
-  ThemeProvider(AppTheme theme) {
-    appTheme = theme;
-  }
+  ThemeProvider();
 
   void updateTheme(String themeName) {
-    appTheme.swapTheme(themeName);
+    swapTheme(themeName);
     notifyListeners();
   }
 
-  ThemeMode buildThemeMode() {
-    return appTheme.buildAppThemeMode();
+  void swapTheme(String themeName) {
+    if (themeName != dark_theme_name &&
+        themeName != light_theme_name &&
+        themeName != system_theme_name) {
+      throw AssertionError(error_message_constants_not_used_theme);
+    }
+    currentThemeName = themeName;
+
+    buildAppThemeMode();
+  }
+
+  ThemeMode buildAppThemeMode() {
+    switch (currentThemeName) {
+      case light_theme_name:
+        return ThemeMode.light;
+      case dark_theme_name:
+        return ThemeMode.dark;
+      case system_theme_name:
+        return ThemeMode.system;
+    }
+    throw AssertionError(error_message_constants_not_used_theme);
   }
 }

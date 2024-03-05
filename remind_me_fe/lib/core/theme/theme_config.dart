@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
+const Color accent = Color.fromARGB(255, 161, 127, 23);
+
 const Color lightPrimary = Color.fromARGB(255, 225, 225, 225);
-const Color lightAccent = Color.fromARGB(255, 161, 127, 23);
+const Color lightAccent = accent; // Color.fromARGB(255, 161, 127, 23);
 const Color lightBG = Color.fromARGB(255, 238, 238, 238);
 
 const Color darkPrimary = Color.fromARGB(255, 36, 36, 36);
-const Color darkAccent = Color.fromARGB(255, 171, 160, 127);
+const Color darkAccent = accent; // Color.fromARGB(255, 171, 160, 127);
 const Color darkBG = Color.fromARGB(255, 18, 18, 18);
 
 const Color smokeWhite = Color(0xffF5F5F5);
@@ -26,7 +28,7 @@ final ThemeData lightTheme = ThemeData(
   ),
   tabBarTheme: const TabBarTheme(
     labelColor: Colors.black,
-    unselectedLabelColor: Colors.grey,
+    //unselectedLabelColor: Colors.grey,
     indicator: UnderlineTabIndicator(
       borderSide: BorderSide(
         color: darkAccent,
@@ -44,16 +46,13 @@ final ThemeData lightTheme = ThemeData(
     ),
     iconTheme: IconThemeData(color: Colors.black),
   ),
-  buttonTheme: ButtonThemeData(
-    buttonColor: lightAccent,
-    textTheme: ButtonTextTheme.primary,
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(80),
-    ),
+  elevatedButtonTheme: ElevatedButtonThemeData(
+    style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all<Color>(darkPrimary)),
   ),
-  cardTheme: const CardTheme(
-    color: lightPrimary,
-    margin: EdgeInsets.all(50),
+  cardTheme: CardTheme(
+    color: lightAccent.withOpacity(0.6),
+    margin: const EdgeInsets.all(50),
   ),
 );
 
@@ -90,15 +89,13 @@ final ThemeData darkTheme = ThemeData(
     ),
     iconTheme: IconThemeData(color: Colors.white),
   ),
-  buttonTheme: ButtonThemeData(
-    buttonColor: darkAccent,
-    textTheme: ButtonTextTheme.primary,
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(80),
-    ),
+  elevatedButtonTheme: ElevatedButtonThemeData(
+    style: ButtonStyle(
+        backgroundColor:
+            MaterialStateProperty.all<Color>((lightPrimary.withOpacity(0.3)))),
   ),
-  cardTheme: const CardTheme(
-    color: darkPrimary,
-    margin: EdgeInsets.all(50),
+  cardTheme: CardTheme(
+    color: darkAccent.withOpacity(0.5),
+    margin: const EdgeInsets.all(50),
   ),
 );

@@ -74,11 +74,6 @@ Scaffold buildListFromTodos(BuildContext context, String todoListName) {
                           ],
                         ),
                         onTap: () {
-                          // Navigator.pushNamed(
-                          //   context,
-                          //   Routes.todoUpdateRoute,
-                          //   arguments: {'index': index, 'object': toDo},
-                          // );
                           AutoRouter.of(context).push(const TodoUpdateRoute());
                         },
                       );
@@ -93,19 +88,7 @@ Scaffold buildListFromTodos(BuildContext context, String todoListName) {
                 onPressed: () {
                   AutoRouter.of(context).push(const TodoAddRoute());
                 },
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Theme.of(context)
-                      .colorScheme
-                      .secondary
-                      .withOpacity(0.75)),
-                ),
-                child: Text(
-                  '+',
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.primary,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                child: const Text('+'),
               ),
             ),
           ],
