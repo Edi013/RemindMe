@@ -36,8 +36,13 @@ class RegisterController {
 
       if (result.httpStatusCode == HttpStatus.created) {
         AutoRouter.of(context).push(LoginRoute());
+        buildSnackBarMessage(context, result.message);
       } else if (result.httpStatusCode == HttpStatus.badRequest) {
-        buildSnackBarMessage(context, "'Bad credentials. Please try again.'");
+        buildSnackBarMessage(context, result.message);
+      } else if (result.httpStatusCode == HttpStatus.forbidden) {
+        buildSnackBarMessage(context, result.message);
+      } else if (result.httpStatusCode == HttpStatus.internalServerError) {
+        buildSnackBarMessage(context, result.message);
       } else {
         buildSnackBarMessage(
             context, 'Unexpected error occurred. Try again later.');

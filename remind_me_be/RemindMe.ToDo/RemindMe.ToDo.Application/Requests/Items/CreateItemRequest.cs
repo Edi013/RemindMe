@@ -13,6 +13,5 @@ namespace RemindMe.Application.Requests.Todos
         public bool IsFinished { get; set; }
         public int Difficulty { get; set; }
         public string OwnerId { get; set; }
-
     }
 }

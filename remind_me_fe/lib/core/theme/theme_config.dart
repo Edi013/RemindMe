@@ -50,10 +50,18 @@ final ThemeData lightTheme = ThemeData(
     style: ButtonStyle(
         backgroundColor: MaterialStateProperty.all<Color>(darkPrimary)),
   ),
+  textButtonTheme: TextButtonThemeData(
+    style: ButtonStyle(
+      backgroundColor: MaterialStateProperty.all<Color>(
+        (darkPrimary),
+      ),
+    ),
+  ),
   cardTheme: CardTheme(
     color: lightAccent.withOpacity(0.6),
     margin: const EdgeInsets.all(50),
   ),
+  snackBarTheme: const SnackBarThemeData(backgroundColor: darkPrimary),
 );
 
 final ThemeData darkTheme = ThemeData(
@@ -91,11 +99,22 @@ final ThemeData darkTheme = ThemeData(
   ),
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ButtonStyle(
-        backgroundColor:
-            MaterialStateProperty.all<Color>((lightPrimary.withOpacity(0.3)))),
+      backgroundColor: MaterialStateProperty.all<Color>(
+        (lightPrimary.withOpacity(0.3)),
+      ),
+    ),
+  ),
+  textButtonTheme: TextButtonThemeData(
+    style: ButtonStyle(
+      backgroundColor: MaterialStateProperty.all<Color>(
+        (lightPrimary.withOpacity(0.6)),
+      ),
+    ),
   ),
   cardTheme: CardTheme(
-    color: darkAccent.withOpacity(0.5),
+    color: darkAccent.withOpacity(0.65),
     margin: const EdgeInsets.all(50),
   ),
+  snackBarTheme:
+      SnackBarThemeData(backgroundColor: lightPrimary.withOpacity(0.6)),
 );

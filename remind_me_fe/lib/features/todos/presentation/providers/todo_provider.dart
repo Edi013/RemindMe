@@ -11,26 +11,26 @@ class TodoProvider extends ChangeNotifier {
     repository = repo;
   }
 
-  Future<List<TodoEntity>> getAll() async {
-    var result = await repository.getAll();
+  Future<List<TodoEntity>> getAllByUserIdTodos(String userId) async {
+    var result = await repository.getAllByUserId(userId);
     todos = result;
     notifyListeners();
     return result;
   }
 
-  Future<void> add(TodoEntity object) async {
-    await repository.addTodo(object).then((TodoEntity value) {
+  Future<void> add(TodoEntity todo) async {
+    await repository.addTodo(todo).then((TodoEntity value) {
       todos.add(value);
       notifyListeners();
-      obtainActiveTodosFromAllTodos();
+      obtainActiveTodosFromAllTodos(todo.ownerId);
     });
   }
 
-  Future<void> update(int index, TodoEntity updatedObject) async {
-    await repository.updateTodo(updatedObject).then((TodoEntity value) {
+  Future<void> update(int index, TodoEntity todo) async {
+    await repository.updateTodo(todo).then((TodoEntity value) {
       todos[index] = value;
       notifyListeners();
-      obtainActiveTodosFromAllTodos();
+      obtainActiveTodosFromAllTodos(todo.ownerId);
     });
   }
 
@@ -38,21 +38,20 @@ class TodoProvider extends ChangeNotifier {
     await repository.deleteTodo(id).then((value) {
       todos.remove(todos.firstWhere((element) => element.id == id));
       notifyListeners();
-      obtainActiveTodosFromAllTodos();
     });
   }
 
-  Future<List<TodoEntity>> getAllActiveTodos() async {
-    var result = await repository.getAllActiveTodos();
+  Future<List<TodoEntity>> getAllActiveByUserIdTodos(String userId) async {
+    var result = await repository.getAllActiveByUserIdTodos(userId);
     activeTodos = result;
     notifyListeners();
     return result;
   }
 
-  Future<void> obtainActiveTodosFromAllTodos() async {
+  Future<void> obtainActiveTodosFromAllTodos(String userId) async {
     final now = DateTime.now();
     if (todos.isEmpty) {
-      await getAll();
+      await getAllByUserIdTodos(userId);
     }
     activeTodos = todos
         .where(

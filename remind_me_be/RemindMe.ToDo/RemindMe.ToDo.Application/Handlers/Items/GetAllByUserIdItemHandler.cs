@@ -5,18 +5,18 @@ using RemindMe.Domain.Interfaces;
 
 namespace RemindMe.Application.Handlers.Todos
 {
-    public class GetAllItemHandler : IRequestHandler<GetAllItemRequest, IEnumerable<Item>>
+    public class GetAllByUserIdItemHandler : IRequestHandler<GetAllItemRequest, IEnumerable<Item>>
     {
         private IItemRepository repository;
 
-        public GetAllItemHandler(IItemRepository _repository)
+        public GetAllByUserIdItemHandler(IItemRepository _repository)
         {
             repository = _repository;
         }
 
         public async Task<IEnumerable<Item>> Handle(GetAllItemRequest request, CancellationToken cancellationToken)
         {
-            var result = await repository.GetAll();
+            var result = await repository.GetAllByUserId(request.UserId);
             return result;
         }
     }

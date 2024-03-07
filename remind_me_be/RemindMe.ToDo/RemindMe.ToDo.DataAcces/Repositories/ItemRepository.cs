@@ -16,12 +16,19 @@ namespace RemindMe.DataAcces.Repositories
                 .SingleAsync(x => x.Id == id);
         }
 
-        public async Task<IQueryable<Item>> GetAllActiveItems()
+        public async Task<IQueryable<Item>> GetAllActiveItemsByUserId(string userId)
         {
-            DateTime dateTimeNow = DateTime.UtcNow;
+            DateTime dateTimeNow = DateTime.UtcNow; 
 
             return context.Set<Item>().Where(currentItem =>
-             (currentItem.StartDate < dateTimeNow) && (dateTimeNow < currentItem.EndDate));
+                 (currentItem.OwnerId == userId) && 
+                    (currentItem.StartDate.ToUniversalTime() < dateTimeNow) && (dateTimeNow < currentItem.EndDate.ToUniversalTime()));
         }
+
+        public async Task<IQueryable<Item>> GetAllByUserId(string userId)
+        {
+            return context.Set<Item>().Where(currentItem => (currentItem.OwnerId == userId));
+        }
+
     }
 }

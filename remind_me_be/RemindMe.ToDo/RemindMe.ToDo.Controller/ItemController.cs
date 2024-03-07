@@ -24,10 +24,10 @@ namespace RemindMe.Controller
         }
 
         [Authorize]
-        [HttpGet("GetAll")]
-        public async Task<IEnumerable<Item>> GetAll()
+        [HttpGet("GetAllByUserId/{ownerId}")]
+        public async Task<IEnumerable<Item>> GetAllByUserId(String ownerId)
         {
-            var req = new GetAllItemRequest();
+            var req = new GetAllItemRequest() { UserId = ownerId };
 
             _logger.LogInformation("GetAll [GET] request for Todos / Items.");
             var result = await _mediator.Send(req, CancellationToken.None);
@@ -35,10 +35,10 @@ namespace RemindMe.Controller
         }
 
         [Authorize]
-        [HttpGet("GetAllActiveItems")]
-        public async Task<IEnumerable<Item>> GetAllActiveItem()
+        [HttpGet("GetAllActiveByUserIdItem/{ownerId}")]
+        public async Task<IEnumerable<Item>> GetAllActiveByUserIdItem(String ownerId)
         {
-            var req = new GetAllActiveItemRequest();
+            var req = new GetAllActiveItemRequest() { UserId = ownerId };
             _logger.LogInformation("GetAllActiveItem [GET] request for Todos / Items.");
             var result = await _mediator.Send(req, CancellationToken.None);
             return result;

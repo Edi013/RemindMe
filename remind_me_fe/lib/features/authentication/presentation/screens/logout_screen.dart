@@ -36,10 +36,6 @@ class LogoutScreenContent extends StatelessWidget {
               onPressed: () {
                 CurrentUser user = sl<CurrentUser>();
 
-                if (!user.isJwtPresent()) {
-                  return;
-                }
-
                 user.clearJwtData();
                 AutoRouter.of(context).push(LoginRoute());
               },

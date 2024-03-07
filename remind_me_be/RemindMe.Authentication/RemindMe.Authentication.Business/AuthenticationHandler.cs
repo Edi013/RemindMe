@@ -209,16 +209,6 @@ namespace RemindMe.Authentication.Handlers
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        private static string GenerateRefreshToken()
-        {
-            var randomNumber = new byte[64];
-
-            using var generator = RandomNumberGenerator.Create();
-
-            generator.GetBytes(randomNumber);
-
-            return Convert.ToBase64String(randomNumber);
-        }
 
         public async Task<BaseResponse> SeedRoles()
         {

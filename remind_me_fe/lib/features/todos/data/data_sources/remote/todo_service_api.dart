@@ -16,67 +16,29 @@ class TodoServiceApi {
     _dio = sl<Dio>();
   }
 
-  Future<List<TodoModel>> getAll() async {
+  Future<List<TodoModel>> getAllByUserId(String userId) async {
     try {
-      final response = await _dio.get('$apiUrl/GetAll');
+      final response = await _dio.get('$apiUrl/GetAllByUserId/$userId');
       final List<dynamic> data = response.data;
       List<TodoModel> result =
           data.map((json) => TodoModel.fromJson(json)).toList();
-      return result; //result.isEmpty ? seedData() : result;
+      return result;
     } catch (error) {
       throw Exception('Failed to fetch todos: $error');
     }
   }
 
-  Future<List<TodoModel>> getAllActiveTodos() async {
+  Future<List<TodoModel>> getAllByUserIdActiveTodos(String userId) async {
     try {
-      final response = await _dio.get('$apiUrl/GetAllActiveItems');
+      final response =
+          await _dio.get('$apiUrl/GetAllActiveByUserIdItem/$userId');
       final List<dynamic> data = response.data;
       List<TodoModel> result =
           data.map((json) => TodoModel.fromJson(json)).toList();
-      return result; //result.isEmpty ? seedData() : result;
+      return result;
     } catch (error) {
       throw Exception('Failed to fetch todos: $error');
     }
-  }
-
-  List<TodoModel> seedData() {
-    List<TodoModel> toDoList = [
-      TodoModel(
-        id: 1,
-        title: "Complete Flutter Project",
-        description: "Finish the tasks in the Flutter project",
-        creationDate: DateTime.now(),
-        startDate: DateTime(2024, 1, 21),
-        endDate: DateTime(2024, 1, 25),
-        isFinished: false,
-        difficulty: 3,
-        ownerId: "testOwnerId",
-      ),
-      TodoModel(
-        id: 2,
-        title: "Study Dart Programming",
-        description: "Learn Dart programming language",
-        creationDate: DateTime.now(),
-        startDate: DateTime(2024, 1, 22),
-        endDate: DateTime(2024, 1, 30),
-        isFinished: false,
-        difficulty: 2,
-        ownerId: "testOwnerId",
-      ),
-      TodoModel(
-        id: 3,
-        title: "Exercise",
-        description: "Go for a jog or hit the gym",
-        creationDate: DateTime.now(),
-        startDate: DateTime(2024, 1, 23),
-        endDate: DateTime(2024, 1, 31),
-        isFinished: false,
-        difficulty: 1,
-        ownerId: "testOwnerId",
-      ),
-    ];
-    return toDoList;
   }
 
   Future<TodoModel> addTodo(TodoModel todo) async {

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using RemindMe.Domain.Entities;
 using RemindMe.Domain.Interfaces;
 using System.Linq.Expressions;
 

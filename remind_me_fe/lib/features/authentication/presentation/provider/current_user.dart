@@ -1,5 +1,4 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:flutter/material.dart';
 import 'package:jwt_decode_full/jwt_decode_full.dart';
 import 'package:remind_me_fe/core/constants.dart';
 import 'package:remind_me_fe/core/router/app_router.gr.dart';
@@ -30,6 +29,13 @@ class CurrentUser {
     email = null;
     roles = [];
   }
+
+  // String get id {
+  //   if (isJwtExpired()) {
+  //     AutoRouter.of().push(const SessionExpiredRoute());
+  //   }
+  //   return id!;
+  // }
 
   bool isLoggedIn() {
     if (!isJwtPresent()) {

@@ -11,16 +11,17 @@ class TodoRepositoryImpl implements ToDoRepository {
   }
 
   @override
-  Future<List<TodoEntity>> getAll() async {
-    List<TodoModel> remoteData = await _todoServiceApi.getAll();
+  Future<List<TodoEntity>> getAllByUserId(String userId) async {
+    List<TodoModel> remoteData = await _todoServiceApi.getAllByUserId(userId);
     return remoteData.map((todoModel) {
       return todoModel.toTodoEntity();
     }).toList();
   }
 
   @override
-  Future<List<TodoEntity>> getAllActiveTodos() async {
-    List<TodoModel> remoteData = await _todoServiceApi.getAllActiveTodos();
+  Future<List<TodoEntity>> getAllActiveByUserIdTodos(String userId) async {
+    List<TodoModel> remoteData =
+        await _todoServiceApi.getAllByUserIdActiveTodos(userId);
     return remoteData.map((todoModel) {
       return todoModel.toTodoEntity();
     }).toList();
