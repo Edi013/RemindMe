@@ -34,20 +34,6 @@ class MyApp extends StatelessWidget {
 
   final _appRouter = AppRouter();
 
-  // @override
-  // Widget build(BuildContext context) {
-  //   return MaterialApp(
-  //     debugShowCheckedModeBanner: false,
-  //     title: 'RemindMe',
-  //     initialRoute: sl<CurrentUser>().isJwtExpired()
-  //         ? Routes.loginRoute
-  //         : Routes.homeRoute,
-  //     routes: Routes.generateRoutes(),
-  //     theme: lightTheme,
-  //     darkTheme: darkTheme,
-  //     themeMode: Provider.of<ThemeProvider>(context).buildThemeMode(),
-  //   );
-  // }
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(

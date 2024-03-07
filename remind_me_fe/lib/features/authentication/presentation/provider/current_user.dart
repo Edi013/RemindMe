@@ -37,6 +37,9 @@ class CurrentUser {
   //   return id!;
   // }
 
+  // 1 in api cand iei 401
+  // 2 cand aplicatia, daca a expirat jwt ul
+
   bool isLoggedIn() {
     if (!isJwtPresent()) {
       clearJwtData();
