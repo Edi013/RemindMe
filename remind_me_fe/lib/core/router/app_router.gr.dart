@@ -90,9 +90,19 @@ abstract class $AppRouter extends _i11.RootStackRouter {
       );
     },
     TodoUpdateRoute.name: (routeData) {
+      final pathParams = routeData.inheritedPathParams;
+      final args = routeData.argsAs<TodoUpdateRouteArgs>(
+          orElse: () => TodoUpdateRouteArgs(
+                index: pathParams.getInt('index'),
+                todoId: pathParams.getInt('todoId'),
+              ));
       return _i11.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i9.TodoUpdateScreen(),
+        child: _i9.TodoUpdateScreen(
+          key: args.key,
+          index: args.index,
+          todoId: args.todoId,
+        ),
       );
     },
     UserProfileRoute.name: (routeData) {
@@ -257,16 +267,49 @@ class TodoListRoute extends _i11.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i9.TodoUpdateScreen]
-class TodoUpdateRoute extends _i11.PageRouteInfo<void> {
-  const TodoUpdateRoute({List<_i11.PageRouteInfo>? children})
-      : super(
+class TodoUpdateRoute extends _i11.PageRouteInfo<TodoUpdateRouteArgs> {
+  TodoUpdateRoute({
+    _i12.Key? key,
+    required int index,
+    required int todoId,
+    List<_i11.PageRouteInfo>? children,
+  }) : super(
           TodoUpdateRoute.name,
+          args: TodoUpdateRouteArgs(
+            key: key,
+            index: index,
+            todoId: todoId,
+          ),
+          rawPathParams: {
+            'index': index,
+            'todoId': todoId,
+          },
           initialChildren: children,
         );
 
   static const String name = 'TodoUpdateRoute';
 
-  static const _i11.PageInfo<void> page = _i11.PageInfo<void>(name);
+  static const _i11.PageInfo<TodoUpdateRouteArgs> page =
+      _i11.PageInfo<TodoUpdateRouteArgs>(name);
+}
+
+class TodoUpdateRouteArgs {
+  const TodoUpdateRouteArgs({
+    this.key,
+    required this.index,
+    required this.todoId,
+  });
+
+  final _i12.Key? key;
+
+  final int index;
+
+  final int todoId;
+
+  @override
+  String toString() {
+    return 'TodoUpdateRouteArgs{key: $key, index: $index, todoId: $todoId}';
+  }
 }
 
 /// generated route for

@@ -3,21 +3,38 @@ import 'package:flutter/material.dart';
 import 'package:remind_me_fe/core/bar/presentation/screen_by_orientation.dart';
 import 'package:remind_me_fe/features/todos/domain/entities/todo.dart';
 import 'package:remind_me_fe/features/todos/presentation/controllers/update_controller.dart';
+import 'package:remind_me_fe/features/todos/presentation/providers/todo_provider.dart';
+import 'package:remind_me_fe/injection_container.dart';
 
 @RoutePage()
 class TodoUpdateScreen extends StatelessWidget {
-  const TodoUpdateScreen({super.key});
+  late int index;
+  late TodoEntity todo;
+
+  TodoUpdateScreen({
+    super.key,
+    @PathParam('index') required this.index,
+    @PathParam('todoId') required int todoId,
+  }) {
+    todo =
+        sl<TodoProvider>().todos.where((element) => element.id == todoId).first;
+  }
 
   @override
   Widget build(BuildContext context) {
-    return LayoutByOrientation(TodoUpdateScreenContent());
+    return LayoutByOrientation(TodoUpdateScreenContent(todo, index));
   }
 }
 
 class TodoUpdateScreenContent extends StatelessWidget {
   final TodoUpdateController controller = TodoUpdateController();
+  late int index;
+  late TodoEntity todoToUpdate;
 
-  TodoUpdateScreenContent({super.key});
+  TodoUpdateScreenContent(TodoEntity _todoToUpdate, int _index, {super.key}) {
+    todoToUpdate = _todoToUpdate;
+    index = _index;
+  }
 
   Future<void> _selectDate(
       BuildContext context, TextEditingController currentController) async {
@@ -51,12 +68,7 @@ class TodoUpdateScreenContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Map<String, dynamic> arguments =
-        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
-    int index = arguments['index'];
-    TodoEntity toDoToUpdate = arguments['object'];
-
-    controller.initControllers(toDoToUpdate);
+    controller.initControllers(todoToUpdate);
 
     return Scaffold(
       body: Padding(
@@ -102,7 +114,7 @@ class TodoUpdateScreenContent extends StatelessWidget {
                 onPressed: () {
                   controller.updateItem(
                     index,
-                    toDoToUpdate,
+                    todoToUpdate,
                     context,
                   );
                 },

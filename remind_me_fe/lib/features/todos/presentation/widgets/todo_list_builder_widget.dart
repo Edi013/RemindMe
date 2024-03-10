@@ -74,7 +74,8 @@ Scaffold buildListFromTodos(BuildContext context, String todoListName) {
                           ],
                         ),
                         onTap: () {
-                          AutoRouter.of(context).push(const TodoUpdateRoute());
+                          AutoRouter.of(context).push(
+                              TodoUpdateRoute(index: index, todoId: toDo.id));
                         },
                       );
                     },

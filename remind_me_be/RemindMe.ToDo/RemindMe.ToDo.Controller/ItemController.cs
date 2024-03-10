@@ -67,8 +67,8 @@ namespace RemindMe.Controller
         public async Task<ItemResponse> UpdateTodo(UpdateItemRequest req)
         {
             _logger.LogInformation($"Update [PUT] request for Todo / Item with id {req.Id}.");
-
-            return await _mediator.Send(req, CancellationToken.None);
+            var result = await _mediator.Send(req, CancellationToken.None);
+            return result;
         }
     }
 }
