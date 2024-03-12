@@ -5,16 +5,16 @@ using RemindMe.ToDo.Application.Requests.Items;
 
 namespace RemindMe.ToDo.Application.Handlers.Items
 {
-    public class GetUndoneByUserIdItemHandler : IRequestHandler<GetActiveItemRequest, IQueryable<Item>>
+    public class GetDoneByUserIdItemHandler : IRequestHandler<GetDoneItemRequest, IQueryable<Item>>
     {
         private IItemRepository repository;
 
-        public GetUndoneByUserIdItemHandler(IItemRepository _repository)
+        public GetDoneByUserIdItemHandler(IItemRepository _repository)
         {
             repository = _repository;
         }
 
-        public Task<IQueryable<Item>> Handle(GetActiveItemRequest request, CancellationToken cancellationToken)
+        public Task<IQueryable<Item>> Handle(GetDoneItemRequest request, CancellationToken cancellationToken)
         {
             var result = repository.GetUndoneItemsByUserId(request.UserId);
             return result;

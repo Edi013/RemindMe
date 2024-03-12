@@ -3,7 +3,7 @@ using RemindMe.Domain.Entities;
 
 namespace RemindMe.ToDo.Application.Requests.Items
 {
-    public class GetAllActiveItemRequest : IRequest<IQueryable<Item>>
+    public class GetUndoneItemRequest : IRequest<IQueryable<Item>>
     {
         public string UserId;
     }

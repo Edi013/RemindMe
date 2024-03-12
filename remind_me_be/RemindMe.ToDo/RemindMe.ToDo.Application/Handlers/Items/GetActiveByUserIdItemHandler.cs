@@ -5,7 +5,7 @@ using RemindMe.ToDo.Application.Requests.Items;
 
 namespace RemindMe.ToDo.Application.Handlers.Items
 {
-    public class GetActiveByUserIdItemHandler : IRequestHandler<GetAllActiveItemRequest, IQueryable<Item>>
+    public class GetActiveByUserIdItemHandler : IRequestHandler<GetActiveItemRequest, IQueryable<Item>>
     {
         private IItemRepository repository;
 
@@ -14,7 +14,7 @@ namespace RemindMe.ToDo.Application.Handlers.Items
             repository = _repository;
         }
 
-        public  Task<IQueryable<Item>> Handle(GetAllActiveItemRequest request, CancellationToken cancellationToken)
+        public  Task<IQueryable<Item>> Handle(GetActiveItemRequest request, CancellationToken cancellationToken)
         {
             var result = repository.GetActiveItemsByUserId(request.UserId);
             return result;
