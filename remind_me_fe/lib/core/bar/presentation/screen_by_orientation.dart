@@ -260,7 +260,13 @@ class RoutesDrawer extends StatelessWidget {
               color: theme.colorScheme.secondary,
             ),
             child: const Text(
-                'Streets / Routes / Directions / Actions / Screens / Categories'),
+              'Features',
+              style: TextStyle(
+                fontSize: 32.0, // Adjust the font size here
+                fontWeight:
+                    FontWeight.bold, // Optionally, adjust the font weight
+              ),
+            ),
           ),
           ListTile(
             title: const Text('User Profile'),

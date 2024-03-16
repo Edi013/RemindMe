@@ -59,31 +59,60 @@ Scaffold buildListFromTodos(BuildContext context, String todoListName) {
                   return ListView.builder(
                     itemCount: todos.length,
                     itemBuilder: (context, index) {
-                      TodoEntity toDo = todos[index];
+                      TodoEntity todo = todos[index];
                       return ListTile(
-                        title: Text(toDo.title),
-                        subtitle: Column(
+                        title: Text(todo.title),
+                        subtitle: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text("Description: ${toDo.description}"),
-                            Text(
-                                "Creation Date: ${toDo.creationDate.toString()}"),
-                            Text("Start Date: ${toDo.startDate.toString()}"),
-                            Text("End Date: ${toDo.endDate.toString()}"),
-                            Text("Is finished: ${toDo.isFinished.toString()}"),
-                            Text("Difficulty: ${toDo.difficulty.toString()}"),
-                            IconButton(
-                              onPressed: () => provider.delete(toDo.id),
-                              icon: const Icon(
-                                Icons.delete,
-                                color: Colors.red,
-                              ),
+                            Checkbox(
+                              value: todo.isFinished,
+                              onChanged: (value) {
+                                todo.isFinished = !todo.isFinished;
+                                provider.update(
+                                  index,
+                                  TodoEntity.fromExistent(
+                                    id: todo.id,
+                                    title: todo.title,
+                                    description: todo.description,
+                                    creationDate: todo.creationDate,
+                                    startDate: todo.startDate,
+                                    endDate: todo.endDate,
+                                    difficulty: todo.difficulty,
+                                    ownerId: todo.ownerId,
+                                    isFinished: todo.isFinished,
+                                  ),
+                                );
+                              },
                             ),
-                            const Divider()
+                            Column(
+                              children: [
+                                Text("Description: ${todo.description}"),
+                                Text(
+                                    "Creation Date: ${todo.creationDate.toString()}"),
+                                Text(
+                                    "Start Date: ${todo.startDate.toString()}"),
+                                Text("End Date: ${todo.endDate.toString()}"),
+                                Text(
+                                    "Is finished: ${todo.isFinished.toString()}"),
+                                Text(
+                                    "Difficulty: ${todo.difficulty.toString()}"),
+                                IconButton(
+                                  onPressed: () => provider.delete(todo.id),
+                                  icon: const Icon(
+                                    Icons.delete,
+                                    color: Colors.red,
+                                  ),
+                                ),
+                                const Divider()
+                              ],
+                            ),
+                            const SizedBox()
                           ],
                         ),
                         onTap: () {
                           AutoRouter.of(context).push(
-                              TodoUpdateRoute(index: index, todoId: toDo.id));
+                              TodoUpdateRoute(index: index, todoId: todo.id));
                         },
                       );
                     },

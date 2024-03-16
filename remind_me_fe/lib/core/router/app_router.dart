@@ -23,7 +23,10 @@ class AppRouter extends $AppRouter {
           page: RegisterRoute.page,
           keepHistory: false,
         ),
-        AutoRoute(page: SessionExpiredRoute.page),
+        AutoRoute(
+          page: SessionExpiredRoute.page,
+          keepHistory: false,
+        ),
         AutoRoute(
           page: LogoutRoute.page,
           guards: [AuthGuard()],
