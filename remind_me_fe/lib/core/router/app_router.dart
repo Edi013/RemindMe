@@ -44,7 +44,16 @@ class AppRouter extends $AppRouter {
           guards: [AuthGuard()],
         ),
         AutoRoute(
-            page: ActiveTodosRoute.page,
-            initial: !sl<CurrentUser>().isJwtExpired() ? true : false),
+          page: ActiveTodosRoute.page,
+          initial: !sl<CurrentUser>().isJwtExpired() ? true : false,
+        ),
+        AutoRoute(
+          page: DoneTodosRoute.page,
+          guards: [AuthGuard()],
+        ),
+        AutoRoute(
+          page: UndoneTodosRoute.page,
+          guards: [AuthGuard()],
+        ),
       ];
 }

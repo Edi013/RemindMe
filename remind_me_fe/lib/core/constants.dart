@@ -21,5 +21,7 @@ const String jwt_user_id = "Id";
 
 const String allTodosListName = "todos";
 const String activeTodosListName = "activeTodos";
+const String undoneTodosListName = "undoneTodos";
+const String doneTodosListName = "doneTodos";
 const String error_message_constants_not_used_list_name =
     "List name doesn't use one of the allowed constants !";

@@ -23,27 +23,35 @@ class TodoProvider extends ChangeNotifier {
   Future<void> add(TodoEntity todo) async {
     await repository.addTodo(todo).then((TodoEntity value) {
       todos.add(value);
-      notifyListeners();
       obtainActiveTodosFromAllTodos(todo.ownerId);
+      obtainDoneTodosFromAllTodos(todo.ownerId);
+      obtainUndoneTodosFromAllTodos(todo.ownerId);
+      notifyListeners();
     });
   }
 
   Future<void> update(int index, TodoEntity todo) async {
     await repository.updateTodo(todo).then((TodoEntity value) {
       todos[index] = value;
-      notifyListeners();
       obtainActiveTodosFromAllTodos(todo.ownerId);
+      obtainDoneTodosFromAllTodos(todo.ownerId);
+      obtainUndoneTodosFromAllTodos(todo.ownerId);
+      notifyListeners();
     });
   }
 
   Future<void> delete(int id) async {
     await repository.deleteTodo(id).then((value) {
       todos.remove(todos.firstWhere((element) => element.id == id));
+      activeTodos.remove(todos.firstWhere((element) => element.id == id));
+      undoneTodos.remove(todos.firstWhere((element) => element.id == id));
+      doneTodos.remove(todos.firstWhere((element) => element.id == id));
+
       notifyListeners();
     });
   }
 
-  Future<List<TodoEntity>> getAllActiveByUserIdTodos(String userId) async {
+  Future<List<TodoEntity>> getActiveByUserIdTodos(String userId) async {
     var result = await repository.getAllActiveByUserIdTodos(userId);
     activeTodos = result;
     notifyListeners();

@@ -88,10 +88,10 @@ class ExampleSidebarX extends StatelessWidget {
       },
       items: [
         SidebarXItem(
-          icon: Icons.segment_rounded,
-          label: 'Active Tasks',
+          icon: Icons.add,
+          label: 'New Task',
           onTap: () {
-            AutoRouter.of(context).push(const HomeRoute());
+            AutoRouter.of(context).push(const TodoAddRoute());
           },
         ),
         SidebarXItem(
@@ -102,10 +102,24 @@ class ExampleSidebarX extends StatelessWidget {
           },
         ),
         SidebarXItem(
-          icon: Icons.add,
-          label: 'New Task',
+          icon: Icons.pending_actions_sharp,
+          label: 'Active Tasks',
           onTap: () {
-            AutoRouter.of(context).push(const TodoAddRoute());
+            AutoRouter.of(context).push(const ActiveTodosRoute());
+          },
+        ),
+        SidebarXItem(
+          icon: Icons.unpublished_rounded,
+          label: 'Undone Tasks',
+          onTap: () {
+            AutoRouter.of(context).push(const UndoneTodosRoute());
+          },
+        ),
+        SidebarXItem(
+          icon: Icons.done,
+          label: 'Done Tasks',
+          onTap: () {
+            AutoRouter.of(context).push(const DoneTodosRoute());
           },
         ),
       ],
@@ -162,10 +176,17 @@ class BottomBar extends StatelessWidget {
       items: <BottomNavigationBarItem>[
         BottomNavigationBarItem(
           icon: Icon(
-            Icons.list,
+            Icons.unpublished_rounded,
             color: theme.colorScheme.secondary,
           ),
-          label: 'All Tasks',
+          label: 'Undone Tasks',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(
+            Icons.done,
+            color: theme.colorScheme.secondary,
+          ),
+          label: 'Done Tasks',
         ),
         BottomNavigationBarItem(
           icon: Icon(
@@ -176,22 +197,35 @@ class BottomBar extends StatelessWidget {
         ),
         BottomNavigationBarItem(
           icon: Icon(
-            Icons.segment_rounded,
+            Icons.pending_actions_sharp,
             color: theme.colorScheme.secondary,
           ),
           label: 'Active Tasks',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(
+            Icons.list,
+            color: theme.colorScheme.secondary,
+          ),
+          label: 'All Tasks',
         ),
       ],
       currentIndex: 1,
       onTap: (int index) {
         if (index == 0) {
-          AutoRouter.of(context).push(const TodoListRoute());
+          AutoRouter.of(context).push(const UndoneTodosRoute());
         }
         if (index == 1) {
-          AutoRouter.of(context).push(const TodoAddRoute());
+          AutoRouter.of(context).push(const DoneTodosRoute());
         }
         if (index == 2) {
-          AutoRouter.of(context).push(const HomeRoute());
+          AutoRouter.of(context).push(const TodoAddRoute());
+        }
+        if (index == 3) {
+          AutoRouter.of(context).push(const ActiveTodosRoute());
+        }
+        if (index == 4) {
+          AutoRouter.of(context).push(const TodoListRoute());
         }
       },
     );

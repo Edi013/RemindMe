@@ -21,6 +21,14 @@ Scaffold buildListFromTodos(BuildContext context, String todoListName) {
       todos = provider.activeTodos;
       title = 'Active tasks';
       break;
+    case undoneTodosListName:
+      todos = provider.undoneTodos;
+      title = 'Undone tasks';
+      break;
+    case doneTodosListName:
+      todos = provider.doneTodos;
+      title = 'Done tasks';
+      break;
     default:
       throw error_message_constants_not_used_list_name;
   }
