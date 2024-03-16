@@ -10,7 +10,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i11;
 import 'package:flutter/material.dart' as _i12;
-import 'package:remind_me_fe/core/home/home_screen.dart' as _i1;
+import 'package:remind_me_fe/core/home/active_todos_screen.dart' as _i1;
 import 'package:remind_me_fe/features/authentication/presentation/screens/expired_session_screen.dart'
     as _i5;
 import 'package:remind_me_fe/features/authentication/presentation/screens/login_screen.dart'
@@ -35,10 +35,10 @@ abstract class $AppRouter extends _i11.RootStackRouter {
 
   @override
   final Map<String, _i11.PageFactory> pagesMap = {
-    HomeRoute.name: (routeData) {
+    ActiveTodosRoute.name: (routeData) {
       return _i11.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i1.HomeScreen(),
+        child: const _i1.ActiveTodosScreen(),
       );
     },
     LoginRoute.name: (routeData) {
@@ -115,15 +115,15 @@ abstract class $AppRouter extends _i11.RootStackRouter {
 }
 
 /// generated route for
-/// [_i1.HomeScreen]
-class HomeRoute extends _i11.PageRouteInfo<void> {
-  const HomeRoute({List<_i11.PageRouteInfo>? children})
+/// [_i1.ActiveTodosScreen]
+class ActiveTodosRoute extends _i11.PageRouteInfo<void> {
+  const ActiveTodosRoute({List<_i11.PageRouteInfo>? children})
       : super(
-          HomeRoute.name,
+          ActiveTodosRoute.name,
           initialChildren: children,
         );
 
-  static const String name = 'HomeRoute';
+  static const String name = 'ActiveTodosRoute';
 
   static const _i11.PageInfo<void> page = _i11.PageInfo<void>(name);
 }

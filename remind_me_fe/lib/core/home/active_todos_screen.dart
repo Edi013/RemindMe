@@ -8,23 +8,23 @@ import 'package:remind_me_fe/features/todos/presentation/widgets/todo_list_build
 import 'package:remind_me_fe/injection_container.dart';
 
 @RoutePage()
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+class ActiveTodosScreen extends StatelessWidget {
+  const ActiveTodosScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return LayoutByOrientation(
-      HomeScreenContent(),
+      ActiveTodosScreenContent(),
     );
   }
 }
 
 // ignore: must_be_immutable
-class HomeScreenContent extends StatelessWidget {
+class ActiveTodosScreenContent extends StatelessWidget {
   TodoProvider provider = sl<TodoProvider>();
   CurrentUser currentUser = sl<CurrentUser>();
 
-  HomeScreenContent({Key? key}) : super(key: key);
+  ActiveTodosScreenContent({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
