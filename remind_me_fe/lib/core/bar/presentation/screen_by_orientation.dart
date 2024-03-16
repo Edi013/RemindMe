@@ -8,7 +8,7 @@ import 'package:remind_me_fe/injection_container.dart';
 import 'package:sidebarx/sidebarx.dart';
 
 class LandscapeScaffold extends StatelessWidget {
-  final double minimizeContentParameter = 0.7;
+  final double minimizeContentParameter = 0.35;
   final Widget child;
 
   const LandscapeScaffold(this.child, {super.key});
@@ -28,6 +28,7 @@ class LandscapeScaffold extends StatelessWidget {
             height: MediaQuery.of(context).size.height,
             child: child,
           ),
+          const BurgerButton()
         ],
       ),
       drawer: const RoutesDrawer(),
@@ -50,7 +51,6 @@ class ExampleSidebarX extends StatelessWidget {
         // hover
         hoverColor: theme.colorScheme.secondary.withOpacity(0.25),
         hoverTextStyle: const TextStyle(fontWeight: FontWeight.w500),
-
         // unselected
         textStyle:
             TextStyle(color: theme.colorScheme.secondary.withOpacity(0.85)),

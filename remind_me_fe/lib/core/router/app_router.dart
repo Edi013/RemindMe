@@ -10,6 +10,11 @@ class AppRouter extends $AppRouter {
   @override
   List<AutoRoute> get routes => [
         AutoRoute(
+          page: HomeRoute.page,
+          initial: !sl<CurrentUser>().isJwtExpired() ? true : false,
+          guards: [AuthGuard()],
+        ),
+        AutoRoute(
           page: LoginRoute.page,
           initial: sl<CurrentUser>().isJwtExpired() ? true : false,
           keepHistory: false,
@@ -45,7 +50,7 @@ class AppRouter extends $AppRouter {
         ),
         AutoRoute(
           page: ActiveTodosRoute.page,
-          initial: !sl<CurrentUser>().isJwtExpired() ? true : false,
+          guards: [AuthGuard()],
         ),
         AutoRoute(
           page: DoneTodosRoute.page,

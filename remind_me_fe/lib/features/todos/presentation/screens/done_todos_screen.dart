@@ -43,12 +43,11 @@ class DoneTodosScreenContent extends StatelessWidget {
                 child: RefreshIndicator(
                   onRefresh: () async {
                     await sl<TodoProvider>()
-                        .getActiveByUserIdTodos(currentUser.id!);
+                        .getDoneByUserIdTodos(currentUser.id!);
                   },
                   child: buildListFromTodos(context, doneTodosListName),
                 ),
               ),
-              const BurgerButton(),
             ],
           );
         }

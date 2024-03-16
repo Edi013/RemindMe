@@ -49,7 +49,6 @@ class TodoListScreenContent extends StatelessWidget {
                   child: buildListFromTodos(context, allTodosListName),
                 ),
               ),
-              const BurgerButton(),
             ],
           );
         }

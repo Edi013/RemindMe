@@ -27,15 +27,12 @@ namespace RemindMe.DataAcces.Repositories
 
         public async Task<IQueryable<Item>> GetDoneItemsByUserId(string userId)
         {
-            DateTime dateTimeNow = DateTime.UtcNow;
-
             return context.Set<Item>().Where(currentItem =>
                  (currentItem.OwnerId == userId) && (currentItem.IsFinished == true));
         }
 
         public async Task<IQueryable<Item>> GetUndoneItemsByUserId(string userId)
         {
-            DateTime dateTimeNow = DateTime.UtcNow;
 
             return context.Set<Item>().Where(currentItem =>
                  (currentItem.OwnerId == userId) && (currentItem.IsFinished == false));

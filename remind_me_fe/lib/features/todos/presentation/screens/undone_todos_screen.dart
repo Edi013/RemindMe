@@ -43,12 +43,11 @@ class UndoneTodosScreenContent extends StatelessWidget {
                 child: RefreshIndicator(
                   onRefresh: () async {
                     await sl<TodoProvider>()
-                        .getActiveByUserIdTodos(currentUser.id!);
+                        .getUndoneByUserIdTodos(currentUser.id!);
                   },
                   child: buildListFromTodos(context, undoneTodosListName),
                 ),
               ),
-              const BurgerButton(),
             ],
           );
         }
