@@ -42,10 +42,27 @@ class TodoProvider extends ChangeNotifier {
 
   Future<void> delete(int id) async {
     await repository.deleteTodo(id).then((value) {
-      todos.remove(todos.firstWhere((element) => element.id == id));
-      activeTodos.remove(todos.firstWhere((element) => element.id == id));
-      undoneTodos.remove(todos.firstWhere((element) => element.id == id));
-      doneTodos.remove(todos.firstWhere((element) => element.id == id));
+      final todoIndex = todos.indexWhere((element) => element.id == id);
+      if (todoIndex != -1) {
+        todos.removeAt(todoIndex);
+      }
+
+      final activeTodoIndex =
+          activeTodos.indexWhere((element) => element.id == id);
+      if (activeTodoIndex != -1) {
+        activeTodos.removeAt(activeTodoIndex);
+      }
+
+      final undoneTodoIndex =
+          undoneTodos.indexWhere((element) => element.id == id);
+      if (undoneTodoIndex != -1) {
+        undoneTodos.removeAt(undoneTodoIndex);
+      }
+
+      final doneTodoIndex = doneTodos.indexWhere((element) => element.id == id);
+      if (doneTodoIndex != -1) {
+        doneTodos.removeAt(doneTodoIndex);
+      }
 
       notifyListeners();
     });
