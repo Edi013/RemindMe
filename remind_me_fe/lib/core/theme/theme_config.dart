@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 const Color lightPrimary = Color.fromARGB(255, 225, 225, 225);
 const Color lightAccent = accent;
-const Color lightBG = Color.fromARGB(255, 238, 238, 238);
+const Color lightBG = Color.fromARGB(255, 192, 192, 192);
 
 const Color accent = Color.fromARGB(255, 161, 127, 23);
 
-const Color darkPrimary = Color.fromARGB(255, 36, 36, 36);
+const Color darkPrimary = Color.fromARGB(255, 73, 73, 73);
 const Color darkAccent = accent;
-const Color darkBG = Color.fromARGB(255, 18, 18, 18);
+const Color darkBG = Color.fromARGB(255, 53, 53, 53);
 
 const Color smokeWhite = Color(0xffF5F5F5);
 
@@ -44,7 +44,7 @@ final ThemeData lightTheme = ThemeData(
       fontSize: 20,
       fontWeight: FontWeight.w800,
     ),
-    iconTheme: IconThemeData(color: Colors.black),
+    iconTheme: IconThemeData(color: Color.fromARGB(255, 219, 219, 219)),
   ),
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ButtonStyle(

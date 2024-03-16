@@ -43,12 +43,7 @@ class LogoutScreenContent extends StatelessWidget {
             ),
           ],
         ),
-        const Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            BurgerButton(),
-          ],
-        ),
+        const SizedBox()
       ],
     );
   }

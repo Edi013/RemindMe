@@ -8,7 +8,7 @@ import 'package:remind_me_fe/injection_container.dart';
 import 'package:sidebarx/sidebarx.dart';
 
 class LandscapeScaffold extends StatelessWidget {
-  final double minimizeContentParameter = 0.35;
+  final double minimizeContentParameter = 0.60;
   final Widget child;
 
   const LandscapeScaffold(this.child, {super.key});
@@ -130,7 +130,7 @@ class ExampleSidebarX extends StatelessWidget {
 // Portrait
 
 class PortraitScaffold extends StatelessWidget {
-  final double minimizeContentParameter = 0.015;
+  final double minimizeContentParameter = 0.05;
   final Widget child;
 
   const PortraitScaffold(this.child, {super.key});
@@ -144,20 +144,18 @@ class PortraitScaffold extends StatelessWidget {
     return Scaffold(
       key: scaffoldKey,
       body: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           SizedBox(
             width: width * minimizeContentParameter,
             height: height,
           ),
           SizedBox(
-            width: width * (1 - 2 * minimizeContentParameter),
+            width: width * (1 - 2.7 * minimizeContentParameter),
             height: height,
             child: child,
           ),
-          SizedBox(
-            width: width * minimizeContentParameter,
-            height: height,
-          ),
+          const BurgerButton()
         ],
       ),
       drawer: const RoutesDrawer(),
@@ -210,7 +208,7 @@ class BottomBar extends StatelessWidget {
           label: 'All Tasks',
         ),
       ],
-      currentIndex: 1,
+      currentIndex: 2,
       onTap: (int index) {
         if (index == 0) {
           AutoRouter.of(context).push(const UndoneTodosRoute());

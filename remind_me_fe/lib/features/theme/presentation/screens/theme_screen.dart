@@ -121,7 +121,6 @@ class ThemeScreenContent extends StatelessWidget {
             ],
           ),
         ),
-        const BurgerButton()
       ],
     );
   }
