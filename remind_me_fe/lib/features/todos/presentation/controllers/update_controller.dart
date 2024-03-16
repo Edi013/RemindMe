@@ -56,7 +56,6 @@ class TodoUpdateController {
       TodoEntity updatedTodoEntity = TodoEntity(
         title: titleController.text,
         description: descriptionController.text,
-        creationDate: DateTime.now(),
         startDate: startDate,
         endDate: endDate,
         difficulty: difficulty,

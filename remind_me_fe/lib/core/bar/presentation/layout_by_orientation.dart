@@ -83,7 +83,13 @@ class ExampleSidebarX extends StatelessWidget {
       headerBuilder: (context, extended) {
         return Padding(
           padding: const EdgeInsets.all(20.0),
-          child: Image.asset('assets/images/rm_logo.png'),
+          child: IconButton(
+            icon: Image.asset('assets/images/rm_logo.png'),
+            iconSize: 50,
+            onPressed: () {
+              AutoRouter.of(context).push(const HomeRoute());
+            },
+          ),
         );
       },
       items: [

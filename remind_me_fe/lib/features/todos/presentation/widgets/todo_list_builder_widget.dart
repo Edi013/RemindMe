@@ -71,6 +71,7 @@ Scaffold buildListFromTodos(BuildContext context, String todoListName) {
                                 todo.isFinished = !todo.isFinished;
                                 provider.update(
                                   index,
+                                  todoListName,
                                   TodoEntity.fromExistent(
                                     id: todo.id,
                                     title: todo.title,

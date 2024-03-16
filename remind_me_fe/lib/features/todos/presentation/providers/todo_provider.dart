@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:remind_me_fe/core/constants.dart';
 import 'package:remind_me_fe/features/todos/data/repositories/todo_repository_impl.dart';
 import 'package:remind_me_fe/features/todos/domain/entities/todo.dart';
 
@@ -30,12 +31,36 @@ class TodoProvider extends ChangeNotifier {
     });
   }
 
-  Future<void> update(int index, TodoEntity todo) async {
+  Future<void> update(int index, String listName, TodoEntity todo) async {
     await repository.updateTodo(todo).then((TodoEntity value) {
-      todos[index] = value;
-      obtainActiveTodosFromAllTodos(todo.ownerId);
-      obtainDoneTodosFromAllTodos(todo.ownerId);
-      obtainUndoneTodosFromAllTodos(todo.ownerId);
+      switch (listName) {
+        case allTodosListName:
+          todos[index] = value;
+          obtainActiveTodosFromAllTodos(todo.ownerId);
+          obtainDoneTodosFromAllTodos(todo.ownerId);
+          obtainUndoneTodosFromAllTodos(todo.ownerId);
+          break;
+        case activeTodosListName:
+          todos = [];
+          activeTodos[index] = value;
+          undoneTodos = [];
+          doneTodos = [];
+          break;
+        case undoneTodosListName:
+          todos = [];
+          activeTodos = [];
+          undoneTodos[index] = value;
+          doneTodos = [];
+          break;
+        case doneTodosListName:
+          todos = [];
+          activeTodos = [];
+          undoneTodos = [];
+          doneTodos[index] = value;
+          break;
+        default:
+          throw error_message_constants_not_used_list_name;
+      }
       notifyListeners();
     });
   }

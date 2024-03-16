@@ -38,7 +38,6 @@ class TodoAddController {
         id: 0,
         title: title,
         description: description,
-        creationDate: DateTime.now(),
         startDate: startDate,
         endDate: endDate,
         difficulty: difficulty,

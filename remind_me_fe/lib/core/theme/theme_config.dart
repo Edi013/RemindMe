@@ -112,7 +112,7 @@ final ThemeData darkTheme = ThemeData(
     ),
   ),
   cardTheme: CardTheme(
-    color: darkAccent.withOpacity(0.65),
+    color: darkAccent.withOpacity(0.85),
     margin: const EdgeInsets.all(50),
   ),
   snackBarTheme:
