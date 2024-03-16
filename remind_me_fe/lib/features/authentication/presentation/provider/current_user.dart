@@ -1,15 +1,18 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:jwt_decode_full/jwt_decode_full.dart';
 import 'package:remind_me_fe/core/constants.dart';
+import 'package:remind_me_fe/core/router/app_router.gr.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CurrentUser {
   late final SharedPreferences preferences;
+  String? id;
   String? jwt;
   DateTime? jwtExpirationDate;
   String? jwtJti;
   String? nickname;
   String? email;
-  List<String>? role;
+  List<String> roles = [];
 
   CurrentUser(SharedPreferences preferencesInjected) {
     preferences = preferencesInjected;
@@ -18,13 +21,24 @@ class CurrentUser {
       parseNewJwt(storedJwt);
       return;
     }
+    id = null;
     jwt = null;
     jwtExpirationDate = null;
     jwtJti = null;
-    nickname = null;
+    nickname = "User";
     email = null;
-    role = null;
+    roles = [];
   }
+
+  // String get id {
+  //   if (isJwtExpired()) {
+  //     AutoRouter.of().push(const SessionExpiredRoute());
+  //   }
+  //   return id!;
+  // }
+
+  // 1 in api cand iei 401
+  // 2 cand aplicatia, daca a expirat jwt ul
 
   bool isLoggedIn() {
     if (!isJwtPresent()) {
@@ -65,17 +79,19 @@ class CurrentUser {
   }
 
   void _saveJwtData(JWTData jwtData) {
+    id = jwtData.payload[jwt_user_id];
     jwtExpirationDate = jwtData.expiration!;
     jwtJti = jwtData.payload[jwt_jti] as String;
     nickname = jwtData.payload[jwt_nickname] as String;
     email = jwtData.payload[jwt_email] as String;
+
     var roleFromJwt = jwtData.payload[jwt_role];
-    roleFromJwt = List<String>;
     if (roleFromJwt is String) {
-      role!.insert(0, roleFromJwt);
+      roles.add(roleFromJwt);
     } else if (roleFromJwt is List<String>) {
+      // role = roleFromJwt;
       for (var role in roleFromJwt) {
-        this.role!.insert(this.role!.length, role);
+        roles.add(role);
       }
     }
   }
@@ -108,11 +124,12 @@ class CurrentUser {
 
   void clearJwtData() {
     preferences.remove(jwt_key);
+    id = null;
     jwt = null;
     jwtExpirationDate = null;
     jwtJti = null;
     nickname = null;
     email = null;
-    role = null;
+    roles = [];
   }
 }

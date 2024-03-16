@@ -5,6 +5,8 @@ using Microsoft.Extensions.Logging;
 using RemindMe.Application.Requests.Todos;
 using RemindMe.Domain.Entities;
 using RemindMe.Domain.Results;
+using RemindMe.ToDo.Application.Handlers.Items;
+using RemindMe.ToDo.Application.Requests.Items;
 using RemindMe.ToDo.Domain.Results;
 
 namespace RemindMe.Controller
@@ -22,21 +24,48 @@ namespace RemindMe.Controller
             this._logger = logger;
         }
 
-        //[Authorize]
-        [HttpGet("GetAll")]
-        public async Task<IEnumerable<Item>> GetAll()
+        [Authorize]
+        [HttpGet("GetAllByUserId/{ownerId}")]
+        public async Task<IEnumerable<Item>> GetAllByUserId(String ownerId)
         {
-            var req = new GetAllItemRequest();
-            foreach (var header in HttpContext.Request.Headers)
-            {
-                _logger.LogInformation($"{header.Key}: {header.Value}");
-            }
-            _logger.LogInformation("GetAll [GET] request for Todos / Items.");
+            var req = new GetAllItemRequest() { UserId = ownerId };
+
+            _logger.LogInformation("GetAllByUserId [GET] request for Todos / Items.");
             var result = await _mediator.Send(req, CancellationToken.None);
             return result;
         }
 
-        //[Authorize]
+        [Authorize]
+        [HttpGet("GetAllActiveByUserIdItem/{ownerId}")]
+        public async Task<IEnumerable<Item>> GetAllActiveByUserIdItem(String ownerId)
+        {
+            var req = new GetActiveItemRequest() { UserId = ownerId };
+            _logger.LogInformation("GetAllActiveByUserIdItem [GET] request for Todos / Items.");
+            var result = await _mediator.Send(req, CancellationToken.None);
+            return result;
+        }
+
+        [Authorize]
+        [HttpGet("GetUndoneByUserIdItem/{ownerId}")]
+        public async Task<IEnumerable<Item>> GetUndoneByUserIdItem(String ownerId)
+        {
+            var req = new GetUndoneItemRequest() { UserId = ownerId };
+            _logger.LogInformation("GetUndoneByUserIdItem [GET] request for Todos / Items.");
+            var result = await _mediator.Send(req, CancellationToken.None);
+            return result;
+        }
+
+        [Authorize]
+        [HttpGet("GetDoneByUserIdItem/{ownerId}")]
+        public async Task<IEnumerable<Item>> GetDoneByUserIdItem(String ownerId)
+        {
+            var req = new GetDoneItemRequest() { UserId = ownerId };
+            _logger.LogInformation("GetDoneByUserIdItem [GET] request for Todos / Items.");
+            var result = await _mediator.Send(req, CancellationToken.None);
+            return result;
+        }
+
+        [Authorize]
         [HttpPost("Create")]
         public async Task<ItemResponse> CreateTodo(CreateItemRequest req)
         {
@@ -59,8 +88,8 @@ namespace RemindMe.Controller
         public async Task<ItemResponse> UpdateTodo(UpdateItemRequest req)
         {
             _logger.LogInformation($"Update [PUT] request for Todo / Item with id {req.Id}.");
-
-            return await _mediator.Send(req, CancellationToken.None);
+            var result = await _mediator.Send(req, CancellationToken.None);
+            return result;
         }
     }
 }

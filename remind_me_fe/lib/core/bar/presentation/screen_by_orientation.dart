@@ -1,11 +1,14 @@
 // Landscape
 
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:remind_me_fe/core/routes.dart';
+import 'package:remind_me_fe/core/router/app_router.gr.dart';
+import 'package:remind_me_fe/features/authentication/presentation/provider/current_user.dart';
+import 'package:remind_me_fe/injection_container.dart';
 import 'package:sidebarx/sidebarx.dart';
 
 class LandscapeScaffold extends StatelessWidget {
-  final double minimizeContentParameter = 0.7;
+  final double minimizeContentParameter = 0.60;
   final Widget child;
 
   const LandscapeScaffold(this.child, {super.key});
@@ -25,6 +28,7 @@ class LandscapeScaffold extends StatelessWidget {
             height: MediaQuery.of(context).size.height,
             child: child,
           ),
+          const BurgerButton()
         ],
       ),
       drawer: const RoutesDrawer(),
@@ -47,7 +51,6 @@ class ExampleSidebarX extends StatelessWidget {
         // hover
         hoverColor: theme.colorScheme.secondary.withOpacity(0.25),
         hoverTextStyle: const TextStyle(fontWeight: FontWeight.w500),
-
         // unselected
         textStyle:
             TextStyle(color: theme.colorScheme.secondary.withOpacity(0.85)),
@@ -85,24 +88,38 @@ class ExampleSidebarX extends StatelessWidget {
       },
       items: [
         SidebarXItem(
-          icon: Icons.home,
-          label: 'Home',
+          icon: Icons.add,
+          label: 'New Task',
           onTap: () {
-            Navigator.pushNamed(context, Routes.homeRoute);
+            AutoRouter.of(context).push(const TodoAddRoute());
           },
         ),
         SidebarXItem(
           icon: Icons.business,
-          label: 'View todos',
+          label: 'All Tasks',
           onTap: () {
-            Navigator.pushNamed(context, Routes.todoListRoute);
+            AutoRouter.of(context).push(const TodoListRoute());
           },
         ),
         SidebarXItem(
-          icon: Icons.add,
-          label: 'New todo',
+          icon: Icons.pending_actions_sharp,
+          label: 'Active Tasks',
           onTap: () {
-            Navigator.pushNamed(context, Routes.todoAddRoute);
+            AutoRouter.of(context).push(const ActiveTodosRoute());
+          },
+        ),
+        SidebarXItem(
+          icon: Icons.unpublished_rounded,
+          label: 'Undone Tasks',
+          onTap: () {
+            AutoRouter.of(context).push(const UndoneTodosRoute());
+          },
+        ),
+        SidebarXItem(
+          icon: Icons.done,
+          label: 'Done Tasks',
+          onTap: () {
+            AutoRouter.of(context).push(const DoneTodosRoute());
           },
         ),
       ],
@@ -113,7 +130,7 @@ class ExampleSidebarX extends StatelessWidget {
 // Portrait
 
 class PortraitScaffold extends StatelessWidget {
-  final double minimizeContentParameter = 0.015;
+  final double minimizeContentParameter = 0.05;
   final Widget child;
 
   const PortraitScaffold(this.child, {super.key});
@@ -127,20 +144,18 @@ class PortraitScaffold extends StatelessWidget {
     return Scaffold(
       key: scaffoldKey,
       body: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           SizedBox(
             width: width * minimizeContentParameter,
             height: height,
           ),
           SizedBox(
-            width: width * (1 - 2 * minimizeContentParameter),
+            width: width * (1 - 2.7 * minimizeContentParameter),
             height: height,
             child: child,
           ),
-          SizedBox(
-            width: width * minimizeContentParameter,
-            height: height,
-          ),
+          const BurgerButton()
         ],
       ),
       drawer: const RoutesDrawer(),
@@ -159,35 +174,56 @@ class BottomBar extends StatelessWidget {
       items: <BottomNavigationBarItem>[
         BottomNavigationBarItem(
           icon: Icon(
-            Icons.business,
+            Icons.unpublished_rounded,
             color: theme.colorScheme.secondary,
           ),
-          label: 'Todo',
+          label: 'Undone Tasks',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(
+            Icons.done,
+            color: theme.colorScheme.secondary,
+          ),
+          label: 'Done Tasks',
         ),
         BottomNavigationBarItem(
           icon: Icon(
             Icons.add,
             color: theme.colorScheme.secondary,
           ),
-          label: '',
+          label: 'G\'day ${sl<CurrentUser>().nickname ?? "User"}',
         ),
         BottomNavigationBarItem(
           icon: Icon(
-            Icons.home,
+            Icons.pending_actions_sharp,
             color: theme.colorScheme.secondary,
           ),
-          label: 'Home',
+          label: 'Active Tasks',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(
+            Icons.list,
+            color: theme.colorScheme.secondary,
+          ),
+          label: 'All Tasks',
         ),
       ],
+      currentIndex: 2,
       onTap: (int index) {
         if (index == 0) {
-          Navigator.pushNamed(context, Routes.todoListRoute);
+          AutoRouter.of(context).push(const UndoneTodosRoute());
         }
         if (index == 1) {
-          Navigator.pushNamed(context, Routes.todoAddRoute);
+          AutoRouter.of(context).push(const DoneTodosRoute());
         }
         if (index == 2) {
-          Navigator.pushNamed(context, Routes.homeRoute);
+          AutoRouter.of(context).push(const TodoAddRoute());
+        }
+        if (index == 3) {
+          AutoRouter.of(context).push(const ActiveTodosRoute());
+        }
+        if (index == 4) {
+          AutoRouter.of(context).push(const TodoListRoute());
         }
       },
     );
@@ -223,20 +259,33 @@ class RoutesDrawer extends StatelessWidget {
             decoration: BoxDecoration(
               color: theme.colorScheme.secondary,
             ),
-            child: const Text('Drawer Header'),
+            child: const Text(
+                'Streets / Routes / Directions / Actions / Screens / Categories'),
           ),
           ListTile(
-            title: Text('Theme'),
+            title: const Text('User Profile'),
             onTap: () {
-              Navigator.pushNamed(context, Routes.themeScreenRoute);
+              AutoRouter.of(context).push(const UserProfileRoute());
             },
           ),
-          // ListTile(
-          //   title: Text('User Profile'),
-          //   onTap: () {
-          //     Navigator.pushNamed(context, Routes.homeRoute);
-          //   },
-          // ),
+          ListTile(
+            title: const Text('Tasks'),
+            onTap: () {
+              AutoRouter.of(context).push(const HomeRoute());
+            },
+          ),
+          ListTile(
+            title: const Text('Theme'),
+            onTap: () {
+              AutoRouter.of(context).push(ThemeRoute(context: context));
+            },
+          ),
+          ListTile(
+            title: const Text('Logout'),
+            onTap: () {
+              AutoRouter.of(context).push(const LogoutRoute());
+            },
+          ),
         ],
       ),
     );

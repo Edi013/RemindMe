@@ -1,6 +1,9 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:remind_me_fe/core/router/app_router.gr.dart';
 import 'package:remind_me_fe/features/authentication/presentation/controllers/register_controller.dart';
 
+@RoutePage()
 class RegisterScreen extends StatelessWidget {
   const RegisterScreen({super.key});
 
@@ -14,6 +17,7 @@ class RegisterScreen extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class RegisterCard extends StatelessWidget {
   late RegisterController controller;
 
@@ -141,6 +145,13 @@ class RegisterCard extends StatelessWidget {
                         ),
                       ),
                     ),
+                    TextButton(
+                      onPressed: () {
+                        AutoRouter.of(context).push(LoginRoute());
+                      },
+                      child: const Text(
+                          "You already have an account ? Login now ."),
+                    )
                   ],
                 ),
               ),

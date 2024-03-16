@@ -3,8 +3,9 @@
 
 import 'dart:io';
 
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:remind_me_fe/core/routes.dart';
+import 'package:remind_me_fe/core/router/app_router.gr.dart';
 import 'package:remind_me_fe/core/snackBar/snack_bar.dart';
 import 'package:remind_me_fe/features/authentication/domain/entities/register_credentials.dart';
 import 'package:remind_me_fe/features/authentication/presentation/provider/auth_provider.dart';
@@ -34,9 +35,14 @@ class RegisterController {
       var result = await provider.register(credentials);
 
       if (result.httpStatusCode == HttpStatus.created) {
-        Navigator.pushNamed(context, Routes.loginRoute);
+        AutoRouter.of(context).push(LoginRoute());
+        buildSnackBarMessage(context, result.message);
       } else if (result.httpStatusCode == HttpStatus.badRequest) {
-        buildSnackBarMessage(context, "'Bad credentials. Please try again.'");
+        buildSnackBarMessage(context, result.message);
+      } else if (result.httpStatusCode == HttpStatus.forbidden) {
+        buildSnackBarMessage(context, result.message);
+      } else if (result.httpStatusCode == HttpStatus.internalServerError) {
+        buildSnackBarMessage(context, result.message);
       } else {
         buildSnackBarMessage(
             context, 'Unexpected error occurred. Try again later.');

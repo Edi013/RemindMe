@@ -47,8 +47,9 @@ namespace RemindMe.ToDo.DataAcces.Migrations
                     b.Property<bool>("IsFinished")
                         .HasColumnType("boolean");
 
-                    b.Property<int>("OwnerId")
-                        .HasColumnType("integer");
+                    b.Property<string>("OwnerId")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("timestamp with time zone");

@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 
 const Color lightPrimary = Color.fromARGB(255, 225, 225, 225);
-const Color lightAccent = Color.fromARGB(255, 161, 127, 23);
-const Color lightBG = Color.fromARGB(255, 238, 238, 238);
+const Color lightAccent = accent;
+const Color lightBG = Color.fromARGB(255, 192, 192, 192);
 
-const Color darkPrimary = Color.fromARGB(255, 36, 36, 36);
-const Color darkAccent = Color.fromARGB(255, 171, 160, 127);
-const Color darkBG = Color.fromARGB(255, 18, 18, 18);
+const Color accent = Color.fromARGB(255, 161, 127, 23);
+
+const Color darkPrimary = Color.fromARGB(255, 73, 73, 73);
+const Color darkAccent = accent;
+const Color darkBG = Color.fromARGB(255, 53, 53, 53);
 
 const Color smokeWhite = Color(0xffF5F5F5);
 
@@ -26,7 +28,7 @@ final ThemeData lightTheme = ThemeData(
   ),
   tabBarTheme: const TabBarTheme(
     labelColor: Colors.black,
-    unselectedLabelColor: Colors.grey,
+    //unselectedLabelColor: Colors.grey,
     indicator: UnderlineTabIndicator(
       borderSide: BorderSide(
         color: darkAccent,
@@ -42,19 +44,24 @@ final ThemeData lightTheme = ThemeData(
       fontSize: 20,
       fontWeight: FontWeight.w800,
     ),
-    iconTheme: IconThemeData(color: Colors.black),
+    iconTheme: IconThemeData(color: Color.fromARGB(255, 219, 219, 219)),
   ),
-  buttonTheme: ButtonThemeData(
-    buttonColor: lightAccent,
-    textTheme: ButtonTextTheme.primary,
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(80),
+  elevatedButtonTheme: ElevatedButtonThemeData(
+    style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all<Color>(darkPrimary)),
+  ),
+  textButtonTheme: TextButtonThemeData(
+    style: ButtonStyle(
+      backgroundColor: MaterialStateProperty.all<Color>(
+        (darkPrimary),
+      ),
     ),
   ),
-  cardTheme: const CardTheme(
-    color: lightPrimary,
-    margin: EdgeInsets.all(50),
+  cardTheme: CardTheme(
+    color: lightAccent.withOpacity(0.6),
+    margin: const EdgeInsets.all(50),
   ),
+  snackBarTheme: const SnackBarThemeData(backgroundColor: darkPrimary),
 );
 
 final ThemeData darkTheme = ThemeData(
@@ -90,15 +97,24 @@ final ThemeData darkTheme = ThemeData(
     ),
     iconTheme: IconThemeData(color: Colors.white),
   ),
-  buttonTheme: ButtonThemeData(
-    buttonColor: darkAccent,
-    textTheme: ButtonTextTheme.primary,
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(80),
+  elevatedButtonTheme: ElevatedButtonThemeData(
+    style: ButtonStyle(
+      backgroundColor: MaterialStateProperty.all<Color>(
+        (lightPrimary.withOpacity(0.3)),
+      ),
     ),
   ),
-  cardTheme: const CardTheme(
-    color: darkPrimary,
-    margin: EdgeInsets.all(50),
+  textButtonTheme: TextButtonThemeData(
+    style: ButtonStyle(
+      backgroundColor: MaterialStateProperty.all<Color>(
+        (lightPrimary.withOpacity(0.6)),
+      ),
+    ),
   ),
+  cardTheme: CardTheme(
+    color: darkAccent.withOpacity(0.65),
+    margin: const EdgeInsets.all(50),
+  ),
+  snackBarTheme:
+      SnackBarThemeData(backgroundColor: lightPrimary.withOpacity(0.6)),
 );

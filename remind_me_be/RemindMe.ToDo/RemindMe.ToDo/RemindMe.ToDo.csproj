@@ -46,7 +46,6 @@
     <ProjectReference Include="..\RemindMe.ToDo.Controller\RemindMe.ToDo.Controller.csproj" />
     <ProjectReference Include="..\RemindMe.ToDo.DataAcces\RemindMe.ToDo.DataAcces.csproj" />
     <ProjectReference Include="..\RemindMe.ToDo.Domain\RemindMe.ToDo.Domain.csproj" />
-    <ProjectReference Include="..\RemindMe.ToDo.Notification\RemindMe.ToDo.Notification.csproj" />
   </ItemGroup>
 
 </Project>

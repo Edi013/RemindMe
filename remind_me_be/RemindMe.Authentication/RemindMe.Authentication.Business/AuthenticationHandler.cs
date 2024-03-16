@@ -178,6 +178,7 @@ namespace RemindMe.Authentication.Handlers
             };
             var authClaims = new List<Claim>
             {
+                new Claim("Id", user.Id.ToString()),
                 new Claim("Jti", Guid.NewGuid().ToString()),
                 new Claim("Email", user.Email),
                 new Claim("Username", user.Nickname),
@@ -208,16 +209,6 @@ namespace RemindMe.Authentication.Handlers
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        private static string GenerateRefreshToken()
-        {
-            var randomNumber = new byte[64];
-
-            using var generator = RandomNumberGenerator.Create();
-
-            generator.GetBytes(randomNumber);
-
-            return Convert.ToBase64String(randomNumber);
-        }
 
         public async Task<BaseResponse> SeedRoles()
         {
