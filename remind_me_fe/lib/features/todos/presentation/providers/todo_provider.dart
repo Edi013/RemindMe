@@ -6,6 +6,8 @@ class TodoProvider extends ChangeNotifier {
   late TodoRepositoryImpl repository;
   late List<TodoEntity> todos = [];
   late List<TodoEntity> activeTodos = [];
+  late List<TodoEntity> undoneTodos = [];
+  late List<TodoEntity> doneTodos = [];
 
   TodoProvider(TodoRepositoryImpl repo) {
     repository = repo;
@@ -48,6 +50,20 @@ class TodoProvider extends ChangeNotifier {
     return result;
   }
 
+  Future<List<TodoEntity>> getUndoneByUserIdTodos(String userId) async {
+    var result = await repository.getUndoneByUserIdTodos(userId);
+    undoneTodos = result;
+    notifyListeners();
+    return result;
+  }
+
+  Future<List<TodoEntity>> getDoneByUserIdTodos(String userId) async {
+    var result = await repository.getDoneByUserIdTodos(userId);
+    doneTodos = result;
+    notifyListeners();
+    return result;
+  }
+
   Future<void> obtainActiveTodosFromAllTodos(String userId) async {
     final now = DateTime.now();
     if (todos.isEmpty) {
@@ -57,6 +73,22 @@ class TodoProvider extends ChangeNotifier {
         .where(
             (todo) => todo.startDate.isBefore(now) && todo.endDate.isAfter(now))
         .toList();
+    notifyListeners();
+  }
+
+  Future<void> obtainDoneTodosFromAllTodos(String userId) async {
+    if (todos.isEmpty) {
+      await getAllByUserIdTodos(userId);
+    }
+    doneTodos = todos.where((todo) => todo.isFinished == true).toList();
+    notifyListeners();
+  }
+
+  Future<void> obtainUndoneTodosFromAllTodos(String userId) async {
+    if (todos.isEmpty) {
+      await getAllByUserIdTodos(userId);
+    }
+    undoneTodos = todos.where((todo) => todo.isFinished == false).toList();
     notifyListeners();
   }
 }

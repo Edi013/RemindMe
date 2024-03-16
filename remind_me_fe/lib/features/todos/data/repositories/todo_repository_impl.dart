@@ -28,6 +28,24 @@ class TodoRepositoryImpl implements ToDoRepository {
   }
 
   @override
+  Future<List<TodoEntity>> getUndoneByUserIdTodos(String userId) async {
+    List<TodoModel> remoteData =
+        await _todoServiceApi.getUndoneByUserIdTodos(userId);
+    return remoteData.map((todoModel) {
+      return todoModel.toTodoEntity();
+    }).toList();
+  }
+
+  @override
+  Future<List<TodoEntity>> getDoneByUserIdTodos(String userId) async {
+    List<TodoModel> remoteData =
+        await _todoServiceApi.getDoneByUserIdTodos(userId);
+    return remoteData.map((todoModel) {
+      return todoModel.toTodoEntity();
+    }).toList();
+  }
+
+  @override
   Future<void> deleteTodo(int todoId) async {
     await _todoServiceApi.deleteTodo(todoId);
   }

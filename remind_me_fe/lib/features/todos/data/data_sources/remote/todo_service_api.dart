@@ -41,6 +41,30 @@ class TodoServiceApi {
     }
   }
 
+  Future<List<TodoModel>> getUndoneByUserIdTodos(String userId) async {
+    try {
+      final response = await _dio.get('$apiUrl/GetUndoneByUserIdItem/$userId');
+      final List<dynamic> data = response.data;
+      List<TodoModel> result =
+          data.map((json) => TodoModel.fromJson(json)).toList();
+      return result;
+    } catch (error) {
+      throw Exception('Failed to fetch todos: $error');
+    }
+  }
+
+  Future<List<TodoModel>> getDoneByUserIdTodos(String userId) async {
+    try {
+      final response = await _dio.get('$apiUrl/GetDoneByUserIdItem/$userId');
+      final List<dynamic> data = response.data;
+      List<TodoModel> result =
+          data.map((json) => TodoModel.fromJson(json)).toList();
+      return result;
+    } catch (error) {
+      throw Exception('Failed to fetch todos: $error');
+    }
+  }
+
   Future<TodoModel> addTodo(TodoModel todo) async {
     CreateToDoRequest newToDo = CreateToDoRequest(
       title: todo.title,
