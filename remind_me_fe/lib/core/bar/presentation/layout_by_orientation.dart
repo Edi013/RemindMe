@@ -155,6 +155,18 @@ class PortraitScaffold extends StatelessWidget {
           SizedBox(
             width: width * minimizeContentParameter,
             height: height,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                IconButton(
+                  icon: Image.asset('assets/images/rm_logo.png'),
+                  iconSize: 50,
+                  onPressed: () {
+                    AutoRouter.of(context).push(const HomeRoute());
+                  },
+                ),
+              ],
+            ),
           ),
           SizedBox(
             width: width * (1 - 2.7 * minimizeContentParameter),
@@ -266,7 +278,7 @@ class RoutesDrawer extends StatelessWidget {
               color: theme.colorScheme.secondary,
             ),
             child: const Text(
-              'Features',
+              'Actions',
               style: TextStyle(
                 fontSize: 32.0, // Adjust the font size here
                 fontWeight:

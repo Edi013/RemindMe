@@ -19,9 +19,7 @@ class TodoEntity {
     required this.difficulty,
     required this.ownerId,
   }) {
-    if (this.creationDate == null) {
-      this.creationDate = DateTime.now();
-    }
+    creationDate ??= DateTime.now();
   }
   TodoEntity.fromExistent({
     required this.id,

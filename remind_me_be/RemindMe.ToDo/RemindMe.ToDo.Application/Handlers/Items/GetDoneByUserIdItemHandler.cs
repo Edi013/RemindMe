@@ -16,7 +16,7 @@ namespace RemindMe.ToDo.Application.Handlers.Items
 
         public Task<IQueryable<Item>> Handle(GetDoneItemRequest request, CancellationToken cancellationToken)
         {
-            var result = repository.GetUndoneItemsByUserId(request.UserId);
+            var result = repository.GetDoneItemsByUserId(request.UserId);
             return result;
         }
     }

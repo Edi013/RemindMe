@@ -10,8 +10,16 @@ class UserProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final currentUser = sl<CurrentUser>();
+    return const LayoutByOrientation(UserProfileScreenContent());
+  }
+}
 
+class UserProfileScreenContent extends StatelessWidget {
+  const UserProfileScreenContent({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final currentUser = sl<CurrentUser>();
     return Scaffold(
       drawer: const RoutesDrawer(),
       body: Row(
@@ -50,7 +58,6 @@ class UserProfileScreen extends StatelessWidget {
               ],
             ),
           ),
-          const BurgerButton()
         ],
       ),
     );

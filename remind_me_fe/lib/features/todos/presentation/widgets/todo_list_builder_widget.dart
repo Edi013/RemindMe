@@ -90,10 +90,11 @@ Scaffold buildListFromTodos(BuildContext context, String todoListName) {
                               children: [
                                 Text("Description: ${todo.description}"),
                                 Text(
-                                    "Creation Date: ${todo.creationDate.toString()}"),
+                                    "Creation Date: ${_dateTimeToString(todo.creationDate!)}"),
                                 Text(
-                                    "Start Date: ${todo.startDate.toString()}"),
-                                Text("End Date: ${todo.endDate.toString()}"),
+                                    "Start Date: ${_dateTimeToString(todo.startDate)}"),
+                                Text(
+                                    "End Date: ${_dateTimeToString(todo.endDate)}"),
                                 Text(
                                     "Is finished: ${todo.isFinished.toString()}"),
                                 Text(
@@ -112,8 +113,10 @@ Scaffold buildListFromTodos(BuildContext context, String todoListName) {
                           ],
                         ),
                         onTap: () {
-                          AutoRouter.of(context).push(
-                              TodoUpdateRoute(index: index, todoId: todo.id));
+                          AutoRouter.of(context).push(TodoUpdateRoute(
+                              index: index,
+                              todoId: todo.id,
+                              listName: todoListName));
                         },
                       );
                     },
@@ -135,4 +138,8 @@ Scaffold buildListFromTodos(BuildContext context, String todoListName) {
       ),
     ),
   );
+}
+
+String _dateTimeToString(DateTime dateTime) {
+  return '${dateTime.year}-${dateTime.month}-${dateTime.day} ${dateTime.hour}:${dateTime.minute}';
 }

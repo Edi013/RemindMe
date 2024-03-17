@@ -1,6 +1,9 @@
+// ignore_for_file: no_leading_underscores_for_local_identifiers
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:remind_me_fe/core/bar/presentation/layout_by_orientation.dart';
+import 'package:remind_me_fe/core/constants.dart';
 import 'package:remind_me_fe/features/todos/domain/entities/todo.dart';
 import 'package:remind_me_fe/features/todos/presentation/controllers/update_controller.dart';
 import 'package:remind_me_fe/features/todos/presentation/providers/todo_provider.dart';
@@ -10,19 +13,47 @@ import 'package:remind_me_fe/injection_container.dart';
 class TodoUpdateScreen extends StatelessWidget {
   late int index;
   late TodoEntity todo;
+  late String listName;
 
   TodoUpdateScreen({
     super.key,
     @PathParam('index') required this.index,
     @PathParam('todoId') required int todoId,
+    @PathParam('listName') required this.listName,
   }) {
-    todo =
-        sl<TodoProvider>().todos.where((element) => element.id == todoId).first;
+    switch (listName) {
+      case allTodosListName:
+        todo = sl<TodoProvider>()
+            .todos
+            .where((element) => element.id == todoId)
+            .first;
+        break;
+      case activeTodosListName:
+        todo = sl<TodoProvider>()
+            .activeTodos
+            .where((element) => element.id == todoId)
+            .first;
+        break;
+      case undoneTodosListName:
+        todo = sl<TodoProvider>()
+            .undoneTodos
+            .where((element) => element.id == todoId)
+            .first;
+        break;
+      case doneTodosListName:
+        todo = sl<TodoProvider>()
+            .doneTodos
+            .where((element) => element.id == todoId)
+            .first;
+        break;
+      default:
+        throw error_message_constants_not_used_list_name;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return LayoutByOrientation(TodoUpdateScreenContent(todo, index));
+    return LayoutByOrientation(TodoUpdateScreenContent(todo, index, listName));
   }
 }
 
@@ -30,10 +61,14 @@ class TodoUpdateScreenContent extends StatelessWidget {
   final TodoUpdateController controller = TodoUpdateController();
   late int index;
   late TodoEntity todoToUpdate;
+  late String listName;
 
-  TodoUpdateScreenContent(TodoEntity _todoToUpdate, int _index, {super.key}) {
+  TodoUpdateScreenContent(
+      TodoEntity _todoToUpdate, int _index, String _listName,
+      {super.key}) {
     todoToUpdate = _todoToUpdate;
     index = _index;
+    listName = _listName;
   }
 
   Future<void> _selectDate(
@@ -98,8 +133,7 @@ class TodoUpdateScreenContent extends StatelessWidget {
               const SizedBox(height: 16.0),
               TextFormField(
                 controller: controller.endDateController,
-                decoration:
-                    const InputDecoration(labelText: 'End Date Controller'),
+                decoration: const InputDecoration(labelText: 'End Date '),
                 validator: (value) => controller.validateEndDateField(value),
                 onTap: () => _selectDate(context, controller.endDateController),
               ),
@@ -112,11 +146,7 @@ class TodoUpdateScreenContent extends StatelessWidget {
               const SizedBox(height: 16.0),
               ElevatedButton(
                 onPressed: () {
-                  controller.updateItem(
-                    index,
-                    todoToUpdate,
-                    context,
-                  );
+                  controller.updateItem(index, todoToUpdate, context, listName);
                 },
                 child: const Text('Save Changes'),
               ),

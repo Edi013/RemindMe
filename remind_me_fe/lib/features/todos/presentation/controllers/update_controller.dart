@@ -36,16 +36,24 @@ class TodoUpdateController {
     if (value == null || value.isEmpty) {
       return null;
     } else if (value.length < 10) {
-      return 'Field must have this format 2000-01-01';
+      return 'Date format is not valid, use the date picker';
+    } else if (DateTime.tryParse(value) == null) {
+      return 'Date format is not valid';
+    } else if (startDateController.text == null ||
+        startDateController.text.isEmpty) {
+      return 'Start date must be filled in before you enter an end date';
+    } else if (DateTime.tryParse(startDateController.text) == null) {
+      return 'Start date must be filled in before you enter an end date';
+    } else if (DateTime.tryParse(value)!
+        .isBefore(DateTime.tryParse(startDateController.text)!)) {
+      return 'End date has to be after the start date';
     }
+    //convert startDateController.text to datetime and verifify if isAfter(value ca DateTime)
     return null;
   }
 
-  void updateItem(
-    int index,
-    TodoEntity toDoToUpdate,
-    BuildContext context,
-  ) {
+  void updateItem(int index, TodoEntity toDoToUpdate, BuildContext context,
+      String listName) {
     if (formKey.currentState!.validate()) {
       DateTime startDate = DateTime.parse(startDateController.text);
       DateTime? endDate = endDateController.text != ""
@@ -65,7 +73,7 @@ class TodoUpdateController {
       );
 
       Provider.of<TodoProvider>(context, listen: false)
-          .update(index, updatedTodoEntity);
+          .update(index, listName, updatedTodoEntity);
 
       Navigator.pop(context);
     }
@@ -73,6 +81,6 @@ class TodoUpdateController {
 
   String formatDate(DateTime dateTime) {
     return "${dateTime.year}-${dateTime.month.toString().padLeft(2, '0')}-${dateTime.day.toString().padLeft(2, '0')}"
-        "T${dateTime.hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')}:00.000";
+        " ${dateTime.hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')}";
   }
 }

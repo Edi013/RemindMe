@@ -41,22 +41,37 @@ class TodoProvider extends ChangeNotifier {
           obtainUndoneTodosFromAllTodos(todo.ownerId);
           break;
         case activeTodosListName:
+          if (todo.endDate.isAfter(DateTime.now())) {
+            activeTodos[index] = value;
+          } else {
+            activeTodos.remove(
+                activeTodos.firstWhere((element) => element.id == value.id));
+          }
           todos = [];
-          activeTodos[index] = value;
           undoneTodos = [];
           doneTodos = [];
           break;
         case undoneTodosListName:
+          if (todo.isFinished) {
+            undoneTodos.remove(
+                undoneTodos.firstWhere((element) => element.id == todo.id));
+          } else {
+            undoneTodos[index] = value;
+          }
           todos = [];
           activeTodos = [];
-          undoneTodos[index] = value;
           doneTodos = [];
           break;
         case doneTodosListName:
+          if (!todo.isFinished) {
+            doneTodos.remove(
+                doneTodos.firstWhere((element) => element.id == todo.id));
+          } else {
+            doneTodos[index] = value;
+          }
           todos = [];
           activeTodos = [];
           undoneTodos = [];
-          doneTodos[index] = value;
           break;
         default:
           throw error_message_constants_not_used_list_name;
