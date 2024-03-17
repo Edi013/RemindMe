@@ -31,7 +31,6 @@ final ThemeData lightTheme = ThemeData(
       headerBackgroundColor: darkBG.withOpacity(0.5)),
   tabBarTheme: const TabBarTheme(
     labelColor: Colors.black,
-    //unselectedLabelColor: Colors.grey,
     indicator: UnderlineTabIndicator(
       borderSide: BorderSide(
         color: darkAccent,
@@ -47,7 +46,7 @@ final ThemeData lightTheme = ThemeData(
       fontSize: 20,
       fontWeight: FontWeight.w800,
     ),
-    iconTheme: IconThemeData(color: Color.fromARGB(255, 219, 219, 219)),
+    iconTheme: IconThemeData(color: Color.fromARGB(255, 194, 29, 29)),
   ),
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ButtonStyle(

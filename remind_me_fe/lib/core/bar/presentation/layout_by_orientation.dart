@@ -219,6 +219,8 @@ class BottomBar extends StatelessWidget {
             color: theme.colorScheme.secondary,
           ),
           label: 'G\'day ${sl<CurrentUser>().nickname ?? "User"}',
+          //backgroundColor modifies the entire  bar
+          backgroundColor: theme.colorScheme.primary.withOpacity(0.85),
         ),
         BottomNavigationBarItem(
           icon: Icon(
