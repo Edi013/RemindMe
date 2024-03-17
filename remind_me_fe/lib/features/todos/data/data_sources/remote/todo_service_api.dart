@@ -69,7 +69,7 @@ class TodoServiceApi {
     CreateToDoRequest newToDo = CreateToDoRequest(
       title: todo.title,
       description: todo.description,
-      creationDate: todo.creationDate,
+      creationDate: todo.creationDate!,
       startDate: todo.startDate,
       endDate: todo.endDate,
       isFinished: todo.isFinished,

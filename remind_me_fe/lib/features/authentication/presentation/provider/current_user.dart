@@ -1,7 +1,5 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:jwt_decode_full/jwt_decode_full.dart';
 import 'package:remind_me_fe/core/constants.dart';
-import 'package:remind_me_fe/core/router/app_router.gr.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CurrentUser {
@@ -29,16 +27,6 @@ class CurrentUser {
     email = null;
     roles = [];
   }
-
-  // String get id {
-  //   if (isJwtExpired()) {
-  //     AutoRouter.of().push(const SessionExpiredRoute());
-  //   }
-  //   return id!;
-  // }
-
-  // 1 in api cand iei 401
-  // 2 cand aplicatia, daca a expirat jwt ul
 
   bool isLoggedIn() {
     if (!isJwtPresent()) {
@@ -89,7 +77,6 @@ class CurrentUser {
     if (roleFromJwt is String) {
       roles.add(roleFromJwt);
     } else if (roleFromJwt is List<String>) {
-      // role = roleFromJwt;
       for (var role in roleFromJwt) {
         roles.add(role);
       }

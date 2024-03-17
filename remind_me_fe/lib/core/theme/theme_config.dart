@@ -26,9 +26,11 @@ final ThemeData lightTheme = ThemeData(
   navigationRailTheme: const NavigationRailThemeData(
     backgroundColor: lightBG,
   ),
+  datePickerTheme: DatePickerThemeData(
+      backgroundColor: lightAccent,
+      headerBackgroundColor: darkBG.withOpacity(0.5)),
   tabBarTheme: const TabBarTheme(
     labelColor: Colors.black,
-    //unselectedLabelColor: Colors.grey,
     indicator: UnderlineTabIndicator(
       borderSide: BorderSide(
         color: darkAccent,
@@ -44,7 +46,7 @@ final ThemeData lightTheme = ThemeData(
       fontSize: 20,
       fontWeight: FontWeight.w800,
     ),
-    iconTheme: IconThemeData(color: Color.fromARGB(255, 219, 219, 219)),
+    iconTheme: IconThemeData(color: Color.fromARGB(255, 194, 29, 29)),
   ),
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ButtonStyle(
@@ -78,6 +80,9 @@ final ThemeData darkTheme = ThemeData(
   navigationRailTheme: const NavigationRailThemeData(
     backgroundColor: darkBG,
   ),
+  datePickerTheme: DatePickerThemeData(
+      backgroundColor: darkAccent,
+      headerBackgroundColor: darkBG.withOpacity(0.5)),
   tabBarTheme: const TabBarTheme(
     labelColor: Colors.white,
     indicator: UnderlineTabIndicator(
@@ -112,7 +117,7 @@ final ThemeData darkTheme = ThemeData(
     ),
   ),
   cardTheme: CardTheme(
-    color: darkAccent.withOpacity(0.65),
+    color: darkAccent.withOpacity(0.85),
     margin: const EdgeInsets.all(50),
   ),
   snackBarTheme:

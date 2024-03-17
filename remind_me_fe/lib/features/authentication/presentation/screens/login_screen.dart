@@ -30,94 +30,96 @@ class LoginCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      constraints: const BoxConstraints(maxWidth: 750),
-      child: Card(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Text(
-                "Login",
-                style: TextStyle(
-                  fontSize: 32,
-                  decorationStyle: TextDecorationStyle.solid,
+    return SingleChildScrollView(
+      child: Container(
+        constraints: const BoxConstraints(maxWidth: 750),
+        child: Card(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text(
+                  "Login",
+                  style: TextStyle(
+                    fontSize: 32,
+                    decorationStyle: TextDecorationStyle.solid,
+                  ),
                 ),
-              ),
-              Form(
-                key: controller.formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 16,
-                      ),
-                      child: TextFormField(
-                        controller: controller.emailController,
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: "Email",
+                Form(
+                  key: controller.formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 16,
                         ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your email';
-                          }
-                          if (!value.contains("@")) {
-                            return 'Email has to contain \' @ \'.';
-                          }
-                          return null;
-                        },
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 16,
-                      ),
-                      child: TextFormField(
-                        controller: controller.passwordController,
-                        obscureText: true,
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: "Password",
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your password';
-                          }
-                          return null;
-                        },
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 16.0,
-                      ),
-                      child: Center(
-                        child: ElevatedButton(
-                          onPressed: () async {
-                            await controller.handleLogin(context);
+                        child: TextFormField(
+                          controller: controller.emailController,
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: "Email",
+                          ),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter your email';
+                            }
+                            if (!value.contains("@")) {
+                              return 'Email has to contain \' @ \'.';
+                            }
+                            return null;
                           },
-                          style: ElevatedButton.styleFrom(),
-                          child: const Text('Submit'),
                         ),
                       ),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        AutoRouter.of(context).push(const RegisterRoute());
-                      },
-                      child:
-                          const Text("Don't have an accout ? Register now ."),
-                    )
-                  ],
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 16,
+                        ),
+                        child: TextFormField(
+                          controller: controller.passwordController,
+                          obscureText: true,
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: "Password",
+                          ),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter your password';
+                            }
+                            return null;
+                          },
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 16.0,
+                        ),
+                        child: Center(
+                          child: ElevatedButton(
+                            onPressed: () async {
+                              await controller.handleLogin(context);
+                            },
+                            style: ElevatedButton.styleFrom(),
+                            child: const Text('Submit'),
+                          ),
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          AutoRouter.of(context).push(const RegisterRoute());
+                        },
+                        child:
+                            const Text("Don't have an accout ? Register now ."),
+                      )
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

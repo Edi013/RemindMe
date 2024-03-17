@@ -13,7 +13,7 @@ class TodoModel extends TodoEntity {
     bool isFinished = false,
     required int difficulty,
     required String ownerId,
-  }) : super(
+  }) : super.fromExistent(
           id: id,
           title: title,
           description: description,
@@ -24,7 +24,7 @@ class TodoModel extends TodoEntity {
           difficulty: difficulty,
           ownerId: ownerId,
         ) {
-    creationDate = DateTime.now();
+    //creationDate = DateTime.now();
   }
 
   factory TodoModel.fromJson(Map<String, dynamic> json) {
@@ -46,7 +46,7 @@ class TodoModel extends TodoEntity {
       'id': id,
       'title': title,
       'description': description,
-      'creationDate': creationDate.toIso8601String(),
+      'creationDate': creationDate!.toIso8601String(),
       'startDate': startDate.toIso8601String(),
       'endDate': endDate.toIso8601String(),
       'isFinished': isFinished,
@@ -56,7 +56,7 @@ class TodoModel extends TodoEntity {
   }
 
   TodoEntity toTodoEntity() {
-    return TodoEntity(
+    return TodoEntity.fromExistent(
       id: id,
       title: title,
       description: description,
@@ -70,7 +70,7 @@ class TodoModel extends TodoEntity {
   }
 
   TodoModel.fromTodoEntity(TodoEntity todoEntity)
-      : super(
+      : super.fromExistent(
           id: todoEntity.id,
           title: todoEntity.title,
           description: todoEntity.description,

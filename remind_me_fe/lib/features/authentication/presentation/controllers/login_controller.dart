@@ -30,8 +30,8 @@ class LoginController {
       var result = await provider.login(credentials);
 
       if (result.httpStatusCode == HttpStatus.accepted) {
-        AutoRouter.of(context).push(const HomeRoute());
         _saveUserAuthenticationData(result.token);
+        AutoRouter.of(context).push(const HomeRoute());
       } else if (result.httpStatusCode == HttpStatus.badRequest) {
         buildSnackBarMessage(context, "'Bad credentials. Please try again.'");
       } else {

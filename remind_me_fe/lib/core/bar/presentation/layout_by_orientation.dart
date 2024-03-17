@@ -8,7 +8,7 @@ import 'package:remind_me_fe/injection_container.dart';
 import 'package:sidebarx/sidebarx.dart';
 
 class LandscapeScaffold extends StatelessWidget {
-  final double minimizeContentParameter = 0.60;
+  final double minimizeContentParameter = 0.6;
   final Widget child;
 
   const LandscapeScaffold(this.child, {super.key});
@@ -23,10 +23,13 @@ class LandscapeScaffold extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           ExampleSidebarX(),
-          SizedBox(
-            width: MediaQuery.of(context).size.width * minimizeContentParameter,
-            height: MediaQuery.of(context).size.height,
-            child: child,
+          Expanded(
+            child: SizedBox(
+              width:
+                  MediaQuery.of(context).size.width * minimizeContentParameter,
+              height: MediaQuery.of(context).size.height,
+              child: child,
+            ),
           ),
           const BurgerButton()
         ],
@@ -37,14 +40,20 @@ class LandscapeScaffold extends StatelessWidget {
 }
 
 class ExampleSidebarX extends StatelessWidget {
-  final SidebarXController _controller =
-      SidebarXController(selectedIndex: 0, extended: true);
+  late SidebarXController _controller;
 
-  ExampleSidebarX({Key? key}) : super(key: key);
+  ExampleSidebarX({Key? key}) : super(key: key) {
+    _controller = SidebarXController(
+      selectedIndex: 0,
+      extended: false,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
+    _controller
+        .setExtended(MediaQuery.of(context).size.width > 800 ? true : false);
     return SidebarX(
       controller: _controller,
       theme: SidebarXTheme(
@@ -82,8 +91,14 @@ class ExampleSidebarX extends StatelessWidget {
       headerDivider: const Divider(),
       headerBuilder: (context, extended) {
         return Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Image.asset('assets/images/rm_logo.png'),
+          padding: const EdgeInsets.all(1.0),
+          child: IconButton(
+            icon: Image.asset('assets/images/rm_logo_landscape.png'),
+            iconSize: 100,
+            onPressed: () {
+              AutoRouter.of(context).push(const HomeRoute());
+            },
+          ),
         );
       },
       items: [
@@ -95,7 +110,7 @@ class ExampleSidebarX extends StatelessWidget {
           },
         ),
         SidebarXItem(
-          icon: Icons.business,
+          icon: Icons.list,
           label: 'All Tasks',
           onTap: () {
             AutoRouter.of(context).push(const TodoListRoute());
@@ -130,7 +145,7 @@ class ExampleSidebarX extends StatelessWidget {
 // Portrait
 
 class PortraitScaffold extends StatelessWidget {
-  final double minimizeContentParameter = 0.05;
+  final double minimizeContentParameter = 0.1;
   final Widget child;
 
   const PortraitScaffold(this.child, {super.key});
@@ -149,9 +164,21 @@ class PortraitScaffold extends StatelessWidget {
           SizedBox(
             width: width * minimizeContentParameter,
             height: height,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                IconButton(
+                  icon: Image.asset('assets/images/rm_logo_portrait.png'),
+                  iconSize: 100,
+                  onPressed: () {
+                    AutoRouter.of(context).push(const HomeRoute());
+                  },
+                ),
+              ],
+            ),
           ),
           SizedBox(
-            width: width * (1 - 2.7 * minimizeContentParameter),
+            width: width * (1 - 1.95 * minimizeContentParameter),
             height: height,
             child: child,
           ),
@@ -192,6 +219,8 @@ class BottomBar extends StatelessWidget {
             color: theme.colorScheme.secondary,
           ),
           label: 'G\'day ${sl<CurrentUser>().nickname ?? "User"}',
+          //backgroundColor modifies the entire  bar
+          backgroundColor: theme.colorScheme.primary.withOpacity(0.85),
         ),
         BottomNavigationBarItem(
           icon: Icon(
@@ -260,7 +289,13 @@ class RoutesDrawer extends StatelessWidget {
               color: theme.colorScheme.secondary,
             ),
             child: const Text(
-                'Streets / Routes / Directions / Actions / Screens / Categories'),
+              'Actions',
+              style: TextStyle(
+                fontSize: 32.0, // Adjust the font size here
+                fontWeight:
+                    FontWeight.bold, // Optionally, adjust the font weight
+              ),
+            ),
           ),
           ListTile(
             title: const Text('User Profile'),

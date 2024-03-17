@@ -113,6 +113,7 @@ abstract class $AppRouter extends _i14.RootStackRouter {
           orElse: () => TodoUpdateRouteArgs(
                 index: pathParams.getInt('index'),
                 todoId: pathParams.getInt('todoId'),
+                listName: pathParams.getString('listName'),
               ));
       return _i14.AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -120,6 +121,7 @@ abstract class $AppRouter extends _i14.RootStackRouter {
           key: args.key,
           index: args.index,
           todoId: args.todoId,
+          listName: args.listName,
         ),
       );
     },
@@ -324,6 +326,7 @@ class TodoUpdateRoute extends _i14.PageRouteInfo<TodoUpdateRouteArgs> {
     _i15.Key? key,
     required int index,
     required int todoId,
+    required String listName,
     List<_i14.PageRouteInfo>? children,
   }) : super(
           TodoUpdateRoute.name,
@@ -331,10 +334,12 @@ class TodoUpdateRoute extends _i14.PageRouteInfo<TodoUpdateRouteArgs> {
             key: key,
             index: index,
             todoId: todoId,
+            listName: listName,
           ),
           rawPathParams: {
             'index': index,
             'todoId': todoId,
+            'listName': listName,
           },
           initialChildren: children,
         );
@@ -350,6 +355,7 @@ class TodoUpdateRouteArgs {
     this.key,
     required this.index,
     required this.todoId,
+    required this.listName,
   });
 
   final _i15.Key? key;
@@ -358,9 +364,11 @@ class TodoUpdateRouteArgs {
 
   final int todoId;
 
+  final String listName;
+
   @override
   String toString() {
-    return 'TodoUpdateRouteArgs{key: $key, index: $index, todoId: $todoId}';
+    return 'TodoUpdateRouteArgs{key: $key, index: $index, todoId: $todoId, listName: $listName}';
   }
 }
 

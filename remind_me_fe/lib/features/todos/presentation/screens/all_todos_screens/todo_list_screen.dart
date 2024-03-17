@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:remind_me_fe/core/bar/presentation/screen_by_orientation.dart';
+import 'package:remind_me_fe/core/bar/presentation/layout_by_orientation.dart';
 import 'package:remind_me_fe/core/constants.dart';
 import 'package:remind_me_fe/features/authentication/presentation/provider/current_user.dart';
 import 'package:remind_me_fe/features/todos/presentation/providers/todo_provider.dart';
