@@ -26,6 +26,9 @@ final ThemeData lightTheme = ThemeData(
   navigationRailTheme: const NavigationRailThemeData(
     backgroundColor: lightBG,
   ),
+  datePickerTheme: DatePickerThemeData(
+      backgroundColor: lightAccent,
+      headerBackgroundColor: darkBG.withOpacity(0.5)),
   tabBarTheme: const TabBarTheme(
     labelColor: Colors.black,
     //unselectedLabelColor: Colors.grey,
@@ -78,6 +81,9 @@ final ThemeData darkTheme = ThemeData(
   navigationRailTheme: const NavigationRailThemeData(
     backgroundColor: darkBG,
   ),
+  datePickerTheme: DatePickerThemeData(
+      backgroundColor: darkAccent,
+      headerBackgroundColor: darkBG.withOpacity(0.5)),
   tabBarTheme: const TabBarTheme(
     labelColor: Colors.white,
     indicator: UnderlineTabIndicator(
