@@ -192,9 +192,7 @@ class PortraitScaffold extends StatelessWidget {
 }
 
 class BottomBar extends StatelessWidget {
-  int currentIndex = 2;
-
-  BottomBar({super.key});
+  const BottomBar({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -237,7 +235,7 @@ class BottomBar extends StatelessWidget {
           label: 'All Tasks',
         ),
       ],
-      currentIndex: currentIndex,
+      currentIndex: 2,
       onTap: (int index) {
         if (index == 0) {
           AutoRouter.of(context).push(const UndoneTodosRoute());

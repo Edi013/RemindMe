@@ -15,50 +15,50 @@ class UserProfileScreen extends StatelessWidget {
 }
 
 class UserProfileScreenContent extends StatelessWidget {
-  const UserProfileScreenContent({super.key});
+  const UserProfileScreenContent({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final currentUser = sl<CurrentUser>();
+
     return Scaffold(
       drawer: const RoutesDrawer(),
-      body: Row(
-        children: [
-          Flexible(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Card(
-                  child: ListTile(
-                    title: const Text(
-                      'Nickname',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    subtitle: Text(currentUser.nickname ?? 'Not available'),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Card(
+                child: ListTile(
+                  title: const Text(
+                    'Nickname',
+                    style: TextStyle(fontWeight: FontWeight.bold),
                   ),
+                  subtitle: Text(currentUser.nickname ?? 'Not available'),
                 ),
-                Card(
-                  child: ListTile(
-                    title: const Text(
-                      'Email',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    subtitle: Text(currentUser.email ?? 'Not available'),
+              ),
+              Card(
+                child: ListTile(
+                  title: const Text(
+                    'Email',
+                    style: TextStyle(fontWeight: FontWeight.bold),
                   ),
+                  subtitle: Text(currentUser.email ?? 'Not available'),
                 ),
-                Card(
-                  child: ListTile(
-                    title: const Text(
-                      'Account type',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    subtitle: Text(currentUser.roles.last),
+              ),
+              Card(
+                child: ListTile(
+                  title: const Text(
+                    'Account type',
+                    style: TextStyle(fontWeight: FontWeight.bold),
                   ),
+                  subtitle: Text(currentUser.roles.last),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
