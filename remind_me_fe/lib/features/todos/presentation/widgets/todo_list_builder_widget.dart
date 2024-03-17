@@ -60,64 +60,66 @@ Scaffold buildListFromTodos(BuildContext context, String todoListName) {
                     itemCount: todos.length,
                     itemBuilder: (context, index) {
                       TodoEntity todo = todos[index];
-                      return ListTile(
-                        title: Text(todo.title),
-                        subtitle: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Checkbox(
-                              value: todo.isFinished,
-                              onChanged: (value) {
-                                todo.isFinished = !todo.isFinished;
-                                provider.update(
-                                  index,
-                                  todoListName,
-                                  TodoEntity.fromExistent(
-                                    id: todo.id,
-                                    title: todo.title,
-                                    description: todo.description,
-                                    creationDate: todo.creationDate,
-                                    startDate: todo.startDate,
-                                    endDate: todo.endDate,
-                                    difficulty: todo.difficulty,
-                                    ownerId: todo.ownerId,
-                                    isFinished: todo.isFinished,
+                      return SingleChildScrollView(
+                        child: ListTile(
+                          title: Text(todo.title),
+                          subtitle: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Checkbox(
+                                value: todo.isFinished,
+                                onChanged: (value) {
+                                  todo.isFinished = !todo.isFinished;
+                                  provider.update(
+                                    index,
+                                    todoListName,
+                                    TodoEntity.fromExistent(
+                                      id: todo.id,
+                                      title: todo.title,
+                                      description: todo.description,
+                                      creationDate: todo.creationDate,
+                                      startDate: todo.startDate,
+                                      endDate: todo.endDate,
+                                      difficulty: todo.difficulty,
+                                      ownerId: todo.ownerId,
+                                      isFinished: todo.isFinished,
+                                    ),
+                                  );
+                                },
+                              ),
+                              Column(
+                                children: [
+                                  Text("Description: ${todo.description}"),
+                                  Text(
+                                      "Creation Date: ${_dateTimeToString(todo.creationDate!)}"),
+                                  Text(
+                                      "Start Date: ${_dateTimeToString(todo.startDate)}"),
+                                  Text(
+                                      "End Date: ${_dateTimeToString(todo.endDate)}"),
+                                  Text(
+                                      "Is finished: ${todo.isFinished.toString()}"),
+                                  Text(
+                                      "Difficulty: ${todo.difficulty.toString()}"),
+                                  IconButton(
+                                    onPressed: () => provider.delete(todo.id),
+                                    icon: const Icon(
+                                      Icons.delete,
+                                      color: Colors.red,
+                                    ),
                                   ),
-                                );
-                              },
-                            ),
-                            Column(
-                              children: [
-                                Text("Description: ${todo.description}"),
-                                Text(
-                                    "Creation Date: ${_dateTimeToString(todo.creationDate!)}"),
-                                Text(
-                                    "Start Date: ${_dateTimeToString(todo.startDate)}"),
-                                Text(
-                                    "End Date: ${_dateTimeToString(todo.endDate)}"),
-                                Text(
-                                    "Is finished: ${todo.isFinished.toString()}"),
-                                Text(
-                                    "Difficulty: ${todo.difficulty.toString()}"),
-                                IconButton(
-                                  onPressed: () => provider.delete(todo.id),
-                                  icon: const Icon(
-                                    Icons.delete,
-                                    color: Colors.red,
-                                  ),
-                                ),
-                                const Divider()
-                              ],
-                            ),
-                            const SizedBox()
-                          ],
+                                  const Divider()
+                                ],
+                              ),
+                              const SizedBox()
+                            ],
+                          ),
+                          onTap: () {
+                            AutoRouter.of(context).push(TodoUpdateRoute(
+                                index: index,
+                                todoId: todo.id,
+                                listName: todoListName));
+                          },
                         ),
-                        onTap: () {
-                          AutoRouter.of(context).push(TodoUpdateRoute(
-                              index: index,
-                              todoId: todo.id,
-                              listName: todoListName));
-                        },
                       );
                     },
                   );
