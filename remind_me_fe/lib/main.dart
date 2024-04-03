@@ -8,6 +8,7 @@ import 'package:remind_me_fe/features/theme/presentation/providers/theme_provide
 import 'package:remind_me_fe/injection_container.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await initializeDependencies();
   try {
     runApp(

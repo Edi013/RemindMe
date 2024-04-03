@@ -39,8 +39,7 @@ class TodoUpdateController {
       return 'Date format is not valid, use the date picker';
     } else if (DateTime.tryParse(value) == null) {
       return 'Date format is not valid';
-    } else if (startDateController.text == null ||
-        startDateController.text.isEmpty) {
+    } else if (startDateController.text.isEmpty) {
       return 'Start date must be filled in before you enter an end date';
     } else if (DateTime.tryParse(startDateController.text) == null) {
       return 'Start date must be filled in before you enter an end date';

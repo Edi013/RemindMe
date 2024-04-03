@@ -59,6 +59,7 @@ final ThemeData lightTheme = ThemeData(
       ),
     ),
   ),
+  //checkboxTheme: ChechBoxTheme(),
   cardTheme: CardTheme(
     color: lightAccent.withOpacity(0.6),
     margin: const EdgeInsets.all(50),

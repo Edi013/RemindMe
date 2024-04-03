@@ -39,7 +39,7 @@ class LoginController {
             "Unexpected error occured. Http code status not expected.");
       }
     } else {
-      buildSnackBarMessage(context, "Fill in your credentials.");
+      buildSnackBarMessage(context, "Fill in properly your credentials.");
     }
   }
 
