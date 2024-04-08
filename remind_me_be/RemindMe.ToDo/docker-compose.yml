@@ -1,0 +1,53 @@
+version: '3.9'
+
+services:
+  remindme.todo.api:
+    image: remindme.todo.api
+    container_name: todo-api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "5000:80"
+      - "5001:443" 
+
+  remindme.todo.api2:
+    image: remindme.todo.api
+    container_name: todo-api2
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "6000:80"
+      - "6001:443" 
+
+  remindme.todo.api3:
+    image: remindme.todo.api
+    container_name: todo-api3
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "7000:80"
+      - "7001:443" 
+
+  todo.db:
+    image: postgres:14-alpine
+    container_name: todo-db
+    environment:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: 1234
+          POSTGRES_DB: RemindMeToDoDb
+    volumes:
+      - RemindMeToDoDb-db-volume:/var/lib/postgresql/data
+    ports:
+    - "5432:5432"
+
+volumes:
+  RemindMeToDoDb-db-volume:
