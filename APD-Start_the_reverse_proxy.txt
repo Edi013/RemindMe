@@ -1,0 +1,5 @@
+1. docker-compose build 
+2. docker-compose up
+3. Start the YARP project.
+4. open pgAdmin4 to show the db structure and contained data.
+5. Open postman and make getAll call

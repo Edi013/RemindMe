@@ -67,7 +67,7 @@ namespace RemindMe
                 {
                     options.SaveToken = true;
                     options.RequireHttpsMetadata = false;
-                    options.TokenValidationParameters = new TokenValidationParameters
+                    /*options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuer = true,
                         ValidateAudience = true,
@@ -78,7 +78,7 @@ namespace RemindMe
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
                             builder.Configuration.GetSection("JWT:Secret").Value)),
                         ClockSkew = TimeSpan.Zero
-                    };
+                    };*/
                 }
             );
             ;
@@ -107,8 +107,8 @@ namespace RemindMe
                                               .AllowAnyOrigin()
                                               //.WithOrigins(builder.Configuration.GetSection("FrontendApp:Url").Value)
                                               .AllowAnyHeader()
-                                              .AllowAnyMethod()
-                                              .AllowCredentials();
+                                              .AllowAnyMethod();
+                                              //.AllowCredentials();
                                           });
             });
         }

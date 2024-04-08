@@ -7,8 +7,10 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    volumes:
+      - /RemindMe.ToDo/appsettings.json:/app/out/appsettings.json
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=Release
     ports:
       - "5000:80"
       - "5001:443" 
@@ -19,8 +21,10 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    volumes:
+      - /RemindMe.ToDo/appsettings.json:/app/out/appsettings.json
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=Release
     ports:
       - "6000:80"
       - "6001:443" 
@@ -31,8 +35,10 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    volumes:
+      - /RemindMe.ToDo/appsettings.json:/app/out/appsettings.json
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=Release
     ports:
       - "7000:80"
       - "7001:443" 
@@ -43,11 +49,11 @@ services:
     environment:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: 1234
-          POSTGRES_DB: RemindMeToDoDb
-    volumes:
-      - RemindMeToDoDb-db-volume:/var/lib/postgresql/data
+          POSTGRES_DB: RemindMeDb
     ports:
     - "5432:5432"
+    volumes:
+      - RemindMeToDoDb-db-volume:/var/lib/postgresql/data
 
 volumes:
   RemindMeToDoDb-db-volume:
