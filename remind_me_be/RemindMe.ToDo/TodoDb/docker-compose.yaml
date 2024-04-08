@@ -8,9 +8,9 @@ services:
     volumes:
       - RemindMeToDoDb-db-volume:/var/lib/postgresql/data
     environment:
-      - POSTGRES_PASSWORD=1234
-      - POSTGRES_USER=postgres
       - POSTGRES_DB=RemindMeToDoDb
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=1234
 
 volumes:
   RemindMeToDoDb-db-volume:
