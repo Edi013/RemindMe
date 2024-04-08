@@ -13,6 +13,20 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RemindMe.ToDo.DataAcces", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RemindMe.ToDo.Domain", "RemindMe.ToDo.Domain\RemindMe.ToDo.Domain.csproj", "{A58ED3BC-12A4-4637-86B2-EAE408360CC4}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "api", "api", "{268972DD-6DF0-4DC4-AEC7-65C71E73031E}"
+	ProjectSection(SolutionItems) = preProject
+		Dockerfile = Dockerfile
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "gateway", "gateway", "{40E44BFC-2ECB-4D93-9B3A-E6068DAA21A6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yarp.LoadBalancer", "Yarp.LoadBalancer\Yarp.LoadBalancer.csproj", "{D06629D5-9BA5-4D24-AF7A-5DE1751B268D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker-compose", "docker-compose", "{BB785FE1-451A-40CA-85B1-C38DE3E8C2C8}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yml = docker-compose.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,9 +53,21 @@ Global
 		{A58ED3BC-12A4-4637-86B2-EAE408360CC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A58ED3BC-12A4-4637-86B2-EAE408360CC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A58ED3BC-12A4-4637-86B2-EAE408360CC4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D06629D5-9BA5-4D24-AF7A-5DE1751B268D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D06629D5-9BA5-4D24-AF7A-5DE1751B268D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D06629D5-9BA5-4D24-AF7A-5DE1751B268D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D06629D5-9BA5-4D24-AF7A-5DE1751B268D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{84811297-DE24-42BE-8E61-A6DAF97A11E7} = {268972DD-6DF0-4DC4-AEC7-65C71E73031E}
+		{7297352C-5A79-4901-A781-98E077E67034} = {268972DD-6DF0-4DC4-AEC7-65C71E73031E}
+		{97A8F02A-5460-4F79-B874-602998FA1A6B} = {268972DD-6DF0-4DC4-AEC7-65C71E73031E}
+		{D21C6623-EB18-4BD3-A7A3-ADC02525102F} = {268972DD-6DF0-4DC4-AEC7-65C71E73031E}
+		{A58ED3BC-12A4-4637-86B2-EAE408360CC4} = {268972DD-6DF0-4DC4-AEC7-65C71E73031E}
+		{D06629D5-9BA5-4D24-AF7A-5DE1751B268D} = {40E44BFC-2ECB-4D93-9B3A-E6068DAA21A6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {13F08025-0A92-4BD7-B35F-61B1455EEF79}

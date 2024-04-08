@@ -104,7 +104,8 @@ namespace RemindMe
                                           policy =>
                                           {
                                               policy
-                                              .WithOrigins(builder.Configuration.GetSection("FrontendApp:Url").Value)
+                                              .AllowAnyOrigin()
+                                              //.WithOrigins(builder.Configuration.GetSection("FrontendApp:Url").Value)
                                               .AllowAnyHeader()
                                               .AllowAnyMethod()
                                               .AllowCredentials();

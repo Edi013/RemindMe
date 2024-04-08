@@ -24,7 +24,7 @@ namespace RemindMe.Controller
             this._logger = logger;
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpGet("GetAllByUserId/{ownerId}")]
         public async Task<IEnumerable<Item>> GetAllByUserId(String ownerId)
         {
@@ -35,7 +35,7 @@ namespace RemindMe.Controller
             return result;
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpGet("GetAllActiveByUserIdItem/{ownerId}")]
         public async Task<IEnumerable<Item>> GetAllActiveByUserIdItem(String ownerId)
         {
@@ -45,7 +45,7 @@ namespace RemindMe.Controller
             return result;
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpGet("GetUndoneByUserIdItem/{ownerId}")]
         public async Task<IEnumerable<Item>> GetUndoneByUserIdItem(String ownerId)
         {
@@ -55,7 +55,7 @@ namespace RemindMe.Controller
             return result;
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpGet("GetDoneByUserIdItem/{ownerId}")]
         public async Task<IEnumerable<Item>> GetDoneByUserIdItem(String ownerId)
         {
@@ -65,7 +65,7 @@ namespace RemindMe.Controller
             return result;
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpPost("Create")]
         public async Task<ItemResponse> CreateTodo(CreateItemRequest req)
         {
@@ -74,7 +74,7 @@ namespace RemindMe.Controller
             return result;
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpDelete("Delete")]
         public async Task<BaseResponse> DeleteTodo(DeleteItemRequest req)
         {
@@ -83,7 +83,7 @@ namespace RemindMe.Controller
             return result;
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpPut("Update")]
         public async Task<ItemResponse> UpdateTodo(UpdateItemRequest req)
         {
