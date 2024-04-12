@@ -27,8 +27,9 @@ final ThemeData lightTheme = ThemeData(
     backgroundColor: lightBG,
   ),
   datePickerTheme: DatePickerThemeData(
-      backgroundColor: lightAccent,
-      headerBackgroundColor: darkBG.withOpacity(0.5)),
+    backgroundColor: darkAccent,
+    headerBackgroundColor: darkBG,
+  ),
   tabBarTheme: const TabBarTheme(
     labelColor: Colors.black,
     indicator: UnderlineTabIndicator(
