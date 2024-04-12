@@ -8,7 +8,7 @@ import 'package:remind_me_fe/injection_container.dart';
 import 'package:sidebarx/sidebarx.dart';
 
 class LandscapeScaffold extends StatelessWidget {
-  final double minimizeContentParameter = 0.6;
+  //final double minimizeContentParameter = 0.6;
   final Widget child;
 
   const LandscapeScaffold(this.child, {super.key});
@@ -23,15 +23,17 @@ class LandscapeScaffold extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           ExampleSidebarX(),
-          Expanded(
-            child: SizedBox(
-              width:
-                  MediaQuery.of(context).size.width * minimizeContentParameter,
-              height: MediaQuery.of(context).size.height,
-              child: child,
-            ),
-          ),
+          Expanded(child: child),
           const BurgerButton()
+          // Expanded(
+          //   child: SizedBox(
+          //     width: MediaQuery.of(context)
+          //         .size
+          //         .width, //* minimizeContentParameter,
+          //     height: MediaQuery.of(context).size.height,
+          //     child: child,
+          //   ),
+          //),
         ],
       ),
       drawer: const RoutesDrawer(),
@@ -45,13 +47,15 @@ class ExampleSidebarX extends StatelessWidget {
   ExampleSidebarX({Key? key}) : super(key: key) {
     _controller = SidebarXController(
       selectedIndex: 0,
-      extended: true,
+      extended: false,
     );
   }
 
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
+    _controller
+        .setExtended(MediaQuery.of(context).size.width > 1200 ? true : false);
 
     return SidebarX(
       controller: _controller,

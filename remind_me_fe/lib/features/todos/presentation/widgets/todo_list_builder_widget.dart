@@ -61,39 +61,27 @@ Scaffold buildListFromTodos(BuildContext context, String todoListName) {
                       TodoEntity todo = todos[index];
                       return SingleChildScrollView(
                         child: ListTile(
-                          title: _buildRichTextForTitle(
-                            context: context,
-                            title: todo.title,
+                          title: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              _buildRichTextForTitle(
+                                context: context,
+                                title: todo.title,
+                              ),
+                              _buildCheckboxForTodo(
+                                  todo, provider, index, todoListName),
+                            ],
                           ),
                           subtitle: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              _buildCheckboxForTodo(
-                                  todo, provider, index, todoListName),
-                              const SizedBox(width: 30),
                               Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  // _buildRichTextForDescription(context,
-                                  //     'Description: \n', todo.description),
-                                  Container(
-                                    constraints: BoxConstraints(
-                                      //maxHeight: double.infinity,
-                                      maxWidth:
-                                          MediaQuery.of(context).size.width *
-                                              0.5,
-                                    ),
-                                    child: Text(
-                                      "Description: \n ${todo.description}",
-                                      style: const TextStyle(
-                                        fontSize: kFontSize,
-                                      ),
-                                      maxLines: null,
-                                    ),
-                                  ),
-
+                                  _buildRichTextForDescription(context,
+                                      'Description: \n', todo.description),
                                   _buildLineSeparator(),
                                   _buildRichTextForField(
                                       context: context,
@@ -129,7 +117,7 @@ Scaffold buildListFromTodos(BuildContext context, String todoListName) {
                                       color: Colors.red,
                                     ),
                                   ),
-                                  const Divider()
+                                  //const Divider()
                                 ],
                               ),
                             ],
@@ -194,26 +182,31 @@ _buildCheckboxForTodo(
 
 _buildRichTextForDescription(
     BuildContext context, String title, String content) {
-  return RichText(
-    text: TextSpan(
-      text: title,
-      style: DefaultTextStyle.of(context).style.merge(
-            const TextStyle(
-              fontSize: kFontSize,
-            ),
-          ),
-      children: <TextSpan>[
-        TextSpan(
-          text: content,
-          style: DefaultTextStyle.of(context).style.merge(
-                const TextStyle(
-                  fontSize: kFontSize,
-                ),
-              ),
-        ),
-      ],
+  return Container(
+    constraints: BoxConstraints(
+      maxWidth: MediaQuery.of(context).size.width * 0.6,
     ),
-    maxLines: null,
+    child: RichText(
+      text: TextSpan(
+        text: title,
+        style: DefaultTextStyle.of(context).style.merge(
+              const TextStyle(
+                fontSize: kFontSize,
+              ),
+            ),
+        children: <TextSpan>[
+          TextSpan(
+            text: content,
+            style: DefaultTextStyle.of(context).style.merge(
+                  const TextStyle(
+                    fontSize: kFontSize,
+                  ),
+                ),
+          ),
+        ],
+      ),
+      maxLines: null,
+    ),
   );
 }
 
