@@ -151,37 +151,32 @@ class PortraitScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
-
     final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
     return Scaffold(
       key: scaffoldKey,
-      body: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      body: Column(
         children: [
-          SizedBox(
-            width: width * minimizeContentParameter,
-            height: height,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                IconButton(
-                  icon: Image.asset('assets/images/rm_logo_portrait.png'),
-                  iconSize: 100,
-                  onPressed: () {
-                    AutoRouter.of(context).push(const HomeRoute());
-                  },
-                ),
-              ],
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: BurgerButton(),
+              ),
+              IconButton(
+                icon: Image.asset('assets/images/rm_logo_portrait.png'),
+                iconSize: 100,
+                onPressed: () {
+                  AutoRouter.of(context).push(const HomeRoute());
+                },
+              ),
+            ],
           ),
-          SizedBox(
-            width: width * (1 - 1.95 * minimizeContentParameter),
-            height: height,
+          Expanded(
             child: child,
           ),
-          const BurgerButton()
         ],
       ),
       drawer: const RoutesDrawer(),

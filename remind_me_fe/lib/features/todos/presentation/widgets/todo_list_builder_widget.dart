@@ -35,7 +35,6 @@ Scaffold buildListFromTodos(BuildContext context, String todoListName) {
 
   return Scaffold(
     body: Container(
-      padding: const EdgeInsets.all(16.0),
       child: Card(
         elevation: 5.0,
         shape: RoundedRectangleBorder(
@@ -68,6 +67,7 @@ Scaffold buildListFromTodos(BuildContext context, String todoListName) {
                           ),
                           subtitle: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               _buildCheckboxForTodo(
                                   todo, provider, index, todoListName),
@@ -83,14 +83,14 @@ Scaffold buildListFromTodos(BuildContext context, String todoListName) {
                                       //maxHeight: double.infinity,
                                       maxWidth:
                                           MediaQuery.of(context).size.width *
-                                              0.6,
+                                              0.5,
                                     ),
                                     child: Text(
                                       "Description: \n ${todo.description}",
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontSize: kFontSize,
                                       ),
-                                      //maxLines: null,
+                                      maxLines: null,
                                     ),
                                   ),
 
