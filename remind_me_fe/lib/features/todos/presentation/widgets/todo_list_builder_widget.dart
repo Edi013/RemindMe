@@ -88,18 +88,62 @@ Scaffold buildListFromTodos(BuildContext context, String todoListName) {
                                 },
                               ),
                               Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  Text("Description: ${todo.description}"),
+                                  Container(
+                                    width:
+                                        MediaQuery.of(context).size.width / 1.7,
+                                    child: RichText(
+                                      text: TextSpan(
+                                        text: 'Description: \n',
+                                        style: DefaultTextStyle.of(context)
+                                            .style
+                                            .merge(TextStyle(
+                                              fontSize: kFontSize,
+                                            )),
+                                        children: <TextSpan>[
+                                          TextSpan(
+                                            text: '${todo.description}',
+                                            style: DefaultTextStyle.of(context)
+                                                .style
+                                                .merge(TextStyle(
+                                                  fontSize: kFontSize,
+                                                )),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
                                   Text(
-                                      "Creation Date: ${_dateTimeToString(todo.creationDate!)}"),
+                                    "Creation Date: ${_dateTimeToString(todo.creationDate!)}",
+                                    style: TextStyle(
+                                      fontSize: kFontSize,
+                                    ),
+                                  ),
                                   Text(
-                                      "Start Date: ${_dateTimeToString(todo.startDate)}"),
+                                    "Start Date: ${_dateTimeToString(todo.startDate)}",
+                                    style: TextStyle(
+                                      fontSize: kFontSize,
+                                    ),
+                                  ),
                                   Text(
-                                      "End Date: ${_dateTimeToString(todo.endDate)}"),
+                                    "End Date: ${_dateTimeToString(todo.endDate)}",
+                                    style: TextStyle(
+                                      fontSize: kFontSize,
+                                    ),
+                                  ),
                                   Text(
-                                      "Is finished: ${todo.isFinished.toString()}"),
+                                    "Is finished: ${todo.isFinished.toString()}",
+                                    style: TextStyle(
+                                      fontSize: kFontSize,
+                                    ),
+                                  ),
                                   Text(
-                                      "Difficulty: ${todo.difficulty.toString()}"),
+                                    "Difficulty: ${todo.difficulty.toString()}",
+                                    style: TextStyle(
+                                      fontSize: kFontSize,
+                                    ),
+                                  ),
                                   IconButton(
                                     onPressed: () => provider.delete(todo.id),
                                     icon: const Icon(
