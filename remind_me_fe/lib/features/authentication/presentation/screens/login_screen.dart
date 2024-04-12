@@ -17,6 +17,7 @@ class LoginScreen extends StatelessWidget {
       body: Center(
         child: LoginCard(),
       ),
+      backgroundColor: const Color.fromARGB(255, 176, 176, 176),
     );
   }
 }

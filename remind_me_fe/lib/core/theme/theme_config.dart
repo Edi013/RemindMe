@@ -40,29 +40,20 @@ final ThemeData lightTheme = ThemeData(
   //     ),
   //   ),
   // ),
+
   textTheme: const TextTheme(
     bodyLarge: TextStyle(
       fontSize: kFontSize + 5,
-      color: Colors.black,
+      color: Color.fromARGB(255, 255, 255, 255),
     ),
     bodySmall: TextStyle(
       fontSize: kFontSize - 5,
-      color: Colors.black,
+      color: Color.fromARGB(255, 255, 255, 255),
     ),
     bodyMedium: TextStyle(
       fontSize: kFontSize,
-      color: Colors.black,
+      color: Color.fromARGB(255, 255, 255, 255),
     ),
-  ),
-  appBarTheme: const AppBarTheme(
-    color: lightPrimary,
-    elevation: 0.0,
-    titleTextStyle: TextStyle(
-      color: Colors.black,
-      fontSize: 20,
-      fontWeight: FontWeight.w800,
-    ),
-    iconTheme: IconThemeData(color: Color.fromARGB(255, 194, 29, 29)),
   ),
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ButtonStyle(
@@ -76,8 +67,12 @@ final ThemeData lightTheme = ThemeData(
     ),
   ),
   //checkboxTheme: ChechBoxTheme(),
+  // cardTheme: CardTheme(
+  //   color: lightAccent.withOpacity(0.6),
+  //   margin: const EdgeInsets.all(50),
+  // ),
   cardTheme: CardTheme(
-    color: lightAccent.withOpacity(0.6),
+    color: darkBG.withOpacity(0.3), //darkAccent.withOpacity(0.85),
     margin: const EdgeInsets.all(50),
   ),
   snackBarTheme: const SnackBarThemeData(backgroundColor: darkPrimary),
@@ -100,15 +95,6 @@ final ThemeData darkTheme = ThemeData(
   datePickerTheme: DatePickerThemeData(
       backgroundColor: darkAccent,
       headerBackgroundColor: darkBG.withOpacity(0.5)),
-  // tabBarTheme: const TabBarTheme(
-  //   labelColor: Colors.white,
-  //   indicator: UnderlineTabIndicator(
-  //     borderSide: BorderSide(
-  //       color: lightAccent,
-  //       width: 2.0,
-  //     ),
-  //   ),
-  // ),
   textTheme: const TextTheme(
     bodyLarge: TextStyle(
       fontSize: kFontSize + 5,
@@ -122,16 +108,6 @@ final ThemeData darkTheme = ThemeData(
       fontSize: kFontSize,
       color: Colors.white,
     ),
-  ),
-  appBarTheme: const AppBarTheme(
-    color: darkPrimary,
-    elevation: 0.0,
-    titleTextStyle: TextStyle(
-      color: Colors.white,
-      fontSize: 20,
-      fontWeight: FontWeight.w800,
-    ),
-    iconTheme: IconThemeData(color: Colors.white),
   ),
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ButtonStyle(

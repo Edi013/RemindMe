@@ -62,82 +62,64 @@ Scaffold buildListFromTodos(BuildContext context, String todoListName) {
                       TodoEntity todo = todos[index];
                       return SingleChildScrollView(
                         child: ListTile(
-                          title: Text(todo.title),
+                          title: _buildRichTextForTitle(
+                            context: context,
+                            title: todo.title,
+                          ),
                           subtitle: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Checkbox(
-                                value: todo.isFinished,
-                                onChanged: (value) {
-                                  todo.isFinished = !todo.isFinished;
-                                  provider.update(
-                                    index,
-                                    todoListName,
-                                    TodoEntity.fromExistent(
-                                      id: todo.id,
-                                      title: todo.title,
-                                      description: todo.description,
-                                      creationDate: todo.creationDate,
-                                      startDate: todo.startDate,
-                                      endDate: todo.endDate,
-                                      difficulty: todo.difficulty,
-                                      ownerId: todo.ownerId,
-                                      isFinished: todo.isFinished,
-                                    ),
-                                  );
-                                },
-                              ),
+                              _buildCheckboxForTodo(
+                                  todo, provider, index, todoListName),
+                              const SizedBox(width: 30),
                               Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
+                                  // _buildRichTextForDescription(context,
+                                  //     'Description: \n', todo.description),
                                   Container(
-                                    width:
-                                        MediaQuery.of(context).size.width / 1.7,
-                                    child: RichText(
-                                      text: TextSpan(
-                                        text: 'Description: \n',
-                                        style: DefaultTextStyle.of(context)
-                                            .style
-                                            .merge(
-                                              const TextStyle(
-                                                fontSize: kFontSize,
-                                              ),
-                                            ),
-                                        children: <TextSpan>[
-                                          TextSpan(
-                                            text: '${todo.description}',
-                                            style: DefaultTextStyle.of(context)
-                                                .style
-                                                .merge(
-                                                  const TextStyle(
-                                                    fontSize: kFontSize,
-                                                  ),
-                                                ),
-                                          ),
-                                        ],
+                                    constraints: BoxConstraints(
+                                        maxHeight: double.infinity,
+                                        maxWidth:
+                                            MediaQuery.of(context).size.width *
+                                                0.6),
+                                    child: Text(
+                                      "Description: \n ${todo.description}",
+                                      style: TextStyle(
+                                        fontSize: kFontSize,
                                       ),
+                                      maxLines: null,
                                     ),
                                   ),
+
                                   _buildLineSeparator(),
-                                  _buildRichText(
-                                      "Creation Date: ${_dateTimeToString(todo.creationDate!)}",
-                                      context),
+                                  _buildRichTextForField(
+                                      context: context,
+                                      title: "Creation Date: ",
+                                      content: _dateTimeToString(
+                                          todo.creationDate!)),
                                   _buildLineSeparator(),
-                                  _buildRichText(
-                                      "Start Date: ${_dateTimeToString(todo.startDate)}",
-                                      context),
+                                  _buildRichTextForField(
+                                      context: context,
+                                      title: "Start Date: ",
+                                      content:
+                                          _dateTimeToString(todo.startDate)),
                                   _buildLineSeparator(),
-                                  _buildRichText(
-                                      "End Date: ${_dateTimeToString(todo.endDate)}",
-                                      context),
+                                  _buildRichTextForField(
+                                      context: context,
+                                      title: "End Date: ",
+                                      content: _dateTimeToString(todo.endDate)),
                                   _buildLineSeparator(),
-                                  _buildRichText(
-                                      "Is finished: ${todo.isFinished.toString()}",
-                                      context),
+                                  _buildRichTextForField(
+                                      context: context,
+                                      title: "Is finished: ",
+                                      content: todo.isFinished ? 'Yes' : 'No'),
                                   _buildLineSeparator(),
-                                  _buildRichText(
-                                      "Difficulty: ${todo.difficulty.toString()}",
-                                      context),
+                                  _buildRichTextForField(
+                                      context: context,
+                                      title: "Difficulty: ",
+                                      content: todo.difficulty.toString()),
                                   _buildLineSeparator(),
                                   IconButton(
                                     onPressed: () => provider.delete(todo.id),
@@ -149,7 +131,6 @@ Scaffold buildListFromTodos(BuildContext context, String todoListName) {
                                   const Divider()
                                 ],
                               ),
-                              const SizedBox()
                             ],
                           ),
                           onTap: () {
@@ -165,19 +146,73 @@ Scaffold buildListFromTodos(BuildContext context, String todoListName) {
                 },
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: ElevatedButton(
-                onPressed: () {
-                  AutoRouter.of(context).push(const TodoAddRoute());
-                },
-                child: const Text('+'),
-              ),
-            ),
+            _buildAddButton(context),
           ],
         ),
       ),
     ),
+  );
+}
+
+_buildAddButton(BuildContext context) {
+  return Padding(
+    padding: const EdgeInsets.all(16.0),
+    child: ElevatedButton(
+      onPressed: () {
+        AutoRouter.of(context).push(const TodoAddRoute());
+      },
+      child: const Text('+'),
+    ),
+  );
+}
+
+_buildCheckboxForTodo(
+    final todo, final provider, final index, final todoListName) {
+  return Checkbox(
+    value: todo.isFinished,
+    onChanged: (value) {
+      todo.isFinished = !todo.isFinished;
+      provider.update(
+        index,
+        todoListName,
+        TodoEntity.fromExistent(
+          id: todo.id,
+          title: todo.title,
+          description: todo.description,
+          creationDate: todo.creationDate,
+          startDate: todo.startDate,
+          endDate: todo.endDate,
+          difficulty: todo.difficulty,
+          ownerId: todo.ownerId,
+          isFinished: todo.isFinished,
+        ),
+      );
+    },
+  );
+}
+
+_buildRichTextForDescription(
+    BuildContext context, String title, String content) {
+  return RichText(
+    text: TextSpan(
+      text: title,
+      style: DefaultTextStyle.of(context).style.merge(
+            const TextStyle(
+              fontSize: kFontSize,
+            ),
+          ),
+      children: <TextSpan>[
+        TextSpan(
+          text: content,
+          style: DefaultTextStyle.of(context).style.merge(
+                const TextStyle(
+                  fontSize: kFontSize,
+                ),
+              ),
+        ),
+      ],
+    ),
+    maxLines: null,
   );
 }
 
@@ -186,18 +221,53 @@ _buildLineSeparator() {
   return const SizedBox(height: height);
 }
 
-Widget _buildRichText(String text, BuildContext context) {
+Widget _buildRichTextForField(
+    {required BuildContext context,
+    required String title,
+    String content = ""}) {
   return Container(
-    width: MediaQuery.of(context).size.width / 1.7,
+    //width: MediaQuery.of(context).size.width / 1.7,
     child: RichText(
       text: TextSpan(
-        text: text,
+        text: title,
         style: DefaultTextStyle.of(context).style.merge(
               const TextStyle(
                 fontSize: kFontSize,
               ),
             ),
+        children: <TextSpan>[
+          TextSpan(
+            text: content,
+            style: DefaultTextStyle.of(context).style.merge(
+                  const TextStyle(
+                    fontSize: kFontSize,
+                  ),
+                ),
+          ),
+        ],
       ),
+      maxLines: null,
+    ),
+  );
+}
+
+Widget _buildRichTextForTitle({
+  required BuildContext context,
+  required String title,
+}) {
+  return Container(
+    //width: MediaQuery.of(context).size.width / 1.7,
+    child: RichText(
+      text: TextSpan(
+        text: title,
+        style: DefaultTextStyle.of(context).style.merge(
+              const TextStyle(
+                fontSize: kFontSize,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+      ),
+      maxLines: null,
     ),
   );
 }
