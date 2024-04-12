@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:remind_me_fe/core/bar/presentation/layout_by_orientation.dart';
 import 'package:remind_me_fe/features/todos/presentation/controllers/add_controller.dart';
 
@@ -65,9 +66,8 @@ class TodoAddScreenContent extends StatelessWidget {
                     decoration: const InputDecoration(labelText: 'Title'),
                   ),
                   const SizedBox(height: 16.0),
-                  TextFormField(
-                    controller: controller.descriptionController,
-                    decoration: const InputDecoration(labelText: 'Description'),
+                  MarkdownBody(
+                    data: controller.descriptionController.text,
                   ),
                   const SizedBox(height: 16.0),
                   TextFormField(

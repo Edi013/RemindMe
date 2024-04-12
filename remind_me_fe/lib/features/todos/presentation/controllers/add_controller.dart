@@ -23,6 +23,7 @@ class TodoAddController {
   void addItem(BuildContext context) {
     if (_formKey.currentState!.validate()) {
       String title = _titleController.text;
+      // Retrieve markdown content from description controller
       String description = _descriptionController.text;
       DateTime startDate = DateTime.parse(
         _startDateController.text,
@@ -48,6 +49,16 @@ class TodoAddController {
 
       Navigator.pop(context);
     }
+  }
+
+  // Method to set markdown content to the description controller
+  void setDescriptionMarkdown(String markdownContent) {
+    _descriptionController.text = markdownContent;
+  }
+
+  // Method to clear the description controller
+  void clearDescription() {
+    _descriptionController.clear();
   }
 
   String? validateDateTimeFormField(value) {

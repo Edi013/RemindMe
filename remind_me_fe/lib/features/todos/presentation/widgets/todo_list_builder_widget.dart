@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:provider/provider.dart';
 import 'package:remind_me_fe/core/constants.dart';
 import 'package:remind_me_fe/core/router/app_router.gr.dart';
@@ -180,39 +181,25 @@ _buildCheckboxForTodo(
   );
 }
 
-_buildRichTextForDescription(
-    BuildContext context, String title, String content) {
+Widget _buildRichTextForDescription(
+  BuildContext context,
+  String title,
+  String content,
+) {
   return Container(
     constraints: BoxConstraints(
-      // aici trebuie accesat width ul parintelui
       maxWidth:
           MediaQuery.of(context).size.width > MediaQuery.of(context).size.height
               ? _buildWidthForLandscapeOrientation(
-                  context, MediaQuery.of(context).size.width) // Landscape
+                  context, MediaQuery.of(context).size.width)
               : _buildWidthForPortraitOrientation(
-                  context, MediaQuery.of(context).size.width), //Portrait
-      //maxWidth: double.infinity,
+                  context, MediaQuery.of(context).size.width),
     ),
-    child: RichText(
-      text: TextSpan(
-        text: title,
-        style: DefaultTextStyle.of(context).style.merge(
-              const TextStyle(
-                fontSize: kFontSize,
-              ),
-            ),
-        children: <TextSpan>[
-          TextSpan(
-            text: content,
-            style: DefaultTextStyle.of(context).style.merge(
-                  const TextStyle(
-                    fontSize: kFontSize,
-                  ),
-                ),
-          ),
-        ],
+    child: Markdown(
+      data: '$title\n$content',
+      styleSheet: MarkdownStyleSheet(
+        p: TextStyle(fontSize: kFontSize),
       ),
-      maxLines: null,
     ),
   );
 }
