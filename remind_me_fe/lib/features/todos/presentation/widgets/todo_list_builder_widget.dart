@@ -184,7 +184,14 @@ _buildRichTextForDescription(
     BuildContext context, String title, String content) {
   return Container(
     constraints: BoxConstraints(
-      maxWidth: MediaQuery.of(context).size.width * 0.6,
+      // aici trebuie accesat width ul parintelui
+      maxWidth:
+          MediaQuery.of(context).size.width > MediaQuery.of(context).size.height
+              ? _buildWidthForLandscapeOrientation(
+                  context, MediaQuery.of(context).size.width) // Landscape
+              : _buildWidthForPortraitOrientation(
+                  context, MediaQuery.of(context).size.width), //Portrait
+      //maxWidth: double.infinity,
     ),
     child: RichText(
       text: TextSpan(
@@ -208,6 +215,58 @@ _buildRichTextForDescription(
       maxLines: null,
     ),
   );
+}
+
+_buildWidthForPortraitOrientation(BuildContext context, double width) {
+  if (width >= 1 && width < 300) {
+    return MediaQuery.of(context).size.width * 0.55;
+  } else if (width > 300 && width < 500) {
+    return MediaQuery.of(context).size.width * 0.65;
+  } else if (width >= 500 && width < 700) {
+    return MediaQuery.of(context).size.width * 0.7;
+  } else if (width >= 700 && width < 800) {
+    return MediaQuery.of(context).size.width * 0.75;
+  } else if (width >= 800 && width < 900) {
+    return MediaQuery.of(context).size.width * 0.8;
+  } else if (width >= 900 && width < 1100) {
+    return MediaQuery.of(context).size.width * 0.85;
+  } else if (width >= 1100 && width < 1300) {
+    return MediaQuery.of(context).size.width * 0.85;
+  } else if (width >= 1300 && width < 1500) {
+    return MediaQuery.of(context).size.width * 0.85;
+  } else if (width >= 1500 && width < 1800) {
+    return MediaQuery.of(context).size.width * 0.85;
+  } else if (width >= 1800 && width < 2000) {
+    return MediaQuery.of(context).size.width * 0.85;
+  } else {
+    return MediaQuery.of(context).size.width * 0.9;
+  }
+}
+
+_buildWidthForLandscapeOrientation(BuildContext context, width) {
+  if (width >= 1 && width < 300) {
+    return MediaQuery.of(context).size.width * 0.2;
+  } else if (width > 300 && width < 500) {
+    return MediaQuery.of(context).size.width * 0.3;
+  } else if (width >= 500 && width < 700) {
+    return MediaQuery.of(context).size.width * 0.4;
+  } else if (width >= 700 && width < 800) {
+    return MediaQuery.of(context).size.width * 0.45;
+  } else if (width >= 800 && width < 900) {
+    return MediaQuery.of(context).size.width * 0.5;
+  } else if (width >= 900 && width < 1100) {
+    return MediaQuery.of(context).size.width * 0.55;
+  } else if (width >= 1100 && width < 1300) {
+    return MediaQuery.of(context).size.width * 0.65;
+  } else if (width >= 1300 && width < 1500) {
+    return MediaQuery.of(context).size.width * 0.7;
+  } else if (width >= 1500 && width < 1800) {
+    return MediaQuery.of(context).size.width * 0.7;
+  } else if (width >= 1800 && width < 2000) {
+    return MediaQuery.of(context).size.width * 0.75;
+  } else {
+    return MediaQuery.of(context).size.width * 0.8;
+  }
 }
 
 _buildLineSeparator() {
