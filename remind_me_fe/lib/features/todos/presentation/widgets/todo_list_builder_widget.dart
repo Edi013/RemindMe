@@ -80,16 +80,17 @@ Scaffold buildListFromTodos(BuildContext context, String todoListName) {
                                   //     'Description: \n', todo.description),
                                   Container(
                                     constraints: BoxConstraints(
-                                        maxHeight: double.infinity,
-                                        maxWidth:
-                                            MediaQuery.of(context).size.width *
-                                                0.6),
+                                      //maxHeight: double.infinity,
+                                      maxWidth:
+                                          MediaQuery.of(context).size.width *
+                                              0.6,
+                                    ),
                                     child: Text(
                                       "Description: \n ${todo.description}",
                                       style: TextStyle(
                                         fontSize: kFontSize,
                                       ),
-                                      maxLines: null,
+                                      //maxLines: null,
                                     ),
                                   ),
 
