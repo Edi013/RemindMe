@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:remind_me_fe/core/bar/presentation/layout_by_orientation.dart';
+import 'package:remind_me_fe/core/constants.dart';
 import 'package:remind_me_fe/core/router/app_router.gr.dart';
 import 'package:remind_me_fe/features/authentication/presentation/provider/current_user.dart';
 import 'package:remind_me_fe/injection_container.dart';
@@ -30,7 +31,14 @@ class LogoutScreenContent extends StatelessWidget {
         Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text("Here you can log out."),
+            Text(
+              logoutMesage,
+              // style: DefaultTextStyle.of(context).style.merge(
+              //       const TextStyle(
+              //         fontSize: kFontSize,
+              //       ),
+              //     ),
+            ),
             const SizedBox(height: 30),
             IconButton(
               onPressed: () {

@@ -98,52 +98,47 @@ Scaffold buildListFromTodos(BuildContext context, String todoListName) {
                                         text: 'Description: \n',
                                         style: DefaultTextStyle.of(context)
                                             .style
-                                            .merge(TextStyle(
-                                              fontSize: kFontSize,
-                                            )),
+                                            .merge(
+                                              const TextStyle(
+                                                fontSize: kFontSize,
+                                              ),
+                                            ),
                                         children: <TextSpan>[
                                           TextSpan(
                                             text: '${todo.description}',
                                             style: DefaultTextStyle.of(context)
                                                 .style
-                                                .merge(TextStyle(
-                                                  fontSize: kFontSize,
-                                                )),
+                                                .merge(
+                                                  const TextStyle(
+                                                    fontSize: kFontSize,
+                                                  ),
+                                                ),
                                           ),
                                         ],
                                       ),
                                     ),
                                   ),
-                                  Text(
-                                    "Creation Date: ${_dateTimeToString(todo.creationDate!)}",
-                                    style: TextStyle(
-                                      fontSize: kFontSize,
-                                    ),
-                                  ),
-                                  Text(
-                                    "Start Date: ${_dateTimeToString(todo.startDate)}",
-                                    style: TextStyle(
-                                      fontSize: kFontSize,
-                                    ),
-                                  ),
-                                  Text(
-                                    "End Date: ${_dateTimeToString(todo.endDate)}",
-                                    style: TextStyle(
-                                      fontSize: kFontSize,
-                                    ),
-                                  ),
-                                  Text(
-                                    "Is finished: ${todo.isFinished.toString()}",
-                                    style: TextStyle(
-                                      fontSize: kFontSize,
-                                    ),
-                                  ),
-                                  Text(
-                                    "Difficulty: ${todo.difficulty.toString()}",
-                                    style: TextStyle(
-                                      fontSize: kFontSize,
-                                    ),
-                                  ),
+                                  _buildLineSeparator(),
+                                  _buildRichText(
+                                      "Creation Date: ${_dateTimeToString(todo.creationDate!)}",
+                                      context),
+                                  _buildLineSeparator(),
+                                  _buildRichText(
+                                      "Start Date: ${_dateTimeToString(todo.startDate)}",
+                                      context),
+                                  _buildLineSeparator(),
+                                  _buildRichText(
+                                      "End Date: ${_dateTimeToString(todo.endDate)}",
+                                      context),
+                                  _buildLineSeparator(),
+                                  _buildRichText(
+                                      "Is finished: ${todo.isFinished.toString()}",
+                                      context),
+                                  _buildLineSeparator(),
+                                  _buildRichText(
+                                      "Difficulty: ${todo.difficulty.toString()}",
+                                      context),
+                                  _buildLineSeparator(),
                                   IconButton(
                                     onPressed: () => provider.delete(todo.id),
                                     icon: const Icon(
@@ -181,6 +176,27 @@ Scaffold buildListFromTodos(BuildContext context, String todoListName) {
             ),
           ],
         ),
+      ),
+    ),
+  );
+}
+
+_buildLineSeparator() {
+  const double height = 10;
+  return const SizedBox(height: height);
+}
+
+Widget _buildRichText(String text, BuildContext context) {
+  return Container(
+    width: MediaQuery.of(context).size.width / 1.7,
+    child: RichText(
+      text: TextSpan(
+        text: text,
+        style: DefaultTextStyle.of(context).style.merge(
+              const TextStyle(
+                fontSize: kFontSize,
+              ),
+            ),
       ),
     ),
   );

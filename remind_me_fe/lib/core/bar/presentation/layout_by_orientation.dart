@@ -45,15 +45,14 @@ class ExampleSidebarX extends StatelessWidget {
   ExampleSidebarX({Key? key}) : super(key: key) {
     _controller = SidebarXController(
       selectedIndex: 0,
-      extended: false,
+      extended: true,
     );
   }
 
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
-    _controller
-        .setExtended(MediaQuery.of(context).size.width > 800 ? true : false);
+
     return SidebarX(
       controller: _controller,
       theme: SidebarXTheme(

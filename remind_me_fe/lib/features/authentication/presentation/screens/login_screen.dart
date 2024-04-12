@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:remind_me_fe/core/router/app_router.gr.dart';
 import 'package:remind_me_fe/features/authentication/presentation/controllers/login_controller.dart';
+import 'package:remind_me_fe/features/authentication/presentation/widgets/password_form_field.dart';
 
 @RoutePage()
 class LoginScreen extends StatelessWidget {
@@ -78,20 +79,8 @@ class LoginCard extends StatelessWidget {
                           horizontal: 8,
                           vertical: 16,
                         ),
-                        child: TextFormField(
-                          controller: controller.passwordController,
-                          obscureText: true,
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: "Password",
-                          ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter your password';
-                            }
-                            return null;
-                          },
-                        ),
+                        child: PasswordFormField(
+                            controller.passwordController, 'Password'),
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(

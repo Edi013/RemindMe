@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:remind_me_fe/core/constants.dart';
 
 const Color lightPrimary = Color.fromARGB(255, 225, 225, 225);
 const Color lightAccent = accent;
@@ -26,17 +27,31 @@ final ThemeData lightTheme = ThemeData(
   navigationRailTheme: const NavigationRailThemeData(
     backgroundColor: lightBG,
   ),
-  datePickerTheme: DatePickerThemeData(
+  datePickerTheme: const DatePickerThemeData(
     backgroundColor: darkAccent,
     headerBackgroundColor: darkBG,
   ),
-  tabBarTheme: const TabBarTheme(
-    labelColor: Colors.black,
-    indicator: UnderlineTabIndicator(
-      borderSide: BorderSide(
-        color: darkAccent,
-        width: 2.0,
-      ),
+  // tabBarTheme: const TabBarTheme(
+  //   labelColor: Colors.black,
+  //   indicator: UnderlineTabIndicator(
+  //     borderSide: BorderSide(
+  //       color: darkAccent,
+  //       width: 2.0,
+  //     ),
+  //   ),
+  // ),
+  textTheme: const TextTheme(
+    bodyLarge: TextStyle(
+      fontSize: kFontSize + 5,
+      color: Colors.black,
+    ),
+    bodySmall: TextStyle(
+      fontSize: kFontSize - 5,
+      color: Colors.black,
+    ),
+    bodyMedium: TextStyle(
+      fontSize: kFontSize,
+      color: Colors.black,
     ),
   ),
   appBarTheme: const AppBarTheme(
@@ -85,13 +100,27 @@ final ThemeData darkTheme = ThemeData(
   datePickerTheme: DatePickerThemeData(
       backgroundColor: darkAccent,
       headerBackgroundColor: darkBG.withOpacity(0.5)),
-  tabBarTheme: const TabBarTheme(
-    labelColor: Colors.white,
-    indicator: UnderlineTabIndicator(
-      borderSide: BorderSide(
-        color: lightAccent,
-        width: 2.0,
-      ),
+  // tabBarTheme: const TabBarTheme(
+  //   labelColor: Colors.white,
+  //   indicator: UnderlineTabIndicator(
+  //     borderSide: BorderSide(
+  //       color: lightAccent,
+  //       width: 2.0,
+  //     ),
+  //   ),
+  // ),
+  textTheme: const TextTheme(
+    bodyLarge: TextStyle(
+      fontSize: kFontSize + 5,
+      color: Colors.white,
+    ),
+    bodySmall: TextStyle(
+      fontSize: kFontSize - 5,
+      color: Colors.white,
+    ),
+    bodyMedium: TextStyle(
+      fontSize: kFontSize,
+      color: Colors.white,
     ),
   ),
   appBarTheme: const AppBarTheme(
@@ -119,7 +148,7 @@ final ThemeData darkTheme = ThemeData(
     ),
   ),
   cardTheme: CardTheme(
-    color: darkAccent.withOpacity(0.85),
+    color: darkBG.withOpacity(0.3), //darkAccent.withOpacity(0.85),
     margin: const EdgeInsets.all(50),
   ),
   snackBarTheme:

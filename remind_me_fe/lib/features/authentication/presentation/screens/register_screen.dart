@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:remind_me_fe/core/router/app_router.gr.dart';
 import 'package:remind_me_fe/features/authentication/presentation/controllers/register_controller.dart';
+import 'package:remind_me_fe/features/authentication/presentation/widgets/password_form_field.dart';
 
 @RoutePage()
 class RegisterScreen extends StatelessWidget {
@@ -94,43 +95,17 @@ class RegisterCard extends StatelessWidget {
                           horizontal: 8,
                           vertical: 16,
                         ),
-                        child: TextFormField(
-                          controller: controller.passwordController,
-                          obscureText: true,
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: "Password",
-                          ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter your password';
-                            }
-                            return null;
-                          },
-                        ),
+                        child: PasswordFormField(
+                            controller.passwordController, 'Password'),
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(
                           horizontal: 8,
                           vertical: 16,
                         ),
-                        child: TextFormField(
-                          controller: controller.confirmPasswordController,
-                          obscureText: true,
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: "Confirm Password",
-                          ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please confirm your password';
-                            }
-                            if (value != controller.passwordController.text) {
-                              return 'Passwords do not match';
-                            }
-                            return null;
-                          },
-                        ),
+                        child: PasswordFormField(
+                            controller.confirmPasswordController,
+                            'Confirm password'),
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(

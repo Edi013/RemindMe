@@ -28,3 +28,6 @@ const String error_message_constants_not_used_list_name =
     "List name doesn't use one of the allowed constants !";
 
 const double kFontSize = 18;
+
+//Logout screen
+const String logoutMesage = "Exit current account.";
