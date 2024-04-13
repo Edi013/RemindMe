@@ -186,6 +186,13 @@ Widget _buildRichTextForDescription(
   String title,
   String content,
 ) {
+  final markdownContent = Markdown(
+    data: '$title\n$content',
+    styleSheet: MarkdownStyleSheet(
+      p: const TextStyle(fontSize: kFontSize),
+    ),
+  );
+
   return Container(
     constraints: BoxConstraints(
       maxWidth:
@@ -195,11 +202,9 @@ Widget _buildRichTextForDescription(
               : _buildWidthForPortraitOrientation(
                   context, MediaQuery.of(context).size.width),
     ),
-    child: Markdown(
-      data: '$title\n$content',
-      styleSheet: MarkdownStyleSheet(
-        p: TextStyle(fontSize: kFontSize),
-      ),
+    child: MarkdownBody(
+      data: markdownContent.data,
+      styleSheet: markdownContent.styleSheet!,
     ),
   );
 }
@@ -314,4 +319,50 @@ Widget _buildRichTextForTitle({
 
 String _dateTimeToString(DateTime dateTime) {
   return '${dateTime.year}-${dateTime.month}-${dateTime.day} ${dateTime.hour}:${dateTime.minute}';
+}
+
+class MarkdownTextField extends StatefulWidget {
+  @override
+  _MarkdownTextFieldState createState() => _MarkdownTextFieldState();
+}
+
+class _MarkdownTextFieldState extends State<MarkdownTextField> {
+  final TextEditingController _controller = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Markdown TextField Example'),
+      ),
+      body: Column(
+        children: [
+          Expanded(
+            child: TextField(
+              controller: _controller,
+              maxLines: null,
+              keyboardType: TextInputType.multiline,
+              decoration: const InputDecoration(
+                hintText: 'Input text here',
+                contentPadding: EdgeInsets.all(16.0),
+              ),
+            ),
+          ),
+          const Expanded(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Markdown(
+                  data:
+                      '""" # Flutter Markdown Example\n\nThis is an example of how to use the `flutter_markdown` package in a Flutter app.\n\n- It supports basic text formatting like *italic* and **bold**.\n- You can create lists:\n  1. Item 1\n  2. Item 2\n- Links are clickable: [OpenAI](https://www.openai.com)\n\n## Give it a try!\n\nYou can experiment with different Markdown content here.\n"""',
+
+                  //data: _controller.text,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }
