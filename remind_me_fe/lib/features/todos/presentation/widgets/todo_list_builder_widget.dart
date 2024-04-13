@@ -186,13 +186,6 @@ Widget _buildRichTextForDescription(
   String title,
   String content,
 ) {
-  final markdownContent = Markdown(
-    data: '$title\n$content',
-    styleSheet: MarkdownStyleSheet(
-      p: const TextStyle(fontSize: kFontSize),
-    ),
-  );
-
   return Container(
     constraints: BoxConstraints(
       maxWidth:
@@ -203,8 +196,10 @@ Widget _buildRichTextForDescription(
                   context, MediaQuery.of(context).size.width),
     ),
     child: MarkdownBody(
-      data: markdownContent.data,
-      styleSheet: markdownContent.styleSheet!,
+      data: content,
+      styleSheet: MarkdownStyleSheet(
+        p: const TextStyle(fontSize: kFontSize),
+      ),
     ),
   );
 }
