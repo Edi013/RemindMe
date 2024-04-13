@@ -106,56 +106,66 @@ class TodoUpdateScreenContent extends StatelessWidget {
     controller.initControllers(todoToUpdate);
 
     return Scaffold(
-      body: Card(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Form(
-            key: controller.formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                TextFormField(
-                  controller: controller.titleController,
-                  decoration: const InputDecoration(labelText: 'Title'),
+      body: SizedBox(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        child: SingleChildScrollView(
+          child: Card(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Form(
+                key: controller.formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    TextFormField(
+                      controller: controller.titleController,
+                      decoration: const InputDecoration(labelText: 'Title'),
+                    ),
+                    const SizedBox(height: 16.0),
+                    TextFormField(
+                      controller: controller.descriptionController,
+                      decoration:
+                          const InputDecoration(labelText: 'Description'),
+                      keyboardType: TextInputType.multiline,
+                      maxLines: null,
+                    ),
+                    const SizedBox(height: 16.0),
+                    TextFormField(
+                      controller: controller.startDateController,
+                      decoration:
+                          const InputDecoration(labelText: 'Start Date *'),
+                      validator: (value) => controller.validateFormField(value),
+                      onTap: () =>
+                          _selectDate(context, controller.startDateController),
+                    ),
+                    const SizedBox(height: 16.0),
+                    TextFormField(
+                      controller: controller.endDateController,
+                      decoration: const InputDecoration(labelText: 'End Date '),
+                      validator: (value) =>
+                          controller.validateEndDateField(value),
+                      onTap: () =>
+                          _selectDate(context, controller.endDateController),
+                    ),
+                    const SizedBox(height: 16.0),
+                    TextFormField(
+                      controller: controller.difficultyController,
+                      decoration:
+                          const InputDecoration(labelText: 'Difficulty *'),
+                      validator: (value) => controller.validateFormField(value),
+                    ),
+                    const SizedBox(height: 16.0),
+                    ElevatedButton(
+                      onPressed: () {
+                        controller.updateItem(
+                            index, todoToUpdate, context, listName);
+                      },
+                      child: const Text('Save Changes'),
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 16.0),
-                TextFormField(
-                  controller: controller.descriptionController,
-                  decoration: const InputDecoration(labelText: 'Description'),
-                  keyboardType: TextInputType.multiline,
-                  maxLines: null,
-                ),
-                const SizedBox(height: 16.0),
-                TextFormField(
-                  controller: controller.startDateController,
-                  decoration: const InputDecoration(labelText: 'Start Date *'),
-                  validator: (value) => controller.validateFormField(value),
-                  onTap: () =>
-                      _selectDate(context, controller.startDateController),
-                ),
-                const SizedBox(height: 16.0),
-                TextFormField(
-                  controller: controller.endDateController,
-                  decoration: const InputDecoration(labelText: 'End Date '),
-                  validator: (value) => controller.validateEndDateField(value),
-                  onTap: () =>
-                      _selectDate(context, controller.endDateController),
-                ),
-                const SizedBox(height: 16.0),
-                TextFormField(
-                  controller: controller.difficultyController,
-                  decoration: const InputDecoration(labelText: 'Difficulty *'),
-                  validator: (value) => controller.validateFormField(value),
-                ),
-                const SizedBox(height: 16.0),
-                ElevatedButton(
-                  onPressed: () {
-                    controller.updateItem(
-                        index, todoToUpdate, context, listName);
-                  },
-                  child: const Text('Save Changes'),
-                ),
-              ],
+              ),
             ),
           ),
         ),

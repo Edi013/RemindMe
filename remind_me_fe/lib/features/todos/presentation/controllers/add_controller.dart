@@ -23,7 +23,6 @@ class TodoAddController {
   void addItem(BuildContext context) {
     if (_formKey.currentState!.validate()) {
       String title = _titleController.text;
-      // Retrieve markdown content from description controller
       String description = _descriptionController.text;
       DateTime startDate = DateTime.parse(
         _startDateController.text,
