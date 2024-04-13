@@ -60,76 +60,73 @@ Scaffold buildListFromTodos(BuildContext context, String todoListName) {
                     itemCount: todos.length,
                     itemBuilder: (context, index) {
                       TodoEntity todo = todos[index];
-                      return SingleChildScrollView(
-                        child: ListTile(
-                          title: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              _buildRichTextForTitle(
-                                context: context,
-                                title: todo.title,
-                              ),
-                              _buildCheckboxForTodo(
-                                  todo, provider, index, todoListName),
-                            ],
-                          ),
-                          subtitle: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  _buildRichTextForDescription(context,
-                                      'Description: \n', todo.description),
-                                  _buildLineSeparator(),
-                                  _buildRichTextForField(
-                                      context: context,
-                                      title: "Creation Date: ",
-                                      content: _dateTimeToString(
-                                          todo.creationDate!)),
-                                  _buildLineSeparator(),
-                                  _buildRichTextForField(
-                                      context: context,
-                                      title: "Start Date: ",
-                                      content:
-                                          _dateTimeToString(todo.startDate)),
-                                  _buildLineSeparator(),
-                                  _buildRichTextForField(
-                                      context: context,
-                                      title: "End Date: ",
-                                      content: _dateTimeToString(todo.endDate)),
-                                  _buildLineSeparator(),
-                                  _buildRichTextForField(
-                                      context: context,
-                                      title: "Is finished: ",
-                                      content: todo.isFinished ? 'Yes' : 'No'),
-                                  _buildLineSeparator(),
-                                  _buildRichTextForField(
-                                      context: context,
-                                      title: "Difficulty: ",
-                                      content: todo.difficulty.toString()),
-                                  _buildLineSeparator(),
-                                  IconButton(
-                                    onPressed: () => provider.delete(todo.id),
-                                    icon: const Icon(
-                                      Icons.delete,
-                                      color: Colors.red,
-                                    ),
-                                  ),
-                                  //const Divider()
-                                ],
-                              ),
-                            ],
-                          ),
-                          onTap: () {
-                            AutoRouter.of(context).push(TodoUpdateRoute(
-                                index: index,
-                                todoId: todo.id,
-                                listName: todoListName));
-                          },
+                      return ListTile(
+                        title: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            _buildRichTextForTitle(
+                              context: context,
+                              title: todo.title,
+                            ),
+                            _buildCheckboxForTodo(
+                                todo, provider, index, todoListName),
+                          ],
                         ),
+                        subtitle: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                _buildRichTextForDescription(context,
+                                    'Description: \n', todo.description),
+                                _buildLineSeparator(),
+                                _buildRichTextForField(
+                                    context: context,
+                                    title: "Creation Date: ",
+                                    content:
+                                        _dateTimeToString(todo.creationDate!)),
+                                _buildLineSeparator(),
+                                _buildRichTextForField(
+                                    context: context,
+                                    title: "Start Date: ",
+                                    content: _dateTimeToString(todo.startDate)),
+                                _buildLineSeparator(),
+                                _buildRichTextForField(
+                                    context: context,
+                                    title: "End Date: ",
+                                    content: _dateTimeToString(todo.endDate)),
+                                _buildLineSeparator(),
+                                _buildRichTextForField(
+                                    context: context,
+                                    title: "Is finished: ",
+                                    content: todo.isFinished ? 'Yes' : 'No'),
+                                _buildLineSeparator(),
+                                _buildRichTextForField(
+                                    context: context,
+                                    title: "Difficulty: ",
+                                    content: todo.difficulty.toString()),
+                                _buildLineSeparator(),
+                                IconButton(
+                                  onPressed: () => provider.delete(todo.id),
+                                  icon: const Icon(
+                                    Icons.delete,
+                                    color: Colors.red,
+                                  ),
+                                ),
+                                //const Divider()
+                              ],
+                            ),
+                          ],
+                        ),
+                        onTap: () {
+                          AutoRouter.of(context).push(TodoUpdateRoute(
+                              index: index,
+                              todoId: todo.id,
+                              listName: todoListName));
+                        },
                       );
                     },
                   );
