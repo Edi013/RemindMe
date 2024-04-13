@@ -6,7 +6,7 @@ import 'package:remind_me_fe/features/todos/presentation/controllers/add_control
 
 @RoutePage()
 class TodoAddScreen extends StatelessWidget {
-  const TodoAddScreen({super.key});
+  const TodoAddScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class TodoAddScreen extends StatelessWidget {
 class TodoAddScreenContent extends StatelessWidget {
   final TodoAddController controller = TodoAddController();
 
-  TodoAddScreenContent({super.key});
+  TodoAddScreenContent({Key? key}) : super(key: key);
 
   Future<void> _selectDate(
       BuildContext context, TextEditingController currentController) async {
@@ -66,8 +66,11 @@ class TodoAddScreenContent extends StatelessWidget {
                     decoration: const InputDecoration(labelText: 'Title'),
                   ),
                   const SizedBox(height: 16.0),
-                  MarkdownBody(
-                    data: controller.descriptionController.text,
+                  TextField(
+                    controller: controller.descriptionController,
+                    decoration: const InputDecoration(labelText: 'Description'),
+                    keyboardType: TextInputType.multiline,
+                    maxLines: null, // Allow unlimited lines
                   ),
                   const SizedBox(height: 16.0),
                   TextFormField(
