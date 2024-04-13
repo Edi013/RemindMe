@@ -122,6 +122,8 @@ class TodoUpdateScreenContent extends StatelessWidget {
                 TextFormField(
                   controller: controller.descriptionController,
                   decoration: const InputDecoration(labelText: 'Description'),
+                  keyboardType: TextInputType.multiline,
+                  maxLines: null,
                 ),
                 const SizedBox(height: 16.0),
                 TextFormField(
