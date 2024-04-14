@@ -336,10 +336,10 @@ Widget _buildRichTextForTitle({
 }
 
 String _dateTimeToString(DateTime dateTime) {
-  return '${dateTime.year}-${_avoidSingleDigid(dateTime.month)}-${_avoidSingleDigid(dateTime.day)} ${_avoidSingleDigid(dateTime.hour)}:${_avoidSingleDigid(dateTime.minute)}';
+  return '${dateTime.year}-${_avoidSingleDigit(dateTime.month)}-${_avoidSingleDigit(dateTime.day)} ${_avoidSingleDigit(dateTime.hour)}:${_avoidSingleDigit(dateTime.minute)}';
 }
 
-String _avoidSingleDigid(int value) {
+String _avoidSingleDigit(int value) {
   return '${value < 10 ? '0$value' : value}';
 }
 

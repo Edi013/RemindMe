@@ -22,11 +22,19 @@ class TodoProvider extends ChangeNotifier {
   }
 
   Future<void> add(TodoEntity todo) async {
-    await repository.addTodo(todo);
+    await repository.addTodo(todo).then(
+      (value) {
+        notifyListeners();
+      },
+    );
   }
 
   Future<void> update(int index, String listName, TodoEntity todo) async {
-    await repository.updateTodo(todo);
+    await repository.updateTodo(todo).then(
+      (value) {
+        notifyListeners();
+      },
+    );
   }
 
   Future<void> delete(int id) async {

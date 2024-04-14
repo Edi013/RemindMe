@@ -18,11 +18,12 @@ namespace RemindMe.DataAcces.Repositories
 
         public async Task<IQueryable<Item>> GetActiveItemsByUserId(string userId)
         {
-            DateTime dateTimeNow = DateTime.UtcNow; 
+            DateTime dateTimeNow = DateTime.UtcNow;
 
             return context.Set<Item>().Where(currentItem =>
                  (currentItem.OwnerId == userId) &&
-                    (currentItem.StartDate.ToUniversalTime() < dateTimeNow) && (dateTimeNow < currentItem.EndDate.ToUniversalTime()));
+                    (currentItem.StartDate.ToUniversalTime() <= dateTimeNow)
+                    && (dateTimeNow <= currentItem.EndDate.ToUniversalTime()));
         }
 
         public async Task<IQueryable<Item>> GetDoneItemsByUserId(string userId)
