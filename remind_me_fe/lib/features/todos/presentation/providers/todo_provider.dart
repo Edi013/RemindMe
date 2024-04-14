@@ -24,6 +24,7 @@ class TodoProvider extends ChangeNotifier {
   Future<void> add(TodoEntity todo) async {
     await repository.addTodo(todo).then(
       (value) {
+        todos.add(value);
         notifyListeners();
       },
     );
@@ -32,6 +33,7 @@ class TodoProvider extends ChangeNotifier {
   Future<void> update(int index, String listName, TodoEntity todo) async {
     await repository.updateTodo(todo).then(
       (value) {
+        todos[index] = value;
         notifyListeners();
       },
     );
@@ -66,23 +68,20 @@ class TodoProvider extends ChangeNotifier {
   }
 
   Future<List<TodoEntity>> getActiveByUserIdTodos(String userId) async {
-    getAllByUserIdTodos(userId);
-    obtainActiveTodosFromAllTodos(userId);
-    notifyListeners();
+    await getAllByUserIdTodos(userId);
+    await obtainActiveTodosFromAllTodos(userId);
     return activeTodos;
   }
 
   Future<List<TodoEntity>> getUndoneByUserIdTodos(String userId) async {
-    getAllByUserIdTodos(userId);
-    obtainUndoneTodosFromAllTodos(userId);
-    notifyListeners();
+    await getAllByUserIdTodos(userId);
+    await obtainUndoneTodosFromAllTodos(userId);
     return undoneTodos;
   }
 
   Future<List<TodoEntity>> getDoneByUserIdTodos(String userId) async {
-    getAllByUserIdTodos(userId);
-    obtainDoneTodosFromAllTodos(userId);
-    notifyListeners();
+    await getAllByUserIdTodos(userId);
+    await obtainDoneTodosFromAllTodos(userId);
     return doneTodos;
   }
 

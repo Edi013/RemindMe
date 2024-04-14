@@ -22,7 +22,7 @@ class TodoAddController {
   TextEditingController get difficultyController => _difficultyController;
   GlobalKey<FormState> get formKey => _formKey;
 
-  void addItem(BuildContext context) {
+  Future<void> addItem(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
       String title = _titleController.text;
       String description = _descriptionController.text;
@@ -46,10 +46,10 @@ class TodoAddController {
         ownerId: user.id!,
       );
 
-      Provider.of<TodoProvider>(context, listen: false).add(newObject);
+      await Provider.of<TodoProvider>(context, listen: false).add(newObject);
 
-      AutoRouter.of(context).replace(const ActiveTodosRoute());
       //Navigator.pop(context);
+      AutoRouter.of(context).navigate(const ActiveTodosRoute());
     }
   }
 
