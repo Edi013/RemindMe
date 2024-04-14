@@ -45,7 +45,27 @@ Scaffold buildListFromTodos(BuildContext context, String todoListName) {
           children: [
             Consumer<TodoProvider>(
               builder: (context, todoProvider, child) {
-                List<TodoEntity> todos = todoProvider.todos;
+                //List<TodoEntity> todos = todoProvider.todos;
+                switch (todoListName) {
+                  case allTodosListName:
+                    todos = provider.todos;
+                    title = 'All tasks';
+                    break;
+                  case activeTodosListName:
+                    todos = provider.activeTodos;
+                    title = 'Active tasks';
+                    break;
+                  case undoneTodosListName:
+                    todos = provider.undoneTodos;
+                    title = 'Undone tasks';
+                    break;
+                  case doneTodosListName:
+                    todos = provider.doneTodos;
+                    title = 'Done tasks';
+                    break;
+                  default:
+                    throw error_message_constants_not_used_list_name;
+                }
 
                 return Padding(
                   padding: const EdgeInsets.all(16.0),
@@ -160,7 +180,7 @@ _buildAddButton(BuildContext context) {
 }
 
 _buildCheckboxForTodo(
-    final todo, final provider, final index, final todoListName) {
+    TodoEntity todo, TodoProvider provider, int index, String todoListName) {
   return Checkbox(
     value: todo.isFinished,
     onChanged: (value) {
@@ -316,7 +336,11 @@ Widget _buildRichTextForTitle({
 }
 
 String _dateTimeToString(DateTime dateTime) {
-  return '${dateTime.year}-${dateTime.month}-${dateTime.day} ${dateTime.hour}:${dateTime.minute}';
+  return '${dateTime.year}-${_avoidSingleDigid(dateTime.month)}-${_avoidSingleDigid(dateTime.day)} ${_avoidSingleDigid(dateTime.hour)}:${_avoidSingleDigid(dateTime.minute)}';
+}
+
+String _avoidSingleDigid(int value) {
+  return '${value < 10 ? '0$value' : value}';
 }
 
 class MarkdownTextField extends StatefulWidget {
