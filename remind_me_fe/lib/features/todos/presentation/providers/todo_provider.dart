@@ -58,7 +58,7 @@ class TodoProvider extends ChangeNotifier {
   }
 
   Future<List<TodoEntity>> getActiveByUserIdTodos(String userId) async {
-    var result = await repository.getAllActiveByUserIdTodos(userId);
+    var result = await repository.getActiveByUserIdTodos(userId);
     activeTodos = result;
     notifyListeners();
     return result;

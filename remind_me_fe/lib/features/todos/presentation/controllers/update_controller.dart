@@ -76,7 +76,7 @@ class TodoUpdateController {
       Provider.of<TodoProvider>(context, listen: false)
           .update(index, listName, updatedTodoEntity);
 
-      AutoRouter.of(context).push(const ActiveTodosRoute());
+      AutoRouter.of(context).replace(const ActiveTodosRoute());
     }
   }
 

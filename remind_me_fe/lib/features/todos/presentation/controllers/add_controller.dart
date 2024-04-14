@@ -48,7 +48,7 @@ class TodoAddController {
 
       Provider.of<TodoProvider>(context, listen: false).add(newObject);
 
-      AutoRouter.of(context).push(const ActiveTodosRoute());
+      AutoRouter.of(context).replace(const ActiveTodosRoute());
       //Navigator.pop(context);
     }
   }
