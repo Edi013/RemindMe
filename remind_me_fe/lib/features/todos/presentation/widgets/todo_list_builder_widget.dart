@@ -43,15 +43,21 @@ Scaffold buildListFromTodos(BuildContext context, String todoListName) {
         ),
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Text(
-                title,
-                style: const TextStyle(
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+            Consumer<TodoProvider>(
+              builder: (context, todoProvider, child) {
+                List<TodoEntity> todos = todoProvider.todos;
+
+                return Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Text(
+                    '$title (${todos.length})',
+                    style: const TextStyle(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                );
+              },
             ),
             Expanded(
               child: Consumer<TodoProvider>(

@@ -1,5 +1,7 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:remind_me_fe/core/router/app_router.gr.dart';
 import 'package:remind_me_fe/features/todos/domain/entities/todo.dart';
 import 'package:remind_me_fe/features/todos/presentation/providers/todo_provider.dart';
 
@@ -74,7 +76,7 @@ class TodoUpdateController {
       Provider.of<TodoProvider>(context, listen: false)
           .update(index, listName, updatedTodoEntity);
 
-      Navigator.pop(context);
+      AutoRouter.of(context).push(const ActiveTodosRoute());
     }
   }
 

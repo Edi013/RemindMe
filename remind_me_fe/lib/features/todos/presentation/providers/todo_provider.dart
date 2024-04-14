@@ -22,62 +22,11 @@ class TodoProvider extends ChangeNotifier {
   }
 
   Future<void> add(TodoEntity todo) async {
-    await repository.addTodo(todo).then((TodoEntity value) {
-      todos.add(value);
-      obtainActiveTodosFromAllTodos(todo.ownerId);
-      obtainDoneTodosFromAllTodos(todo.ownerId);
-      obtainUndoneTodosFromAllTodos(todo.ownerId);
-      notifyListeners();
-    });
+    await repository.addTodo(todo);
   }
 
   Future<void> update(int index, String listName, TodoEntity todo) async {
-    await repository.updateTodo(todo).then((TodoEntity value) {
-      switch (listName) {
-        case allTodosListName:
-          todos[index] = value;
-          obtainActiveTodosFromAllTodos(todo.ownerId);
-          obtainDoneTodosFromAllTodos(todo.ownerId);
-          obtainUndoneTodosFromAllTodos(todo.ownerId);
-          break;
-        case activeTodosListName:
-          if (todo.endDate.isAfter(DateTime.now())) {
-            activeTodos[index] = value;
-          } else {
-            activeTodos.remove(
-                activeTodos.firstWhere((element) => element.id == value.id));
-          }
-          todos = [];
-          undoneTodos = [];
-          doneTodos = [];
-          break;
-        case undoneTodosListName:
-          if (todo.isFinished) {
-            undoneTodos.remove(
-                undoneTodos.firstWhere((element) => element.id == todo.id));
-          } else {
-            undoneTodos[index] = value;
-          }
-          todos = [];
-          activeTodos = [];
-          doneTodos = [];
-          break;
-        case doneTodosListName:
-          if (!todo.isFinished) {
-            doneTodos.remove(
-                doneTodos.firstWhere((element) => element.id == todo.id));
-          } else {
-            doneTodos[index] = value;
-          }
-          todos = [];
-          activeTodos = [];
-          undoneTodos = [];
-          break;
-        default:
-          throw error_message_constants_not_used_list_name;
-      }
-      notifyListeners();
-    });
+    await repository.updateTodo(todo);
   }
 
   Future<void> delete(int id) async {
