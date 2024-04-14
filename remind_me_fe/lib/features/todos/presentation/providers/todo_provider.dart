@@ -23,8 +23,11 @@ class TodoProvider extends ChangeNotifier {
 
   Future<void> add(TodoEntity todo) async {
     await repository.addTodo(todo).then(
-      (value) {
+      (value) async {
         todos.add(value);
+        await obtainActiveTodosFromAllTodos(todo.ownerId);
+        await obtainDoneTodosFromAllTodos(todo.ownerId);
+        await obtainUndoneTodosFromAllTodos(todo.ownerId);
         notifyListeners();
       },
     );
@@ -32,8 +35,11 @@ class TodoProvider extends ChangeNotifier {
 
   Future<void> update(int index, String listName, TodoEntity todo) async {
     await repository.updateTodo(todo).then(
-      (value) {
+      (value) async {
         todos[index] = value;
+        await obtainActiveTodosFromAllTodos(todo.ownerId);
+        await obtainDoneTodosFromAllTodos(todo.ownerId);
+        await obtainUndoneTodosFromAllTodos(todo.ownerId);
         notifyListeners();
       },
     );

@@ -28,7 +28,7 @@ class TodoServiceApi {
     }
   }
 
-  Future<List<TodoModel>> getAllByUserIdActiveTodos(String userId) async {
+  Future<List<TodoModel>> getActiveByUserIdTodos(String userId) async {
     try {
       final response =
           await _dio.get('$apiUrl/GetAllActiveByUserIdItem/$userId');

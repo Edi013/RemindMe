@@ -46,10 +46,10 @@ class TodoAddController {
         ownerId: user.id!,
       );
 
-      await Provider.of<TodoProvider>(context, listen: false).add(newObject);
+      Provider.of<TodoProvider>(context, listen: false).add(newObject);
 
-      //Navigator.pop(context);
-      AutoRouter.of(context).navigate(const ActiveTodosRoute());
+      Navigator.pop(context);
+      //AutoRouter.of(context).navigate(const ActiveTodosRoute());
     }
   }
 
