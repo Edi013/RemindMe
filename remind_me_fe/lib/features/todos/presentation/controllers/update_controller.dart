@@ -42,14 +42,13 @@ class TodoUpdateController {
     } else if (DateTime.tryParse(value) == null) {
       return 'Date format is not valid';
     } else if (startDateController.text.isEmpty) {
-      return 'Start date must be filled in before you enter an end date';
+      return 'Start date has to be provided first';
     } else if (DateTime.tryParse(startDateController.text) == null) {
-      return 'Start date must be filled in before you enter an end date';
-    } else if (DateTime.tryParse(value)!
-        .isBefore(DateTime.tryParse(startDateController.text)!)) {
+      return 'A valid start date has to be provided first';
+    } else if (DateTime.parse(value)
+        .isBefore(DateTime.parse(startDateController.text))) {
       return 'End date has to be after the start date';
     }
-    //convert startDateController.text to datetime and verifify if isAfter(value ca DateTime)
     return null;
   }
 

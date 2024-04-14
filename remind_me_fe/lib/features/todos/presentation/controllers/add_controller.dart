@@ -53,12 +53,10 @@ class TodoAddController {
     }
   }
 
-  // Method to set markdown content to the description controller
   void setDescriptionMarkdown(String markdownContent) {
     _descriptionController.text = markdownContent;
   }
 
-  // Method to clear the description controller
   void clearDescription() {
     _descriptionController.clear();
   }
@@ -96,7 +94,16 @@ class TodoAddController {
     if (value == null || value.isEmpty) {
       return null;
     } else if (value.length < 10) {
-      return 'Field must have this format 2000-01-01';
+      return 'Date format is not valid, use the date picker';
+    } else if (DateTime.tryParse(value) == null) {
+      return 'Date format is not valid';
+    } else if (startDateController.text.isEmpty) {
+      return 'Start date has to be provided first';
+    } else if (DateTime.tryParse(startDateController.text) == null) {
+      return 'A valid start date has to be provided first';
+    } else if (DateTime.parse(value)
+        .isBefore(DateTime.parse(startDateController.text))) {
+      return 'End date has to be after the start date';
     }
     return null;
   }
