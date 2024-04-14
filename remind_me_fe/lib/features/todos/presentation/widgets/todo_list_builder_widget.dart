@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:provider/provider.dart';
 import 'package:remind_me_fe/core/constants.dart';
 import 'package:remind_me_fe/core/router/app_router.gr.dart';
@@ -42,15 +43,41 @@ Scaffold buildListFromTodos(BuildContext context, String todoListName) {
         ),
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Text(
-                title,
-                style: const TextStyle(
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+            Consumer<TodoProvider>(
+              builder: (context, todoProvider, child) {
+                //List<TodoEntity> todos = todoProvider.todos;
+                switch (todoListName) {
+                  case allTodosListName:
+                    todos = provider.todos;
+                    title = 'All tasks';
+                    break;
+                  case activeTodosListName:
+                    todos = provider.activeTodos;
+                    title = 'Active tasks';
+                    break;
+                  case undoneTodosListName:
+                    todos = provider.undoneTodos;
+                    title = 'Undone tasks';
+                    break;
+                  case doneTodosListName:
+                    todos = provider.doneTodos;
+                    title = 'Done tasks';
+                    break;
+                  default:
+                    throw error_message_constants_not_used_list_name;
+                }
+
+                return Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Text(
+                    '$title (${todos.length})',
+                    style: const TextStyle(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                );
+              },
             ),
             Expanded(
               child: Consumer<TodoProvider>(
@@ -59,76 +86,73 @@ Scaffold buildListFromTodos(BuildContext context, String todoListName) {
                     itemCount: todos.length,
                     itemBuilder: (context, index) {
                       TodoEntity todo = todos[index];
-                      return SingleChildScrollView(
-                        child: ListTile(
-                          title: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              _buildRichTextForTitle(
-                                context: context,
-                                title: todo.title,
-                              ),
-                              _buildCheckboxForTodo(
-                                  todo, provider, index, todoListName),
-                            ],
-                          ),
-                          subtitle: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  _buildRichTextForDescription(context,
-                                      'Description: \n', todo.description),
-                                  _buildLineSeparator(),
-                                  _buildRichTextForField(
-                                      context: context,
-                                      title: "Creation Date: ",
-                                      content: _dateTimeToString(
-                                          todo.creationDate!)),
-                                  _buildLineSeparator(),
-                                  _buildRichTextForField(
-                                      context: context,
-                                      title: "Start Date: ",
-                                      content:
-                                          _dateTimeToString(todo.startDate)),
-                                  _buildLineSeparator(),
-                                  _buildRichTextForField(
-                                      context: context,
-                                      title: "End Date: ",
-                                      content: _dateTimeToString(todo.endDate)),
-                                  _buildLineSeparator(),
-                                  _buildRichTextForField(
-                                      context: context,
-                                      title: "Is finished: ",
-                                      content: todo.isFinished ? 'Yes' : 'No'),
-                                  _buildLineSeparator(),
-                                  _buildRichTextForField(
-                                      context: context,
-                                      title: "Difficulty: ",
-                                      content: todo.difficulty.toString()),
-                                  _buildLineSeparator(),
-                                  IconButton(
-                                    onPressed: () => provider.delete(todo.id),
-                                    icon: const Icon(
-                                      Icons.delete,
-                                      color: Colors.red,
-                                    ),
-                                  ),
-                                  //const Divider()
-                                ],
-                              ),
-                            ],
-                          ),
-                          onTap: () {
-                            AutoRouter.of(context).push(TodoUpdateRoute(
-                                index: index,
-                                todoId: todo.id,
-                                listName: todoListName));
-                          },
+                      return ListTile(
+                        title: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            _buildRichTextForTitle(
+                              context: context,
+                              title: todo.title,
+                            ),
+                            _buildCheckboxForTodo(
+                                todo, provider, index, todoListName),
+                          ],
                         ),
+                        subtitle: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                _buildRichTextForDescription(context,
+                                    'Description: \n', todo.description),
+                                _buildLineSeparator(),
+                                _buildRichTextForField(
+                                    context: context,
+                                    title: "Creation Date: ",
+                                    content:
+                                        _dateTimeToString(todo.creationDate!)),
+                                _buildLineSeparator(),
+                                _buildRichTextForField(
+                                    context: context,
+                                    title: "Start Date: ",
+                                    content: _dateTimeToString(todo.startDate)),
+                                _buildLineSeparator(),
+                                _buildRichTextForField(
+                                    context: context,
+                                    title: "End Date: ",
+                                    content: _dateTimeToString(todo.endDate)),
+                                _buildLineSeparator(),
+                                _buildRichTextForField(
+                                    context: context,
+                                    title: "Is finished: ",
+                                    content: todo.isFinished ? 'Yes' : 'No'),
+                                _buildLineSeparator(),
+                                _buildRichTextForField(
+                                    context: context,
+                                    title: "Difficulty: ",
+                                    content: todo.difficulty.toString()),
+                                _buildLineSeparator(),
+                                IconButton(
+                                  onPressed: () => provider.delete(todo.id),
+                                  icon: const Icon(
+                                    Icons.delete,
+                                    color: Colors.red,
+                                  ),
+                                ),
+                                //const Divider()
+                              ],
+                            ),
+                          ],
+                        ),
+                        onTap: () {
+                          AutoRouter.of(context).push(TodoUpdateRoute(
+                              index: index,
+                              todoId: todo.id,
+                              listName: todoListName));
+                        },
                       );
                     },
                   );
@@ -156,7 +180,7 @@ _buildAddButton(BuildContext context) {
 }
 
 _buildCheckboxForTodo(
-    final todo, final provider, final index, final todoListName) {
+    TodoEntity todo, TodoProvider provider, int index, String todoListName) {
   return Checkbox(
     value: todo.isFinished,
     onChanged: (value) {
@@ -180,39 +204,25 @@ _buildCheckboxForTodo(
   );
 }
 
-_buildRichTextForDescription(
-    BuildContext context, String title, String content) {
+Widget _buildRichTextForDescription(
+  BuildContext context,
+  String title,
+  String content,
+) {
   return Container(
     constraints: BoxConstraints(
-      // aici trebuie accesat width ul parintelui
       maxWidth:
           MediaQuery.of(context).size.width > MediaQuery.of(context).size.height
               ? _buildWidthForLandscapeOrientation(
-                  context, MediaQuery.of(context).size.width) // Landscape
+                  context, MediaQuery.of(context).size.width)
               : _buildWidthForPortraitOrientation(
-                  context, MediaQuery.of(context).size.width), //Portrait
-      //maxWidth: double.infinity,
+                  context, MediaQuery.of(context).size.width),
     ),
-    child: RichText(
-      text: TextSpan(
-        text: title,
-        style: DefaultTextStyle.of(context).style.merge(
-              const TextStyle(
-                fontSize: kFontSize,
-              ),
-            ),
-        children: <TextSpan>[
-          TextSpan(
-            text: content,
-            style: DefaultTextStyle.of(context).style.merge(
-                  const TextStyle(
-                    fontSize: kFontSize,
-                  ),
-                ),
-          ),
-        ],
+    child: MarkdownBody(
+      data: content,
+      styleSheet: MarkdownStyleSheet(
+        p: const TextStyle(fontSize: kFontSize),
       ),
-      maxLines: null,
     ),
   );
 }
@@ -326,5 +336,55 @@ Widget _buildRichTextForTitle({
 }
 
 String _dateTimeToString(DateTime dateTime) {
-  return '${dateTime.year}-${dateTime.month}-${dateTime.day} ${dateTime.hour}:${dateTime.minute}';
+  return '${dateTime.year}-${_avoidSingleDigit(dateTime.month)}-${_avoidSingleDigit(dateTime.day)} ${_avoidSingleDigit(dateTime.hour)}:${_avoidSingleDigit(dateTime.minute)}';
+}
+
+String _avoidSingleDigit(int value) {
+  return '${value < 10 ? '0$value' : value}';
+}
+
+class MarkdownTextField extends StatefulWidget {
+  @override
+  _MarkdownTextFieldState createState() => _MarkdownTextFieldState();
+}
+
+class _MarkdownTextFieldState extends State<MarkdownTextField> {
+  final TextEditingController _controller = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Markdown TextField Example'),
+      ),
+      body: Column(
+        children: [
+          Expanded(
+            child: TextField(
+              controller: _controller,
+              maxLines: null,
+              keyboardType: TextInputType.multiline,
+              decoration: const InputDecoration(
+                hintText: 'Input text here',
+                contentPadding: EdgeInsets.all(16.0),
+              ),
+            ),
+          ),
+          const Expanded(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Markdown(
+                  data:
+                      '""" # Flutter Markdown Example\n\nThis is an example of how to use the `flutter_markdown` package in a Flutter app.\n\n- It supports basic text formatting like *italic* and **bold**.\n- You can create lists:\n  1. Item 1\n  2. Item 2\n- Links are clickable: [OpenAI](https://www.openai.com)\n\n## Give it a try!\n\nYou can experiment with different Markdown content here.\n"""',
+
+                  //data: _controller.text,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }

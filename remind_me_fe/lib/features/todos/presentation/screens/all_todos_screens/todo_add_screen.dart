@@ -5,7 +5,7 @@ import 'package:remind_me_fe/features/todos/presentation/controllers/add_control
 
 @RoutePage()
 class TodoAddScreen extends StatelessWidget {
-  const TodoAddScreen({super.key});
+  const TodoAddScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class TodoAddScreen extends StatelessWidget {
 class TodoAddScreenContent extends StatelessWidget {
   final TodoAddController controller = TodoAddController();
 
-  TodoAddScreenContent({super.key});
+  TodoAddScreenContent({Key? key}) : super(key: key);
 
   Future<void> _selectDate(
       BuildContext context, TextEditingController currentController) async {
@@ -51,57 +51,64 @@ class TodoAddScreenContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Card(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Form(
-              key: controller.formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  TextFormField(
-                    controller: controller.titleController,
-                    decoration: const InputDecoration(labelText: 'Title'),
-                  ),
-                  const SizedBox(height: 16.0),
-                  TextFormField(
-                    controller: controller.descriptionController,
-                    decoration: const InputDecoration(labelText: 'Description'),
-                  ),
-                  const SizedBox(height: 16.0),
-                  TextFormField(
-                    controller: controller.startDateController,
-                    decoration:
-                        const InputDecoration(labelText: 'Start Date *'),
-                    validator: (value) =>
-                        controller.validateDateTimeFormField(value),
-                    onTap: () =>
-                        _selectDate(context, controller.startDateController),
-                  ),
-                  const SizedBox(height: 16.0),
-                  TextFormField(
-                    controller: controller.endDateController,
-                    decoration: const InputDecoration(labelText: 'End Date'),
-                    validator: (value) =>
-                        controller.validateEndDateField(value),
-                    onTap: () =>
-                        _selectDate(context, controller.endDateController),
-                  ),
-                  const SizedBox(height: 16.0),
-                  TextFormField(
-                    controller: controller.difficultyController,
-                    decoration:
-                        const InputDecoration(labelText: 'Difficulty *'),
-                    validator: (value) =>
-                        controller.validateDifficultyFormField(value),
-                  ),
-                  const SizedBox(height: 16.0),
-                  ElevatedButton(
-                    onPressed: () => controller.addItem(context),
-                    child: const Text('Add Object'),
-                  ),
-                ],
+      body: SizedBox(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        child: SingleChildScrollView(
+          child: Card(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Form(
+                key: controller.formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    TextFormField(
+                      controller: controller.titleController,
+                      decoration: const InputDecoration(labelText: 'Title'),
+                    ),
+                    const SizedBox(height: 16.0),
+                    TextField(
+                      controller: controller.descriptionController,
+                      decoration:
+                          const InputDecoration(labelText: 'Description'),
+                      keyboardType: TextInputType.multiline,
+                      maxLines: null,
+                    ),
+                    const SizedBox(height: 16.0),
+                    TextFormField(
+                      controller: controller.startDateController,
+                      decoration:
+                          const InputDecoration(labelText: 'Start Date *'),
+                      validator: (value) =>
+                          controller.validateDateTimeFormField(value),
+                      onTap: () =>
+                          _selectDate(context, controller.startDateController),
+                    ),
+                    const SizedBox(height: 16.0),
+                    TextFormField(
+                      controller: controller.endDateController,
+                      decoration: const InputDecoration(labelText: 'End Date'),
+                      validator: (value) =>
+                          controller.validateEndDateField(value),
+                      onTap: () =>
+                          _selectDate(context, controller.endDateController),
+                    ),
+                    const SizedBox(height: 16.0),
+                    TextFormField(
+                      controller: controller.difficultyController,
+                      decoration:
+                          const InputDecoration(labelText: 'Difficulty *'),
+                      validator: (value) =>
+                          controller.validateDifficultyFormField(value),
+                    ),
+                    const SizedBox(height: 16.0),
+                    ElevatedButton(
+                      onPressed: () => controller.addItem(context),
+                      child: const Text('Add Object'),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

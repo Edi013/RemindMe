@@ -1,5 +1,7 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:remind_me_fe/core/router/app_router.gr.dart';
 import 'package:remind_me_fe/features/todos/domain/entities/todo.dart';
 import 'package:remind_me_fe/features/todos/presentation/providers/todo_provider.dart';
 
@@ -40,14 +42,13 @@ class TodoUpdateController {
     } else if (DateTime.tryParse(value) == null) {
       return 'Date format is not valid';
     } else if (startDateController.text.isEmpty) {
-      return 'Start date must be filled in before you enter an end date';
+      return 'Start date has to be provided first';
     } else if (DateTime.tryParse(startDateController.text) == null) {
-      return 'Start date must be filled in before you enter an end date';
-    } else if (DateTime.tryParse(value)!
-        .isBefore(DateTime.tryParse(startDateController.text)!)) {
+      return 'A valid start date has to be provided first';
+    } else if (DateTime.parse(value)
+        .isBefore(DateTime.parse(startDateController.text))) {
       return 'End date has to be after the start date';
     }
-    //convert startDateController.text to datetime and verifify if isAfter(value ca DateTime)
     return null;
   }
 
@@ -74,7 +75,7 @@ class TodoUpdateController {
       Provider.of<TodoProvider>(context, listen: false)
           .update(index, listName, updatedTodoEntity);
 
-      Navigator.pop(context);
+      AutoRouter.of(context).replace(const ActiveTodosRoute());
     }
   }
 

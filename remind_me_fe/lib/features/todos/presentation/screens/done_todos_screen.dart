@@ -28,9 +28,7 @@ class DoneTodosScreenContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: provider.doneTodos.isEmpty
-          ? provider.getDoneByUserIdTodos(currentUser.id!)
-          : null,
+      future: provider.getDoneByUserIdTodos(currentUser.id!),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());

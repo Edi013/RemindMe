@@ -28,9 +28,7 @@ class UndoneTodosScreenContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: provider.undoneTodos.isEmpty
-          ? provider.getUndoneByUserIdTodos(currentUser.id!)
-          : null,
+      future: provider.getUndoneByUserIdTodos(currentUser.id!),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());

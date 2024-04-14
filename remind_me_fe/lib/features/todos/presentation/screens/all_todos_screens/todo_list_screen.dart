@@ -29,9 +29,7 @@ class TodoListScreenContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: provider.todos.isEmpty
-          ? provider.getAllByUserIdTodos(currentUser.id!)
-          : null,
+      future: provider.getAllByUserIdTodos(currentUser.id!),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());

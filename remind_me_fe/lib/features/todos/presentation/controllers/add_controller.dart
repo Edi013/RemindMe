@@ -1,5 +1,7 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:remind_me_fe/core/router/app_router.gr.dart';
 import 'package:remind_me_fe/features/authentication/presentation/provider/current_user.dart';
 import 'package:remind_me_fe/features/todos/domain/entities/todo.dart';
 import 'package:remind_me_fe/features/todos/presentation/providers/todo_provider.dart';
@@ -20,7 +22,7 @@ class TodoAddController {
   TextEditingController get difficultyController => _difficultyController;
   GlobalKey<FormState> get formKey => _formKey;
 
-  void addItem(BuildContext context) {
+  Future<void> addItem(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
       String title = _titleController.text;
       String description = _descriptionController.text;
@@ -47,7 +49,16 @@ class TodoAddController {
       Provider.of<TodoProvider>(context, listen: false).add(newObject);
 
       Navigator.pop(context);
+      //AutoRouter.of(context).navigate(const ActiveTodosRoute());
     }
+  }
+
+  void setDescriptionMarkdown(String markdownContent) {
+    _descriptionController.text = markdownContent;
+  }
+
+  void clearDescription() {
+    _descriptionController.clear();
   }
 
   String? validateDateTimeFormField(value) {
@@ -83,7 +94,16 @@ class TodoAddController {
     if (value == null || value.isEmpty) {
       return null;
     } else if (value.length < 10) {
-      return 'Field must have this format 2000-01-01';
+      return 'Date format is not valid, use the date picker';
+    } else if (DateTime.tryParse(value) == null) {
+      return 'Date format is not valid';
+    } else if (startDateController.text.isEmpty) {
+      return 'Start date has to be provided first';
+    } else if (DateTime.tryParse(startDateController.text) == null) {
+      return 'A valid start date has to be provided first';
+    } else if (DateTime.parse(value)
+        .isBefore(DateTime.parse(startDateController.text))) {
+      return 'End date has to be after the start date';
     }
     return null;
   }
