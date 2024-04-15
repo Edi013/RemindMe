@@ -1,11 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:remind_me_fe/core/constants.dart';
+import 'package:remind_me_fe/injection_container.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ThemeProvider extends ChangeNotifier {
-  late String currentThemeName = dark_theme_name; //system_theme_name;
-  //late String currentThemeName = light_theme_name;
+  late String currentThemeName; //system_theme_name;
+  late SharedPreferences preferences;
 
-  ThemeProvider();
+  ThemeProvider() {
+    init();
+  }
+
+  init() {
+    preferences = sl<SharedPreferences>();
+
+    final existingValue = preferences.getString(selectedThemeSharedPreferances);
+    updateTheme(existingValue ?? system_theme_name);
+  }
 
   void updateTheme(String themeName) {
     swapTheme(themeName);
@@ -19,6 +30,7 @@ class ThemeProvider extends ChangeNotifier {
       throw AssertionError(error_message_constants_not_used_theme);
     }
     currentThemeName = themeName;
+    preferences.setString(selectedThemeSharedPreferances, themeName);
 
     buildAppThemeMode();
   }
