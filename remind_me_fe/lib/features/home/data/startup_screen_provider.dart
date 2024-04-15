@@ -7,11 +7,11 @@ import 'package:remind_me_fe/features/todos/presentation/screens/undone_todos_sc
 import 'package:remind_me_fe/injection_container.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class HomeScreenProvider extends ChangeNotifier {
+class StartupScreenProvider extends ChangeNotifier {
   late String _defaultScreenName;
   late SharedPreferences preferences;
 
-  HomeScreenProvider() {
+  StartupScreenProvider() {
     init();
   }
 
@@ -21,8 +21,8 @@ class HomeScreenProvider extends ChangeNotifier {
     final existingValue =
         preferences.getString(selectedScreenSharedPreferances);
     existingValue == null
-        ? changeDefaultScreen(activeTodosScreen)
-        : changeDefaultScreen(existingValue);
+        ? changeStartupScreen(activeTodosScreen)
+        : changeStartupScreen(existingValue);
   }
 
   Widget loadSelectedDefaultScreen() {
@@ -40,7 +40,7 @@ class HomeScreenProvider extends ChangeNotifier {
     }
   }
 
-  void changeDefaultScreen(String newDefaultScreen) {
+  void changeStartupScreen(String newDefaultScreen) {
     switch (newDefaultScreen) {
       case allTodosScreen:
         _defaultScreenName = newDefaultScreen;

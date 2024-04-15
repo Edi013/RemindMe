@@ -8,103 +8,112 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:auto_route/auto_route.dart' as _i14;
-import 'package:flutter/material.dart' as _i15;
-import 'package:remind_me_fe/core/home/home_screen.dart' as _i3;
+import 'package:auto_route/auto_route.dart' as _i15;
+import 'package:flutter/material.dart' as _i16;
 import 'package:remind_me_fe/features/authentication/presentation/screens/expired_session_screen.dart'
-    as _i7;
-import 'package:remind_me_fe/features/authentication/presentation/screens/login_screen.dart'
-    as _i4;
-import 'package:remind_me_fe/features/authentication/presentation/screens/logout_screen.dart'
-    as _i5;
-import 'package:remind_me_fe/features/authentication/presentation/screens/register_screen.dart'
-    as _i6;
-import 'package:remind_me_fe/features/theme/presentation/screens/theme_screen.dart'
     as _i8;
+import 'package:remind_me_fe/features/authentication/presentation/screens/login_screen.dart'
+    as _i5;
+import 'package:remind_me_fe/features/authentication/presentation/screens/logout_screen.dart'
+    as _i6;
+import 'package:remind_me_fe/features/authentication/presentation/screens/register_screen.dart'
+    as _i7;
+import 'package:remind_me_fe/features/home/presentation/change_startup_screen.dart'
+    as _i2;
+import 'package:remind_me_fe/features/home/presentation/home_screen.dart'
+    as _i4;
+import 'package:remind_me_fe/features/theme/presentation/screens/theme_screen.dart'
+    as _i9;
 import 'package:remind_me_fe/features/todos/presentation/screens/active_todos_screen.dart'
     as _i1;
 import 'package:remind_me_fe/features/todos/presentation/screens/all_todos_screens/todo_add_screen.dart'
-    as _i9;
-import 'package:remind_me_fe/features/todos/presentation/screens/all_todos_screens/todo_list_screen.dart'
     as _i10;
-import 'package:remind_me_fe/features/todos/presentation/screens/all_todos_screens/todo_update_screen.dart'
+import 'package:remind_me_fe/features/todos/presentation/screens/all_todos_screens/todo_list_screen.dart'
     as _i11;
-import 'package:remind_me_fe/features/todos/presentation/screens/done_todos_screen.dart'
-    as _i2;
-import 'package:remind_me_fe/features/todos/presentation/screens/undone_todos_screen.dart'
+import 'package:remind_me_fe/features/todos/presentation/screens/all_todos_screens/todo_update_screen.dart'
     as _i12;
-import 'package:remind_me_fe/features/user_profile/presentation/screens/user_profile_screen.dart'
+import 'package:remind_me_fe/features/todos/presentation/screens/done_todos_screen.dart'
+    as _i3;
+import 'package:remind_me_fe/features/todos/presentation/screens/undone_todos_screen.dart'
     as _i13;
+import 'package:remind_me_fe/features/user_profile/presentation/screens/user_profile_screen.dart'
+    as _i14;
 
-abstract class $AppRouter extends _i14.RootStackRouter {
+abstract class $AppRouter extends _i15.RootStackRouter {
   $AppRouter({super.navigatorKey});
 
   @override
-  final Map<String, _i14.PageFactory> pagesMap = {
+  final Map<String, _i15.PageFactory> pagesMap = {
     ActiveTodosRoute.name: (routeData) {
-      return _i14.AutoRoutePage<dynamic>(
+      return _i15.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const _i1.ActiveTodosScreen(),
       );
     },
-    DoneTodosRoute.name: (routeData) {
-      return _i14.AutoRoutePage<dynamic>(
+    ChangeStartupRoute.name: (routeData) {
+      return _i15.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i2.DoneTodosScreen(),
+        child: const _i2.ChangeStartupScreen(),
+      );
+    },
+    DoneTodosRoute.name: (routeData) {
+      return _i15.AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const _i3.DoneTodosScreen(),
       );
     },
     HomeRoute.name: (routeData) {
-      return _i14.AutoRoutePage<dynamic>(
+      return _i15.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i3.HomeScreen(),
+        child: const _i4.HomeScreen(),
       );
     },
     LoginRoute.name: (routeData) {
       final args = routeData.argsAs<LoginRouteArgs>(
           orElse: () => const LoginRouteArgs());
-      return _i14.AutoRoutePage<dynamic>(
+      return _i15.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i4.LoginScreen(key: args.key),
+        child: _i5.LoginScreen(key: args.key),
       );
     },
     LogoutRoute.name: (routeData) {
-      return _i14.AutoRoutePage<dynamic>(
+      return _i15.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i5.LogoutScreen(),
+        child: const _i6.LogoutScreen(),
       );
     },
     RegisterRoute.name: (routeData) {
-      return _i14.AutoRoutePage<dynamic>(
+      return _i15.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i6.RegisterScreen(),
+        child: const _i7.RegisterScreen(),
       );
     },
     SessionExpiredRoute.name: (routeData) {
-      return _i14.AutoRoutePage<dynamic>(
+      return _i15.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i7.SessionExpiredScreen(),
+        child: const _i8.SessionExpiredScreen(),
       );
     },
     ThemeRoute.name: (routeData) {
       final args = routeData.argsAs<ThemeRouteArgs>();
-      return _i14.AutoRoutePage<dynamic>(
+      return _i15.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i8.ThemeScreen(
+        child: _i9.ThemeScreen(
           args.context,
           key: args.key,
         ),
       );
     },
     TodoAddRoute.name: (routeData) {
-      return _i14.AutoRoutePage<dynamic>(
+      return _i15.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i9.TodoAddScreen(),
+        child: const _i10.TodoAddScreen(),
       );
     },
     TodoListRoute.name: (routeData) {
-      return _i14.AutoRoutePage<dynamic>(
+      return _i15.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i10.TodoListScreen(),
+        child: const _i11.TodoListScreen(),
       );
     },
     TodoUpdateRoute.name: (routeData) {
@@ -115,9 +124,9 @@ abstract class $AppRouter extends _i14.RootStackRouter {
                 todoId: pathParams.getInt('todoId'),
                 listName: pathParams.getString('listName'),
               ));
-      return _i14.AutoRoutePage<dynamic>(
+      return _i15.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i11.TodoUpdateScreen(
+        child: _i12.TodoUpdateScreen(
           key: args.key,
           index: args.index,
           todoId: args.todoId,
@@ -126,15 +135,15 @@ abstract class $AppRouter extends _i14.RootStackRouter {
       );
     },
     UndoneTodosRoute.name: (routeData) {
-      return _i14.AutoRoutePage<dynamic>(
+      return _i15.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i12.UndoneTodosScreen(),
+        child: const _i13.UndoneTodosScreen(),
       );
     },
     UserProfileRoute.name: (routeData) {
-      return _i14.AutoRoutePage<dynamic>(
+      return _i15.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i13.UserProfileScreen(),
+        child: const _i14.UserProfileScreen(),
       );
     },
   };
@@ -142,8 +151,8 @@ abstract class $AppRouter extends _i14.RootStackRouter {
 
 /// generated route for
 /// [_i1.ActiveTodosScreen]
-class ActiveTodosRoute extends _i14.PageRouteInfo<void> {
-  const ActiveTodosRoute({List<_i14.PageRouteInfo>? children})
+class ActiveTodosRoute extends _i15.PageRouteInfo<void> {
+  const ActiveTodosRoute({List<_i15.PageRouteInfo>? children})
       : super(
           ActiveTodosRoute.name,
           initialChildren: children,
@@ -151,13 +160,27 @@ class ActiveTodosRoute extends _i14.PageRouteInfo<void> {
 
   static const String name = 'ActiveTodosRoute';
 
-  static const _i14.PageInfo<void> page = _i14.PageInfo<void>(name);
+  static const _i15.PageInfo<void> page = _i15.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i2.DoneTodosScreen]
-class DoneTodosRoute extends _i14.PageRouteInfo<void> {
-  const DoneTodosRoute({List<_i14.PageRouteInfo>? children})
+/// [_i2.ChangeStartupScreen]
+class ChangeStartupRoute extends _i15.PageRouteInfo<void> {
+  const ChangeStartupRoute({List<_i15.PageRouteInfo>? children})
+      : super(
+          ChangeStartupRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ChangeStartupRoute';
+
+  static const _i15.PageInfo<void> page = _i15.PageInfo<void>(name);
+}
+
+/// generated route for
+/// [_i3.DoneTodosScreen]
+class DoneTodosRoute extends _i15.PageRouteInfo<void> {
+  const DoneTodosRoute({List<_i15.PageRouteInfo>? children})
       : super(
           DoneTodosRoute.name,
           initialChildren: children,
@@ -165,13 +188,13 @@ class DoneTodosRoute extends _i14.PageRouteInfo<void> {
 
   static const String name = 'DoneTodosRoute';
 
-  static const _i14.PageInfo<void> page = _i14.PageInfo<void>(name);
+  static const _i15.PageInfo<void> page = _i15.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i3.HomeScreen]
-class HomeRoute extends _i14.PageRouteInfo<void> {
-  const HomeRoute({List<_i14.PageRouteInfo>? children})
+/// [_i4.HomeScreen]
+class HomeRoute extends _i15.PageRouteInfo<void> {
+  const HomeRoute({List<_i15.PageRouteInfo>? children})
       : super(
           HomeRoute.name,
           initialChildren: children,
@@ -179,15 +202,15 @@ class HomeRoute extends _i14.PageRouteInfo<void> {
 
   static const String name = 'HomeRoute';
 
-  static const _i14.PageInfo<void> page = _i14.PageInfo<void>(name);
+  static const _i15.PageInfo<void> page = _i15.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i4.LoginScreen]
-class LoginRoute extends _i14.PageRouteInfo<LoginRouteArgs> {
+/// [_i5.LoginScreen]
+class LoginRoute extends _i15.PageRouteInfo<LoginRouteArgs> {
   LoginRoute({
-    _i15.Key? key,
-    List<_i14.PageRouteInfo>? children,
+    _i16.Key? key,
+    List<_i15.PageRouteInfo>? children,
   }) : super(
           LoginRoute.name,
           args: LoginRouteArgs(key: key),
@@ -196,14 +219,14 @@ class LoginRoute extends _i14.PageRouteInfo<LoginRouteArgs> {
 
   static const String name = 'LoginRoute';
 
-  static const _i14.PageInfo<LoginRouteArgs> page =
-      _i14.PageInfo<LoginRouteArgs>(name);
+  static const _i15.PageInfo<LoginRouteArgs> page =
+      _i15.PageInfo<LoginRouteArgs>(name);
 }
 
 class LoginRouteArgs {
   const LoginRouteArgs({this.key});
 
-  final _i15.Key? key;
+  final _i16.Key? key;
 
   @override
   String toString() {
@@ -212,9 +235,9 @@ class LoginRouteArgs {
 }
 
 /// generated route for
-/// [_i5.LogoutScreen]
-class LogoutRoute extends _i14.PageRouteInfo<void> {
-  const LogoutRoute({List<_i14.PageRouteInfo>? children})
+/// [_i6.LogoutScreen]
+class LogoutRoute extends _i15.PageRouteInfo<void> {
+  const LogoutRoute({List<_i15.PageRouteInfo>? children})
       : super(
           LogoutRoute.name,
           initialChildren: children,
@@ -222,13 +245,13 @@ class LogoutRoute extends _i14.PageRouteInfo<void> {
 
   static const String name = 'LogoutRoute';
 
-  static const _i14.PageInfo<void> page = _i14.PageInfo<void>(name);
+  static const _i15.PageInfo<void> page = _i15.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i6.RegisterScreen]
-class RegisterRoute extends _i14.PageRouteInfo<void> {
-  const RegisterRoute({List<_i14.PageRouteInfo>? children})
+/// [_i7.RegisterScreen]
+class RegisterRoute extends _i15.PageRouteInfo<void> {
+  const RegisterRoute({List<_i15.PageRouteInfo>? children})
       : super(
           RegisterRoute.name,
           initialChildren: children,
@@ -236,13 +259,13 @@ class RegisterRoute extends _i14.PageRouteInfo<void> {
 
   static const String name = 'RegisterRoute';
 
-  static const _i14.PageInfo<void> page = _i14.PageInfo<void>(name);
+  static const _i15.PageInfo<void> page = _i15.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i7.SessionExpiredScreen]
-class SessionExpiredRoute extends _i14.PageRouteInfo<void> {
-  const SessionExpiredRoute({List<_i14.PageRouteInfo>? children})
+/// [_i8.SessionExpiredScreen]
+class SessionExpiredRoute extends _i15.PageRouteInfo<void> {
+  const SessionExpiredRoute({List<_i15.PageRouteInfo>? children})
       : super(
           SessionExpiredRoute.name,
           initialChildren: children,
@@ -250,16 +273,16 @@ class SessionExpiredRoute extends _i14.PageRouteInfo<void> {
 
   static const String name = 'SessionExpiredRoute';
 
-  static const _i14.PageInfo<void> page = _i14.PageInfo<void>(name);
+  static const _i15.PageInfo<void> page = _i15.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i8.ThemeScreen]
-class ThemeRoute extends _i14.PageRouteInfo<ThemeRouteArgs> {
+/// [_i9.ThemeScreen]
+class ThemeRoute extends _i15.PageRouteInfo<ThemeRouteArgs> {
   ThemeRoute({
-    required _i15.BuildContext context,
-    _i15.Key? key,
-    List<_i14.PageRouteInfo>? children,
+    required _i16.BuildContext context,
+    _i16.Key? key,
+    List<_i15.PageRouteInfo>? children,
   }) : super(
           ThemeRoute.name,
           args: ThemeRouteArgs(
@@ -271,8 +294,8 @@ class ThemeRoute extends _i14.PageRouteInfo<ThemeRouteArgs> {
 
   static const String name = 'ThemeRoute';
 
-  static const _i14.PageInfo<ThemeRouteArgs> page =
-      _i14.PageInfo<ThemeRouteArgs>(name);
+  static const _i15.PageInfo<ThemeRouteArgs> page =
+      _i15.PageInfo<ThemeRouteArgs>(name);
 }
 
 class ThemeRouteArgs {
@@ -281,9 +304,9 @@ class ThemeRouteArgs {
     this.key,
   });
 
-  final _i15.BuildContext context;
+  final _i16.BuildContext context;
 
-  final _i15.Key? key;
+  final _i16.Key? key;
 
   @override
   String toString() {
@@ -292,9 +315,9 @@ class ThemeRouteArgs {
 }
 
 /// generated route for
-/// [_i9.TodoAddScreen]
-class TodoAddRoute extends _i14.PageRouteInfo<void> {
-  const TodoAddRoute({List<_i14.PageRouteInfo>? children})
+/// [_i10.TodoAddScreen]
+class TodoAddRoute extends _i15.PageRouteInfo<void> {
+  const TodoAddRoute({List<_i15.PageRouteInfo>? children})
       : super(
           TodoAddRoute.name,
           initialChildren: children,
@@ -302,13 +325,13 @@ class TodoAddRoute extends _i14.PageRouteInfo<void> {
 
   static const String name = 'TodoAddRoute';
 
-  static const _i14.PageInfo<void> page = _i14.PageInfo<void>(name);
+  static const _i15.PageInfo<void> page = _i15.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i10.TodoListScreen]
-class TodoListRoute extends _i14.PageRouteInfo<void> {
-  const TodoListRoute({List<_i14.PageRouteInfo>? children})
+/// [_i11.TodoListScreen]
+class TodoListRoute extends _i15.PageRouteInfo<void> {
+  const TodoListRoute({List<_i15.PageRouteInfo>? children})
       : super(
           TodoListRoute.name,
           initialChildren: children,
@@ -316,18 +339,18 @@ class TodoListRoute extends _i14.PageRouteInfo<void> {
 
   static const String name = 'TodoListRoute';
 
-  static const _i14.PageInfo<void> page = _i14.PageInfo<void>(name);
+  static const _i15.PageInfo<void> page = _i15.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i11.TodoUpdateScreen]
-class TodoUpdateRoute extends _i14.PageRouteInfo<TodoUpdateRouteArgs> {
+/// [_i12.TodoUpdateScreen]
+class TodoUpdateRoute extends _i15.PageRouteInfo<TodoUpdateRouteArgs> {
   TodoUpdateRoute({
-    _i15.Key? key,
+    _i16.Key? key,
     required int index,
     required int todoId,
     required String listName,
-    List<_i14.PageRouteInfo>? children,
+    List<_i15.PageRouteInfo>? children,
   }) : super(
           TodoUpdateRoute.name,
           args: TodoUpdateRouteArgs(
@@ -346,8 +369,8 @@ class TodoUpdateRoute extends _i14.PageRouteInfo<TodoUpdateRouteArgs> {
 
   static const String name = 'TodoUpdateRoute';
 
-  static const _i14.PageInfo<TodoUpdateRouteArgs> page =
-      _i14.PageInfo<TodoUpdateRouteArgs>(name);
+  static const _i15.PageInfo<TodoUpdateRouteArgs> page =
+      _i15.PageInfo<TodoUpdateRouteArgs>(name);
 }
 
 class TodoUpdateRouteArgs {
@@ -358,7 +381,7 @@ class TodoUpdateRouteArgs {
     required this.listName,
   });
 
-  final _i15.Key? key;
+  final _i16.Key? key;
 
   final int index;
 
@@ -373,9 +396,9 @@ class TodoUpdateRouteArgs {
 }
 
 /// generated route for
-/// [_i12.UndoneTodosScreen]
-class UndoneTodosRoute extends _i14.PageRouteInfo<void> {
-  const UndoneTodosRoute({List<_i14.PageRouteInfo>? children})
+/// [_i13.UndoneTodosScreen]
+class UndoneTodosRoute extends _i15.PageRouteInfo<void> {
+  const UndoneTodosRoute({List<_i15.PageRouteInfo>? children})
       : super(
           UndoneTodosRoute.name,
           initialChildren: children,
@@ -383,13 +406,13 @@ class UndoneTodosRoute extends _i14.PageRouteInfo<void> {
 
   static const String name = 'UndoneTodosRoute';
 
-  static const _i14.PageInfo<void> page = _i14.PageInfo<void>(name);
+  static const _i15.PageInfo<void> page = _i15.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i13.UserProfileScreen]
-class UserProfileRoute extends _i14.PageRouteInfo<void> {
-  const UserProfileRoute({List<_i14.PageRouteInfo>? children})
+/// [_i14.UserProfileScreen]
+class UserProfileRoute extends _i15.PageRouteInfo<void> {
+  const UserProfileRoute({List<_i15.PageRouteInfo>? children})
       : super(
           UserProfileRoute.name,
           initialChildren: children,
@@ -397,5 +420,5 @@ class UserProfileRoute extends _i14.PageRouteInfo<void> {
 
   static const String name = 'UserProfileRoute';
 
-  static const _i14.PageInfo<void> page = _i14.PageInfo<void>(name);
+  static const _i15.PageInfo<void> page = _i15.PageInfo<void>(name);
 }

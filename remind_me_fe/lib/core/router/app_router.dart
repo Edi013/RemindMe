@@ -36,6 +36,10 @@ class AppRouter extends $AppRouter {
           guards: [AuthGuard()],
         ),
         AutoRoute(
+          page: ChangeStartupRoute.page,
+          guards: [AuthGuard()],
+        ),
+        AutoRoute(
           page: TodoAddRoute.page,
           guards: [AuthGuard()],
         ),

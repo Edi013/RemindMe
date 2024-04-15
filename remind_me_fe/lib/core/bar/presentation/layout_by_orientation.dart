@@ -280,9 +280,8 @@ class RoutesDrawer extends StatelessWidget {
             child: const Text(
               'Actions',
               style: TextStyle(
-                fontSize: 32.0, // Adjust the font size here
-                fontWeight:
-                    FontWeight.bold, // Optionally, adjust the font weight
+                fontSize: 32.0,
+                fontWeight: FontWeight.bold,
               ),
             ),
           ),
@@ -299,9 +298,15 @@ class RoutesDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            title: const Text('Theme'),
+            title: const Text('Theme Settings'),
             onTap: () {
               AutoRouter.of(context).push(ThemeRoute(context: context));
+            },
+          ),
+          ListTile(
+            title: const Text('Startup Settings'),
+            onTap: () {
+              AutoRouter.of(context).push(const ChangeStartupRoute());
             },
           ),
           ListTile(
