@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:remind_me_fe/core/constants.dart';
 
 class ThemeProvider extends ChangeNotifier {
-  //late String currentThemeName = dark_theme_name; //system_theme_name;
-  late String currentThemeName = light_theme_name;
+  late String currentThemeName = dark_theme_name; //system_theme_name;
+  //late String currentThemeName = light_theme_name;
 
   ThemeProvider();
 

@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:remind_me_fe/features/todos/presentation/screens/active_todos_screen.dart';
+import 'package:remind_me_fe/features/home_screen/home_screen_provider.dart';
+import 'package:remind_me_fe/injection_container.dart';
 
 @RoutePage()
 class HomeScreen extends StatelessWidget {
@@ -8,6 +9,6 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const ActiveTodosScreen();
+    return sl<HomeScreenProvider>().loadSelectedDefaultScreen();
   }
 }
