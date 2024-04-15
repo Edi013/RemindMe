@@ -16,14 +16,20 @@ class TodoProvider extends ChangeNotifier {
   Future<List<TodoEntity>> getAllByUserIdTodos(String userId) async {
     var result = await repository.getAllByUserId(userId);
     todos = result;
+    _sortAllTodosList();
     notifyListeners();
     return result;
+  }
+
+  _sortAllTodosList() {
+    todos.sort(((a, b) => b.creationDate!.compareTo(a.creationDate!)));
   }
 
   Future<void> add(TodoEntity todo) async {
     await repository.addTodo(todo).then(
       (value) async {
         todos.add(value);
+        _sortAllTodosList();
         await obtainActiveTodosFromAllTodos(todo.ownerId);
         await obtainDoneTodosFromAllTodos(todo.ownerId);
         await obtainUndoneTodosFromAllTodos(todo.ownerId);
@@ -36,6 +42,7 @@ class TodoProvider extends ChangeNotifier {
     await repository.updateTodo(todo).then(
       (value) async {
         todos[index] = value;
+        _sortAllTodosList();
         await obtainActiveTodosFromAllTodos(todo.ownerId);
         await obtainDoneTodosFromAllTodos(todo.ownerId);
         await obtainUndoneTodosFromAllTodos(todo.ownerId);
