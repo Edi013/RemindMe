@@ -16,7 +16,7 @@ class RegisterScreen extends StatelessWidget {
           image: DecorationImage(
             image: AssetImage(
                 "../../../../assets/images/pier-lake-hallstatt-austria.jpg"),
-            fit: BoxFit.fitHeight,
+            fit: BoxFit.fill,
           ),
         ),
         child: Center(
