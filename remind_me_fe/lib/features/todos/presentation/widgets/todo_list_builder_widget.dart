@@ -36,7 +36,15 @@ Scaffold buildListFromTodos(BuildContext context, String todoListName) {
 
   return Scaffold(
     body: Container(
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage(
+              "../../../../assets/images/pier-lake-hallstatt-austria.jpg"),
+          fit: BoxFit.fill,
+        ),
+      ),
       child: Card(
+        color: Colors.black.withOpacity(0.7),
         elevation: 5.0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0),
