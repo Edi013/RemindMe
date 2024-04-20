@@ -66,11 +66,6 @@ final ThemeData lightTheme = ThemeData(
       ),
     ),
   ),
-  //checkboxTheme: ChechBoxTheme(),
-  // cardTheme: CardTheme(
-  //   color: lightAccent.withOpacity(0.6),
-  //   margin: const EdgeInsets.all(50),
-  // ),
   cardTheme: CardTheme(
     color: darkBG.withOpacity(0.3), //darkAccent.withOpacity(0.85),
     margin: const EdgeInsets.all(50),

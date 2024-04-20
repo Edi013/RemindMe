@@ -11,8 +11,17 @@ class RegisterScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: RegisterCard(context),
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(
+                "../../../../assets/images/pier-lake-hallstatt-austria.jpg"),
+            fit: BoxFit.fitHeight,
+          ),
+        ),
+        child: Center(
+          child: RegisterCard(context),
+        ),
       ),
     );
   }

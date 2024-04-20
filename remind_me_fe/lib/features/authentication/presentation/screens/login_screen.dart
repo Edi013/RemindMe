@@ -14,10 +14,18 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      body: Center(
-        child: LoginCard(),
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(
+                "../../../../assets/images/pier-lake-hallstatt-austria.jpg"),
+            fit: BoxFit.fitHeight,
+          ),
+        ),
+        child: Center(
+          child: LoginCard(),
+        ),
       ),
-      backgroundColor: const Color.fromARGB(255, 176, 176, 176),
     );
   }
 }
