@@ -230,6 +230,12 @@ Widget _buildRichTextForDescription(
       data: content,
       styleSheet: MarkdownStyleSheet(
         p: const TextStyle(fontSize: kFontSize),
+        h1: TextStyle(
+          color: const Color.fromARGB(255, 255, 255, 255),
+        ),
+        h2: TextStyle(
+          color: const Color.fromARGB(255, 255, 255, 255),
+        ),
       ),
     ),
   );

@@ -33,11 +33,12 @@ class LogoutScreenContent extends StatelessWidget {
           children: [
             Text(
               logoutMesage,
-              // style: DefaultTextStyle.of(context).style.merge(
-              //       const TextStyle(
-              //         fontSize: kFontSize,
-              //       ),
-              //     ),
+              style: DefaultTextStyle.of(context).style.merge(
+                    TextStyle(
+                      fontSize: kFontSize,
+                      //color: Theme.of(context).primaryColor.withOpacity(0.1),
+                    ),
+                  ),
             ),
             const SizedBox(height: 30),
             IconButton(

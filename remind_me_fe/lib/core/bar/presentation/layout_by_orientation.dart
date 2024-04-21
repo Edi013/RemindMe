@@ -3,6 +3,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:remind_me_fe/core/router/app_router.gr.dart';
+import 'package:remind_me_fe/core/theme/theme_config.dart';
 import 'package:remind_me_fe/features/authentication/presentation/provider/current_user.dart';
 import 'package:remind_me_fe/injection_container.dart';
 import 'package:sidebarx/sidebarx.dart';
@@ -22,9 +23,9 @@ class LandscapeScaffold extends StatelessWidget {
       body: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          ExampleSidebarX(),
+          Sidebar(),
           Expanded(child: child),
-          const BurgerButton()
+          const BurgerButton(),
         ],
       ),
       drawer: const RoutesDrawer(),
@@ -32,10 +33,10 @@ class LandscapeScaffold extends StatelessWidget {
   }
 }
 
-class ExampleSidebarX extends StatelessWidget {
+class Sidebar extends StatelessWidget {
   late SidebarXController _controller;
 
-  ExampleSidebarX({Key? key}) : super(key: key) {
+  Sidebar({Key? key}) : super(key: key) {
     _controller = SidebarXController(
       selectedIndex: 0,
       extended: true,
@@ -47,40 +48,50 @@ class ExampleSidebarX extends StatelessWidget {
     final ThemeData theme = Theme.of(context);
     _controller
         .setExtended(MediaQuery.of(context).size.width >= 1500 ? true : false);
-    _controller.setExtended(true);
+
     return SidebarX(
       controller: _controller,
       theme: SidebarXTheme(
         // hover
-        hoverColor: theme.colorScheme.secondary.withOpacity(0.25),
-        hoverTextStyle: const TextStyle(fontWeight: FontWeight.w500),
+        hoverColor: black, //theme.colorScheme.secondary.withOpacity(0.25),
+        hoverTextStyle: const TextStyle(
+          fontWeight: FontWeight.w500,
+          color: white,
+        ),
+
         // unselected
-        textStyle:
-            TextStyle(color: theme.colorScheme.secondary.withOpacity(0.85)),
+        textStyle: TextStyle(
+            color: smokeWhite //theme.colorScheme.secondary.withOpacity(0.85),
+            ),
         itemTextPadding: const EdgeInsets.only(left: 30),
         iconTheme: IconThemeData(
-          color: theme.colorScheme.secondary,
+          color: white, //theme.colorScheme.secondary,
           size: 20,
         ),
         itemDecoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
           border: Border.all(),
         ),
+
         // selected
-        selectedTextStyle: TextStyle(color: theme.colorScheme.secondary),
+        selectedTextStyle: TextStyle(
+          color: smokeWhite, //theme.colorScheme.secondary,
+        ),
         selectedItemTextPadding: const EdgeInsets.only(left: 30),
         selectedItemDecoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
           border: Border.all(),
         ),
         selectedIconTheme: IconThemeData(
-          color: theme.colorScheme.secondary,
+          color: white, //theme.colorScheme.secondary,
           size: 20,
         ),
       ),
       extendedTheme: SidebarXTheme(
         width: 200,
-        decoration: BoxDecoration(color: theme.colorScheme.primary),
+        decoration: BoxDecoration(
+          color: theme.colorScheme.primary,
+        ),
       ),
       headerDivider: const Divider(),
       headerBuilder: (context, extended) {
@@ -160,12 +171,15 @@ class PortraitScaffold extends StatelessWidget {
                 padding: EdgeInsets.all(8.0),
                 child: BurgerButton(),
               ),
-              IconButton(
-                icon: Image.asset('assets/images/rm_logo_portrait.png'),
-                iconSize: 100,
-                onPressed: () {
-                  AutoRouter.of(context).push(const HomeRoute());
-                },
+              Container(
+                constraints: BoxConstraints(maxWidth: 35, maxHeight: 50),
+                child: IconButton(
+                  icon: Image.asset('assets/images/rm_logo_portrait.png'),
+                  iconSize: 45 * (MediaQuery.of(context).size.height / 1200),
+                  onPressed: () {
+                    AutoRouter.of(context).push(const HomeRoute());
+                  },
+                ),
               ),
             ],
           ),
@@ -189,40 +203,27 @@ class BottomBar extends StatelessWidget {
     return BottomNavigationBar(
       items: <BottomNavigationBarItem>[
         BottomNavigationBarItem(
-          icon: Icon(
-            Icons.unpublished_rounded,
-            color: theme.colorScheme.secondary,
-          ),
+          icon: Icon(Icons.unpublished_rounded,
+              color: white //theme.colorScheme.secondary,
+              ),
           label: 'Undone Tasks',
         ),
         BottomNavigationBarItem(
-          icon: Icon(
-            Icons.done,
-            color: theme.colorScheme.secondary,
-          ),
+          icon: Icon(Icons.done, color: white),
           label: 'Done Tasks',
         ),
         BottomNavigationBarItem(
-          icon: Icon(
-            Icons.add,
-            color: theme.colorScheme.secondary,
-          ),
+          icon: Icon(Icons.add, color: white),
           label: 'G\'day ${sl<CurrentUser>().nickname ?? "User"}',
           //backgroundColor modifies the entire  bar
           backgroundColor: theme.colorScheme.primary.withOpacity(0.85),
         ),
         BottomNavigationBarItem(
-          icon: Icon(
-            Icons.pending_actions_sharp,
-            color: theme.colorScheme.secondary,
-          ),
+          icon: Icon(Icons.pending_actions_sharp, color: white),
           label: 'Active Tasks',
         ),
         BottomNavigationBarItem(
-          icon: Icon(
-            Icons.list,
-            color: theme.colorScheme.secondary,
-          ),
+          icon: Icon(Icons.list, color: white),
           label: 'All Tasks',
         ),
       ],

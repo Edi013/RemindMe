@@ -22,59 +22,58 @@ class ChangeStartupScreenContent extends StatelessWidget {
   Widget build(BuildContext context) {
     StartupScreenProvider provider = sl<StartupScreenProvider>();
     return Expanded(
-      child: Center(
-        child: Column(
-          children: [
-            const Text(
-              'Select your startup screen.',
-              style: TextStyle(
-                fontSize: kFontSize,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Text(
+            'Select your startup screen.',
+            style: TextStyle(
+              fontSize: kFontSize,
+            ),
+          ),
+          const SizedBox(
+            height: 50,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(Icons.list),
+              ElevatedButton(
+                onPressed: () {
+                  provider.changeStartupScreen(allTodosScreen);
+                },
+                child: const Text("All"),
               ),
-            ),
-            const SizedBox(
-              height: 50,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Icon(Icons.list),
-                ElevatedButton(
-                  onPressed: () {
-                    provider.changeStartupScreen(allTodosScreen);
-                  },
-                  child: const Text("All"),
-                ),
-                const VerticalDivider(),
-                const VerticalDivider(),
-                const Icon(Icons.pending_actions_sharp),
-                ElevatedButton(
-                  onPressed: () {
-                    provider.changeStartupScreen(activeTodosScreen);
-                  },
-                  child: const Text("Active"),
-                ),
-                const VerticalDivider(),
-                const VerticalDivider(),
-                const Icon(Icons.done),
-                ElevatedButton(
-                  onPressed: () {
-                    provider.changeStartupScreen(doneTodosScreen);
-                  },
-                  child: const Text("Done"),
-                ),
-                const VerticalDivider(),
-                const VerticalDivider(),
-                const Icon(Icons.unpublished_rounded),
-                ElevatedButton(
-                  onPressed: () {
-                    provider.changeStartupScreen(undoneTodosScreen);
-                  },
-                  child: const Text("Undone"),
-                ),
-              ],
-            )
-          ],
-        ),
+              const VerticalDivider(),
+              const VerticalDivider(),
+              const Icon(Icons.pending_actions_sharp),
+              ElevatedButton(
+                onPressed: () {
+                  provider.changeStartupScreen(activeTodosScreen);
+                },
+                child: const Text("Active"),
+              ),
+              const VerticalDivider(),
+              const VerticalDivider(),
+              const Icon(Icons.done),
+              ElevatedButton(
+                onPressed: () {
+                  provider.changeStartupScreen(doneTodosScreen);
+                },
+                child: const Text("Done"),
+              ),
+              const VerticalDivider(),
+              const VerticalDivider(),
+              const Icon(Icons.unpublished_rounded),
+              ElevatedButton(
+                onPressed: () {
+                  provider.changeStartupScreen(undoneTodosScreen);
+                },
+                child: const Text("Undone"),
+              ),
+            ],
+          )
+        ],
       ),
     );
   }
