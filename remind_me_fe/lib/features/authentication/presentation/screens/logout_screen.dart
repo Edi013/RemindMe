@@ -30,18 +30,18 @@ class LogoutScreenContent extends StatelessWidget {
           fit: BoxFit.fill,
         ),
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          const SizedBox(
-            width: 1,
-            height: 1,
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Card(
-                child: Padding(
+      child: Card(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const SizedBox(
+              width: 1,
+              height: 1,
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
                     children: [
@@ -50,7 +50,6 @@ class LogoutScreenContent extends StatelessWidget {
                         style: DefaultTextStyle.of(context).style.merge(
                               const TextStyle(
                                 fontSize: kHeadingMediumFontSize,
-                                fontWeight: FontWeight.bold,
                                 color: white,
                               ),
                             ),
@@ -68,11 +67,11 @@ class LogoutScreenContent extends StatelessWidget {
                     ],
                   ),
                 ),
-              ),
-            ],
-          ),
-          const SizedBox()
-        ],
+              ],
+            ),
+            const SizedBox()
+          ],
+        ),
       ),
     );
   }

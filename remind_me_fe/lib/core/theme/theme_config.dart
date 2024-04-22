@@ -7,7 +7,7 @@ const Color bg = Color.fromARGB(255, 85, 162, 175);
 
 const Color lightPrimary = primary; //Color.fromARGB(255, 225, 225, 225);
 const Color lightAccent = accent;
-const Color lightBG = bg; //Color.fromARGB(255, 192, 192, 192);
+const Color lightBG = white; //Color.fromARGB(255, 192, 192, 192);
 
 const Color darkPrimary = smokeAccent;
 const Color darkAccent = smokeWhite;
@@ -29,7 +29,38 @@ final ThemeData lightTheme = ThemeData(
     secondary: lightAccent,
     brightness: Brightness.dark,
   ),
-  useMaterial3: false,
+  useMaterial3: true,
+  primaryTextTheme: const TextTheme(
+    displayLarge:
+        TextStyle(fontSize: kBodyLargeFontSize, color: halfSmokeWhite),
+    displayMedium:
+        TextStyle(fontSize: kBodyMediumFontSize, color: halfSmokeWhite),
+    displaySmall:
+        TextStyle(fontSize: kBodySmallFontSize, color: halfSmokeWhite),
+    bodyLarge: TextStyle(fontSize: kBodyLargeFontSize, color: halfSmokeWhite),
+    bodyMedium: TextStyle(fontSize: kBodyMediumFontSize, color: halfSmokeWhite),
+    bodySmall: TextStyle(fontSize: kBodySmallFontSize, color: halfSmokeWhite),
+    headlineLarge: TextStyle(
+        fontSize: kHeadingLargeFontSize,
+        fontWeight: FontWeight.bold,
+        color: halfSmokeWhite),
+    headlineMedium: TextStyle(
+        fontSize: kHeadingMediumFontSize,
+        fontWeight: FontWeight.bold,
+        color: halfSmokeWhite),
+    headlineSmall: TextStyle(
+        fontSize: kHeadingSmallFontSize,
+        fontWeight: FontWeight.bold,
+        color: halfSmokeWhite),
+    labelLarge: TextStyle(fontSize: kBodyMediumFontSize, color: halfSmokeWhite),
+    labelMedium:
+        TextStyle(fontSize: kBodyMediumFontSize, color: halfSmokeWhite),
+    labelSmall: TextStyle(fontSize: kBodyMediumFontSize, color: halfSmokeWhite),
+    titleLarge: TextStyle(fontSize: kBodyLargeFontSize, color: halfSmokeWhite),
+    titleMedium:
+        TextStyle(fontSize: kBodyMediumFontSize, color: halfSmokeWhite),
+    titleSmall: TextStyle(fontSize: kBodySmallFontSize, color: halfSmokeWhite),
+  ),
   splashColor: lightAccent,
   primaryColor: lightPrimary,
   scaffoldBackgroundColor: smokeAccent,
@@ -61,6 +92,14 @@ final ThemeData lightTheme = ThemeData(
         fontSize: kHeadingSmallFontSize,
         fontWeight: FontWeight.bold,
         color: halfSmokeWhite),
+    labelLarge: TextStyle(fontSize: kBodyMediumFontSize, color: halfSmokeWhite),
+    labelMedium:
+        TextStyle(fontSize: kBodyMediumFontSize, color: halfSmokeWhite),
+    labelSmall: TextStyle(fontSize: kBodyMediumFontSize, color: halfSmokeWhite),
+    titleLarge: TextStyle(fontSize: kBodyLargeFontSize, color: halfSmokeWhite),
+    titleMedium:
+        TextStyle(fontSize: kBodyMediumFontSize, color: halfSmokeWhite),
+    titleSmall: TextStyle(fontSize: kBodySmallFontSize, color: halfSmokeWhite),
   ),
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ButtonStyle(
@@ -77,9 +116,9 @@ final ThemeData lightTheme = ThemeData(
     ),
   ),
   cardTheme: CardTheme(
-    color: darkBG.withOpacity(0.3),
+    color: darkBG.withOpacity(0.5),
     margin: const EdgeInsets.all(15),
-    shadowColor: grey,
+    shadowColor: white,
   ),
   checkboxTheme: CheckboxThemeData(
     checkColor: MaterialStateProperty.all<Color>(
@@ -105,7 +144,7 @@ final ThemeData darkTheme = ThemeData(
   colorScheme: ColorScheme.fromSwatch().copyWith(
     primary: darkPrimary,
     onBackground: darkBG,
-    secondary: smokeAccent, //darkAccent,
+    secondary: smokeAccent,
     brightness: Brightness.dark,
   ),
   useMaterial3: false,
@@ -153,11 +192,8 @@ final ThemeData darkTheme = ThemeData(
     ),
   ),
   cardTheme: CardTheme(
-    color: darkBG.withOpacity(0.4),
+    color: darkBG.withOpacity(0.3),
     margin: const EdgeInsets.all(15),
-    // sa punem shadowul asta pe light
-    //shadowColor: white,
-    //clipBehavior: Clip.antiAlias,
   ),
   checkboxTheme: CheckboxThemeData(
     checkColor: MaterialStateProperty.all<Color>(

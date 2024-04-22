@@ -38,7 +38,7 @@ class ChangeStartupScreenContent extends StatelessWidget {
               const Text(
                 'Select your startup screen.',
                 style: TextStyle(
-                  fontSize: kFontSize,
+                  fontSize: kHeadingMediumFontSize,
                   color: white,
                 ),
               ),

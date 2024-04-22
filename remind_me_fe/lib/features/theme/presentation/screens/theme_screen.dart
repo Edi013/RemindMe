@@ -34,117 +34,113 @@ class ThemeScreenContent extends StatelessWidget {
           fit: BoxFit.fill,
         ),
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Flexible(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Card(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            const Text(
-                              "Change your theme :",
-                              style: TextStyle(
-                                fontSize: 23,
-                                color: white,
+      child: Card(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Flexible(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          const Text(
+                            "Change your theme :",
+                            style: TextStyle(
+                              fontSize: 23,
+                              color: white,
+                            ),
+                          ),
+                          SizedBox(height: spacerForTitles),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(Icons.light_mode_outlined),
+                              ElevatedButton(
+                                onPressed: () {
+                                  themeProvider.updateTheme(light_theme_name);
+                                },
+                                child: const Text("Light theme"),
                               ),
-                            ),
-                            SizedBox(height: spacerForTitles),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Icon(Icons.light_mode_outlined),
-                                ElevatedButton(
-                                  onPressed: () {
-                                    themeProvider.updateTheme(light_theme_name);
-                                  },
-                                  child: const Text("Light theme"),
+                            ],
+                          ),
+                          SizedBox(height: spacerForTitles / 2),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(Icons.gpp_good_outlined),
+                              ElevatedButton(
+                                onPressed: () {
+                                  themeProvider.updateTheme(system_theme_name);
+                                },
+                                child: const Text(
+                                  "System theme",
                                 ),
-                              ],
-                            ),
-                            SizedBox(height: spacerForTitles / 2),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Icon(Icons.gpp_good_outlined),
-                                ElevatedButton(
-                                  onPressed: () {
-                                    themeProvider
-                                        .updateTheme(system_theme_name);
-                                  },
-                                  child: const Text("System theme"),
-                                ),
-                              ],
-                            ),
-                            SizedBox(height: spacerForTitles / 2),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Icon(Icons.dark_mode_outlined),
-                                ElevatedButton(
-                                  onPressed: () {
-                                    themeProvider.updateTheme(dark_theme_name);
-                                  },
-                                  child: const Text("Dark theme"),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: spacerForTitles / 2),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(Icons.dark_mode_outlined),
+                              ElevatedButton(
+                                onPressed: () {
+                                  themeProvider.updateTheme(dark_theme_name);
+                                },
+                                child: const Text("Dark theme"),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
-                ),
-                const Divider(),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Card(
-                    child: Column(
-                      children: [
-                        const Text(
-                          'Selected Theme:',
-                          style: TextStyle(fontSize: 23),
+                  //const Divider(),
+                  Column(
+                    children: [
+                      const Text(
+                        'Selected Theme:',
+                        style: TextStyle(
+                          fontSize: kHeadingMediumFontSize,
+                          color: white,
                         ),
-                        Consumer<ThemeProvider>(
-                          builder: (context, value, child) {
-                            return DropdownButton<String>(
-                              value: value.currentThemeName,
-                              onChanged: (value) {
-                                value != null
-                                    ? themeProvider.updateTheme(value)
-                                    : null;
-                              },
-                              items: [
-                                dark_theme_name,
-                                light_theme_name,
-                                system_theme_name
-                              ]
-                                  .map<DropdownMenuItem<String>>(
-                                    (String value) => DropdownMenuItem<String>(
-                                      value: value,
-                                      child: Text(value),
-                                    ),
-                                  )
-                                  .toList(),
-                            );
-                          },
-                        ),
-                      ],
-                    ),
+                      ),
+                      Consumer<ThemeProvider>(
+                        builder: (context, value, child) {
+                          return DropdownButton<String>(
+                            value: value.currentThemeName,
+                            onChanged: (value) {
+                              value != null
+                                  ? themeProvider.updateTheme(value)
+                                  : null;
+                            },
+                            items: [
+                              dark_theme_name,
+                              light_theme_name,
+                              system_theme_name
+                            ]
+                                .map<DropdownMenuItem<String>>(
+                                  (String value) => DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(value),
+                                  ),
+                                )
+                                .toList(),
+                          );
+                        },
+                      ),
+                    ],
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

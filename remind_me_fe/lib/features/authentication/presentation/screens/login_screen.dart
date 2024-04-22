@@ -118,8 +118,10 @@ class LoginCard extends StatelessWidget {
                         onPressed: () {
                           AutoRouter.of(context).push(const RegisterRoute());
                         },
-                        child:
-                            const Text("Don't have an accout ? Register now ."),
+                        child: const Text(
+                          "Don't have an accout ? Register now .",
+                          style: TextStyle(color: white),
+                        ),
                       )
                     ],
                   ),

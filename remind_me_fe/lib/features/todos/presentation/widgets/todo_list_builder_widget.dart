@@ -114,8 +114,11 @@ Scaffold buildListFromTodos(BuildContext context, String todoListName) {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
+                                const Divider(),
                                 _buildRichTextForDescription(context,
                                     'Description: \n', todo.description),
+                                const Divider(),
+
                                 _buildLineSeparator(),
                                 _buildRichTextForField(
                                     context: context,
