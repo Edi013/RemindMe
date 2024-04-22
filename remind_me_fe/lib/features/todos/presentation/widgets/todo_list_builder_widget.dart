@@ -339,7 +339,7 @@ Widget _buildRichTextForTitle({
         text: title,
         style: DefaultTextStyle.of(context).style.merge(
               const TextStyle(
-                fontSize: kFontSize,
+                fontSize: kFontSize * 1.4,
                 fontWeight: FontWeight.bold,
               ),
             ),

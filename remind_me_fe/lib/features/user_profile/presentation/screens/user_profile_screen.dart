@@ -21,39 +21,46 @@ class UserProfileScreenContent extends StatelessWidget {
   Widget build(BuildContext context) {
     final currentUser = sl<CurrentUser>();
 
-    return Scaffold(
-      drawer: const RoutesDrawer(),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
+    return Container(
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage(
+              "../../../../assets/images/pier-lake-hallstatt-austria.jpg"),
+          fit: BoxFit.fill,
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: SingleChildScrollView(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Card(
                 child: ListTile(
                   title: const Text(
                     'Nickname',
-                    style: TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  subtitle: Text(currentUser.nickname ?? 'Not available'),
+                  subtitle: Text(currentUser.nickname ?? 'Not available',
+                      style: const TextStyle(fontWeight: FontWeight.bold)),
                 ),
               ),
               Card(
                 child: ListTile(
                   title: const Text(
                     'Email',
-                    style: TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  subtitle: Text(currentUser.email ?? 'Not available'),
+                  subtitle: Text(currentUser.email ?? 'Not available',
+                      style: const TextStyle(fontWeight: FontWeight.bold)),
                 ),
               ),
               Card(
                 child: ListTile(
                   title: const Text(
                     'Account type',
-                    style: TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  subtitle: Text(currentUser.roles.last),
+                  subtitle: Text(currentUser.roles.last,
+                      style: const TextStyle(fontWeight: FontWeight.bold)),
                 ),
               ),
             ],

@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:remind_me_fe/core/router/app_router.gr.dart';
+import 'package:remind_me_fe/core/theme/theme_config.dart';
 import 'package:remind_me_fe/features/authentication/presentation/controllers/login_controller.dart';
 import 'package:remind_me_fe/features/authentication/presentation/widgets/password_form_field.dart';
 
@@ -54,6 +55,7 @@ class LoginCard extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 32,
                     decorationStyle: TextDecorationStyle.solid,
+                    color: white,
                   ),
                 ),
                 Form(
@@ -71,6 +73,12 @@ class LoginCard extends StatelessWidget {
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             labelText: "Email",
+                            fillColor: white,
+                            iconColor: white,
+                            hoverColor: white,
+                            suffixIconColor: white,
+                            prefixIconColor: white,
+                            focusColor: white,
                           ),
                           validator: (value) {
                             if (value == null || value.isEmpty) {

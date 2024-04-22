@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:remind_me_fe/core/bar/presentation/layout_by_orientation.dart';
 import 'package:remind_me_fe/core/constants.dart';
 import 'package:remind_me_fe/core/router/app_router.gr.dart';
+import 'package:remind_me_fe/core/theme/theme_config.dart';
 import 'package:remind_me_fe/features/authentication/presentation/provider/current_user.dart';
 import 'package:remind_me_fe/injection_container.dart';
 
@@ -21,39 +22,58 @@ class LogoutScreenContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        const SizedBox(
-          width: 1,
-          height: 1,
+    return Container(
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage(
+              "../../../../assets/images/pier-lake-hallstatt-austria.jpg"),
+          fit: BoxFit.fill,
         ),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              logoutMesage,
-              style: DefaultTextStyle.of(context).style.merge(
-                    TextStyle(
-                      fontSize: kFontSize,
-                      //color: Theme.of(context).primaryColor.withOpacity(0.1),
-                    ),
-                  ),
-            ),
-            const SizedBox(height: 30),
-            IconButton(
-              onPressed: () {
-                CurrentUser user = sl<CurrentUser>();
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          const SizedBox(
+            width: 1,
+            height: 1,
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    children: [
+                      Text(
+                        logoutMesage,
+                        style: DefaultTextStyle.of(context).style.merge(
+                              const TextStyle(
+                                fontSize: kHeadingMediumFontSize,
+                                fontWeight: FontWeight.bold,
+                                color: white,
+                              ),
+                            ),
+                      ),
+                      const SizedBox(height: 30),
+                      IconButton(
+                        onPressed: () {
+                          CurrentUser user = sl<CurrentUser>();
 
-                user.clearJwtData();
-                AutoRouter.of(context).push(LoginRoute());
-              },
-              icon: const Icon(Icons.logout),
-            ),
-          ],
-        ),
-        const SizedBox()
-      ],
+                          user.clearJwtData();
+                          AutoRouter.of(context).push(LoginRoute());
+                        },
+                        icon: const Icon(Icons.logout),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox()
+        ],
+      ),
     );
   }
 }

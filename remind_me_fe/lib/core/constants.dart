@@ -30,6 +30,14 @@ const String error_message_constants_not_used_list_name =
 //Design
 const double kFontSize = 18;
 
+const double kHeadingLargeFontSize = 24;
+const double kHeadingMediumFontSize = 22;
+const double kHeadingSmallFontSize = 20;
+
+const double kBodyLargeFontSize = 20;
+const double kBodyMediumFontSize = 18;
+const double kBodySmallFontSize = 16;
+
 //Logout screen
 const String logoutMesage = "Exit current account.";
 

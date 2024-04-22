@@ -1,169 +1,180 @@
 import 'package:flutter/material.dart';
 import 'package:remind_me_fe/core/constants.dart';
 
-const Color lightPrimary = Color.fromARGB(255, 225, 225, 225);
-const Color lightAccent = accent;
-const Color lightBG = Color.fromARGB(255, 192, 192, 192);
-
+const Color primary = Color.fromARGB(255, 85, 162, 175);
 const Color accent = Color(0xFF468c98);
-const Color red = Color.fromARGB(0, 255, 0, 0);
-const Color darkPrimary = Color.fromARGB(255, 85, 162, 175);
-const Color darkAccent = accent;
-const Color darkBG = smokeAccent; //Color(0xFF3C4A6D);
+const Color bg = Color.fromARGB(255, 85, 162, 175);
 
-const Color black = Color(0xFF121212);
+const Color lightPrimary = primary; //Color.fromARGB(255, 225, 225, 225);
+const Color lightAccent = accent;
+const Color lightBG = bg; //Color.fromARGB(255, 192, 192, 192);
+
+const Color darkPrimary = smokeAccent;
+const Color darkAccent = smokeWhite;
+const Color darkBG = grey;
+
+const Color red = Color.fromARGB(0, 39, 39, 39);
+const Color black = Color.fromARGB(255, 15, 15, 15);
 const Color white = Color(0xFFFFFFFF);
+const Color halfSmokeWhite = Color.fromARGB(255, 228, 228, 228);
 const Color smokeWhite = Color.fromARGB(255, 195, 195, 195);
 const Color smokeAccent = Color.fromARGB(255, 67, 101, 107);
+const Color whitenedAccent = Color.fromARGB(255, 40, 146, 164);
 const Color grey = Color(0xFF2E2E2E);
 
 final ThemeData lightTheme = ThemeData(
   colorScheme: ColorScheme.fromSwatch().copyWith(
-    brightness: Brightness.light,
-    primary: darkPrimary,
-    secondary: darkAccent,
-    background: darkBG,
+    primary: lightPrimary,
+    onBackground: lightBG,
+    secondary: lightAccent,
+    brightness: Brightness.dark,
   ),
-  textTheme: TextTheme(
-    displayLarge: TextStyle(
-        fontSize: 24,
+  useMaterial3: false,
+  splashColor: lightAccent,
+  primaryColor: lightPrimary,
+  scaffoldBackgroundColor: smokeAccent,
+  navigationRailTheme: const NavigationRailThemeData(
+    backgroundColor: darkBG,
+  ),
+  datePickerTheme: DatePickerThemeData(
+      backgroundColor: darkAccent,
+      headerBackgroundColor: darkBG.withOpacity(0.5)),
+  textTheme: const TextTheme(
+    displayLarge:
+        TextStyle(fontSize: kBodyLargeFontSize, color: halfSmokeWhite),
+    displayMedium:
+        TextStyle(fontSize: kBodyMediumFontSize, color: halfSmokeWhite),
+    displaySmall:
+        TextStyle(fontSize: kBodySmallFontSize, color: halfSmokeWhite),
+    bodyLarge: TextStyle(fontSize: kBodyLargeFontSize, color: halfSmokeWhite),
+    bodyMedium: TextStyle(fontSize: kBodyMediumFontSize, color: halfSmokeWhite),
+    bodySmall: TextStyle(fontSize: kBodySmallFontSize, color: halfSmokeWhite),
+    headlineLarge: TextStyle(
+        fontSize: kHeadingLargeFontSize,
         fontWeight: FontWeight.bold,
-        color: white), // Example text style
-    bodyLarge: TextStyle(fontSize: 16, color: white), // Example text style
-    // Define other text styles as needed
+        color: halfSmokeWhite),
+    headlineMedium: TextStyle(
+        fontSize: kHeadingMediumFontSize,
+        fontWeight: FontWeight.bold,
+        color: halfSmokeWhite),
+    headlineSmall: TextStyle(
+        fontSize: kHeadingSmallFontSize,
+        fontWeight: FontWeight.bold,
+        color: halfSmokeWhite),
   ),
-  textSelectionTheme: TextSelectionThemeData(
-    cursorColor: white, // Color of the text cursor
-    selectionColor: smokeAccent, // Color of the text selection highlight
-    selectionHandleColor: smokeAccent, // Color of the text selection handles
+  elevatedButtonTheme: ElevatedButtonThemeData(
+    style: ButtonStyle(
+      backgroundColor: MaterialStateProperty.all<Color>(
+        (lightPrimary.withOpacity(0.7)),
+      ),
+    ),
   ),
-  useMaterial3: true,
-  // materialTapTargetSize: MaterialTapTargetSize.padded,
+  textButtonTheme: TextButtonThemeData(
+    style: ButtonStyle(
+      backgroundColor: MaterialStateProperty.all<Color>(
+        (lightPrimary.withOpacity(0.7)),
+      ),
+    ),
+  ),
   cardTheme: CardTheme(
-    color: darkBG, //darkAccent.withOpacity(0.85),
-    margin: const EdgeInsets.all(50),
+    color: darkBG.withOpacity(0.3),
+    margin: const EdgeInsets.all(15),
+    shadowColor: grey,
   ),
+  checkboxTheme: CheckboxThemeData(
+    checkColor: MaterialStateProperty.all<Color>(
+      (white),
+    ),
+    fillColor: MaterialStateProperty.all<Color>(
+      (primary),
+    ),
+  ),
+  inputDecorationTheme: const InputDecorationTheme(
+    border: OutlineInputBorder(
+      borderSide: BorderSide(
+        color: white,
+        width: 2.0,
+      ),
+    ),
+  ),
+  snackBarTheme:
+      SnackBarThemeData(backgroundColor: lightPrimary.withOpacity(0.6)),
 );
 
 final ThemeData darkTheme = ThemeData(
   colorScheme: ColorScheme.fromSwatch().copyWith(
     primary: darkPrimary,
     onBackground: darkBG,
-    secondary: darkAccent,
+    secondary: smokeAccent, //darkAccent,
     brightness: Brightness.dark,
   ),
   useMaterial3: false,
-  materialTapTargetSize: MaterialTapTargetSize.padded,
+  splashColor: darkAccent,
+  primaryColor: darkPrimary,
+  scaffoldBackgroundColor: smokeAccent,
+  navigationRailTheme: const NavigationRailThemeData(
+    backgroundColor: darkBG,
+  ),
+  datePickerTheme: DatePickerThemeData(
+      backgroundColor: darkAccent,
+      headerBackgroundColor: darkBG.withOpacity(0.5)),
+  textTheme: const TextTheme(
+    displayLarge: TextStyle(fontSize: kBodyLargeFontSize, color: smokeWhite),
+    displayMedium: TextStyle(fontSize: kBodyMediumFontSize, color: smokeWhite),
+    displaySmall: TextStyle(fontSize: kBodySmallFontSize, color: smokeWhite),
+    bodyLarge: TextStyle(fontSize: kBodyLargeFontSize, color: smokeWhite),
+    bodyMedium: TextStyle(fontSize: kBodyMediumFontSize, color: smokeWhite),
+    bodySmall: TextStyle(fontSize: kBodySmallFontSize, color: smokeWhite),
+    headlineLarge: TextStyle(
+        fontSize: kHeadingLargeFontSize,
+        fontWeight: FontWeight.bold,
+        color: smokeWhite),
+    headlineMedium: TextStyle(
+        fontSize: kHeadingMediumFontSize,
+        fontWeight: FontWeight.bold,
+        color: smokeWhite),
+    headlineSmall: TextStyle(
+        fontSize: kHeadingSmallFontSize,
+        fontWeight: FontWeight.bold,
+        color: smokeWhite),
+  ),
+  elevatedButtonTheme: ElevatedButtonThemeData(
+    style: ButtonStyle(
+      backgroundColor: MaterialStateProperty.all<Color>(
+        (lightPrimary.withOpacity(0.7)),
+      ),
+    ),
+  ),
+  textButtonTheme: TextButtonThemeData(
+    style: ButtonStyle(
+      backgroundColor: MaterialStateProperty.all<Color>(
+        (lightPrimary.withOpacity(0.7)),
+      ),
+    ),
+  ),
+  cardTheme: CardTheme(
+    color: darkBG.withOpacity(0.4),
+    margin: const EdgeInsets.all(15),
+    // sa punem shadowul asta pe light
+    //shadowColor: white,
+    //clipBehavior: Clip.antiAlias,
+  ),
+  checkboxTheme: CheckboxThemeData(
+    checkColor: MaterialStateProperty.all<Color>(
+      (white),
+    ),
+    fillColor: MaterialStateProperty.all<Color>(
+      (primary),
+    ),
+  ),
+  inputDecorationTheme: const InputDecorationTheme(
+    border: OutlineInputBorder(
+      borderSide: BorderSide(
+        color: white,
+        width: 2.0,
+      ),
+    ),
+  ),
+  snackBarTheme:
+      SnackBarThemeData(backgroundColor: lightPrimary.withOpacity(0.6)),
 );
-// final ThemeData lightTheme = ThemeData(
-//   colorScheme: ColorScheme.fromSwatch().copyWith(
-//     primary: lightPrimary,
-//     onBackground: lightBG,
-//     secondary: lightAccent,
-//     brightness: Brightness.light,
-//   ),
-//   useMaterial3: false,
-//   splashColor: lightAccent,
-//   primaryColor: lightPrimary,
-//   scaffoldBackgroundColor: lightBG,
-//   navigationRailTheme: const NavigationRailThemeData(
-//     backgroundColor: lightBG,
-//   ),
-//   datePickerTheme: const DatePickerThemeData(
-//     backgroundColor: darkAccent,
-//     headerBackgroundColor: darkBG,
-//   ),
-//   // tabBarTheme: const TabBarTheme(
-//   //   labelColor: Colors.black,
-//   //   indicator: UnderlineTabIndicator(
-//   //     borderSide: BorderSide(
-//   //       color: darkAccent,
-//   //       width: 2.0,
-//   //     ),
-//   //   ),
-//   // ),
-
-//   textTheme: const TextTheme(
-//     bodyLarge: TextStyle(
-//       fontSize: kFontSize + 5,
-//       color: Color.fromARGB(255, 255, 255, 255),
-//     ),
-//     bodySmall: TextStyle(
-//       fontSize: kFontSize - 5,
-//       color: Color.fromARGB(255, 255, 255, 255),
-//     ),
-//     bodyMedium: TextStyle(
-//       fontSize: kFontSize,
-//       color: Color.fromARGB(255, 255, 255, 255),
-//     ),
-//   ),
-//   elevatedButtonTheme: ElevatedButtonThemeData(
-//     style: ButtonStyle(
-//         backgroundColor: MaterialStateProperty.all<Color>(darkPrimary)),
-//   ),
-//   textButtonTheme: TextButtonThemeData(
-//     style: ButtonStyle(
-//       backgroundColor: MaterialStateProperty.all<Color>(
-//         (darkPrimary),
-//       ),
-//     ),
-//   ),
-//   cardTheme: CardTheme(
-//     color: darkBG.withOpacity(0.3), //darkAccent.withOpacity(0.85),
-//     margin: const EdgeInsets.all(50),
-//   ),
-//   snackBarTheme: const SnackBarThemeData(backgroundColor: darkPrimary),
-// );
-
-// final ThemeData darkTheme = ThemeData(
-//   colorScheme: ColorScheme.fromSwatch().copyWith(
-//     primary: darkPrimary,
-//     onBackground: darkBG,
-//     secondary: darkAccent,
-//     brightness: Brightness.dark,
-//   ),
-//   useMaterial3: true,
-//   splashColor: darkAccent,
-//   primaryColor: darkPrimary,
-//   scaffoldBackgroundColor: darkBG,
-//   navigationRailTheme: const NavigationRailThemeData(
-//     backgroundColor: darkBG,
-//   ),
-//   datePickerTheme: DatePickerThemeData(
-//       backgroundColor: darkAccent,
-//       headerBackgroundColor: darkBG.withOpacity(0.5)),
-//   textTheme: const TextTheme(
-//     bodyLarge: TextStyle(
-//       fontSize: kFontSize + 5,
-//       color: Colors.white,
-//     ),
-//     bodySmall: TextStyle(
-//       fontSize: kFontSize - 5,
-//       color: Colors.white,
-//     ),
-//     bodyMedium: TextStyle(
-//       fontSize: kFontSize,
-//       color: Colors.white,
-//     ),
-//   ),
-//   elevatedButtonTheme: ElevatedButtonThemeData(
-//     style: ButtonStyle(
-//       backgroundColor: MaterialStateProperty.all<Color>(
-//         (lightPrimary.withOpacity(0.3)),
-//       ),
-//     ),
-//   ),
-//   textButtonTheme: TextButtonThemeData(
-//     style: ButtonStyle(
-//       backgroundColor: MaterialStateProperty.all<Color>(
-//         (lightPrimary.withOpacity(0.6)),
-//       ),
-//     ),
-//   ),
-//   cardTheme: CardTheme(
-//     color: darkBG.withOpacity(0.3), //darkAccent.withOpacity(0.85),
-//     margin: const EdgeInsets.all(50),
-//   ),
-//   snackBarTheme:
-//       SnackBarThemeData(backgroundColor: lightPrimary.withOpacity(0.6)),
-// );

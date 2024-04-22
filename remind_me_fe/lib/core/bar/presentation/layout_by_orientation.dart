@@ -1,5 +1,7 @@
 // Landscape
 
+import 'dart:ui';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:remind_me_fe/core/router/app_router.gr.dart';
@@ -9,7 +11,6 @@ import 'package:remind_me_fe/injection_container.dart';
 import 'package:sidebarx/sidebarx.dart';
 
 class LandscapeScaffold extends StatelessWidget {
-  final double minimizeContentParameter = 0.7;
   final Widget child;
 
   const LandscapeScaffold(this.child, {super.key});
@@ -52,6 +53,11 @@ class Sidebar extends StatelessWidget {
     return SidebarX(
       controller: _controller,
       theme: SidebarXTheme(
+        // BUG : Don't remove the decoration, Sidebar will not have bg color without it
+        decoration: const BoxDecoration(
+          backgroundBlendMode: BlendMode.darken,
+          color: red,
+        ),
         // hover
         hoverColor: black, //theme.colorScheme.secondary.withOpacity(0.25),
         hoverTextStyle: const TextStyle(
@@ -60,11 +66,11 @@ class Sidebar extends StatelessWidget {
         ),
 
         // unselected
-        textStyle: TextStyle(
+        textStyle: const TextStyle(
             color: smokeWhite //theme.colorScheme.secondary.withOpacity(0.85),
             ),
         itemTextPadding: const EdgeInsets.only(left: 30),
-        iconTheme: IconThemeData(
+        iconTheme: const IconThemeData(
           color: white, //theme.colorScheme.secondary,
           size: 20,
         ),
@@ -74,7 +80,7 @@ class Sidebar extends StatelessWidget {
         ),
 
         // selected
-        selectedTextStyle: TextStyle(
+        selectedTextStyle: const TextStyle(
           color: smokeWhite, //theme.colorScheme.secondary,
         ),
         selectedItemTextPadding: const EdgeInsets.only(left: 30),
@@ -82,13 +88,13 @@ class Sidebar extends StatelessWidget {
           borderRadius: BorderRadius.circular(15),
           border: Border.all(),
         ),
-        selectedIconTheme: IconThemeData(
+        selectedIconTheme: const IconThemeData(
           color: white, //theme.colorScheme.secondary,
           size: 20,
         ),
       ),
       extendedTheme: SidebarXTheme(
-        width: 200,
+        width: 175,
         decoration: BoxDecoration(
           color: theme.colorScheme.primary,
         ),
@@ -99,7 +105,7 @@ class Sidebar extends StatelessWidget {
           padding: const EdgeInsets.all(1.0),
           child: IconButton(
             icon: Image.asset('assets/images/rm_logo_landscape.png'),
-            iconSize: 100,
+            iconSize: 200,
             onPressed: () {
               AutoRouter.of(context).push(const HomeRoute());
             },
@@ -172,10 +178,11 @@ class PortraitScaffold extends StatelessWidget {
                 child: BurgerButton(),
               ),
               Container(
-                constraints: BoxConstraints(maxWidth: 35, maxHeight: 50),
+                constraints: const BoxConstraints(maxWidth: 100, maxHeight: 60),
                 child: IconButton(
-                  icon: Image.asset('assets/images/rm_logo_portrait.png'),
-                  iconSize: 45 * (MediaQuery.of(context).size.height / 1200),
+                  icon: Image.asset('assets/images/rm_logo_landscape.png'),
+                  iconSize:
+                      200, //45 * (MediaQuery.of(context).size.height / 800),
                   onPressed: () {
                     AutoRouter.of(context).push(const HomeRoute());
                   },
@@ -202,27 +209,27 @@ class BottomBar extends StatelessWidget {
     final ThemeData theme = Theme.of(context);
     return BottomNavigationBar(
       items: <BottomNavigationBarItem>[
-        BottomNavigationBarItem(
+        const BottomNavigationBarItem(
           icon: Icon(Icons.unpublished_rounded,
               color: white //theme.colorScheme.secondary,
               ),
           label: 'Undone Tasks',
         ),
-        BottomNavigationBarItem(
+        const BottomNavigationBarItem(
           icon: Icon(Icons.done, color: white),
           label: 'Done Tasks',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.add, color: white),
+          icon: const Icon(Icons.add, color: white),
           label: 'G\'day ${sl<CurrentUser>().nickname ?? "User"}',
           //backgroundColor modifies the entire  bar
           backgroundColor: theme.colorScheme.primary.withOpacity(0.85),
         ),
-        BottomNavigationBarItem(
+        const BottomNavigationBarItem(
           icon: Icon(Icons.pending_actions_sharp, color: white),
           label: 'Active Tasks',
         ),
-        BottomNavigationBarItem(
+        const BottomNavigationBarItem(
           icon: Icon(Icons.list, color: white),
           label: 'All Tasks',
         ),
