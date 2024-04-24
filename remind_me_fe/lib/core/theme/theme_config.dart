@@ -1,18 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:remind_me_fe/core/constants.dart';
 
-const Color primary = Color.fromARGB(255, 85, 162, 175);
-const Color accent = Color(0xFF468c98);
-const Color bg = Color.fromARGB(255, 85, 162, 175);
+const Color generatedPrimary = Color.fromARGB(255, 85, 162, 175);
+const Color generatedAccent = Color(0xFF468c98);
+const Color generatedBG = Color.fromARGB(
+    255, 85, 162, 175); //white; //Color.fromARGB(255, 192, 192, 192);
 
-const Color lightPrimary = primary; //Color.fromARGB(255, 225, 225, 225);
+const Color defaultPrimary = smokeAccent;
+const Color defaultAccent = smokeWhite;
+const Color defaultBG = grey;
+
+const Color lightPrimary = Color.fromARGB(255, 225, 225, 225);
 const Color lightAccent = accent;
-const Color lightBG = white; //Color.fromARGB(255, 192, 192, 192);
+const Color lightBG = Color.fromARGB(255, 192, 192, 192);
 
-const Color darkPrimary = smokeAccent;
-const Color darkAccent = smokeWhite;
-const Color darkBG = grey;
+const Color darkPrimary = Color.fromARGB(255, 73, 73, 73);
+const Color darkAccent = smokeAccent;
+const Color darkBG = Color.fromARGB(255, 53, 53, 53);
 
+const Color accent = Color.fromARGB(255, 161, 127, 23);
 const Color red = Color.fromARGB(0, 39, 39, 39);
 const Color black = Color.fromARGB(255, 15, 15, 15);
 const Color white = Color(0xFFFFFFFF);
@@ -22,11 +28,11 @@ const Color smokeAccent = Color.fromARGB(255, 67, 101, 107);
 const Color whitenedAccent = Color.fromARGB(255, 40, 146, 164);
 const Color grey = Color(0xFF2E2E2E);
 
-final ThemeData lightTheme = ThemeData(
+final ThemeData generatedTheme = ThemeData(
   colorScheme: ColorScheme.fromSwatch().copyWith(
-    primary: lightPrimary,
-    onBackground: lightBG,
-    secondary: lightAccent,
+    primary: generatedPrimary,
+    onBackground: generatedBG,
+    secondary: generatedAccent,
     brightness: Brightness.dark,
   ),
   useMaterial3: true,
@@ -125,7 +131,7 @@ final ThemeData lightTheme = ThemeData(
       (white),
     ),
     fillColor: MaterialStateProperty.all<Color>(
-      (primary),
+      (lightPrimary),
     ),
   ),
   inputDecorationTheme: const InputDecorationTheme(
@@ -140,17 +146,17 @@ final ThemeData lightTheme = ThemeData(
       SnackBarThemeData(backgroundColor: lightPrimary.withOpacity(0.6)),
 );
 
-final ThemeData darkTheme = ThemeData(
+final ThemeData defaultTheme = ThemeData(
   colorScheme: ColorScheme.fromSwatch().copyWith(
-    primary: darkPrimary,
-    onBackground: darkBG,
-    secondary: smokeAccent,
+    primary: defaultPrimary,
+    onBackground: defaultBG,
+    secondary: defaultPrimary,
     brightness: Brightness.dark,
   ),
   useMaterial3: false,
-  splashColor: darkAccent,
-  primaryColor: darkPrimary,
-  scaffoldBackgroundColor: smokeAccent,
+  splashColor: defaultAccent,
+  primaryColor: defaultPrimary,
+  scaffoldBackgroundColor: defaultPrimary,
   navigationRailTheme: const NavigationRailThemeData(
     backgroundColor: darkBG,
   ),
@@ -200,7 +206,7 @@ final ThemeData darkTheme = ThemeData(
       (white),
     ),
     fillColor: MaterialStateProperty.all<Color>(
-      (primary),
+      (defaultPrimary),
     ),
   ),
   inputDecorationTheme: const InputDecorationTheme(
@@ -210,6 +216,139 @@ final ThemeData darkTheme = ThemeData(
         width: 2.0,
       ),
     ),
+  ),
+  snackBarTheme:
+      SnackBarThemeData(backgroundColor: lightPrimary.withOpacity(0.6)),
+);
+
+final ThemeData lightTheme = ThemeData(
+  colorScheme: ColorScheme.fromSwatch().copyWith(
+    primary: lightPrimary,
+    onBackground: lightBG,
+    secondary: lightAccent,
+    brightness: Brightness.light,
+  ),
+  useMaterial3: false,
+  splashColor: lightAccent,
+  primaryColor: lightPrimary,
+  scaffoldBackgroundColor: lightBG,
+  navigationRailTheme: const NavigationRailThemeData(
+    backgroundColor: lightBG,
+  ),
+  datePickerTheme: DatePickerThemeData(
+      backgroundColor: lightAccent,
+      headerBackgroundColor: darkBG.withOpacity(0.5)),
+  tabBarTheme: const TabBarTheme(
+    labelColor: Colors.black,
+    indicator: UnderlineTabIndicator(
+      borderSide: BorderSide(
+        color: darkAccent,
+        width: 2.0,
+      ),
+    ),
+  ),
+  appBarTheme: const AppBarTheme(
+    color: lightPrimary,
+    elevation: 0.0,
+    titleTextStyle: TextStyle(
+      color: Colors.black,
+      fontSize: 20,
+      fontWeight: FontWeight.w800,
+    ),
+    iconTheme: IconThemeData(color: Color.fromARGB(255, 194, 29, 29)),
+  ),
+  elevatedButtonTheme: ElevatedButtonThemeData(
+    style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all<Color>(darkPrimary)),
+  ),
+  textButtonTheme: TextButtonThemeData(
+    style: ButtonStyle(
+      backgroundColor: MaterialStateProperty.all<Color>(
+        (darkPrimary),
+      ),
+    ),
+  ),
+  //checkboxTheme: ChechBoxTheme(),
+  cardTheme: CardTheme(
+    color: lightAccent.withOpacity(0.6),
+    margin: const EdgeInsets.all(50),
+  ),
+  snackBarTheme: const SnackBarThemeData(backgroundColor: darkPrimary),
+);
+
+final ThemeData darkTheme = ThemeData(
+  colorScheme: ColorScheme.fromSwatch().copyWith(
+    primary: darkPrimary,
+    onBackground: darkBG,
+    secondary: darkAccent,
+    brightness: Brightness.dark,
+  ),
+  useMaterial3: false,
+  splashColor: darkAccent,
+  primaryColor: darkPrimary,
+  scaffoldBackgroundColor: darkBG,
+  navigationRailTheme: const NavigationRailThemeData(
+    backgroundColor: darkBG,
+  ),
+  textTheme: const TextTheme(
+    displayLarge: TextStyle(fontSize: kBodyLargeFontSize, color: smokeWhite),
+    displayMedium: TextStyle(fontSize: kBodyMediumFontSize, color: smokeWhite),
+    displaySmall: TextStyle(fontSize: kBodySmallFontSize, color: smokeWhite),
+    bodyLarge: TextStyle(fontSize: kBodyLargeFontSize, color: smokeWhite),
+    bodyMedium: TextStyle(fontSize: kBodyMediumFontSize, color: smokeWhite),
+    bodySmall: TextStyle(fontSize: kBodySmallFontSize, color: smokeWhite),
+    headlineLarge: TextStyle(
+        fontSize: kHeadingLargeFontSize,
+        fontWeight: FontWeight.bold,
+        color: smokeWhite),
+    headlineMedium: TextStyle(
+        fontSize: kHeadingMediumFontSize,
+        fontWeight: FontWeight.bold,
+        color: smokeWhite),
+    headlineSmall: TextStyle(
+        fontSize: kHeadingSmallFontSize,
+        fontWeight: FontWeight.bold,
+        color: smokeWhite),
+  ),
+  datePickerTheme: DatePickerThemeData(
+      backgroundColor: darkAccent,
+      headerBackgroundColor: darkBG.withOpacity(0.5)),
+  tabBarTheme: const TabBarTheme(
+    labelColor: Colors.white,
+    indicator: UnderlineTabIndicator(
+      borderSide: BorderSide(
+        color: lightAccent,
+        width: 2.0,
+      ),
+    ),
+  ),
+  // appBarTheme: const AppBarTheme(
+  //   color: darkPrimary,
+  //   elevation: 0.0,
+  //   titleTextStyle: TextStyle(
+  //     color: Colors.white,
+  //     fontSize: 20,
+  //     fontWeight: FontWeight.w800,
+  //   ),
+  //   iconTheme: IconThemeData(color: Colors.white),
+  // ),
+  elevatedButtonTheme: ElevatedButtonThemeData(
+    style: ButtonStyle(
+      backgroundColor: MaterialStateProperty.all<Color>(
+        (lightPrimary.withOpacity(0.3)),
+      ),
+    ),
+  ),
+  textButtonTheme: TextButtonThemeData(
+    style: ButtonStyle(
+      backgroundColor: MaterialStateProperty.all<Color>(
+        (lightPrimary.withOpacity(0.6)),
+      ),
+    ),
+  ),
+  cardTheme: CardTheme(
+    color: darkBG.withOpacity(0.3),
+    margin: const EdgeInsets.all(15),
   ),
   snackBarTheme:
       SnackBarThemeData(backgroundColor: lightPrimary.withOpacity(0.6)),
