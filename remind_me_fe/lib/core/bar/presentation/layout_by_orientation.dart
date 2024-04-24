@@ -56,7 +56,7 @@ class Sidebar extends StatelessWidget {
         // BUG : Don't remove the decoration, Sidebar will not have bg color without it
         decoration: const BoxDecoration(
           backgroundBlendMode: BlendMode.darken,
-          color: red,
+          color: darkenRed,
         ),
         // hover
         hoverColor: black, //theme.colorScheme.secondary.withOpacity(0.25),
@@ -306,13 +306,13 @@ class RoutesDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            title: const Text('Theme Settings'),
+            title: const Text('Theme'),
             onTap: () {
               AutoRouter.of(context).push(ThemeRoute(context: context));
             },
           ),
           ListTile(
-            title: const Text('Startup Settings'),
+            title: const Text('Startup View'),
             onTap: () {
               AutoRouter.of(context).push(const ChangeStartupRoute());
             },

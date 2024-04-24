@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: 'RemindMe',
-      theme: defaultTheme, //lightTheme,
+      theme: lightTheme,
       darkTheme: darkTheme,
       themeMode: Provider.of<ThemeProvider>(context).buildAppThemeMode(),
       routerConfig: _appRouter.config(),
