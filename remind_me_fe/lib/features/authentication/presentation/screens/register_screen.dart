@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:remind_me_fe/core/router/app_router.gr.dart';
+import 'package:remind_me_fe/core/theme/theme_config.dart';
 import 'package:remind_me_fe/features/authentication/presentation/controllers/register_controller.dart';
 import 'package:remind_me_fe/features/authentication/presentation/widgets/password_form_field.dart';
 
@@ -135,7 +136,9 @@ class RegisterCard extends StatelessWidget {
                           AutoRouter.of(context).push(LoginRoute());
                         },
                         child: const Text(
-                            "You already have an account ? Login now ."),
+                          "You already have an account ? Login now .",
+                          style: TextStyle(color: white),
+                        ),
                       )
                     ],
                   ),

@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:remind_me_fe/core/bar/presentation/layout_by_orientation.dart';
+import 'package:remind_me_fe/core/constants.dart';
 import 'package:remind_me_fe/features/todos/presentation/controllers/add_controller.dart';
 
 @RoutePage()
@@ -81,7 +82,7 @@ class TodoAddScreenContent extends StatelessWidget {
                       decoration:
                           const InputDecoration(labelText: 'Start Date *'),
                       validator: (value) =>
-                          controller.validateDateTimeFormField(value),
+                          controller.validateStartDateFormField(value),
                       onTap: () =>
                           _selectDate(context, controller.startDateController),
                     ),
@@ -97,8 +98,10 @@ class TodoAddScreenContent extends StatelessWidget {
                     const SizedBox(height: 16.0),
                     TextFormField(
                       controller: controller.difficultyController,
-                      decoration:
-                          const InputDecoration(labelText: 'Difficulty *'),
+                      decoration: const InputDecoration(
+                        labelText: 'Difficulty *',
+                        hintText: difficultyLabelHintText,
+                      ),
                       validator: (value) =>
                           controller.validateDifficultyFormField(value),
                     ),

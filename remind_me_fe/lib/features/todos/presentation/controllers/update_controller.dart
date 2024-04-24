@@ -25,20 +25,39 @@ class TodoUpdateController {
         TextEditingController(text: toDoToUpdate.difficulty.toString());
   }
 
-  String? validateFormField(String? value) {
+  String? validateStartDateFormField(value) {
     if (value == null || value.isEmpty) {
       return 'Field cannot be empty';
-    } else if (value.length < 2 && int.tryParse(value) == null) {
-      return 'Field must be at least 2 characters';
+    } else if (DateTime.tryParse(value) == null) {
+      return 'Date format is not valid';
     }
+
+    return null;
+  }
+
+  String? validateDifficultyFormField(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Field cannot be empty';
+    }
+
+    int? intValue = int.tryParse(value);
+
+    if (intValue == null) {
+      return 'Invalid input. Please enter a valid number';
+    }
+
+    if (intValue < 1) {
+      return 'Difficulty must be greater or equal to 1';
+    } else if (intValue > 10) {
+      return 'Difficulty must be less or equal to 10';
+    }
+
     return null;
   }
 
   String? validateEndDateField(String? value) {
     if (value == null || value.isEmpty) {
       return null;
-    } else if (value.length < 10) {
-      return 'Date format is not valid, use the date picker';
     } else if (DateTime.tryParse(value) == null) {
       return 'Date format is not valid';
     } else if (startDateController.text.isEmpty) {
@@ -75,7 +94,7 @@ class TodoUpdateController {
       Provider.of<TodoProvider>(context, listen: false)
           .update(index, listName, updatedTodoEntity);
 
-      AutoRouter.of(context).replace(const ActiveTodosRoute());
+      Navigator.pop(context);
     }
   }
 

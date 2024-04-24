@@ -135,7 +135,8 @@ class TodoUpdateScreenContent extends StatelessWidget {
                       controller: controller.startDateController,
                       decoration:
                           const InputDecoration(labelText: 'Start Date *'),
-                      validator: (value) => controller.validateFormField(value),
+                      validator: (value) =>
+                          controller.validateStartDateFormField(value),
                       onTap: () =>
                           _selectDate(context, controller.startDateController),
                     ),
@@ -153,7 +154,8 @@ class TodoUpdateScreenContent extends StatelessWidget {
                       controller: controller.difficultyController,
                       decoration:
                           const InputDecoration(labelText: 'Difficulty *'),
-                      validator: (value) => controller.validateFormField(value),
+                      validator: (value) =>
+                          controller.validateDifficultyFormField(value),
                     ),
                     const SizedBox(height: 16.0),
                     ElevatedButton(

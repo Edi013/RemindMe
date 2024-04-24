@@ -29,43 +29,38 @@ class UserProfileScreenContent extends StatelessWidget {
           fit: BoxFit.fill,
         ),
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Card(
-                child: ListTile(
-                  title: const Text(
-                    'Nickname',
-                  ),
-                  subtitle: Text(currentUser.nickname ?? 'Not available',
-                      style: const TextStyle(fontWeight: FontWeight.bold)),
-                ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Card(
+            child: ListTile(
+              title: const Text(
+                'Nickname',
               ),
-              Card(
-                child: ListTile(
-                  title: const Text(
-                    'Email',
-                  ),
-                  subtitle: Text(currentUser.email ?? 'Not available',
-                      style: const TextStyle(fontWeight: FontWeight.bold)),
-                ),
-              ),
-              Card(
-                child: ListTile(
-                  title: const Text(
-                    'Account type',
-                  ),
-                  subtitle: Text(currentUser.roles.last,
-                      style: const TextStyle(fontWeight: FontWeight.bold)),
-                ),
-              ),
-            ],
+              subtitle: Text(currentUser.nickname ?? 'Not available',
+                  style: const TextStyle(fontWeight: FontWeight.bold)),
+            ),
           ),
-        ),
+          Card(
+            child: ListTile(
+              title: const Text(
+                'Email',
+              ),
+              subtitle: Text(currentUser.email ?? 'Not available',
+                  style: const TextStyle(fontWeight: FontWeight.bold)),
+            ),
+          ),
+          Card(
+            child: ListTile(
+              title: const Text(
+                'Account type',
+              ),
+              subtitle: Text(currentUser.roles.last,
+                  style: const TextStyle(fontWeight: FontWeight.bold)),
+            ),
+          ),
+        ],
       ),
     );
   }

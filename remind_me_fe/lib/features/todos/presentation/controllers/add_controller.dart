@@ -49,7 +49,6 @@ class TodoAddController {
       Provider.of<TodoProvider>(context, listen: false).add(newObject);
 
       Navigator.pop(context);
-      //AutoRouter.of(context).navigate(const ActiveTodosRoute());
     }
   }
 
@@ -61,12 +60,13 @@ class TodoAddController {
     _descriptionController.clear();
   }
 
-  String? validateDateTimeFormField(value) {
+  String? validateStartDateFormField(value) {
     if (value == null || value.isEmpty) {
       return 'Field cannot be empty';
-    } else if (value.length < 10) {
-      return 'Field must have this format 2000-01-01';
+    } else if (DateTime.tryParse(value) == null) {
+      return 'Date format is not valid';
     }
+
     return null;
   }
 
@@ -93,8 +93,6 @@ class TodoAddController {
   String? validateEndDateField(String? value) {
     if (value == null || value.isEmpty) {
       return null;
-    } else if (value.length < 10) {
-      return 'Date format is not valid, use the date picker';
     } else if (DateTime.tryParse(value) == null) {
       return 'Date format is not valid';
     } else if (startDateController.text.isEmpty) {

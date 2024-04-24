@@ -52,3 +52,6 @@ const String error_message_constants_not_used_screen_name =
 //SharedPreferances
 const String selectedScreenSharedPreferances = 'selectedScreen';
 const String selectedThemeSharedPreferances = 'selectedTheme';
+
+// Add - Update form
+const String difficultyLabelHintText = "1 to 10";
