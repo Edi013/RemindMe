@@ -136,7 +136,7 @@ class RegisterCard extends StatelessWidget {
                           AutoRouter.of(context).push(LoginRoute());
                         },
                         child: const Text(
-                          "You already have an account ? Login now .",
+                          "You already have an account ?",
                           style: TextStyle(color: white),
                         ),
                       )

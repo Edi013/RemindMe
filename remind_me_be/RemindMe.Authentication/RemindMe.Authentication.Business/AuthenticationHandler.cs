@@ -67,8 +67,8 @@ namespace RemindMe.Authentication.Handlers
 
                 var authServiceUrl = _configuration.GetSection("AuthServiceUrl").Value;
                 var controllerName = "Authentication";
-                var enpointName = "ConfirmEmail";
-                var emailConfirmationLink = $"{authServiceUrl}/{controllerName}/{enpointName}?userid={newUser.Id}&token={validEmailConfirmationToken}";
+                var endpointName = "ConfirmEmail";
+                var emailConfirmationLink = $"{authServiceUrl}/{controllerName}/{endpointName}?userid={newUser.Id}&token={validEmailConfirmationToken}";
 
                 string subject = "Confirmation link for your new account on RemindMe";
                 string content = $"To validate your email press this confirmation link {emailConfirmationLink}.\n\nYou can start using your account on RemindMe after you have completed the step above.";
@@ -100,7 +100,6 @@ namespace RemindMe.Authentication.Handlers
                     Message = "This email is not registered."
                 };
             }
-            // sa verificam daca email ul e conform
             
             if(existingUser.EmailConfirmed == false)
             {
@@ -122,43 +121,6 @@ namespace RemindMe.Authentication.Handlers
             DateTime jwtExpirationDate = DateTime.UtcNow.AddMinutes(45);
             var jwt = await GenerateJwtAsync(existingUser, jwtExpirationDate);
 
-            //string refreshToken = GenerateRefreshToken();
-            //DateTime jwtRefreshTokenExpirationDate = DateTime.UtcNow.AddHours(5);
-
-            /*existingUser.Jwt = jwt.ToString();
-            existingUser.JwtExpirationDate = jwtExpirationDate;
-            existingUser.JwtRefreshToken = refreshToken;
-            existingUser.JwtRefreshTokenExpirationDate = jwtRefreshTokenExpirationDate;
-*/
-            //use cookies
-
-            /*httpContext.Response.Cookies.Append("Jwt",
-                jwt,
-                new CookieOptions{
-                    HttpOnly = false,
-                    Secure = false,  // Set to true if using HTTPS
-                    SameSite = SameSiteMode.Lax,  
-                    Expires = jwtExpirationDate
-                });*/
-            /*httpContext.Response.Cookies.Append("JwtRefreshToken",
-                refreshToken,
-                new CookieOptions
-                {
-                    HttpOnly = true,
-                    Secure = true,  
-                    SameSite = SameSiteMode.Strict, 
-                    Expires = jwtRefreshTokenExpirationDate
-                });*/
-
-            // sau 
-
-            //httpContext.Response.Cookies.Append("Jwt", jwt);
-            //httpContext.Response.Cookies.Append("JwtRefreshToken", refreshToken);
-
-            // use headers : 
-            //httpContext.Response.Headers.Add("Authorization", "Bearer " + jwt);
-            //httpContext.Response.Headers.Add("Token-Expiration", jwtExpirationDate.ToString(
-            //  _configuration.GetSection("DateTimeFormat").Value));
 
             return new LoginResponse()
             {
@@ -208,7 +170,6 @@ namespace RemindMe.Authentication.Handlers
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
-
 
         public async Task<BaseResponse> SeedRoles()
         {
@@ -275,15 +236,6 @@ namespace RemindMe.Authentication.Handlers
                 Message = "Unexpected error happened on confirming email. Please contact application staff.",
             };
         }
-
-        // endpoint to check if a token is valid
-        // correct format or not
-        // expired or not
-        // endpoint to refresh the jwt/token being given the refresh token
-        //refresh model
-        // if jwt is valid but expired
-        //      check if the refresh token is valid and not expired
-        //          return new jwt
     }
 }
 
