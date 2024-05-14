@@ -56,22 +56,20 @@ class Sidebar extends StatelessWidget {
         // BUG : Don't remove the decoration, Sidebar will not have bg color without it
         decoration: const BoxDecoration(
           backgroundBlendMode: BlendMode.darken,
-          color: red,
+          color: darkenRed,
         ),
         // hover
-        hoverColor: black, //theme.colorScheme.secondary.withOpacity(0.25),
+        hoverColor: black,
         hoverTextStyle: const TextStyle(
           fontWeight: FontWeight.w500,
           color: white,
         ),
 
         // unselected
-        textStyle: const TextStyle(
-            color: smokeWhite //theme.colorScheme.secondary.withOpacity(0.85),
-            ),
+        textStyle: const TextStyle(color: smokeWhite),
         itemTextPadding: const EdgeInsets.only(left: 30),
         iconTheme: const IconThemeData(
-          color: white, //theme.colorScheme.secondary,
+          color: white,
           size: 20,
         ),
         itemDecoration: BoxDecoration(
@@ -81,7 +79,7 @@ class Sidebar extends StatelessWidget {
 
         // selected
         selectedTextStyle: const TextStyle(
-          color: smokeWhite, //theme.colorScheme.secondary,
+          color: smokeWhite,
         ),
         selectedItemTextPadding: const EdgeInsets.only(left: 30),
         selectedItemDecoration: BoxDecoration(
@@ -89,7 +87,7 @@ class Sidebar extends StatelessWidget {
           border: Border.all(),
         ),
         selectedIconTheme: const IconThemeData(
-          color: white, //theme.colorScheme.secondary,
+          color: white,
           size: 20,
         ),
       ),
@@ -129,21 +127,21 @@ class Sidebar extends StatelessWidget {
         ),
         SidebarXItem(
           icon: Icons.pending_actions_sharp,
-          label: 'Active Tasks',
+          label: 'Active ',
           onTap: () {
             AutoRouter.of(context).push(const ActiveTodosRoute());
           },
         ),
         SidebarXItem(
           icon: Icons.unpublished_rounded,
-          label: 'Undone Tasks',
+          label: 'Unfinished',
           onTap: () {
             AutoRouter.of(context).push(const UndoneTodosRoute());
           },
         ),
         SidebarXItem(
           icon: Icons.done,
-          label: 'Done Tasks',
+          label: 'Finished',
           onTap: () {
             AutoRouter.of(context).push(const DoneTodosRoute());
           },
@@ -210,18 +208,16 @@ class BottomBar extends StatelessWidget {
     return BottomNavigationBar(
       items: <BottomNavigationBarItem>[
         const BottomNavigationBarItem(
-          icon: Icon(Icons.unpublished_rounded,
-              color: white //theme.colorScheme.secondary,
-              ),
-          label: 'Undone Tasks',
+          icon: Icon(Icons.unpublished_rounded, color: white),
+          label: 'Unfinished',
         ),
         const BottomNavigationBarItem(
           icon: Icon(Icons.done, color: white),
-          label: 'Done Tasks',
+          label: 'Finished',
         ),
         BottomNavigationBarItem(
           icon: const Icon(Icons.add, color: white),
-          label: 'G\'day ${sl<CurrentUser>().nickname ?? "User"}',
+          label: 'Hello ${sl<CurrentUser>().nickname ?? "User"}',
           //backgroundColor modifies the entire  bar
           backgroundColor: theme.colorScheme.primary.withOpacity(0.85),
         ),
@@ -306,13 +302,13 @@ class RoutesDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            title: const Text('Theme Settings'),
+            title: const Text('Theme'),
             onTap: () {
               AutoRouter.of(context).push(ThemeRoute(context: context));
             },
           ),
           ListTile(
-            title: const Text('Startup Settings'),
+            title: const Text('Startup View'),
             onTap: () {
               AutoRouter.of(context).push(const ChangeStartupRoute());
             },

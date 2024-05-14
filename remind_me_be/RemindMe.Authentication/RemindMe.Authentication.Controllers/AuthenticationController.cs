@@ -39,8 +39,6 @@ namespace RemindMe.Authentication.Controllers
             
             return result;
         }
-        //IActionResult
-        //Ok(result)
 
         [HttpGet("ConfirmEmail")]
         public async Task<BaseResponse> ConfirmEmail(string userId, string token)
@@ -48,15 +46,6 @@ namespace RemindMe.Authentication.Controllers
 
             return await _authenticationHandler.ConfirmEmail(userId, token);
         }
-
-
-
-        /* [HttpGet("RefreshJwt")]
-         public async Task<bool> RefreshJwt([FromBody] string jwt, [FromBody] string refreshToken)
-         {
-             var result = await _authenticationHandler.RefreshJwt(jwt, refreshToken);
-             return result;
-         }*/
 
         [HttpPut("SeedRoles")]
         public Task<BaseResponse> SeedRoles()
@@ -83,7 +72,6 @@ namespace RemindMe.Authentication.Controllers
             };
         }
 
-        //[Authorize]
         [HttpGet("Test")]
         public string Test()
         {

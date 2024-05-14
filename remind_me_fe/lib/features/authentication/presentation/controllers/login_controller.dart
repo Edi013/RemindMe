@@ -33,7 +33,7 @@ class LoginController {
         _saveUserAuthenticationData(result.token);
         AutoRouter.of(context).push(const HomeRoute());
       } else if (result.httpStatusCode == HttpStatus.badRequest) {
-        buildSnackBarMessage(context, "'Bad credentials. Please try again.'");
+        buildSnackBarMessage(context, result.message);
       } else {
         buildSnackBarMessage(context,
             "Unexpected error occured. Http code status not expected.");

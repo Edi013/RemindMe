@@ -45,6 +45,7 @@ class LoginCard extends StatelessWidget {
       child: Container(
         constraints: const BoxConstraints(maxWidth: 750),
         child: Card(
+          color: black.withOpacity(0.5),
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
@@ -85,7 +86,13 @@ class LoginCard extends StatelessWidget {
                               return 'Please enter your email';
                             }
                             if (!value.contains("@")) {
-                              return 'Email has to contain \' @ \'.';
+                              return 'Email has to contain this symbol @ ';
+                            }
+                            if (!value.endsWith('.com')) {
+                              return 'Email has to end in .com';
+                            }
+                            if (value.endsWith('@.com')) {
+                              return 'Email has to have a domain specified. Avoid using @.com';
                             }
                             return null;
                           },
@@ -119,7 +126,7 @@ class LoginCard extends StatelessWidget {
                           AutoRouter.of(context).push(const RegisterRoute());
                         },
                         child: const Text(
-                          "Don't have an accout ? Register now .",
+                          "Don't have an accout ?",
                           style: TextStyle(color: white),
                         ),
                       )
