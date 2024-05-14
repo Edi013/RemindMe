@@ -36,8 +36,12 @@ final ThemeData lightTheme = ThemeData(
     backgroundColor: darkBG,
   ),
   datePickerTheme: DatePickerThemeData(
-      backgroundColor: darkAccent,
-      headerBackgroundColor: darkBG.withOpacity(0.5)),
+    backgroundColor: white,
+    headerBackgroundColor: darkBG.withOpacity(0.5),
+  ),
+  timePickerTheme: const TimePickerThemeData(
+    backgroundColor: white,
+  ),
   textTheme: const TextTheme(
     displayLarge: TextStyle(fontSize: kBodyLargeFontSize, color: smokeWhite),
     displayMedium: TextStyle(fontSize: kBodyMediumFontSize, color: smokeWhite),
@@ -131,8 +135,9 @@ final ThemeData darkTheme = ThemeData(
         color: smokeWhite),
   ),
   datePickerTheme: DatePickerThemeData(
-      backgroundColor: darkAccent,
-      headerBackgroundColor: darkBG.withOpacity(0.5)),
+    backgroundColor: darkAccent,
+    headerBackgroundColor: darkBG.withOpacity(0.3),
+  ),
   // tabBarTheme: const TabBarTheme(
   //   labelColor: Colors.white,
   //   indicator: UnderlineTabIndicator(
@@ -142,6 +147,9 @@ final ThemeData darkTheme = ThemeData(
   //     ),
   //   ),
   // ),
+  timePickerTheme: const TimePickerThemeData(
+    backgroundColor: darkAccent,
+  ),
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ButtonStyle(
       backgroundColor: MaterialStateProperty.all<Color>(

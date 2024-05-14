@@ -4,6 +4,7 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:provider/provider.dart';
 import 'package:remind_me_fe/core/constants.dart';
 import 'package:remind_me_fe/core/router/app_router.gr.dart';
+import 'package:remind_me_fe/core/theme/theme_config.dart';
 import 'package:remind_me_fe/features/todos/domain/entities/todo.dart';
 import 'package:remind_me_fe/features/todos/presentation/providers/todo_provider.dart';
 import 'package:remind_me_fe/injection_container.dart';
@@ -24,11 +25,11 @@ Scaffold buildListFromTodos(BuildContext context, String todoListName) {
       break;
     case undoneTodosListName:
       todos = provider.undoneTodos;
-      title = 'Undone tasks';
+      title = 'Tasks not finished';
       break;
     case doneTodosListName:
       todos = provider.doneTodos;
-      title = 'Done tasks';
+      title = 'Finished tasks';
       break;
     default:
       throw error_message_constants_not_used_list_name;
@@ -53,7 +54,6 @@ Scaffold buildListFromTodos(BuildContext context, String todoListName) {
           children: [
             Consumer<TodoProvider>(
               builder: (context, todoProvider, child) {
-                //List<TodoEntity> todos = todoProvider.todos;
                 switch (todoListName) {
                   case allTodosListName:
                     todos = provider.todos;
@@ -65,11 +65,11 @@ Scaffold buildListFromTodos(BuildContext context, String todoListName) {
                     break;
                   case undoneTodosListName:
                     todos = provider.undoneTodos;
-                    title = 'Undone tasks';
+                    title = 'Tasks not finished';
                     break;
                   case doneTodosListName:
                     todos = provider.doneTodos;
-                    title = 'Done tasks';
+                    title = 'Finished tasks';
                     break;
                   default:
                     throw error_message_constants_not_used_list_name;
@@ -118,7 +118,6 @@ Scaffold buildListFromTodos(BuildContext context, String todoListName) {
                                 _buildRichTextForDescription(context,
                                     'Description: \n', todo.description),
                                 const Divider(),
-
                                 _buildLineSeparator(),
                                 _buildRichTextForField(
                                     context: context,
@@ -153,7 +152,7 @@ Scaffold buildListFromTodos(BuildContext context, String todoListName) {
                                     color: Colors.red,
                                   ),
                                 ),
-                                //const Divider()
+                                const Divider(color: white),
                               ],
                             ),
                           ],
