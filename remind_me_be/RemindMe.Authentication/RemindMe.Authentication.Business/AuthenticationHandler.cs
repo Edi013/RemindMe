@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Configuration;
@@ -9,15 +10,13 @@ using RemindMe.Authentication.Domain.Models;
 using RemindMe.Authentication.Domain.Responses;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net;
-using System.Net.Mail;
 using System.Security.Claims;
-using System.Security.Cryptography;
 using System.Text;
-using System.Text.RegularExpressions;
+
 
 namespace RemindMe.Authentication.Handlers
 {
-    public class AuthenticationHandler
+    public class AuthenticationHandler : RemindMe.Authentication.Domain.Interfaces.IAuthenticationHandler
     {
         private readonly UserManager<User> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
@@ -88,7 +87,7 @@ namespace RemindMe.Authentication.Handlers
             };
         }
         
-        public async Task<LoginResponse> Login(LoginDto loginDto, HttpContext httpContext)
+        public async Task<LoginResponse> Login(LoginDto loginDto)
         {
             var existingUser = await _userManager.FindByEmailAsync(loginDto.Email);
 

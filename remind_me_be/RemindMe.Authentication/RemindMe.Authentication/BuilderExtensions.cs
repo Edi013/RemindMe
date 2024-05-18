@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using RemindMe.Authentication.DataAccess;
+using RemindMe.Authentication.Domain.Interfaces;
 using RemindMe.Authentication.Domain.Interfaces.EmailingSystem;
 using RemindMe.Authentication.Domain.Models;
 using RemindMe.Authentication.Domain.Models.EmailingSystem;
@@ -74,7 +75,7 @@ namespace RemindMe
             var emailConfig = builder.Configuration.GetSection("EmailingSystem").Get<EmailConfigurator>();
             builder.Services.AddSingleton(emailConfig);
             builder.Services.AddScoped<IEmailService, EmailService>();
-            builder.Services.AddScoped<AuthenticationHandler, AuthenticationHandler>();
+            builder.Services.AddScoped<IAuthenticationHandler, AuthenticationHandler>();
             builder.RegisterJsonConfigFile();
 
             builder.Services.AddSwaggerGen();

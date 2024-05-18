@@ -1,11 +1,9 @@
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MimeKit;
 using RemindMe.Authentication.Domain.DTOs;
+using RemindMe.Authentication.Domain.Interfaces;
 using RemindMe.Authentication.Domain.Interfaces.EmailingSystem;
 using RemindMe.Authentication.Domain.Models.EmailingSystem;
 using RemindMe.Authentication.Domain.Responses;
-using RemindMe.Authentication.Handlers;
 
 namespace RemindMe.Authentication.Controllers
 {
@@ -13,10 +11,10 @@ namespace RemindMe.Authentication.Controllers
     [Route("[controller]")]
     public class AuthenticationController : ControllerBase
     {
-        private readonly AuthenticationHandler _authenticationHandler;
+        private readonly IAuthenticationHandler _authenticationHandler;
         private readonly IEmailService _emailService;
 
-        public AuthenticationController(AuthenticationHandler authenticationHandler, IEmailService emailService)
+        public AuthenticationController(IAuthenticationHandler authenticationHandler, IEmailService emailService)
         {
             _authenticationHandler = authenticationHandler;
             _emailService = emailService;
@@ -35,7 +33,7 @@ namespace RemindMe.Authentication.Controllers
         public async Task<LoginResponse> Login ([FromBody] LoginDto loginDto)
         {
             var result = 
-                await _authenticationHandler.Login(loginDto, HttpContext);
+                await _authenticationHandler.Login(loginDto);
             
             return result;
         }
