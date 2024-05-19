@@ -21,22 +21,29 @@ class LoginController {
   }
 
   Future<void> handleLogin(BuildContext context) async {
+    const String errorMessageServiceNotPresent =
+        'One of our services may not be available at this moment.';
+
     if (formKey.currentState!.validate()) {
       LoginCredentials credentials = LoginCredentials(
         email: emailController.text,
         password: passwordController.text,
       );
 
-      var result = await provider.login(credentials);
-
-      if (result.httpStatusCode == HttpStatus.accepted) {
-        _saveUserAuthenticationData(result.token);
-        AutoRouter.of(context).push(const HomeRoute());
-      } else if (result.httpStatusCode == HttpStatus.badRequest) {
-        buildSnackBarMessage(context, result.message);
-      } else {
-        buildSnackBarMessage(context,
-            "Unexpected error occured. Http code status not expected.");
+      try {
+        var result = await provider.login(credentials);
+        if (result.httpStatusCode == HttpStatus.accepted) {
+          _saveUserAuthenticationData(result.token);
+          AutoRouter.of(context).push(const HomeRoute());
+        } else if (result.httpStatusCode == HttpStatus.badRequest) {
+          buildSnackBarMessage(context, result.message);
+        } else {
+          buildSnackBarMessage(context,
+              "Unexpected error occured. Http code status not expected.");
+        }
+      } catch (error) {
+        buildSnackBarMessage(context, errorMessageServiceNotPresent);
+        //throw Exception(errorMessageServiceNotPresent);
       }
     } else {
       buildSnackBarMessage(context, "Fill in properly your credentials.");

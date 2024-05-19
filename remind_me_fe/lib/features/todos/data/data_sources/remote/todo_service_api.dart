@@ -10,6 +10,8 @@ class TodoServiceApi {
   final String apiExtension = '/Item';
   late String apiUrl;
   late Dio _dio;
+  final String errorMessageServiceNotPresent =
+      'One of our services may not be available at this moment.';
 
   TodoServiceApi() {
     apiUrl = "$BASE_URL_TODOS$apiExtension";
@@ -24,7 +26,7 @@ class TodoServiceApi {
           data.map((json) => TodoModel.fromJson(json)).toList();
       return result;
     } catch (error) {
-      throw Exception('Failed to fetch todos: $error');
+      throw Exception(errorMessageServiceNotPresent);
     }
   }
 
@@ -37,7 +39,7 @@ class TodoServiceApi {
           data.map((json) => TodoModel.fromJson(json)).toList();
       return result;
     } catch (error) {
-      throw Exception('Failed to fetch todos: $error');
+      throw Exception(errorMessageServiceNotPresent);
     }
   }
 
@@ -49,7 +51,7 @@ class TodoServiceApi {
           data.map((json) => TodoModel.fromJson(json)).toList();
       return result;
     } catch (error) {
-      throw Exception('Failed to fetch todos: $error');
+      throw Exception(errorMessageServiceNotPresent);
     }
   }
 
@@ -61,7 +63,7 @@ class TodoServiceApi {
           data.map((json) => TodoModel.fromJson(json)).toList();
       return result;
     } catch (error) {
-      throw Exception('Failed to fetch todos: $error');
+      throw Exception(errorMessageServiceNotPresent);
     }
   }
 
@@ -89,7 +91,7 @@ class TodoServiceApi {
 
       return TodoModel.fromJson(response.data);
     } catch (error) {
-      throw Exception('Failed to add todo: $error');
+      throw Exception(errorMessageServiceNotPresent);
     }
   }
 
@@ -106,7 +108,7 @@ class TodoServiceApi {
 
       return TodoModel.fromJson(response.data);
     } catch (error) {
-      throw Exception('Failed to update todo: $error');
+      throw Exception(errorMessageServiceNotPresent);
     }
   }
 
@@ -119,7 +121,7 @@ class TodoServiceApi {
         data: jsonEncode(deleteRequest.toJson()),
       );
     } catch (error) {
-      throw Exception('Failed to delete todo: $error');
+      throw Exception(errorMessageServiceNotPresent);
     }
   }
 }

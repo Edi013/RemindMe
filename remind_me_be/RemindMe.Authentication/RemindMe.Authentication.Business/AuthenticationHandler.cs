@@ -117,7 +117,7 @@ namespace RemindMe.Authentication.Handlers
                 };
             }
 
-            DateTime jwtExpirationDate = DateTime.UtcNow.AddMinutes(45);
+            DateTime jwtExpirationDate = DateTime.UtcNow.AddHours(12);
             var jwt = await GenerateJwtAsync(existingUser, jwtExpirationDate);
 
 
@@ -150,7 +150,7 @@ namespace RemindMe.Authentication.Handlers
             var userRoles = await _userManager.GetRolesAsync(user);
             for(var i = 0; i < userRoles.Count; i++)
             {
-                authClaims.Add(new Claim($"Role", userRoles[i])); //  "Role {i}"
+                authClaims.Add(new Claim($"Role", userRoles[i])); 
             }
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
