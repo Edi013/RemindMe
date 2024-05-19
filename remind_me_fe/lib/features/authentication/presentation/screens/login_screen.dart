@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:remind_me_fe/core/constants.dart';
 import 'package:remind_me_fe/core/router/app_router.gr.dart';
 import 'package:remind_me_fe/core/theme/theme_config.dart';
 import 'package:remind_me_fe/features/authentication/presentation/controllers/login_controller.dart';
@@ -18,8 +19,8 @@ class LoginScreen extends StatelessWidget {
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage(
-                "../../../../assets/images/pier-lake-hallstatt-austria.jpg"),
+            image: AssetImage(backgroundImagePath),
+            //"../../../../assets/images/pier-lake-hallstatt-austria.jpg"),
             fit: BoxFit.fill,
           ),
         ),

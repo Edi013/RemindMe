@@ -40,7 +40,8 @@ Scaffold buildListFromTodos(BuildContext context, String todoListName) {
       decoration: const BoxDecoration(
         image: DecorationImage(
           image: AssetImage(
-              "../../../../assets/images/pier-lake-hallstatt-austria.jpg"),
+              //"../../../../assets/images/pier-lake-hallstatt-austria.jpg"),
+              backgroundImagePath),
           fit: BoxFit.fill,
         ),
       ),

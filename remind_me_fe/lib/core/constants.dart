@@ -55,3 +55,7 @@ const String selectedThemeSharedPreferances = 'selectedTheme';
 
 // Add - Update form
 const String difficultyLabelHintText = "1 to 10";
+
+//Background image path
+const String backgroundImagePath =
+    "assets/images/pier-lake-hallstatt-austria.jpg";

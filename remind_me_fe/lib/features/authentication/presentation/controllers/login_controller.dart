@@ -43,7 +43,6 @@ class LoginController {
         }
       } catch (error) {
         buildSnackBarMessage(context, errorMessageServiceNotPresent);
-        //throw Exception(errorMessageServiceNotPresent);
       }
     } else {
       buildSnackBarMessage(context, "Fill in properly your credentials.");

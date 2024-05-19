@@ -14,6 +14,7 @@ class TodoEntity {
     this.title = "",
     this.description = "",
     required this.startDate,
+    required this.creationDate,
     required this.endDate,
     this.isFinished = false,
     required this.difficulty,

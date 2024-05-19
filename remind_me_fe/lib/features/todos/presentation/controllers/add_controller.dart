@@ -36,10 +36,23 @@ class TodoAddController {
           : startDate.add(const Duration(days: 1));
       int difficulty = int.parse(_difficultyController.text);
       CurrentUser user = sl<CurrentUser>();
+
+      DateTime now = DateTime.now();
+      DateTime adjustedNow = DateTime(
+        now.year,
+        now.month,
+        now.day,
+        now.hour,
+        now.minute,
+        0,
+        0,
+      );
+
       TodoEntity newObject = TodoEntity(
         id: 0,
         title: title,
         description: description,
+        creationDate: adjustedNow,
         startDate: startDate,
         endDate: endDate,
         difficulty: difficulty,

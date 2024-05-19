@@ -1,7 +1,7 @@
 class CreateToDoRequest {
   String title;
   String description;
-  DateTime creationDate = DateTime.now();
+  DateTime creationDate;
   DateTime startDate;
   DateTime? endDate;
   bool isFinished;
@@ -20,7 +20,7 @@ class CreateToDoRequest {
   });
 
   Map<String, dynamic> toJson() {
-    return {
+    Map<String, dynamic> result = {
       'title': title,
       'description': description,
       'creationDate': creationDate.toIso8601String(),
@@ -30,5 +30,6 @@ class CreateToDoRequest {
       'difficulty': difficulty,
       'ownerId': ownerId,
     };
+    return result;
   }
 }

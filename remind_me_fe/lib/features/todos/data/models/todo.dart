@@ -23,9 +23,7 @@ class TodoModel extends TodoEntity {
           isFinished: isFinished,
           difficulty: difficulty,
           ownerId: ownerId,
-        ) {
-    //creationDate = DateTime.now();
-  }
+        );
 
   factory TodoModel.fromJson(Map<String, dynamic> json) {
     return TodoModel(
