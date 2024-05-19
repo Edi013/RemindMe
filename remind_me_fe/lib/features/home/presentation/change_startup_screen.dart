@@ -26,8 +26,7 @@ class ChangeStartupScreenContent extends StatelessWidget {
       child: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage(
-                "../../../../assets/images/pier-lake-hallstatt-austria.jpg"),
+            image: AssetImage(backgroundImagePath),
             fit: BoxFit.fill,
           ),
         ),

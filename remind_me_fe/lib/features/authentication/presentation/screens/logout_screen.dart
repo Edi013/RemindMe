@@ -25,8 +25,7 @@ class LogoutScreenContent extends StatelessWidget {
     return Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
-          image: AssetImage(
-              "../../../../assets/images/pier-lake-hallstatt-austria.jpg"),
+          image: AssetImage(backgroundImagePath),
           fit: BoxFit.fill,
         ),
       ),
