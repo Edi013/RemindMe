@@ -32,6 +32,7 @@ class LandscapeScaffold extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class Sidebar extends StatelessWidget {
   late SidebarXController _controller;
 

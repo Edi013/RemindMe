@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class PasswordFormField extends StatefulWidget {
   late TextEditingController _passwordController;
   late String _fieldName;
@@ -12,7 +13,9 @@ class PasswordFormField extends StatefulWidget {
   }
 
   @override
+  // ignore: library_private_types_in_public_api
   _PasswordFormFieldState createState() =>
+      // ignore: no_logic_in_create_state
       _PasswordFormFieldState(_passwordController, _fieldName);
 }
 

@@ -8,9 +8,15 @@ class TodoProvider extends ChangeNotifier {
   late List<TodoEntity> activeTodos = [];
   late List<TodoEntity> undoneTodos = [];
   late List<TodoEntity> doneTodos = [];
+  late List<TodoEntity> currentTodosToDisplay = [];
 
   TodoProvider(TodoRepositoryImpl repo) {
     repository = repo;
+  }
+
+  updateCurrentTodosToDisplay(List<TodoEntity> newList) {
+    currentTodosToDisplay = newList;
+    notifyListeners();
   }
 
   Future<List<TodoEntity>> getAllByUserIdTodos(String userId) async {
