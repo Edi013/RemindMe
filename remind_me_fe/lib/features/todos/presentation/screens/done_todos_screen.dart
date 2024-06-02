@@ -37,12 +37,8 @@ class DoneTodosScreenContent extends StatelessWidget {
         } else if (snapshot.hasError) {
           return Center(child: Text('Error: ${snapshot.error}'));
         } else {
-          return Row(
-            children: [
-              Flexible(
-                child: buildListFromTodos(context, doneTodosListName),
-              ),
-            ],
+          return Flexible(
+            child: buildListFromTodos(context, doneTodosListName),
           );
         }
       },

@@ -36,12 +36,8 @@ class TodoListScreenContent extends StatelessWidget {
         } else if (snapshot.hasError) {
           return Center(child: Text('Error: ${snapshot.error}'));
         } else {
-          return Row(
-            children: [
-              Flexible(
-                child: buildListFromTodos(context, allTodosListName),
-              ),
-            ],
+          return Flexible(
+            child: buildListFromTodos(context, allTodosListName),
           );
         }
       },

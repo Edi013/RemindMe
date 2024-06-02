@@ -8,30 +8,6 @@ import 'package:remind_me_fe/features/authentication/presentation/provider/curre
 import 'package:remind_me_fe/injection_container.dart';
 import 'package:sidebarx/sidebarx.dart';
 
-class LandscapeScaffold extends StatelessWidget {
-  final Widget child;
-
-  const LandscapeScaffold(this.child, {super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-
-    return Scaffold(
-      key: scaffoldKey,
-      body: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Sidebar(),
-          Expanded(child: child),
-          const RightBurgerButton(),
-        ],
-      ),
-      endDrawer: const RoutesDrawer(),
-    );
-  }
-}
-
 // ignore: must_be_immutable
 class Sidebar extends StatelessWidget {
   late SidebarXController _controller;
@@ -114,7 +90,7 @@ class Sidebar extends StatelessWidget {
           icon: Icons.add,
           label: 'New Task',
           onTap: () {
-            AutoRouter.of(context).replace(const TodoAddRoute());
+            AutoRouter.of(context).push(const TodoAddRoute());
           },
         ),
         SidebarXItem(
@@ -151,51 +127,6 @@ class Sidebar extends StatelessWidget {
 }
 
 // Portrait
-
-class PortraitScaffold extends StatelessWidget {
-  final double minimizeContentParameter = 0.1;
-  final Widget child;
-
-  const PortraitScaffold(this.child, {super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-
-    return Scaffold(
-      key: scaffoldKey,
-      body: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: LeftBurgerButton(),
-              ),
-              Container(
-                constraints: const BoxConstraints(maxWidth: 100, maxHeight: 60),
-                child: IconButton(
-                  icon: Image.asset('assets/images/rm_logo_landscape.png'),
-                  iconSize: 200,
-                  onPressed: () {
-                    AutoRouter.of(context).replace(const HomeRoute());
-                  },
-                ),
-              ),
-            ],
-          ),
-          Expanded(
-            child: child,
-          ),
-        ],
-      ),
-      drawer: const RoutesDrawer(),
-      bottomNavigationBar: const BottomBar(),
-    );
-  }
-}
 
 class BottomBar extends StatelessWidget {
   const BottomBar({super.key});
@@ -237,7 +168,7 @@ class BottomBar extends StatelessWidget {
           AutoRouter.of(context).replace(const DoneTodosRoute());
         }
         if (index == 2) {
-          AutoRouter.of(context).replace(const TodoAddRoute());
+          AutoRouter.of(context).push(const TodoAddRoute());
         }
         if (index == 3) {
           AutoRouter.of(context).replace(const ActiveTodosRoute());
@@ -345,9 +276,53 @@ class LayoutByOrientation extends StatelessWidget {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
         if (constraints.maxWidth > constraints.maxHeight) {
-          return LandscapeScaffold(child);
+          return Scaffold(
+            //key: scaffoldKey,
+            body: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Sidebar(),
+                Expanded(child: child),
+                const RightBurgerButton(),
+              ],
+            ),
+            endDrawer: const RoutesDrawer(),
+          );
         } else {
-          return PortraitScaffold(child);
+          return Scaffold(
+            body: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: LeftBurgerButton(),
+                    ),
+                    Container(
+                      constraints:
+                          const BoxConstraints(maxWidth: 100, maxHeight: 60),
+                      child: IconButton(
+                        icon:
+                            Image.asset('assets/images/rm_logo_landscape.png'),
+                        iconSize: 200,
+                        onPressed: () {
+                          AutoRouter.of(context).replace(const HomeRoute());
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                Expanded(
+                  child: child,
+                ),
+              ],
+            ),
+            drawer: const RoutesDrawer(),
+            bottomNavigationBar: const BottomBar(),
+          );
+          ;
         }
       },
     );
