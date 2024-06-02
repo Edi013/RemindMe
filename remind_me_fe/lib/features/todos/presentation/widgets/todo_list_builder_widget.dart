@@ -134,25 +134,11 @@ Scaffold buildListFromTodos(BuildContext context, String todoListName) {
                             ),
                             _buildCheckboxForTodo(
                               todo,
-                              (value) async {
-                                todo.isFinished = !todo.isFinished;
-                                await provider.update(
-                                  index,
-                                  todoListName,
-                                  TodoEntity.fromExistent(
-                                    id: todo.id,
-                                    title: todo.title,
-                                    description: todo.description,
-                                    creationDate: todo.creationDate,
-                                    startDate: todo.startDate,
-                                    endDate: todo.endDate,
-                                    difficulty: todo.difficulty,
-                                    ownerId: todo.ownerId,
-                                    isFinished: todo.isFinished,
-                                  ),
-                                );
-                              },
-                            ),
+                              todoListName,
+                              provider,
+                              index,
+                              searchTextFieldController.text,
+                            )
                           ],
                         ),
                         subtitle: Row(
@@ -249,10 +235,6 @@ Scaffold buildListFromTodos(BuildContext context, String todoListName) {
                       getTodosToDisplay(todoListName, provider),
                       searchTextFieldController.text),
                 );
-                // provider.updateCurrentTodosToDisplay(
-                //   getTodosToDisplay(todoListName, provider),
-                // );
-                // searchTextFieldController.clear();
               },
             ),
           ],
@@ -272,10 +254,40 @@ _buildAddButton(Function() onPressed) {
   );
 }
 
-_buildCheckboxForTodo(TodoEntity todo, Function(bool?) onPressed) {
+_buildCheckboxForTodo(TodoEntity todo, String todoListName,
+    TodoProvider provider, int index, String searchTextFieldControllerText) {
   return Checkbox(
     value: todo.isFinished,
-    onChanged: onPressed,
+    onChanged: (value) async {
+      todo.isFinished = !todo.isFinished;
+
+      int taskIndexForInitialList = index;
+      if (searchTextFieldControllerText.isNotEmpty) {
+        taskIndexForInitialList =
+            findIndexForTaskByListName(todo, todoListName, provider);
+      }
+
+      await provider.update(
+        taskIndexForInitialList,
+        todoListName,
+        TodoEntity.fromExistent(
+          id: todo.id,
+          title: todo.title,
+          description: todo.description,
+          creationDate: todo.creationDate,
+          startDate: todo.startDate,
+          endDate: todo.endDate,
+          difficulty: todo.difficulty,
+          ownerId: todo.ownerId,
+          isFinished: todo.isFinished,
+        ),
+      );
+
+      await provider.updateCurrentTodosToDisplay(
+        filterTodosListByTitle(getTodosToDisplay(todoListName, provider),
+            searchTextFieldControllerText),
+      );
+    },
   );
 }
 
