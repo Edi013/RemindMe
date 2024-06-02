@@ -119,9 +119,6 @@ class TodoProvider extends ChangeNotifier {
   }
 
   Future<void> obtainUndoneTodosFromAllTodos(String userId) async {
-    if (todos.isEmpty) {
-      await getAllByUserIdTodos(userId);
-    }
     undoneTodos = todos.where((todo) => todo.isFinished == false).toList();
     notifyListeners();
   }

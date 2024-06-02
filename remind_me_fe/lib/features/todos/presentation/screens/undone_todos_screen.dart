@@ -40,13 +40,7 @@ class UndoneTodosScreenContent extends StatelessWidget {
           return Row(
             children: [
               Flexible(
-                child: RefreshIndicator(
-                  onRefresh: () async {
-                    await sl<TodoProvider>()
-                        .getUndoneByUserIdTodos(currentUser.id!);
-                  },
-                  child: buildListFromTodos(context, undoneTodosListName),
-                ),
+                child: buildListFromTodos(context, undoneTodosListName),
               ),
             ],
           );

@@ -40,13 +40,7 @@ class DoneTodosScreenContent extends StatelessWidget {
           return Row(
             children: [
               Flexible(
-                child: RefreshIndicator(
-                  onRefresh: () async {
-                    await sl<TodoProvider>()
-                        .getDoneByUserIdTodos(currentUser.id!);
-                  },
-                  child: buildListFromTodos(context, doneTodosListName),
-                ),
+                child: buildListFromTodos(context, doneTodosListName),
               ),
             ],
           );

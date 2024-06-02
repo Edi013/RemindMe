@@ -39,13 +39,7 @@ class ActiveTodosScreenContent extends StatelessWidget {
           return Row(
             children: [
               Flexible(
-                child: RefreshIndicator(
-                  onRefresh: () async {
-                    await sl<TodoProvider>()
-                        .getActiveByUserIdTodos(currentUser.id!);
-                  },
-                  child: buildListFromTodos(context, activeTodosListName),
-                ),
+                child: buildListFromTodos(context, activeTodosListName),
               ),
             ],
           );

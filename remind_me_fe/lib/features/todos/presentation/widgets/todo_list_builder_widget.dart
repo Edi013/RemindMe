@@ -90,9 +90,9 @@ Scaffold buildListFromTodos(BuildContext context, String todoListName) {
               padding: const EdgeInsets.fromLTRB(4, 10, 4, 10),
               child: TextFormField(
                 controller: searchTextFieldController,
+                cursorColor: white,
                 decoration: const InputDecoration(
-                    // sa i fac culoarea alba
-                    focusColor: Colors.red,
+                    iconColor: white,
                     labelText: 'Enter task title',
                     icon: Icon(Icons.search)),
                 onChanged: (value) {

@@ -66,7 +66,7 @@ class TodoAddController {
       if (Navigator.canPop(context)) {
         Navigator.pop(context);
       } else {
-        AutoRouter.of(context).replace(const HomeRoute());
+        AutoRouter.of(context).push(const HomeRoute());
       }
     }
   }

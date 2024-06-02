@@ -39,13 +39,7 @@ class TodoListScreenContent extends StatelessWidget {
           return Row(
             children: [
               Flexible(
-                child: RefreshIndicator(
-                  onRefresh: () async {
-                    await sl<TodoProvider>()
-                        .getAllByUserIdTodos(currentUser.id!);
-                  },
-                  child: buildListFromTodos(context, allTodosListName),
-                ),
+                child: buildListFromTodos(context, allTodosListName),
               ),
             ],
           );
