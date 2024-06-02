@@ -183,7 +183,7 @@ Scaffold buildListFromTodos(BuildContext context, String todoListName) {
                                 IconButton(
                                   onPressed: () async {
                                     await provider.delete(todo.id);
-                                    await provider.updateCurrentTodosToDisplay(
+                                    provider.updateCurrentTodosToDisplay(
                                       filterTodosListByTitle(
                                           getTodosToDisplay(
                                               todoListName, provider),
@@ -215,7 +215,7 @@ Scaffold buildListFromTodos(BuildContext context, String todoListName) {
                                 listName: todoListName),
                           );
 
-                          await provider.updateCurrentTodosToDisplay(
+                          provider.updateCurrentTodosToDisplay(
                             filterTodosListByTitle(
                                 getTodosToDisplay(todoListName, provider),
                                 searchTextFieldController.text),
@@ -231,7 +231,7 @@ Scaffold buildListFromTodos(BuildContext context, String todoListName) {
               () async {
                 await AutoRouter.of(context).push(const TodoAddRoute());
 
-                await provider.updateCurrentTodosToDisplay(
+                provider.updateCurrentTodosToDisplay(
                   filterTodosListByTitle(
                       getTodosToDisplay(todoListName, provider),
                       searchTextFieldController.text),
@@ -284,7 +284,7 @@ _buildCheckboxForTodo(TodoEntity todo, String todoListName,
         ),
       );
 
-      await provider.updateCurrentTodosToDisplay(
+      provider.updateCurrentTodosToDisplay(
         filterTodosListByTitle(getTodosToDisplay(todoListName, provider),
             searchTextFieldControllerText),
       );
