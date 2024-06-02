@@ -34,7 +34,7 @@ class LoginController {
         var result = await provider.login(credentials);
         if (result.httpStatusCode == HttpStatus.accepted) {
           _saveUserAuthenticationData(result.token);
-          AutoRouter.of(context).push(const HomeRoute());
+          AutoRouter.of(context).replace(const HomeRoute());
         } else if (result.httpStatusCode == HttpStatus.badRequest) {
           buildSnackBarMessage(context, result.message);
         } else {

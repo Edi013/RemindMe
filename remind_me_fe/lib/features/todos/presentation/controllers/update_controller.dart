@@ -1,5 +1,7 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:remind_me_fe/core/router/app_router.gr.dart';
 import 'package:remind_me_fe/features/todos/domain/entities/todo.dart';
 import 'package:remind_me_fe/features/todos/presentation/providers/todo_provider.dart';
 
@@ -69,8 +71,8 @@ class TodoUpdateController {
     return null;
   }
 
-  void updateItem(int index, TodoEntity toDoToUpdate, BuildContext context,
-      String listName) {
+  Future<void> updateItem(int index, TodoEntity toDoToUpdate,
+      BuildContext context, String listName) async {
     if (formKey.currentState!.validate()) {
       DateTime startDate = DateTime.parse(startDateController.text);
       DateTime? endDate = endDateController.text != ""
@@ -90,10 +92,14 @@ class TodoUpdateController {
         isFinished: toDoToUpdate.isFinished,
       );
 
-      Provider.of<TodoProvider>(context, listen: false)
+      await Provider.of<TodoProvider>(context, listen: false)
           .update(index, listName, updatedTodoEntity);
 
-      Navigator.pop(context);
+      if (Navigator.canPop(context)) {
+        Navigator.pop(context);
+      } else {
+        AutoRouter.of(context).replace(const HomeRoute());
+      }
     }
   }
 

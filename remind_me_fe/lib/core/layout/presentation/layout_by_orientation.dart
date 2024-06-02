@@ -104,7 +104,7 @@ class Sidebar extends StatelessWidget {
             icon: Image.asset('assets/images/rm_logo_landscape.png'),
             iconSize: 200,
             onPressed: () {
-              AutoRouter.of(context).push(const HomeRoute());
+              AutoRouter.of(context).replace(const HomeRoute());
             },
           ),
         );
@@ -121,28 +121,28 @@ class Sidebar extends StatelessWidget {
           icon: Icons.list,
           label: 'All Tasks',
           onTap: () {
-            AutoRouter.of(context).push(const TodoListRoute());
+            AutoRouter.of(context).replace(const TodoListRoute());
           },
         ),
         SidebarXItem(
           icon: Icons.pending_actions_sharp,
           label: 'Active ',
           onTap: () {
-            AutoRouter.of(context).push(const ActiveTodosRoute());
+            AutoRouter.of(context).replace(const ActiveTodosRoute());
           },
         ),
         SidebarXItem(
           icon: Icons.unpublished_rounded,
           label: 'Unfinished',
           onTap: () {
-            AutoRouter.of(context).push(const UndoneTodosRoute());
+            AutoRouter.of(context).replace(const UndoneTodosRoute());
           },
         ),
         SidebarXItem(
           icon: Icons.done,
           label: 'Finished',
           onTap: () {
-            AutoRouter.of(context).push(const DoneTodosRoute());
+            AutoRouter.of(context).replace(const DoneTodosRoute());
           },
         ),
       ],
@@ -178,10 +178,9 @@ class PortraitScaffold extends StatelessWidget {
                 constraints: const BoxConstraints(maxWidth: 100, maxHeight: 60),
                 child: IconButton(
                   icon: Image.asset('assets/images/rm_logo_landscape.png'),
-                  iconSize:
-                      200, //45 * (MediaQuery.of(context).size.height / 800),
+                  iconSize: 200,
                   onPressed: () {
-                    AutoRouter.of(context).push(const HomeRoute());
+                    AutoRouter.of(context).replace(const HomeRoute());
                   },
                 ),
               ),
@@ -232,19 +231,19 @@ class BottomBar extends StatelessWidget {
       currentIndex: 2,
       onTap: (int index) {
         if (index == 0) {
-          AutoRouter.of(context).push(const UndoneTodosRoute());
+          AutoRouter.of(context).replace(const UndoneTodosRoute());
         }
         if (index == 1) {
-          AutoRouter.of(context).push(const DoneTodosRoute());
+          AutoRouter.of(context).replace(const DoneTodosRoute());
         }
         if (index == 2) {
           AutoRouter.of(context).push(const TodoAddRoute());
         }
         if (index == 3) {
-          AutoRouter.of(context).push(const ActiveTodosRoute());
+          AutoRouter.of(context).replace(const ActiveTodosRoute());
         }
         if (index == 4) {
-          AutoRouter.of(context).push(const TodoListRoute());
+          AutoRouter.of(context).replace(const TodoListRoute());
         }
       },
     );

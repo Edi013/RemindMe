@@ -47,13 +47,18 @@ List<TodoEntity> filterTodosListByTitle(
       .toList();
 }
 
+int findIndexForTaskByListName(todo, todoListName, provider) {
+  return getTodosToDisplay(todoListName, provider).indexOf(todo);
+}
+
 Scaffold buildListFromTodos(BuildContext context, String todoListName) {
   TodoProvider provider = sl<TodoProvider>();
   final TextEditingController searchTextFieldController =
       TextEditingController();
 
   String title = getTitleForListName(todoListName);
-  provider.currentTodosToDisplay = getTodosToDisplay(todoListName, provider);
+  provider
+      .updateCurrentTodosToDisplay(getTodosToDisplay(todoListName, provider));
 
   return Scaffold(
     body: Container(
@@ -71,13 +76,24 @@ Scaffold buildListFromTodos(BuildContext context, String todoListName) {
         ),
         child: Column(
           children: [
+            const Padding(
+              padding: EdgeInsets.fromLTRB(0, 4, 0, 2),
+              child: Text(
+                'Task finder',
+                style: TextStyle(
+                  fontSize: kHeadingMediumFontSize,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.fromLTRB(4, 10, 4, 10),
               child: TextFormField(
                 controller: searchTextFieldController,
                 decoration: const InputDecoration(
+                    // sa i fac culoarea alba
                     focusColor: Colors.red,
-                    labelText: 'Find a task by title',
+                    labelText: 'Enter task title',
                     icon: Icon(Icons.search)),
                 onChanged: (value) {
                   provider.updateCurrentTodosToDisplay(
@@ -94,7 +110,7 @@ Scaffold buildListFromTodos(BuildContext context, String todoListName) {
                   child: Text(
                     '$title (${provider.currentTodosToDisplay.length})',
                     style: const TextStyle(
-                      fontSize: 20.0,
+                      fontSize: kHeadingMediumFontSize,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -135,11 +151,6 @@ Scaffold buildListFromTodos(BuildContext context, String todoListName) {
                                     isFinished: todo.isFinished,
                                   ),
                                 );
-                                provider.updateCurrentTodosToDisplay(
-                                    getTodosToDisplay(todoListName, provider));
-                                if (searchTextFieldController.text.isNotEmpty) {
-                                  searchTextFieldController.clear();
-                                }
                               },
                             ),
                           ],
@@ -195,17 +206,29 @@ Scaffold buildListFromTodos(BuildContext context, String todoListName) {
                             ),
                           ],
                         ),
-                        onTap: () {
-                          AutoRouter.of(context).push(TodoUpdateRoute(
-                              index: index,
+                        onTap: () async {
+                          if (searchTextFieldController.text.isEmpty) {
+                            AutoRouter.of(context).push(TodoUpdateRoute(
+                                index: index,
+                                todoId: todo.id,
+                                listName: todoListName));
+                            return;
+                          }
+
+                          int taskIndexForInitialList =
+                              findIndexForTaskByListName(
+                                  todo, todoListName, provider);
+
+                          await AutoRouter.of(context).push(TodoUpdateRoute(
+                              index: taskIndexForInitialList,
                               todoId: todo.id,
                               listName: todoListName));
-                          provider.updateCurrentTodosToDisplay(
-                            getTodosToDisplay(todoListName, provider),
+
+                          await provider.updateCurrentTodosToDisplay(
+                            filterTodosListByTitle(
+                                getTodosToDisplay(todoListName, provider),
+                                searchTextFieldController.text),
                           );
-                          if (searchTextFieldController.text.isNotEmpty) {
-                            searchTextFieldController.clear();
-                          }
                         },
                       );
                     },
@@ -214,14 +237,22 @@ Scaffold buildListFromTodos(BuildContext context, String todoListName) {
               ),
             ),
             _buildAddButton(
-              () {
-                AutoRouter.of(context).push(const TodoAddRoute());
-                provider.updateCurrentTodosToDisplay(
-                  getTodosToDisplay(todoListName, provider),
-                );
-                if (searchTextFieldController.text.isNotEmpty) {
-                  searchTextFieldController.clear();
+              () async {
+                if (searchTextFieldController.text.isEmpty) {
+                  await AutoRouter.of(context).push(const TodoAddRoute());
+                  return;
                 }
+                await AutoRouter.of(context).push(const TodoAddRoute());
+
+                await provider.updateCurrentTodosToDisplay(
+                  filterTodosListByTitle(
+                      getTodosToDisplay(todoListName, provider),
+                      searchTextFieldController.text),
+                );
+                // provider.updateCurrentTodosToDisplay(
+                //   getTodosToDisplay(todoListName, provider),
+                // );
+                // searchTextFieldController.clear();
               },
             ),
           ],

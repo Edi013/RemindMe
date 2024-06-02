@@ -1,5 +1,7 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:remind_me_fe/core/router/app_router.gr.dart';
 import 'package:remind_me_fe/features/authentication/presentation/provider/current_user.dart';
 import 'package:remind_me_fe/features/todos/domain/entities/todo.dart';
 import 'package:remind_me_fe/features/todos/presentation/providers/todo_provider.dart';
@@ -57,9 +59,13 @@ class TodoAddController {
         ownerId: user.id!,
       );
 
-      Provider.of<TodoProvider>(context, listen: false).add(newObject);
+      await Provider.of<TodoProvider>(context, listen: false).add(newObject);
 
-      Navigator.pop(context);
+      if (Navigator.canPop(context)) {
+        Navigator.pop(context);
+      } else {
+        AutoRouter.of(context).replace(const HomeRoute());
+      }
     }
   }
 
