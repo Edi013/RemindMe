@@ -24,10 +24,10 @@ class LandscapeScaffold extends StatelessWidget {
         children: [
           Sidebar(),
           Expanded(child: child),
-          const BurgerButton(),
+          const RightBurgerButton(),
         ],
       ),
-      drawer: const RoutesDrawer(),
+      endDrawer: const RoutesDrawer(),
     );
   }
 }
@@ -114,7 +114,7 @@ class Sidebar extends StatelessWidget {
           icon: Icons.add,
           label: 'New Task',
           onTap: () {
-            AutoRouter.of(context).push(const TodoAddRoute());
+            AutoRouter.of(context).replace(const TodoAddRoute());
           },
         ),
         SidebarXItem(
@@ -172,7 +172,7 @@ class PortraitScaffold extends StatelessWidget {
             children: [
               const Padding(
                 padding: EdgeInsets.all(8.0),
-                child: BurgerButton(),
+                child: LeftBurgerButton(),
               ),
               Container(
                 constraints: const BoxConstraints(maxWidth: 100, maxHeight: 60),
@@ -237,7 +237,7 @@ class BottomBar extends StatelessWidget {
           AutoRouter.of(context).replace(const DoneTodosRoute());
         }
         if (index == 2) {
-          AutoRouter.of(context).push(const TodoAddRoute());
+          AutoRouter.of(context).replace(const TodoAddRoute());
         }
         if (index == 3) {
           AutoRouter.of(context).replace(const ActiveTodosRoute());
@@ -251,14 +251,27 @@ class BottomBar extends StatelessWidget {
 }
 
 // Common
-class BurgerButton extends StatelessWidget {
-  const BurgerButton({super.key});
+class LeftBurgerButton extends StatelessWidget {
+  const LeftBurgerButton({super.key});
 
   @override
   Widget build(BuildContext context) {
     return const Column(
       children: [
         DrawerButton(),
+      ],
+    );
+  }
+}
+
+class RightBurgerButton extends StatelessWidget {
+  const RightBurgerButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Column(
+      children: [
+        EndDrawerButton(),
       ],
     );
   }
@@ -290,31 +303,31 @@ class RoutesDrawer extends StatelessWidget {
           ListTile(
             title: const Text('User Profile'),
             onTap: () {
-              AutoRouter.of(context).push(const UserProfileRoute());
+              AutoRouter.of(context).replace(const UserProfileRoute());
             },
           ),
           ListTile(
             title: const Text('Tasks'),
             onTap: () {
-              AutoRouter.of(context).push(const HomeRoute());
+              AutoRouter.of(context).replace(const HomeRoute());
             },
           ),
           ListTile(
             title: const Text('Theme'),
             onTap: () {
-              AutoRouter.of(context).push(ThemeRoute(context: context));
+              AutoRouter.of(context).replace(ThemeRoute(context: context));
             },
           ),
           ListTile(
             title: const Text('Startup View'),
             onTap: () {
-              AutoRouter.of(context).push(const ChangeStartupRoute());
+              AutoRouter.of(context).replace(const ChangeStartupRoute());
             },
           ),
           ListTile(
             title: const Text('Logout'),
             onTap: () {
-              AutoRouter.of(context).push(const LogoutRoute());
+              AutoRouter.of(context).replace(const LogoutRoute());
             },
           ),
         ],
