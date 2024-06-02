@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -9,6 +8,7 @@ import 'package:remind_me_fe/features/authentication/presentation/provider/auth_
 import 'package:remind_me_fe/features/todos/presentation/providers/todo_provider.dart';
 import 'package:remind_me_fe/features/theme/presentation/providers/theme_provider.dart';
 import 'package:remind_me_fe/injection_container.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,7 +28,7 @@ Future<void> main() async {
       ),
     );
 
-    if (Platform.isWindows) {
+    if (!kIsWeb) {
       doWhenWindowReady(() {
         appWindow.minSize = const Size(500, 500);
       });
