@@ -80,7 +80,7 @@ class Sidebar extends StatelessWidget {
             icon: Image.asset('assets/images/rm_logo_landscape.png'),
             iconSize: 200,
             onPressed: () {
-              AutoRouter.of(context).replace(const HomeRoute());
+              AutoRouter.of(context).push(const HomeRoute());
             },
           ),
         );
@@ -134,6 +134,7 @@ class BottomBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
+    final greetingsLabel = 'Hello ${sl<CurrentUser>().nickname ?? "User"}';
     return BottomNavigationBar(
       items: <BottomNavigationBarItem>[
         const BottomNavigationBarItem(
@@ -146,7 +147,7 @@ class BottomBar extends StatelessWidget {
         ),
         BottomNavigationBarItem(
           icon: const Icon(Icons.add, color: white),
-          label: 'Hello ${sl<CurrentUser>().nickname ?? "User"}',
+          label: greetingsLabel,
           //backgroundColor modifies the entire  bar
           backgroundColor: theme.colorScheme.primary.withOpacity(0.85),
         ),
@@ -277,7 +278,6 @@ class LayoutByOrientation extends StatelessWidget {
       builder: (BuildContext context, BoxConstraints constraints) {
         if (constraints.maxWidth > constraints.maxHeight) {
           return Scaffold(
-            //key: scaffoldKey,
             body: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -308,7 +308,7 @@ class LayoutByOrientation extends StatelessWidget {
                             Image.asset('assets/images/rm_logo_landscape.png'),
                         iconSize: 200,
                         onPressed: () {
-                          AutoRouter.of(context).replace(const HomeRoute());
+                          AutoRouter.of(context).push(const HomeRoute());
                         },
                       ),
                     ),
@@ -322,7 +322,6 @@ class LayoutByOrientation extends StatelessWidget {
             drawer: const RoutesDrawer(),
             bottomNavigationBar: const BottomBar(),
           );
-          ;
         }
       },
     );
