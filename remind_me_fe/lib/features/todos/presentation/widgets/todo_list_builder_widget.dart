@@ -71,9 +71,6 @@ Scaffold buildListFromTodos(BuildContext context, String todoListName) {
       child: Card(
         color: Colors.black.withOpacity(0.7),
         elevation: 5.0,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
-        ),
         child: Column(
           children: [
             const Padding(
