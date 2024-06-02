@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:remind_me_fe/core/router/app_router.dart';
@@ -24,6 +27,12 @@ Future<void> main() async {
         child: MyApp(),
       ),
     );
+
+    if (Platform.isWindows) {
+      doWhenWindowReady(() {
+        appWindow.minSize = const Size(500, 500);
+      });
+    }
   } catch (e, stackTrace) {
     // ignore: avoid_print
     print("Error: $e + Stacktrace: $stackTrace");
