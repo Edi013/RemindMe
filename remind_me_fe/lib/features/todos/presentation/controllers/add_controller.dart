@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -59,9 +61,13 @@ class TodoAddController {
         ownerId: user.id!,
       );
 
-      Provider.of<TodoProvider>(context, listen: false).add(newObject);
+      await Provider.of<TodoProvider>(context, listen: false).add(newObject);
 
-      Navigator.pop(context);
+      if (Navigator.canPop(context)) {
+        Navigator.pop(context);
+      } else {
+        AutoRouter.of(context).push(const HomeRoute());
+      }
     }
   }
 

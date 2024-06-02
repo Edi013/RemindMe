@@ -9,79 +9,105 @@ import 'package:remind_me_fe/features/todos/domain/entities/todo.dart';
 import 'package:remind_me_fe/features/todos/presentation/providers/todo_provider.dart';
 import 'package:remind_me_fe/injection_container.dart';
 
-Scaffold buildListFromTodos(BuildContext context, String todoListName) {
-  TodoProvider provider = sl<TodoProvider>();
-
-  List<TodoEntity> todos;
-  String title = "";
+List<TodoEntity> getTodosToDisplay(String todoListName, TodoProvider provider) {
   switch (todoListName) {
     case allTodosListName:
-      todos = provider.todos;
-      title = 'All tasks';
-      break;
+      return provider.todos;
     case activeTodosListName:
-      todos = provider.activeTodos;
-      title = 'Active tasks';
-      break;
+      return provider.activeTodos;
     case undoneTodosListName:
-      todos = provider.undoneTodos;
-      title = 'Tasks not finished';
-      break;
+      return provider.undoneTodos;
     case doneTodosListName:
-      todos = provider.doneTodos;
-      title = 'Finished tasks';
-      break;
+      return provider.doneTodos;
     default:
       throw error_message_constants_not_used_list_name;
   }
+}
+
+String getTitleForListName(String todoListName) {
+  switch (todoListName) {
+    case allTodosListName:
+      return 'All tasks';
+    case activeTodosListName:
+      return 'Active tasks';
+    case undoneTodosListName:
+      return 'Tasks not finished';
+    case doneTodosListName:
+      return 'Finished tasks';
+    default:
+      throw error_message_constants_not_used_list_name;
+  }
+}
+
+List<TodoEntity> filterTodosListByTitle(
+    List<TodoEntity> listToFilter, String stringToSearchFor) {
+  return listToFilter
+      .where((element) =>
+          element.title.toLowerCase().contains(stringToSearchFor.toLowerCase()))
+      .toList();
+}
+
+int findIndexForTaskByListName(todo, todoListName, provider) {
+  return getTodosToDisplay(todoListName, provider).indexOf(todo);
+}
+
+Scaffold buildListFromTodos(BuildContext context, String todoListName) {
+  TodoProvider provider = sl<TodoProvider>();
+  final TextEditingController searchTextFieldController =
+      TextEditingController();
+
+  String title = getTitleForListName(todoListName);
+  provider
+      .updateCurrentTodosToDisplay(getTodosToDisplay(todoListName, provider));
 
   return Scaffold(
     body: Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
-          image: AssetImage(
-              //"../../../../assets/images/pier-lake-hallstatt-austria.jpg"),
-              backgroundImagePath),
+          image: AssetImage(backgroundImagePath),
           fit: BoxFit.fill,
         ),
       ),
       child: Card(
         color: Colors.black.withOpacity(0.7),
         elevation: 5.0,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
-        ),
         child: Column(
           children: [
+            const Padding(
+              padding: EdgeInsets.fromLTRB(0, 4, 0, 2),
+              child: Text(
+                'Task finder',
+                style: TextStyle(
+                  fontSize: kHeadingMediumFontSize,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(4, 10, 4, 10),
+              child: TextFormField(
+                controller: searchTextFieldController,
+                cursorColor: white,
+                decoration: const InputDecoration(
+                    iconColor: white,
+                    labelText: 'Enter task title',
+                    icon: Icon(Icons.search)),
+                onChanged: (value) {
+                  provider.updateCurrentTodosToDisplay(
+                    filterTodosListByTitle(
+                        getTodosToDisplay(todoListName, provider), value),
+                  );
+                },
+              ),
+            ),
             Consumer<TodoProvider>(
               builder: (context, todoProvider, child) {
-                switch (todoListName) {
-                  case allTodosListName:
-                    todos = provider.todos;
-                    title = 'All tasks';
-                    break;
-                  case activeTodosListName:
-                    todos = provider.activeTodos;
-                    title = 'Active tasks';
-                    break;
-                  case undoneTodosListName:
-                    todos = provider.undoneTodos;
-                    title = 'Tasks not finished';
-                    break;
-                  case doneTodosListName:
-                    todos = provider.doneTodos;
-                    title = 'Finished tasks';
-                    break;
-                  default:
-                    throw error_message_constants_not_used_list_name;
-                }
-
                 return Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Text(
-                    '$title (${todos.length})',
+                    '$title (${provider.currentTodosToDisplay.length})',
                     style: const TextStyle(
-                      fontSize: 20.0,
+                      fontSize: kHeadingMediumFontSize,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -92,9 +118,9 @@ Scaffold buildListFromTodos(BuildContext context, String todoListName) {
               child: Consumer<TodoProvider>(
                 builder: (context, toDoProvider, child) {
                   return ListView.builder(
-                    itemCount: todos.length,
+                    itemCount: provider.currentTodosToDisplay.length,
                     itemBuilder: (context, index) {
-                      TodoEntity todo = todos[index];
+                      TodoEntity todo = provider.currentTodosToDisplay[index];
                       return ListTile(
                         title: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -104,7 +130,12 @@ Scaffold buildListFromTodos(BuildContext context, String todoListName) {
                               title: todo.title,
                             ),
                             _buildCheckboxForTodo(
-                                todo, provider, index, todoListName),
+                              todo,
+                              todoListName,
+                              provider,
+                              index,
+                              searchTextFieldController.text,
+                            )
                           ],
                         ),
                         subtitle: Row(
@@ -147,7 +178,15 @@ Scaffold buildListFromTodos(BuildContext context, String todoListName) {
                                     content: todo.difficulty.toString()),
                                 _buildLineSeparator(),
                                 IconButton(
-                                  onPressed: () => provider.delete(todo.id),
+                                  onPressed: () async {
+                                    await provider.delete(todo.id);
+                                    provider.updateCurrentTodosToDisplay(
+                                      filterTodosListByTitle(
+                                          getTodosToDisplay(
+                                              todoListName, provider),
+                                          searchTextFieldController.text),
+                                    );
+                                  },
                                   icon: const Icon(
                                     Icons.delete,
                                     color: Colors.red,
@@ -158,11 +197,26 @@ Scaffold buildListFromTodos(BuildContext context, String todoListName) {
                             ),
                           ],
                         ),
-                        onTap: () {
-                          AutoRouter.of(context).push(TodoUpdateRoute(
-                              index: index,
-                              todoId: todo.id,
-                              listName: todoListName));
+                        onTap: () async {
+                          int taskIndexForInitialList = index;
+                          if (searchTextFieldController.text.isNotEmpty) {
+                            taskIndexForInitialList =
+                                findIndexForTaskByListName(
+                                    todo, todoListName, provider);
+                          }
+
+                          await AutoRouter.of(context).push(
+                            TodoUpdateRoute(
+                                index: taskIndexForInitialList,
+                                todoId: todo.id,
+                                listName: todoListName),
+                          );
+
+                          provider.updateCurrentTodosToDisplay(
+                            filterTodosListByTitle(
+                                getTodosToDisplay(todoListName, provider),
+                                searchTextFieldController.text),
+                          );
                         },
                       );
                     },
@@ -170,7 +224,17 @@ Scaffold buildListFromTodos(BuildContext context, String todoListName) {
                 },
               ),
             ),
-            _buildAddButton(context),
+            _buildAddButton(
+              () async {
+                await AutoRouter.of(context).push(const TodoAddRoute());
+
+                provider.updateCurrentTodosToDisplay(
+                  filterTodosListByTitle(
+                      getTodosToDisplay(todoListName, provider),
+                      searchTextFieldController.text),
+                );
+              },
+            ),
           ],
         ),
       ),
@@ -178,26 +242,31 @@ Scaffold buildListFromTodos(BuildContext context, String todoListName) {
   );
 }
 
-_buildAddButton(BuildContext context) {
+_buildAddButton(Function() onPressed) {
   return Padding(
     padding: const EdgeInsets.all(16.0),
     child: ElevatedButton(
-      onPressed: () {
-        AutoRouter.of(context).push(const TodoAddRoute());
-      },
+      onPressed: onPressed,
       child: const Text('+'),
     ),
   );
 }
 
-_buildCheckboxForTodo(
-    TodoEntity todo, TodoProvider provider, int index, String todoListName) {
+_buildCheckboxForTodo(TodoEntity todo, String todoListName,
+    TodoProvider provider, int index, String searchTextFieldControllerText) {
   return Checkbox(
     value: todo.isFinished,
-    onChanged: (value) {
+    onChanged: (value) async {
       todo.isFinished = !todo.isFinished;
-      provider.update(
-        index,
+
+      int taskIndexForInitialList = index;
+      if (searchTextFieldControllerText.isNotEmpty) {
+        taskIndexForInitialList =
+            findIndexForTaskByListName(todo, todoListName, provider);
+      }
+
+      await provider.update(
+        taskIndexForInitialList,
         todoListName,
         TodoEntity.fromExistent(
           id: todo.id,
@@ -210,6 +279,11 @@ _buildCheckboxForTodo(
           ownerId: todo.ownerId,
           isFinished: todo.isFinished,
         ),
+      );
+
+      provider.updateCurrentTodosToDisplay(
+        filterTodosListByTitle(getTodosToDisplay(todoListName, provider),
+            searchTextFieldControllerText),
       );
     },
   );
@@ -233,11 +307,11 @@ Widget _buildRichTextForDescription(
       data: content,
       styleSheet: MarkdownStyleSheet(
         p: const TextStyle(fontSize: kFontSize),
-        h1: TextStyle(
-          color: const Color.fromARGB(255, 255, 255, 255),
+        h1: const TextStyle(
+          color: Color.fromARGB(255, 255, 255, 255),
         ),
-        h2: TextStyle(
-          color: const Color.fromARGB(255, 255, 255, 255),
+        h2: const TextStyle(
+          color: Color.fromARGB(255, 255, 255, 255),
         ),
       ),
     ),
@@ -305,29 +379,26 @@ Widget _buildRichTextForField(
     {required BuildContext context,
     required String title,
     String content = ""}) {
-  return Container(
-    //width: MediaQuery.of(context).size.width / 1.7,
-    child: RichText(
-      text: TextSpan(
-        text: title,
-        style: DefaultTextStyle.of(context).style.merge(
-              const TextStyle(
-                fontSize: kFontSize,
-              ),
+  return RichText(
+    text: TextSpan(
+      text: title,
+      style: DefaultTextStyle.of(context).style.merge(
+            const TextStyle(
+              fontSize: kFontSize,
             ),
-        children: <TextSpan>[
-          TextSpan(
-            text: content,
-            style: DefaultTextStyle.of(context).style.merge(
-                  const TextStyle(
-                    fontSize: kFontSize,
-                  ),
-                ),
           ),
-        ],
-      ),
-      maxLines: null,
+      children: <TextSpan>[
+        TextSpan(
+          text: content,
+          style: DefaultTextStyle.of(context).style.merge(
+                const TextStyle(
+                  fontSize: kFontSize,
+                ),
+              ),
+        ),
+      ],
     ),
+    maxLines: null,
   );
 }
 
@@ -335,20 +406,17 @@ Widget _buildRichTextForTitle({
   required BuildContext context,
   required String title,
 }) {
-  return Container(
-    //width: MediaQuery.of(context).size.width / 1.7,
-    child: RichText(
-      text: TextSpan(
-        text: title,
-        style: DefaultTextStyle.of(context).style.merge(
-              const TextStyle(
-                fontSize: kFontSize * 1.4,
-                fontWeight: FontWeight.bold,
-              ),
+  return RichText(
+    text: TextSpan(
+      text: title,
+      style: DefaultTextStyle.of(context).style.merge(
+            const TextStyle(
+              fontSize: kFontSize * 1.4,
+              fontWeight: FontWeight.bold,
             ),
-      ),
-      maxLines: null,
+          ),
     ),
+    maxLines: null,
   );
 }
 
@@ -358,50 +426,4 @@ String _dateTimeToString(DateTime dateTime) {
 
 String _avoidSingleDigit(int value) {
   return '${value < 10 ? '0$value' : value}';
-}
-
-class MarkdownTextField extends StatefulWidget {
-  @override
-  _MarkdownTextFieldState createState() => _MarkdownTextFieldState();
-}
-
-class _MarkdownTextFieldState extends State<MarkdownTextField> {
-  final TextEditingController _controller = TextEditingController();
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Markdown TextField Example'),
-      ),
-      body: Column(
-        children: [
-          Expanded(
-            child: TextField(
-              controller: _controller,
-              maxLines: null,
-              keyboardType: TextInputType.multiline,
-              decoration: const InputDecoration(
-                hintText: 'Input text here',
-                contentPadding: EdgeInsets.all(16.0),
-              ),
-            ),
-          ),
-          const Expanded(
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: EdgeInsets.all(16.0),
-                child: Markdown(
-                  data:
-                      '""" # Flutter Markdown Example\n\nThis is an example of how to use the `flutter_markdown` package in a Flutter app.\n\n- It supports basic text formatting like *italic* and **bold**.\n- You can create lists:\n  1. Item 1\n  2. Item 2\n- Links are clickable: [OpenAI](https://www.openai.com)\n\n## Give it a try!\n\nYou can experiment with different Markdown content here.\n"""',
-
-                  //data: _controller.text,
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 }

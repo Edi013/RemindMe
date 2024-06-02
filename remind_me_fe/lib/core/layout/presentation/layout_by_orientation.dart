@@ -8,30 +8,7 @@ import 'package:remind_me_fe/features/authentication/presentation/provider/curre
 import 'package:remind_me_fe/injection_container.dart';
 import 'package:sidebarx/sidebarx.dart';
 
-class LandscapeScaffold extends StatelessWidget {
-  final Widget child;
-
-  const LandscapeScaffold(this.child, {super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-
-    return Scaffold(
-      key: scaffoldKey,
-      body: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Sidebar(),
-          Expanded(child: child),
-          const BurgerButton(),
-        ],
-      ),
-      drawer: const RoutesDrawer(),
-    );
-  }
-}
-
+// ignore: must_be_immutable
 class Sidebar extends StatelessWidget {
   late SidebarXController _controller;
 
@@ -120,28 +97,28 @@ class Sidebar extends StatelessWidget {
           icon: Icons.list,
           label: 'All Tasks',
           onTap: () {
-            AutoRouter.of(context).push(const TodoListRoute());
+            AutoRouter.of(context).replace(const TodoListRoute());
           },
         ),
         SidebarXItem(
           icon: Icons.pending_actions_sharp,
           label: 'Active ',
           onTap: () {
-            AutoRouter.of(context).push(const ActiveTodosRoute());
+            AutoRouter.of(context).replace(const ActiveTodosRoute());
           },
         ),
         SidebarXItem(
           icon: Icons.unpublished_rounded,
           label: 'Unfinished',
           onTap: () {
-            AutoRouter.of(context).push(const UndoneTodosRoute());
+            AutoRouter.of(context).replace(const UndoneTodosRoute());
           },
         ),
         SidebarXItem(
           icon: Icons.done,
           label: 'Finished',
           onTap: () {
-            AutoRouter.of(context).push(const DoneTodosRoute());
+            AutoRouter.of(context).replace(const DoneTodosRoute());
           },
         ),
       ],
@@ -151,58 +128,13 @@ class Sidebar extends StatelessWidget {
 
 // Portrait
 
-class PortraitScaffold extends StatelessWidget {
-  final double minimizeContentParameter = 0.1;
-  final Widget child;
-
-  const PortraitScaffold(this.child, {super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-
-    return Scaffold(
-      key: scaffoldKey,
-      body: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: BurgerButton(),
-              ),
-              Container(
-                constraints: const BoxConstraints(maxWidth: 100, maxHeight: 60),
-                child: IconButton(
-                  icon: Image.asset('assets/images/rm_logo_landscape.png'),
-                  iconSize:
-                      200, //45 * (MediaQuery.of(context).size.height / 800),
-                  onPressed: () {
-                    AutoRouter.of(context).push(const HomeRoute());
-                  },
-                ),
-              ),
-            ],
-          ),
-          Expanded(
-            child: child,
-          ),
-        ],
-      ),
-      drawer: const RoutesDrawer(),
-      bottomNavigationBar: const BottomBar(),
-    );
-  }
-}
-
 class BottomBar extends StatelessWidget {
   const BottomBar({super.key});
 
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
+    final greetingsLabel = 'Hello ${sl<CurrentUser>().nickname ?? "User"}';
     return BottomNavigationBar(
       items: <BottomNavigationBarItem>[
         const BottomNavigationBarItem(
@@ -215,7 +147,7 @@ class BottomBar extends StatelessWidget {
         ),
         BottomNavigationBarItem(
           icon: const Icon(Icons.add, color: white),
-          label: 'Hello ${sl<CurrentUser>().nickname ?? "User"}',
+          label: greetingsLabel,
           //backgroundColor modifies the entire  bar
           backgroundColor: theme.colorScheme.primary.withOpacity(0.85),
         ),
@@ -231,19 +163,19 @@ class BottomBar extends StatelessWidget {
       currentIndex: 2,
       onTap: (int index) {
         if (index == 0) {
-          AutoRouter.of(context).push(const UndoneTodosRoute());
+          AutoRouter.of(context).replace(const UndoneTodosRoute());
         }
         if (index == 1) {
-          AutoRouter.of(context).push(const DoneTodosRoute());
+          AutoRouter.of(context).replace(const DoneTodosRoute());
         }
         if (index == 2) {
           AutoRouter.of(context).push(const TodoAddRoute());
         }
         if (index == 3) {
-          AutoRouter.of(context).push(const ActiveTodosRoute());
+          AutoRouter.of(context).replace(const ActiveTodosRoute());
         }
         if (index == 4) {
-          AutoRouter.of(context).push(const TodoListRoute());
+          AutoRouter.of(context).replace(const TodoListRoute());
         }
       },
     );
@@ -251,14 +183,27 @@ class BottomBar extends StatelessWidget {
 }
 
 // Common
-class BurgerButton extends StatelessWidget {
-  const BurgerButton({super.key});
+class LeftBurgerButton extends StatelessWidget {
+  const LeftBurgerButton({super.key});
 
   @override
   Widget build(BuildContext context) {
     return const Column(
       children: [
         DrawerButton(),
+      ],
+    );
+  }
+}
+
+class RightBurgerButton extends StatelessWidget {
+  const RightBurgerButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Column(
+      children: [
+        EndDrawerButton(),
       ],
     );
   }
@@ -290,31 +235,31 @@ class RoutesDrawer extends StatelessWidget {
           ListTile(
             title: const Text('User Profile'),
             onTap: () {
-              AutoRouter.of(context).push(const UserProfileRoute());
+              AutoRouter.of(context).replace(const UserProfileRoute());
             },
           ),
           ListTile(
             title: const Text('Tasks'),
             onTap: () {
-              AutoRouter.of(context).push(const HomeRoute());
+              AutoRouter.of(context).replace(const HomeRoute());
             },
           ),
           ListTile(
             title: const Text('Theme'),
             onTap: () {
-              AutoRouter.of(context).push(ThemeRoute(context: context));
+              AutoRouter.of(context).replace(ThemeRoute(context: context));
             },
           ),
           ListTile(
             title: const Text('Startup View'),
             onTap: () {
-              AutoRouter.of(context).push(const ChangeStartupRoute());
+              AutoRouter.of(context).replace(const ChangeStartupRoute());
             },
           ),
           ListTile(
             title: const Text('Logout'),
             onTap: () {
-              AutoRouter.of(context).push(const LogoutRoute());
+              AutoRouter.of(context).replace(const LogoutRoute());
             },
           ),
         ],
@@ -332,9 +277,51 @@ class LayoutByOrientation extends StatelessWidget {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
         if (constraints.maxWidth > constraints.maxHeight) {
-          return LandscapeScaffold(child);
+          return Scaffold(
+            body: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Sidebar(),
+                Expanded(child: child),
+                const RightBurgerButton(),
+              ],
+            ),
+            endDrawer: const RoutesDrawer(),
+          );
         } else {
-          return PortraitScaffold(child);
+          return Scaffold(
+            body: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: LeftBurgerButton(),
+                    ),
+                    Container(
+                      constraints:
+                          const BoxConstraints(maxWidth: 100, maxHeight: 60),
+                      child: IconButton(
+                        icon:
+                            Image.asset('assets/images/rm_logo_landscape.png'),
+                        iconSize: 200,
+                        onPressed: () {
+                          AutoRouter.of(context).push(const HomeRoute());
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                Expanded(
+                  child: child,
+                ),
+              ],
+            ),
+            drawer: const RoutesDrawer(),
+            bottomNavigationBar: const BottomBar(),
+          );
         }
       },
     );

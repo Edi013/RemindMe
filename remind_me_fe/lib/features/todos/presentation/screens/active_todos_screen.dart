@@ -36,18 +36,8 @@ class ActiveTodosScreenContent extends StatelessWidget {
         } else if (snapshot.hasError) {
           return Center(child: Text('Error: ${snapshot.error}'));
         } else {
-          return Row(
-            children: [
-              Flexible(
-                child: RefreshIndicator(
-                  onRefresh: () async {
-                    await sl<TodoProvider>()
-                        .getActiveByUserIdTodos(currentUser.id!);
-                  },
-                  child: buildListFromTodos(context, activeTodosListName),
-                ),
-              ),
-            ],
+          return Flexible(
+            child: buildListFromTodos(context, activeTodosListName),
           );
         }
       },

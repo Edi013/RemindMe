@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:remind_me_fe/core/layout/presentation/layout_by_orientation.dart';
@@ -35,18 +37,8 @@ class UndoneTodosScreenContent extends StatelessWidget {
         } else if (snapshot.hasError) {
           return Center(child: Text('Error: ${snapshot.error}'));
         } else {
-          return Row(
-            children: [
-              Flexible(
-                child: RefreshIndicator(
-                  onRefresh: () async {
-                    await sl<TodoProvider>()
-                        .getUndoneByUserIdTodos(currentUser.id!);
-                  },
-                  child: buildListFromTodos(context, undoneTodosListName),
-                ),
-              ),
-            ],
+          return Flexible(
+            child: buildListFromTodos(context, undoneTodosListName),
           );
         }
       },
