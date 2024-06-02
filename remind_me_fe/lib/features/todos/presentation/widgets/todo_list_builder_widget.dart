@@ -181,7 +181,15 @@ Scaffold buildListFromTodos(BuildContext context, String todoListName) {
                                     content: todo.difficulty.toString()),
                                 _buildLineSeparator(),
                                 IconButton(
-                                  onPressed: () => provider.delete(todo.id),
+                                  onPressed: () async {
+                                    await provider.delete(todo.id);
+                                    await provider.updateCurrentTodosToDisplay(
+                                      filterTodosListByTitle(
+                                          getTodosToDisplay(
+                                              todoListName, provider),
+                                          searchTextFieldController.text),
+                                    );
+                                  },
                                   icon: const Icon(
                                     Icons.delete,
                                     color: Colors.red,
@@ -193,22 +201,19 @@ Scaffold buildListFromTodos(BuildContext context, String todoListName) {
                           ],
                         ),
                         onTap: () async {
-                          if (searchTextFieldController.text.isEmpty) {
-                            AutoRouter.of(context).push(TodoUpdateRoute(
-                                index: index,
-                                todoId: todo.id,
-                                listName: todoListName));
-                            return;
+                          int taskIndexForInitialList = index;
+                          if (searchTextFieldController.text.isNotEmpty) {
+                            taskIndexForInitialList =
+                                findIndexForTaskByListName(
+                                    todo, todoListName, provider);
                           }
 
-                          int taskIndexForInitialList =
-                              findIndexForTaskByListName(
-                                  todo, todoListName, provider);
-
-                          await AutoRouter.of(context).push(TodoUpdateRoute(
-                              index: taskIndexForInitialList,
-                              todoId: todo.id,
-                              listName: todoListName));
+                          await AutoRouter.of(context).push(
+                            TodoUpdateRoute(
+                                index: taskIndexForInitialList,
+                                todoId: todo.id,
+                                listName: todoListName),
+                          );
 
                           await provider.updateCurrentTodosToDisplay(
                             filterTodosListByTitle(
@@ -224,10 +229,6 @@ Scaffold buildListFromTodos(BuildContext context, String todoListName) {
             ),
             _buildAddButton(
               () async {
-                if (searchTextFieldController.text.isEmpty) {
-                  await AutoRouter.of(context).push(const TodoAddRoute());
-                  return;
-                }
                 await AutoRouter.of(context).push(const TodoAddRoute());
 
                 await provider.updateCurrentTodosToDisplay(
