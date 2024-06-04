@@ -89,8 +89,8 @@ class Sidebar extends StatelessWidget {
         SidebarXItem(
           icon: Icons.add,
           label: 'New Task',
-          onTap: () {
-            AutoRouter.of(context).push(const TodoAddRoute());
+          onTap: () async {
+            AutoRouter.of(context).replace(const TodoAddRoute());
           },
         ),
         SidebarXItem(
@@ -161,7 +161,7 @@ class BottomBar extends StatelessWidget {
         ),
       ],
       currentIndex: 2,
-      onTap: (int index) {
+      onTap: (int index) async {
         if (index == 0) {
           AutoRouter.of(context).replace(const UndoneTodosRoute());
         }
@@ -169,7 +169,7 @@ class BottomBar extends StatelessWidget {
           AutoRouter.of(context).replace(const DoneTodosRoute());
         }
         if (index == 2) {
-          AutoRouter.of(context).push(const TodoAddRoute());
+          AutoRouter.of(context).replace(const TodoAddRoute());
         }
         if (index == 3) {
           AutoRouter.of(context).replace(const ActiveTodosRoute());
