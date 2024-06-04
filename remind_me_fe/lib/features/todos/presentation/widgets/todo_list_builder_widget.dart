@@ -51,192 +51,189 @@ int findIndexForTaskByListName(todo, todoListName, provider) {
   return getTodosToDisplay(todoListName, provider).indexOf(todo);
 }
 
-Scaffold buildListFromTodos(BuildContext context, String todoListName) {
+Widget buildListFromTodos(BuildContext context, String todoListName) {
   TodoProvider provider = sl<TodoProvider>();
   final TextEditingController searchTextFieldController =
       TextEditingController();
 
   String title = getTitleForListName(todoListName);
-  provider
-      .updateCurrentTodosToDisplay(getTodosToDisplay(todoListName, provider));
+  // provider
+  //     .updateCurrentTodosToDisplay(getTodosToDisplay(todoListName, provider));
 
-  return Scaffold(
-    body: Container(
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage(backgroundImagePath),
-          fit: BoxFit.fill,
-        ),
+  return Container(
+    decoration: const BoxDecoration(
+      image: DecorationImage(
+        image: AssetImage(backgroundImagePath),
+        fit: BoxFit.fill,
       ),
-      child: Card(
-        color: Colors.black.withOpacity(0.7),
-        elevation: 5.0,
-        child: Column(
-          children: [
-            const Padding(
-              padding: EdgeInsets.fromLTRB(0, 4, 0, 2),
-              child: Text(
-                'Task finder',
-                style: TextStyle(
-                  fontSize: kHeadingMediumFontSize,
-                  fontWeight: FontWeight.bold,
-                ),
+    ),
+    child: Card(
+      color: Colors.black.withOpacity(0.7),
+      elevation: 5.0,
+      child: Column(
+        children: [
+          const Padding(
+            padding: EdgeInsets.fromLTRB(0, 4, 0, 2),
+            child: Text(
+              'Task finder',
+              style: TextStyle(
+                fontSize: kHeadingMediumFontSize,
+                fontWeight: FontWeight.bold,
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(4, 10, 4, 10),
-              child: TextFormField(
-                controller: searchTextFieldController,
-                cursorColor: white,
-                decoration: const InputDecoration(
-                    iconColor: white,
-                    labelText: 'Enter task title',
-                    icon: Icon(Icons.search)),
-                onChanged: (value) {
-                  provider.updateCurrentTodosToDisplay(
-                    filterTodosListByTitle(
-                        getTodosToDisplay(todoListName, provider), value),
-                  );
-                },
-              ),
-            ),
-            Consumer<TodoProvider>(
-              builder: (context, todoProvider, child) {
-                return Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Text(
-                    '$title (${provider.currentTodosToDisplay.length})',
-                    style: const TextStyle(
-                      fontSize: kHeadingMediumFontSize,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                );
-              },
-            ),
-            Expanded(
-              child: Consumer<TodoProvider>(
-                builder: (context, toDoProvider, child) {
-                  return ListView.builder(
-                    itemCount: provider.currentTodosToDisplay.length,
-                    itemBuilder: (context, index) {
-                      TodoEntity todo = provider.currentTodosToDisplay[index];
-                      return ListTile(
-                        title: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            _buildRichTextForTitle(
-                              context: context,
-                              title: todo.title,
-                            ),
-                            _buildCheckboxForTodo(
-                              todo,
-                              todoListName,
-                              provider,
-                              index,
-                              searchTextFieldController.text,
-                            )
-                          ],
-                        ),
-                        subtitle: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Divider(),
-                                _buildRichTextForDescription(context,
-                                    'Description: \n', todo.description),
-                                const Divider(),
-                                _buildLineSeparator(),
-                                _buildRichTextForField(
-                                    context: context,
-                                    title: "Creation Date: ",
-                                    content:
-                                        _dateTimeToString(todo.creationDate!)),
-                                _buildLineSeparator(),
-                                _buildRichTextForField(
-                                    context: context,
-                                    title: "Start Date: ",
-                                    content: _dateTimeToString(todo.startDate)),
-                                _buildLineSeparator(),
-                                _buildRichTextForField(
-                                    context: context,
-                                    title: "End Date: ",
-                                    content: _dateTimeToString(todo.endDate)),
-                                _buildLineSeparator(),
-                                _buildRichTextForField(
-                                    context: context,
-                                    title: "Is finished: ",
-                                    content: todo.isFinished ? 'Yes' : 'No'),
-                                _buildLineSeparator(),
-                                _buildRichTextForField(
-                                    context: context,
-                                    title: "Difficulty: ",
-                                    content: todo.difficulty.toString()),
-                                _buildLineSeparator(),
-                                IconButton(
-                                  onPressed: () async {
-                                    await provider.delete(todo.id);
-                                    provider.updateCurrentTodosToDisplay(
-                                      filterTodosListByTitle(
-                                          getTodosToDisplay(
-                                              todoListName, provider),
-                                          searchTextFieldController.text),
-                                    );
-                                  },
-                                  icon: const Icon(
-                                    Icons.delete,
-                                    color: Colors.red,
-                                  ),
-                                ),
-                                const Divider(color: white),
-                              ],
-                            ),
-                          ],
-                        ),
-                        onTap: () async {
-                          int taskIndexForInitialList = index;
-                          if (searchTextFieldController.text.isNotEmpty) {
-                            taskIndexForInitialList =
-                                findIndexForTaskByListName(
-                                    todo, todoListName, provider);
-                          }
-
-                          await AutoRouter.of(context).push(
-                            TodoUpdateRoute(
-                                index: taskIndexForInitialList,
-                                todoId: todo.id,
-                                listName: todoListName),
-                          );
-
-                          provider.updateCurrentTodosToDisplay(
-                            filterTodosListByTitle(
-                                getTodosToDisplay(todoListName, provider),
-                                searchTextFieldController.text),
-                          );
-                        },
-                      );
-                    },
-                  );
-                },
-              ),
-            ),
-            _buildAddButton(
-              () async {
-                await AutoRouter.of(context).push(const TodoAddRoute());
-
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(4, 10, 4, 10),
+            child: TextFormField(
+              controller: searchTextFieldController,
+              cursorColor: white,
+              decoration: const InputDecoration(
+                  iconColor: white,
+                  labelText: 'Enter task title',
+                  icon: Icon(Icons.search)),
+              onChanged: (value) {
                 provider.updateCurrentTodosToDisplay(
                   filterTodosListByTitle(
-                      getTodosToDisplay(todoListName, provider),
-                      searchTextFieldController.text),
+                      getTodosToDisplay(todoListName, provider), value),
                 );
               },
             ),
-          ],
-        ),
+          ),
+          Consumer<TodoProvider>(
+            builder: (context, todoProvider, child) {
+              return Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Text(
+                  '$title (${provider.currentTodosToDisplay.length})',
+                  style: const TextStyle(
+                    fontSize: kHeadingMediumFontSize,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              );
+            },
+          ),
+          Expanded(
+            child: Consumer<TodoProvider>(
+              builder: (context, toDoProvider, child) {
+                return ListView.builder(
+                  itemCount: provider.currentTodosToDisplay.length,
+                  itemBuilder: (context, index) {
+                    TodoEntity todo = provider.currentTodosToDisplay[index];
+                    return ListTile(
+                      title: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          _buildRichTextForTitle(
+                            context: context,
+                            title: todo.title,
+                          ),
+                          _buildCheckboxForTodo(
+                            todo,
+                            todoListName,
+                            provider,
+                            index,
+                            searchTextFieldController.text,
+                          )
+                        ],
+                      ),
+                      subtitle: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Divider(),
+                              _buildRichTextForDescription(
+                                  context, 'Description: \n', todo.description),
+                              const Divider(),
+                              _buildLineSeparator(),
+                              _buildRichTextForField(
+                                  context: context,
+                                  title: "Creation Date: ",
+                                  content:
+                                      _dateTimeToString(todo.creationDate!)),
+                              _buildLineSeparator(),
+                              _buildRichTextForField(
+                                  context: context,
+                                  title: "Start Date: ",
+                                  content: _dateTimeToString(todo.startDate)),
+                              _buildLineSeparator(),
+                              _buildRichTextForField(
+                                  context: context,
+                                  title: "End Date: ",
+                                  content: _dateTimeToString(todo.endDate)),
+                              _buildLineSeparator(),
+                              _buildRichTextForField(
+                                  context: context,
+                                  title: "Is finished: ",
+                                  content: todo.isFinished ? 'Yes' : 'No'),
+                              _buildLineSeparator(),
+                              _buildRichTextForField(
+                                  context: context,
+                                  title: "Difficulty: ",
+                                  content: todo.difficulty.toString()),
+                              _buildLineSeparator(),
+                              IconButton(
+                                onPressed: () async {
+                                  await provider.delete(todo.id);
+                                  provider.updateCurrentTodosToDisplay(
+                                    filterTodosListByTitle(
+                                        getTodosToDisplay(
+                                            todoListName, provider),
+                                        searchTextFieldController.text),
+                                  );
+                                },
+                                icon: const Icon(
+                                  Icons.delete,
+                                  color: Colors.red,
+                                ),
+                              ),
+                              const Divider(color: white),
+                            ],
+                          ),
+                        ],
+                      ),
+                      onTap: () async {
+                        int taskIndexForInitialList = index;
+                        if (searchTextFieldController.text.isNotEmpty) {
+                          taskIndexForInitialList = findIndexForTaskByListName(
+                              todo, todoListName, provider);
+                        }
+
+                        await AutoRouter.of(context).push(
+                          TodoUpdateRoute(
+                              index: taskIndexForInitialList,
+                              todoId: todo.id,
+                              listName: todoListName),
+                        );
+
+                        provider.updateCurrentTodosToDisplay(
+                          filterTodosListByTitle(
+                              getTodosToDisplay(todoListName, provider),
+                              searchTextFieldController.text),
+                        );
+                      },
+                    );
+                  },
+                );
+              },
+            ),
+          ),
+          _buildAddButton(
+            () async {
+              await AutoRouter.of(context).push(const TodoAddRoute());
+
+              provider.updateCurrentTodosToDisplay(
+                filterTodosListByTitle(
+                    getTodosToDisplay(todoListName, provider),
+                    searchTextFieldController.text),
+              );
+            },
+          ),
+        ],
       ),
     ),
   );
@@ -320,19 +317,19 @@ Widget _buildRichTextForDescription(
 
 _buildWidthForPortraitOrientation(BuildContext context, double width) {
   if (width >= 1 && width < 300) {
-    return MediaQuery.of(context).size.width * 0.55;
+    return MediaQuery.of(context).size.width * 0.40;
   } else if (width > 300 && width < 500) {
-    return MediaQuery.of(context).size.width * 0.65;
+    return MediaQuery.of(context).size.width * 0.45;
   } else if (width >= 500 && width < 700) {
-    return MediaQuery.of(context).size.width * 0.7;
+    return MediaQuery.of(context).size.width * 0.65;
   } else if (width >= 700 && width < 800) {
-    return MediaQuery.of(context).size.width * 0.75;
+    return MediaQuery.of(context).size.width * 0.70;
   } else if (width >= 800 && width < 900) {
-    return MediaQuery.of(context).size.width * 0.8;
+    return MediaQuery.of(context).size.width * 0.75;
   } else if (width >= 900 && width < 1100) {
-    return MediaQuery.of(context).size.width * 0.85;
+    return MediaQuery.of(context).size.width * 0.80;
   } else if (width >= 1100 && width < 1300) {
-    return MediaQuery.of(context).size.width * 0.85;
+    return MediaQuery.of(context).size.width * 0.80;
   } else if (width >= 1300 && width < 1500) {
     return MediaQuery.of(context).size.width * 0.85;
   } else if (width >= 1500 && width < 1800) {
@@ -408,10 +405,10 @@ Widget _buildRichTextForTitle({
 }) {
   return RichText(
     text: TextSpan(
-      text: title,
+      text: title.length > 40 ? title.substring(0, 40) : title,
       style: DefaultTextStyle.of(context).style.merge(
             const TextStyle(
-              fontSize: kFontSize * 1.4,
+              fontSize: kFontSize * 1.2,
               fontWeight: FontWeight.bold,
             ),
           ),

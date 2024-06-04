@@ -19,10 +19,16 @@ class TodoProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  _updateCurrentTodosToDisplayWithoutStateUpdate(List<TodoEntity> newList) {
+    currentTodosToDisplay = newList;
+  }
+
   Future<List<TodoEntity>> getAllByUserIdTodos(String userId) async {
     var result = await repository.getAllByUserId(userId);
     todos = result;
     _sortAllTodosList();
+    _updateCurrentTodosToDisplayWithoutStateUpdate(todos);
+
     notifyListeners();
     return result;
   }
@@ -32,7 +38,6 @@ class TodoProvider extends ChangeNotifier {
     var result = await repository.getAllByUserId(userId);
     todos = result;
     _sortAllTodosList();
-    notifyListeners();
     return result;
   }
 
@@ -99,6 +104,7 @@ class TodoProvider extends ChangeNotifier {
       await _getAllByUserIdTodosWithoutStateUpdate(userId);
     }
     await obtainActiveTodosFromAllTodos(userId);
+    _updateCurrentTodosToDisplayWithoutStateUpdate(activeTodos);
     notifyListeners();
 
     return activeTodos;
@@ -109,6 +115,8 @@ class TodoProvider extends ChangeNotifier {
       await _getAllByUserIdTodosWithoutStateUpdate(userId);
     }
     await obtainUndoneTodosFromAllTodos(userId);
+    _updateCurrentTodosToDisplayWithoutStateUpdate(undoneTodos);
+
     notifyListeners();
 
     return undoneTodos;
@@ -119,6 +127,8 @@ class TodoProvider extends ChangeNotifier {
       await _getAllByUserIdTodosWithoutStateUpdate(userId);
     }
     await obtainDoneTodosFromAllTodos(userId);
+    _updateCurrentTodosToDisplayWithoutStateUpdate(doneTodos);
+
     notifyListeners();
 
     return doneTodos;

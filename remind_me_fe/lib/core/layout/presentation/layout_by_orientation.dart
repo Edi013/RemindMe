@@ -277,53 +277,77 @@ class LayoutByOrientation extends StatelessWidget {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
         if (constraints.maxWidth > constraints.maxHeight) {
-          return Scaffold(
-            body: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Sidebar(),
-                Expanded(child: child),
-                const RightBurgerButton(),
-              ],
-            ),
-            endDrawer: const RoutesDrawer(),
-          );
+          return LandscapeScaffold(child);
         } else {
-          return Scaffold(
-            body: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: LeftBurgerButton(),
-                    ),
-                    Container(
-                      constraints:
-                          const BoxConstraints(maxWidth: 100, maxHeight: 60),
-                      child: IconButton(
-                        icon:
-                            Image.asset('assets/images/rm_logo_landscape.png'),
-                        iconSize: 200,
-                        onPressed: () {
-                          AutoRouter.of(context).push(const HomeRoute());
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-                Expanded(
-                  child: child,
-                ),
-              ],
-            ),
-            drawer: const RoutesDrawer(),
-            bottomNavigationBar: const BottomBar(),
-          );
+          return PortraitScaffold(child);
         }
       },
+    );
+  }
+}
+
+class LandscapeScaffold extends StatelessWidget {
+  final Widget child;
+
+  const LandscapeScaffold(this.child, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
+    return Scaffold(
+      key: scaffoldKey,
+      body: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Sidebar(),
+          Expanded(child: child),
+          const RightBurgerButton(),
+        ],
+      ),
+      endDrawer: const RoutesDrawer(),
+    );
+  }
+}
+
+class PortraitScaffold extends StatelessWidget {
+  final Widget child;
+
+  const PortraitScaffold(this.child, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
+    return Scaffold(
+      key: scaffoldKey,
+      body: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: LeftBurgerButton(),
+              ),
+              Container(
+                constraints: const BoxConstraints(maxWidth: 100, maxHeight: 60),
+                child: IconButton(
+                  icon: Image.asset('assets/images/rm_logo_landscape.png'),
+                  iconSize: 200,
+                  onPressed: () {
+                    AutoRouter.of(context).push(const HomeRoute());
+                  },
+                ),
+              ),
+            ],
+          ),
+          Expanded(child: child),
+        ],
+      ),
+      drawer: const RoutesDrawer(),
+      bottomNavigationBar: const BottomBar(),
     );
   }
 }
