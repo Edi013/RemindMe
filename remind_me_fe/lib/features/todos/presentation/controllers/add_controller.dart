@@ -79,6 +79,26 @@ class TodoAddController {
     _descriptionController.clear();
   }
 
+  String? validateTitleFormField(value) {
+    if (value == null || value.isEmpty) {
+      return null;
+    } else if (value is String && value.length > 98) {
+      return 'Title cannot be more than 98 characters long';
+    }
+
+    return null;
+  }
+
+  String? validateDescriptionFormField(value) {
+    if (value == null || value.isEmpty) {
+      return null;
+    } else if (value is String && value.length > 7999) {
+      return 'Description cannot be more than 8000 characters long';
+    }
+
+    return null;
+  }
+
   String? validateStartDateFormField(value) {
     if (value == null || value.isEmpty) {
       return 'Field cannot be empty';

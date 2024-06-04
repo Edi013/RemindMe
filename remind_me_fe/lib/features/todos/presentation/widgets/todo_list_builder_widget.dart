@@ -342,28 +342,43 @@ _buildWidthForPortraitOrientation(BuildContext context, double width) {
 }
 
 _buildWidthForLandscapeOrientation(BuildContext context, width) {
+  // We have to calculate this because the layout = sidebar + burger button
   if (width >= 1 && width < 300) {
     return MediaQuery.of(context).size.width * 0.2;
-  } else if (width > 300 && width < 500) {
+  } else if (width >= 300 && width < 500) {
     return MediaQuery.of(context).size.width * 0.3;
-  } else if (width >= 500 && width < 700) {
+  } else if (width >= 500 && width < 600) {
+    return MediaQuery.of(context).size.width * 0.33;
+  } else if (width >= 600 && width < 700) {
     return MediaQuery.of(context).size.width * 0.4;
   } else if (width >= 700 && width < 800) {
-    return MediaQuery.of(context).size.width * 0.45;
-  } else if (width >= 800 && width < 900) {
-    return MediaQuery.of(context).size.width * 0.5;
-  } else if (width >= 900 && width < 1100) {
     return MediaQuery.of(context).size.width * 0.55;
-  } else if (width >= 1100 && width < 1300) {
-    return MediaQuery.of(context).size.width * 0.65;
-  } else if (width >= 1300 && width < 1500) {
+  } else if (width >= 800 && width < 900) {
+    return MediaQuery.of(context).size.width * 0.60;
+  } else if (width >= 900 && width < 1000) {
+    return MediaQuery.of(context).size.width * 0.62;
+  } else if (width >= 1000 && width < 1100) {
+    return MediaQuery.of(context).size.width * 0.64;
+  } else if (width >= 1100 && width < 1200) {
+    return MediaQuery.of(context).size.width * 0.66;
+  } else if (width >= 1200 && width < 1300) {
+    return MediaQuery.of(context).size.width * 0.68;
+  } else if (width >= 1300 && width < 1400) {
     return MediaQuery.of(context).size.width * 0.7;
-  } else if (width >= 1500 && width < 1800) {
-    return MediaQuery.of(context).size.width * 0.7;
-  } else if (width >= 1800 && width < 2000) {
-    return MediaQuery.of(context).size.width * 0.75;
-  } else {
+  } else if (width >= 1400 && width < 1500) {
+    return MediaQuery.of(context).size.width * 0.72;
+  } else if (width >= 1500 && width < 1600) {
+    return MediaQuery.of(context).size.width * 0.74;
+  } else if (width >= 1600 && width < 1700) {
+    return MediaQuery.of(context).size.width * 0.76;
+  } else if (width >= 1700 && width < 1800) {
+    return MediaQuery.of(context).size.width * 0.78;
+  } else if (width >= 1800 && width < 1900) {
     return MediaQuery.of(context).size.width * 0.8;
+  } else if (width >= 1900 && width < 2000) {
+    return MediaQuery.of(context).size.width * 0.82;
+  } else {
+    return MediaQuery.of(context).size.width * 0.84;
   }
 }
 
@@ -376,26 +391,36 @@ Widget _buildRichTextForField(
     {required BuildContext context,
     required String title,
     String content = ""}) {
-  return RichText(
-    text: TextSpan(
-      text: title,
-      style: DefaultTextStyle.of(context).style.merge(
-            const TextStyle(
-              fontSize: kFontSize,
-            ),
-          ),
-      children: <TextSpan>[
-        TextSpan(
-          text: content,
-          style: DefaultTextStyle.of(context).style.merge(
-                const TextStyle(
-                  fontSize: kFontSize,
-                ),
-              ),
-        ),
-      ],
+  return Container(
+    constraints: BoxConstraints(
+      maxWidth:
+          MediaQuery.of(context).size.width > MediaQuery.of(context).size.height
+              ? _buildWidthForLandscapeOrientation(
+                  context, MediaQuery.of(context).size.width)
+              : _buildWidthForPortraitOrientation(
+                  context, MediaQuery.of(context).size.width),
     ),
-    maxLines: null,
+    child: RichText(
+      text: TextSpan(
+        text: title,
+        style: DefaultTextStyle.of(context).style.merge(
+              const TextStyle(
+                fontSize: kFontSize,
+              ),
+            ),
+        children: <TextSpan>[
+          TextSpan(
+            text: content,
+            style: DefaultTextStyle.of(context).style.merge(
+                  const TextStyle(
+                    fontSize: kFontSize,
+                  ),
+                ),
+          ),
+        ],
+      ),
+      maxLines: null,
+    ),
   );
 }
 
@@ -403,17 +428,27 @@ Widget _buildRichTextForTitle({
   required BuildContext context,
   required String title,
 }) {
-  return RichText(
-    text: TextSpan(
-      text: title.length > 40 ? title.substring(0, 40) : title,
-      style: DefaultTextStyle.of(context).style.merge(
-            const TextStyle(
-              fontSize: kFontSize * 1.2,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
+  return Container(
+    constraints: BoxConstraints(
+      maxWidth:
+          MediaQuery.of(context).size.width > MediaQuery.of(context).size.height
+              ? _buildWidthForLandscapeOrientation(
+                  context, MediaQuery.of(context).size.width)
+              : _buildWidthForPortraitOrientation(
+                  context, MediaQuery.of(context).size.width),
     ),
-    maxLines: null,
+    child: RichText(
+      text: TextSpan(
+        text: title, //title.length > 40 ? title.substring(0, 40) : title,
+        style: DefaultTextStyle.of(context).style.merge(
+              const TextStyle(
+                fontSize: kFontSize * 1.2,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+      ),
+      maxLines: null,
+    ),
   );
 }
 

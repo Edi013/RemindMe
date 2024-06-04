@@ -50,9 +50,9 @@ class TodoProvider extends ChangeNotifier {
       (value) async {
         todos.add(value);
         _sortAllTodosList();
-        await obtainActiveTodosFromAllTodos(todo.ownerId);
-        await obtainDoneTodosFromAllTodos(todo.ownerId);
-        await obtainUndoneTodosFromAllTodos(todo.ownerId);
+        await _obtainActiveTodosFromAllTodos(todo.ownerId);
+        await _obtainDoneTodosFromAllTodos(todo.ownerId);
+        await _obtainUndoneTodosFromAllTodos(todo.ownerId);
         notifyListeners();
       },
     );
@@ -63,9 +63,9 @@ class TodoProvider extends ChangeNotifier {
       (value) async {
         todos[index] = value;
         _sortAllTodosList();
-        await obtainActiveTodosFromAllTodos(todo.ownerId);
-        await obtainDoneTodosFromAllTodos(todo.ownerId);
-        await obtainUndoneTodosFromAllTodos(todo.ownerId);
+        await _obtainActiveTodosFromAllTodos(todo.ownerId);
+        await _obtainDoneTodosFromAllTodos(todo.ownerId);
+        await _obtainUndoneTodosFromAllTodos(todo.ownerId);
         notifyListeners();
       },
     );
@@ -103,7 +103,7 @@ class TodoProvider extends ChangeNotifier {
     if (activeTodos.isEmpty) {
       await _getAllByUserIdTodosWithoutStateUpdate(userId);
     }
-    await obtainActiveTodosFromAllTodos(userId);
+    await _obtainActiveTodosFromAllTodos(userId);
     _updateCurrentTodosToDisplayWithoutStateUpdate(activeTodos);
     notifyListeners();
 
@@ -114,7 +114,7 @@ class TodoProvider extends ChangeNotifier {
     if (undoneTodos.isEmpty) {
       await _getAllByUserIdTodosWithoutStateUpdate(userId);
     }
-    await obtainUndoneTodosFromAllTodos(userId);
+    await _obtainUndoneTodosFromAllTodos(userId);
     _updateCurrentTodosToDisplayWithoutStateUpdate(undoneTodos);
 
     notifyListeners();
@@ -126,7 +126,7 @@ class TodoProvider extends ChangeNotifier {
     if (doneTodos.isEmpty) {
       await _getAllByUserIdTodosWithoutStateUpdate(userId);
     }
-    await obtainDoneTodosFromAllTodos(userId);
+    await _obtainDoneTodosFromAllTodos(userId);
     _updateCurrentTodosToDisplayWithoutStateUpdate(doneTodos);
 
     notifyListeners();
@@ -134,7 +134,7 @@ class TodoProvider extends ChangeNotifier {
     return doneTodos;
   }
 
-  Future<void> obtainActiveTodosFromAllTodos(String userId) async {
+  Future<void> _obtainActiveTodosFromAllTodos(String userId) async {
     final now = DateTime.now();
 
     activeTodos = todos
@@ -143,11 +143,11 @@ class TodoProvider extends ChangeNotifier {
         .toList();
   }
 
-  Future<void> obtainDoneTodosFromAllTodos(String userId) async {
+  Future<void> _obtainDoneTodosFromAllTodos(String userId) async {
     doneTodos = todos.where((todo) => todo.isFinished == true).toList();
   }
 
-  Future<void> obtainUndoneTodosFromAllTodos(String userId) async {
+  Future<void> _obtainUndoneTodosFromAllTodos(String userId) async {
     undoneTodos = todos.where((todo) => todo.isFinished == false).toList();
   }
 }

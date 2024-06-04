@@ -67,14 +67,18 @@ class TodoAddScreenContent extends StatelessWidget {
                     TextFormField(
                       controller: controller.titleController,
                       decoration: const InputDecoration(labelText: 'Title'),
+                      validator: (value) =>
+                          controller.validateTitleFormField(value),
                     ),
                     const SizedBox(height: 16.0),
-                    TextField(
+                    TextFormField(
                       controller: controller.descriptionController,
                       decoration:
                           const InputDecoration(labelText: 'Description'),
                       keyboardType: TextInputType.multiline,
                       maxLines: null,
+                      validator: (value) =>
+                          controller.validateDescriptionFormField(value),
                     ),
                     const SizedBox(height: 16.0),
                     TextFormField(

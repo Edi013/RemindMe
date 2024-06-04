@@ -23,7 +23,7 @@ class Sidebar extends StatelessWidget {
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
     _controller
-        .setExtended(MediaQuery.of(context).size.width >= 1500 ? true : false);
+        .setExtended(MediaQuery.of(context).size.width >= 1500 ? true : true);
 
     return SidebarX(
       controller: _controller,

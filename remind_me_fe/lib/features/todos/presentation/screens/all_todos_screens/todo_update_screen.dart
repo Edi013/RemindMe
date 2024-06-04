@@ -121,6 +121,8 @@ class TodoUpdateScreenContent extends StatelessWidget {
                     TextFormField(
                       controller: controller.titleController,
                       decoration: const InputDecoration(labelText: 'Title'),
+                      validator: (value) =>
+                          controller.validateTitleFormField(value),
                     ),
                     const SizedBox(height: 16.0),
                     TextFormField(
@@ -129,6 +131,8 @@ class TodoUpdateScreenContent extends StatelessWidget {
                           const InputDecoration(labelText: 'Description'),
                       keyboardType: TextInputType.multiline,
                       maxLines: null,
+                      validator: (value) =>
+                          controller.validateDescriptionFormField(value),
                     ),
                     const SizedBox(height: 16.0),
                     TextFormField(
@@ -159,8 +163,8 @@ class TodoUpdateScreenContent extends StatelessWidget {
                     ),
                     const SizedBox(height: 16.0),
                     ElevatedButton(
-                      onPressed: () {
-                        controller.updateItem(
+                      onPressed: () async {
+                        await controller.updateItem(
                             index, todoToUpdate, context, listName);
                       },
                       child: const Text('Save Changes'),
