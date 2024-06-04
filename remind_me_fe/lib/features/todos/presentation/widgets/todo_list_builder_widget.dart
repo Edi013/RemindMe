@@ -179,7 +179,7 @@ Widget buildListFromTodos(BuildContext context, String todoListName) {
                               IconButton(
                                 onPressed: () async {
                                   await provider.delete(todo.id);
-                                  provider.updateCurrentTodosToDisplay(
+                                  await provider.updateCurrentTodosToDisplay(
                                     filterTodosListByTitle(
                                         getTodosToDisplay(
                                             todoListName, provider),
@@ -210,7 +210,7 @@ Widget buildListFromTodos(BuildContext context, String todoListName) {
                               listName: todoListName),
                         );
 
-                        provider.updateCurrentTodosToDisplay(
+                        await provider.updateCurrentTodosToDisplay(
                           filterTodosListByTitle(
                               getTodosToDisplay(todoListName, provider),
                               searchTextFieldController.text),
@@ -226,7 +226,7 @@ Widget buildListFromTodos(BuildContext context, String todoListName) {
             () async {
               await AutoRouter.of(context).push(const TodoAddRoute());
 
-              provider.updateCurrentTodosToDisplay(
+              await provider.updateCurrentTodosToDisplay(
                 filterTodosListByTitle(
                     getTodosToDisplay(todoListName, provider),
                     searchTextFieldController.text),
@@ -278,7 +278,7 @@ _buildCheckboxForTodo(TodoEntity todo, String todoListName,
         ),
       );
 
-      provider.updateCurrentTodosToDisplay(
+      await provider.updateCurrentTodosToDisplay(
         filterTodosListByTitle(getTodosToDisplay(todoListName, provider),
             searchTextFieldControllerText),
       );
@@ -317,15 +317,15 @@ Widget _buildRichTextForDescription(
 
 _buildWidthForPortraitOrientation(BuildContext context, double width) {
   if (width >= 1 && width < 300) {
-    return MediaQuery.of(context).size.width * 0.40;
+    return MediaQuery.of(context).size.width * 0.5;
   } else if (width > 300 && width < 500) {
-    return MediaQuery.of(context).size.width * 0.45;
+    return MediaQuery.of(context).size.width * 0.8;
   } else if (width >= 500 && width < 700) {
-    return MediaQuery.of(context).size.width * 0.65;
+    return MediaQuery.of(context).size.width * 0.8;
   } else if (width >= 700 && width < 800) {
-    return MediaQuery.of(context).size.width * 0.70;
+    return MediaQuery.of(context).size.width * 0.8;
   } else if (width >= 800 && width < 900) {
-    return MediaQuery.of(context).size.width * 0.75;
+    return MediaQuery.of(context).size.width * 0.8;
   } else if (width >= 900 && width < 1100) {
     return MediaQuery.of(context).size.width * 0.80;
   } else if (width >= 1100 && width < 1300) {
@@ -336,13 +336,10 @@ _buildWidthForPortraitOrientation(BuildContext context, double width) {
     return MediaQuery.of(context).size.width * 0.85;
   } else if (width >= 1800 && width < 2000) {
     return MediaQuery.of(context).size.width * 0.85;
-  } else {
-    return MediaQuery.of(context).size.width * 0.9;
-  }
+  } else {}
 }
 
 _buildWidthForLandscapeOrientation(BuildContext context, width) {
-  // We have to calculate this because the layout = sidebar + burger button
   if (width >= 1 && width < 300) {
     return MediaQuery.of(context).size.width * 0.2;
   } else if (width >= 300 && width < 500) {
