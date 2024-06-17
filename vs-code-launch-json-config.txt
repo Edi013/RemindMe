@@ -1,0 +1,17 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Web Flutter ",
+            "request": "launch",
+            "type": "dart",
+            "args": ["-d", "chrome","--web-port", "51742"],
+        },
+        {
+            "name": "Windows Flutter",
+            "request": "launch",
+            "type": "dart",
+            "args": ["-d", "windows","--web-port", "51742"],
+        },
+    ]
+}
