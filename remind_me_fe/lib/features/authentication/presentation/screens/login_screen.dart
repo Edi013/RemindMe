@@ -89,10 +89,8 @@ class LoginCard extends StatelessWidget {
                             if (!value.contains("@")) {
                               return 'Email has to contain this symbol @ ';
                             }
-                            if (!value.endsWith('.com')) {
-                              return 'Email has to end in .com';
-                            }
-                            if (value.endsWith('@.com')) {
+                            if (value.endsWith('@.com') ||
+                                value.endsWith('@')) {
                               return 'Email has to have a domain specified. Avoid using @.com';
                             }
                             return null;
