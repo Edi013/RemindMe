@@ -1,4 +1,6 @@
 ﻿using log4net;
+using Microsoft.EntityFrameworkCore;
+using RemindMe.DataAcces;
 
 namespace RemindMe
 {
@@ -8,6 +10,7 @@ namespace RemindMe
         {
             app.UseSwager();
 
+            ApplyMigrations(app);
 
             app.UseCors("TodoPolicy");
 
@@ -29,6 +32,13 @@ namespace RemindMe
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+        }
+
+        private static void ApplyMigrations(WebApplication app)
+        {
+            using var scope = app.Services.CreateScope();
+            var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>(); 
+            dbContext.Database.Migrate();  
         }
     }
 }

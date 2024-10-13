@@ -1,4 +1,4 @@
-// ignore_for_file: no_leading_underscores_for_local_identifiers, must_be_immutable
+// ignore_for_file: no_leading_underscores_for_local_identifiers, must_be_immutable, use_build_context_synchronously
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
@@ -81,7 +81,6 @@ class TodoUpdateScreenContent extends StatelessWidget {
     );
 
     if (pickedDate != null) {
-      // ignore: use_build_context_synchronously
       final TimeOfDay? pickedTime = await showTimePicker(
         context: context,
         initialTime: TimeOfDay.now(),

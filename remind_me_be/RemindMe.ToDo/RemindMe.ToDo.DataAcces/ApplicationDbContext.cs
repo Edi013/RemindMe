@@ -11,7 +11,7 @@ namespace RemindMe.DataAcces
 
         public ApplicationDbContext() { }
 
-        public ApplicationDbContext(IConfiguration _configuration)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IConfiguration _configuration) : base(options)
         {
             Configuration = _configuration;
         }
