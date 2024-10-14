@@ -31,7 +31,8 @@ For launch.json configuration you can use this file :
 1. Install Visual Studio & .NET from the Visual Studio Installer.
 2. 1. Do all steps within Database section
 2. 2. Apply the migrations (if they were not applied automatically) with 'update-database' command in Nuget Package Manager Console.
-3. Open and start each microservice.
+3. 1. Open and start each microservice.
+3. 2. Authentication microserivce needs to have roles seeded in the database : Call the api found on route   'http://localhost:7092/Authentication/SeedRoles'.
 
 ## Database
 1. Install Docker
