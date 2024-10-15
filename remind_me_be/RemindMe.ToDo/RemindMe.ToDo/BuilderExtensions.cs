@@ -1,13 +1,10 @@
-﻿using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using RemindMe.Application.Handlers.Todos;
 using RemindMe.DataAcces;
 using RemindMe.DataAcces.Repositories;
 using RemindMe.Domain.Interfaces;
-using System.Net;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
 namespace RemindMe
@@ -29,7 +26,7 @@ namespace RemindMe
             builder.Services.AddMediatR(
                  cfg => cfg.RegisterServicesFromAssemblies(typeof(GetAllByUserIdItemHandler).Assembly));
 
-            var connectionString = builder.Configuration.GetConnectionString("RemindMeDb");
+            var connectionString = builder.Configuration.GetConnectionString("RemindMeToDoDb");
             builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(connectionString));
 
             var audience = new List<string>{
@@ -44,25 +41,6 @@ namespace RemindMe
                     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
                     options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
                 })
-                /*.AddAuthentication(options =>
-                {
-                    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                })
-                .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
-                {
-                    options.Cookie.Name = "Jwt"; 
-                    *//*options.Events = new CookieAuthenticationEvents
-                    {
-                        OnValidatePrincipal = context =>
-                        {
-                            // Custom logic to validate the principal from the cookie
-                            // You may check the cookie content, expiration, etc.
-                            // If validation fails, set context.RejectPrincipal();
-                            return Task.CompletedTask;
-                        }
-                    };*//*
-                })*/
                 .AddJwtBearer(options =>
                 {
                     options.SaveToken = true;
@@ -86,6 +64,7 @@ namespace RemindMe
             builder.RegisterAppSettings();
             builder.Services.AddScoped<IItemRepository, ItemRepository>();
         }
+        
         public static void ConfigureLogging(this WebApplicationBuilder builder)
         {
             builder.Logging.ClearProviders();
