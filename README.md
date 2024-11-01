@@ -1,5 +1,6 @@
 # RemindMe 
-## A cross-platform application built on Microservices
+A cross-platform application for taking notes.
+It uses Flutter, .NET and PostgreSQL, being built on Microservices.
 
 # Setup guide
 ## Frontend
